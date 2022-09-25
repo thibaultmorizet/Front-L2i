@@ -1,0 +1,26 @@
+<h1 class="text-center container">Articles</h1>
+
+<div class="container border">
+  <div *ngFor="let elt of articles" class="m-3 p-3 row border">
+    <div class="col-5">
+      <!-- <img
+        style="width: 200px"
+        src="./assets/images/movie_{{ elt.id }}.jpeg"
+        alt="affiche film"
+      /> -->
+    </div>
+
+    <div class="col-5 d-flex align-items-center text-center">
+      {{ elt.id }}<br /><br />
+      {{ elt.article_title }}<br /><br />
+      {{ elt.article_summary }}<br /><br />
+      {{ elt.article_unit_price }}<br /><br />
+      {{ elt.article_stock }}<br /><br />
+      {{ elt.article_book_isbn }}<br /><br />
+      {{ elt.article_book_image }}<br /><br />
+      {{ elt.article_book_format_id }}<br /><br />
+      {{ elt.article_book_editor_id }}<br /><br />
+      {{ elt.article_book_year }}
+    </div>
+  </div>
+</div>
