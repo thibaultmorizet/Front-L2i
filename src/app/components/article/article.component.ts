@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from 'src/app/interfaces/article';
 import { ArticleService } from 'src/app/services/article.service';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-article',
@@ -10,6 +11,7 @@ import { ArticleService } from 'src/app/services/article.service';
 })
 export class ArticleComponent implements OnInit {
   articles: Array<Article> = [];
+  user: User = {};
 
   constructor(
     private as: ArticleService,
@@ -17,9 +19,13 @@ export class ArticleComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {   
     this.as.getAllArticles().subscribe((res) => {
       this.articles = res;
     });
+  }
+
+  goToArticles() {
+    this.router.navigateByUrl('/articles');
   }
 }
