@@ -11,6 +11,7 @@ import { User } from 'src/app/interfaces/user';
 })
 export class ArticleComponent implements OnInit {
   articles: Array<Article> = [];
+  pageCount: number = 0;
   user: User = {};
 
   constructor(
@@ -19,9 +20,12 @@ export class ArticleComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {   
+  ngOnInit(): void {
     this.as.getAllArticles().subscribe((res) => {
       this.articles = res;
+      this.pageCount = res.length;
+      console.log(this.pageCount);
+      
     });
   }
 

@@ -6,7 +6,7 @@ import { Article } from '../interfaces/article';
   providedIn: 'root'
 })
 export class ArticleService {
-  private url: string = 'http://localhost:8000/ws/articles';
+  private url: string = 'https://localhost:8000/ws/articles';
   private articles: Array<object> = [];
 
   constructor(private http: HttpClient) {}
