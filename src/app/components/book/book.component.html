@@ -1,4 +1,4 @@
-<h1 class="text-center container">Articles</h1>
+<h1 class="text-center container">Livres</h1>
 
 <div id="content">
   <div class="container">
@@ -20,21 +20,21 @@
             <form
               #monForm="ngForm"
               class="container"
-              (ngSubmit)="getArticlesWithFormat()"
+              (ngSubmit)="getBooksWithFormat()"
             >
               <div class="form-group" *ngFor="let elt of formats">
-                  <div class="checkbox">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="format"
-                        value={{elt.format_name}}
-                        [(ngModel)]="elt.filter_is_selected"
-                        [checked]="elt.filter_is_selected"
-                      />
-                      {{elt.format_name}} ({{ elt.count_articles }})</label
-                    >
-                  </div>
+                <div class="checkbox">
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="format"
+                      value="{{ elt.format_name }}"
+                      [(ngModel)]="elt.filter_is_selected"
+                      [checked]="elt.filter_is_selected"
+                    />
+                    {{ elt.format_name }} ({{ elt.count_books }})</label
+                  >
+                </div>
               </div>
               <button type="submit" class="btn btn-default btn-sm btn-primary">
                 <i class="fa fa-pencil"></i> Appliquer
@@ -45,30 +45,35 @@
       </div>
 
       <div class="col-lg-9">
-        <div class="row articles">
-          <div *ngFor="let elt of articles" class="col-lg-4 col-md-6">
-            <div class="product">
+        <div class="row">
+          <div *ngFor="let elt of books" class="col-lg-4 col-md-6 mb-5">
+            <div class="product h-100 d-flex align-items-center flex-column">
               <div class="">
                 <div class="">
-                  <a href="detail.html"
-                    ><img
-                      src="{{ elt.article_book_image }}"
+                  <a [routerLink]="['/books/', elt.id]">
+                    <img
+                      src="{{ elt.book_image }}"
                       alt=""
                       class="img-fluid"
                   /></a>
                 </div>
               </div>
 
-              <div class="text">
+              <div class="text p-2 mt-auto w-100">
                 <h3>
-                  <a href="detail.html">{{ elt.article_title }}</a>
+                  <a [routerLink]="['/books/', elt.id]">
+                    {{ elt.book_title }}
+                  </a>
                 </h3>
-                <p class="price"><del></del>{{ elt.article_unit_price }} €</p>
-                <p class="buttons">
-                  <a href="detail.html" class="btn btn-outline-secondary"
-                    >Voir le détail</a
-                  ><a href="basket.html" class="btn btn-primary"
-                    ><i class="fa fa-shopping-cart"></i>Ajouter au panier</a
+                <p class="price"><del></del>{{ elt.book_unit_price }} €</p>
+                <p class="d-flex justify-content-between px-1">
+                  <button
+                    [routerLink]="['/books/', elt.id]"
+                    class="btn btn-outline-secondary"
+                  >
+                    Voir le détail</button
+                  ><button href="basket.html" class="btn btn-primary"
+                    ><i class="fa fa-shopping-cart"></i>Ajouter au panier</button
                   >
                 </p>
               </div>
@@ -93,10 +98,10 @@
                     ><span class="sr-only">Previous</span>
                   </button>
                 </li>
-                <div *ngFor="let i of arr">
+                <div *ngFor="let i of paginationArray">
                   <li *ngIf="i == actualPage" class="page-item active">
                     <button
-                      (click)="getAllArticlesByPage(i)"
+                      (click)="getAllBooksByPage(i)"
                       type="button"
                       class="page-link"
                     >
@@ -105,7 +110,7 @@
                   </li>
                   <li *ngIf="i != actualPage" class="page-item">
                     <button
-                      (click)="getAllArticlesByPage(i)"
+                      (click)="getAllBooksByPage(i)"
                       type="button"
                       class="page-link"
                     >
@@ -130,8 +135,8 @@
           </div>
 
           <!--     <div class="text-center">
-      {{ elt.article_book_year }}<br /><br />
-      <div *ngFor="let an_author of elt.article_book_author" class="">
+      {{ elt.book_year }}<br /><br />
+      <div *ngFor="let an_author of elt.book_author" class="">
         {{ an_author.author_firstname }}
         {{ an_author.author_lastname }}
         {{ an_author.author_language }}<br /><br />
