@@ -27,6 +27,9 @@ export class BookDetailsComponent implements OnInit {
         this.book = b;
       });
     });
-    
+  }
+  
+  scroll(el: HTMLElement) {
+    el.scrollIntoView();
   }
 }

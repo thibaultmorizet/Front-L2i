@@ -1,59 +1,89 @@
+<header>
+
+    <div id="top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 offer mb-3 mb-lg-0"></div>
+            <div class="col-lg-6 text-end text-lg-right">
+              <ul class="menu list-inline mb-0">
+                <li class="list-inline-item"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                <li class="list-inline-item"><a href="register.html">Register</a></li>
+                <li class="list-inline-item"><a href="contact.html">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>        
+      </div>
+
+
+</header>
 <div id="content">
   <div class="container">
     <div class="row">
+              
+      <div class="col-lg-12">
+
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/books']">Livres</a></li>
+            <li aria-current="page" class="breadcrumb-item active">{{ book.book_title }}</li>
+          </ol>
+        </nav>
+      </div>
+
       <div class="col-lg-9 order-1 order-lg-2">
         <div id="productMain" class="row">
           <div class="col-md-6">
-            <div data-slider-id="1" class="owl-carousel shop-detail-carousel">
-              <div class="item">
-                <img src="{{ book.book_image }}" alt="" class="img-fluid" />
-              </div>
-            </div>
+            <img src="{{ book.book_image }}" alt="" class="img-fluid img-book-details" />
           </div>
           <div class="col-md-6">
             <div class="box">
-              <h1 class="text-center">{{ book.book_title }}</h1>
+              <h2 class="text-center">{{ book.book_title }}</h2>
+
               <p class="goToDescription">
-                <a href="#details" class="scroll-to"
+                <a (click)="scroll(details)" class="scroll-to pointer"
                   >Scroll to product details, material &amp; care and sizing</a
                 >
               </p>
-              <p class="price">{{ book.book_unit_price }} €</p>
+              <p class="price">{{ book.book_unit_price }} € (HT)</p>
+              <li *ngIf="1" class="page-item active">test</li>
+
               <p class="text-center buttons">
-                <a href="basket.html" class="btn btn-primary"
-                  ><i class="fa fa-shopping-cart"></i> Ajoutez au panier</a
+                <button href="basket.html" class="btn btn-primary"
+                  ><i class="fa fa-shopping-cart"></i> Ajoutez au panier</button
                 >
               </p>
             </div>
           </div>
         </div>
-        <div id="details" class="box">
-          <p></p>
-          <h4>Product details</h4>
+        <div #details class="box">
+          <h3>Détail sur le produit</h3>
+          <br />
+          <h5>Description</h5>
           <p>
-            White lace top, woven, has a round neck, short sleeves, has knitted
-            lining attached
+            {{ book.book_summary }}
           </p>
-          <h4>Material &amp; care</h4>
+          <br />
           <ul>
-            <li>Polyester</li>
-            <li>Machine wash</li>
+            <li>
+              <span>
+                <span class="font-weight-bold">ISBN : </span>
+                <span>{{ book.book_isbn }}</span>
+              </span>
+            </li>
+            <li>
+              <span>
+                <span class="font-weight-bold">Éditeur : </span>
+                <span>{{ book.book_editor?.editor_name }}</span>
+              </span>
+            </li>
+            <li>
+              <span>
+                <span class="font-weight-bold">Année de parution : </span>
+                <span>{{ book.book_year }}</span>
+              </span>
+            </li>
           </ul>
-          <h4>Size &amp; Fit</h4>
-          <ul>
-            <li>Regular fit</li>
-            <li>The model (height 5'8" and chest 33") is wearing a size S</li>
-          </ul>
-          <blockquote>
-            <p>
-              <em
-                >Define style this season with Armani's new range of trendy
-                tops, crafted with intricate details. Create a chic statement
-                look by teaming this lace number with skinny jeans and
-                pumps.</em
-              >
-            </p>
-          </blockquote>
         </div>
       </div>
     </div>

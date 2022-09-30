@@ -9,9 +9,22 @@ import { BookComponent } from './components/book/book.component';
 import { UserComponent } from './components/user/user.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
-  declarations: [AppComponent, BookComponent, UserComponent, BookDetailsComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  declarations: [
+    AppComponent,
+    BookComponent,
+    UserComponent,
+    BookDetailsComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    NgbModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

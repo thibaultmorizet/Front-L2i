@@ -1,8 +1,51 @@
-<h1 class="text-center container">Livres</h1>
+<header>
+  <div id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offer mb-3 mb-lg-0"></div>
+        <div class="col-lg-6 text-end text-lg-right">
+          <ul class="menu list-inline mb-0">
+            <li class="list-inline-item">
+              <a href="#" data-toggle="modal" data-target="#login-modal"
+                >Login</a
+              >
+            </li>
+            <li class="list-inline-item">
+              <a href="register.html">Register</a>
+            </li>
+            <li class="list-inline-item"><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 
 <div id="content">
   <div class="container">
     <div class="row">
+      <div id="search" class="my-3">
+        <div class="container d-flex justify-content-end">
+          <form role="search">
+            <div class="input-group">
+              <input type="text" placeholder="Search" class="form-control" />
+              <div class="input-group-append">
+                <button type="button" class="btn btn-primary button-search h-100">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-12 my-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Livres</li>
+          </ol>
+        </nav>
+      </div>
+
       <div class="col-lg-3">
         <div class="card sidebar-menu mb-4">
           <div class="card-header">
@@ -51,10 +94,7 @@
               <div class="">
                 <div class="">
                   <a [routerLink]="['/books/', elt.id]">
-                    <img
-                      src="{{ elt.book_image }}"
-                      alt=""
-                      class="img-fluid"
+                    <img src="{{ elt.book_image }}" alt="" class="img-fluid"
                   /></a>
                 </div>
               </div>
@@ -71,10 +111,12 @@
                     [routerLink]="['/books/', elt.id]"
                     class="btn btn-outline-secondary"
                   >
-                    Voir le détail</button
-                  ><button href="basket.html" class="btn btn-primary"
-                    ><i class="fa fa-shopping-cart"></i>Ajouter au panier</button
-                  >
+                    Voir le détail
+                  </button>
+
+                  <button href="basket.html" class="btn btn-primary">
+                    <i class="fa fa-shopping-cart"></i>Ajouter au panier
+                  </button>
                 </p>
               </div>
             </div>
