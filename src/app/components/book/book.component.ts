@@ -13,6 +13,7 @@ import { Format } from 'src/app/interfaces/format';
 })
 export class BookComponent implements OnInit {
   books: Array<Book> = [];
+  allBooks: Array<Book> = [];
   formats: Array<Format> = [];
   totalBooksCount: number = 0;
   pageCount: number = 0;
@@ -20,32 +21,49 @@ export class BookComponent implements OnInit {
   paginationArray: Array<number> = [];
   actualPage: number = 1;
   formatFilter: Array<string> = [];
+  searchText: string = '';
 
   constructor(
     private bs: BookService,
     private fs: FormatService,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.bs.getAllBooks().subscribe((res) => {
-      this.books = res;
-    });
+    this.getBooks();
+    this.getAllBooks();
     this.getAllFormatsfunc();
     this.setPaginationArray();
   }
-  setPaginationArray(formatFilter: Array<string> = []) {
-    this.bs.getAllBooksWithoutLimit(formatFilter).subscribe((res) => {
-      this.pageCount = Math.ceil(res.length / 9);
-      this.totalBooksCount = res.length;
-      this.paginationArray = [];
-
-      for (let index = 0; index < this.pageCount; index++) {
-        this.paginationArray.push(index + 1);
-      }
-      this.actualPage = 1;
+  getBooks() {
+    this.bs.getAllBooks().subscribe((res) => {
+      this.books = res;
     });
+  }
+  getAllBooks(formatFilter: Array<string> = [], searchText: string = '') {
+    this.bs
+      .getAllBooksWithoutLimit(formatFilter, searchText)
+      .subscribe((res) => {
+        this.allBooks = res;
+      });
+  }
+  setPaginationArray(
+    formatFilter: Array<string> = [],
+    searchText: string = ''
+  ) {
+    this.bs
+      .getAllBooksWithoutLimit(formatFilter, searchText)
+      .subscribe((res) => {        
+        this.pageCount = Math.ceil(res.length / 9);
+        this.totalBooksCount = res.length;
+        this.paginationArray = [];
+
+        for (let index = 0; index < this.pageCount; index++) {
+          this.paginationArray.push(index + 1);
+        }
+        this.actualPage = 1;
+      });
   }
   getAllFormatsfunc() {
     this.fs.getAllFormats().subscribe((res) => {
@@ -65,18 +83,10 @@ export class BookComponent implements OnInit {
       this.formats = res;
     });
   }
-  goToBooks() {
-    this.router.navigateByUrl('/books');
-  }
   goToBookDetails(id: number) {
     this.router.navigateByUrl('/books/' + id);
   }
-  getAllBooksByPage(page: number) {
-    this.bs.getAllBooksForPage(page, this.formatFilter).subscribe((res) => {
-      this.books = res;
-      this.actualPage = page;
-    });
-  }
+
   getPreviousPage() {
     if (this.actualPage - 1 >= 1) {
       this.getAllBooksByPage(this.actualPage - 1);
@@ -94,7 +104,16 @@ export class BookComponent implements OnInit {
     this.getAllBooksByPage(1);
   }
 
-  getBooksWithFormat() {
+  getAllBooksByPage(page: number) {
+    this.bs
+      .getAllBooksForPage(page, this.formatFilter, this.searchText)
+      .subscribe((res) => {
+        this.books = res;
+        this.actualPage = page;
+      });
+  }
+
+  getBooksWithFormatAndSearch() {
     this.formatFilter = [];
 
     this.formats.forEach((el) => {
@@ -102,9 +121,12 @@ export class BookComponent implements OnInit {
         this.formatFilter.push(el.format_name);
       }
     });
-    this.bs.getAllBooksByFormat(this.formatFilter).subscribe((res) => {
-      this.books = res;
-    });
-    this.setPaginationArray(this.formatFilter);
+    this.bs
+      .getAllBooksByFormatAndSearch(this.formatFilter, this.searchText)
+      .subscribe((res) => {
+        this.books = res;
+        this.setPaginationArray(this.formatFilter,this.searchText);
+      });
   }
+
 }

@@ -26,11 +26,28 @@
     <div class="row">
       <div id="search" class="my-3">
         <div class="container d-flex justify-content-end">
-          <form role="search">
+          <form #searchForm="ngForm" role="search" (ngSubmit)="getBooksWithFormatAndSearch()">
             <div class="input-group">
-              <input type="text" placeholder="Search" class="form-control" />
+              <input
+                type="text"
+                placeholder="Search"
+                class="form-control"
+                value="{{ searchText }}"
+                [(ngModel)]="searchText"
+                name="searchbar"
+                list="searchList"
+              />
+              <datalist *ngIf="searchText.length > 0" id="searchList">
+                <option *ngFor="let elt of allBooks" [value]="elt.book_title">
+                  {{ elt.book_title }}
+                </option>
+              </datalist>
+
               <div class="input-group-append">
-                <button type="button" class="btn btn-primary button-search h-100">
+                <button
+                  type="submit"
+                  class="btn btn-primary button-search h-100"
+                >
                   <i class="fa fa-search"></i>
                 </button>
               </div>
@@ -63,7 +80,7 @@
             <form
               #monForm="ngForm"
               class="container"
-              (ngSubmit)="getBooksWithFormat()"
+              (ngSubmit)="getBooksWithFormatAndSearch()"
             >
               <div class="form-group" *ngFor="let elt of formats">
                 <div class="checkbox">
