@@ -12,6 +12,7 @@ import { FormatService } from 'src/app/services/format.service';
 export class BookDetailsComponent implements OnInit {
   book: Book = {};
   idBook: number = 0;
+  basketCount: number = 0;
 
   constructor(
     private bs: BookService,

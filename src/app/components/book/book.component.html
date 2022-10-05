@@ -3,8 +3,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 offer mb-3 mb-lg-0"></div>
-        <div class="col-lg-6 text-end text-lg-right">
-          <ul class="menu list-inline mb-0">
+        <div class="col-lg-6 d-flex justify-content-end align-items-center">
+          <!--  <ul class="menu list-inline mb-0">
             <li class="list-inline-item">
               <a href="#" data-toggle="modal" data-target="#login-modal"
                 >Login</a
@@ -13,8 +13,17 @@
             <li class="list-inline-item">
               <a href="register.html">Register</a>
             </li>
-            <li class="list-inline-item"><a href="contact.html">Contact</a></li>
-          </ul>
+          </ul> -->
+
+          <div id="bag-shopping-count-container">
+            <span
+              id="bag-shopping-count"
+              aria-hidden="true"
+              >{{basketCount}}</span
+            >
+            <i class="fa-solid fa-bag-shopping fa-2x text-white"></i>
+          </div>
+
         </div>
       </div>
     </div>
@@ -26,7 +35,11 @@
     <div class="row">
       <div id="search" class="my-3">
         <div class="container d-flex justify-content-end">
-          <form #searchForm="ngForm" role="search" (ngSubmit)="getBooksWithFormatAndSearch()">
+          <form
+            #searchForm="ngForm"
+            role="search"
+            (ngSubmit)="getBooksWithFormatAndTypeAndSearch()"
+          >
             <div class="input-group">
               <input
                 type="text"
@@ -80,7 +93,7 @@
             <form
               #monForm="ngForm"
               class="container"
-              (ngSubmit)="getBooksWithFormatAndSearch()"
+              (ngSubmit)="getBooksWithFormatAndTypeAndSearch()"
             >
               <div class="form-group" *ngFor="let elt of formats">
                 <div class="checkbox">
@@ -93,6 +106,44 @@
                       [checked]="elt.filter_is_selected"
                     />
                     {{ elt.format_name }} ({{ elt.count_books }})</label
+                  >
+                </div>
+              </div>
+              <button type="submit" class="btn btn-default btn-sm btn-primary">
+                <i class="fa fa-pencil"></i> Appliquer
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="card sidebar-menu mb-4">
+          <div class="card-header">
+            <h3 class="h4 card-title d-flex justify-content-between">
+              Type
+              <button
+                (click)="removeTypeFilter()"
+                class="btn btn-sm btn-danger pull-right"
+              >
+                <i class="fa fa-times-circle"></i> Effacer
+              </button>
+            </h3>
+          </div>
+          <div class="card-body">
+            <form
+              #monForm="ngForm"
+              class="container"
+              (ngSubmit)="getBooksWithFormatAndTypeAndSearch()"
+            >
+              <div class="form-group" *ngFor="let elt of types">
+                <div class="checkbox">
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="type"
+                      value="{{ elt.type_name }}"
+                      [(ngModel)]="elt.filter_is_selected"
+                      [checked]="elt.filter_is_selected"
+                    />
+                    {{ elt.type_name }} ({{ elt.count_books }})</label
                   >
                 </div>
               </div>
