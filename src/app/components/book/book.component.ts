@@ -39,7 +39,7 @@ export class BookComponent implements OnInit {
     private ts: TypeService,
     private route: ActivatedRoute,
     private router: Router,
-    public iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService
   ) {}
 
   ngOnInit(): void {
@@ -50,9 +50,7 @@ export class BookComponent implements OnInit {
     this.setPaginationArray();
 
     if (this.storageCrypter.getItem('basket', 'local') != '') {
-      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
-      console.log(this.basket);
-      
+      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));      
     }
   }
   getBooks() {
