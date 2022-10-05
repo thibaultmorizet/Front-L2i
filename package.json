@@ -27,8 +27,10 @@
     "jquery": "^3.6.1",
     "mdb-angular-ui-kit": "^2.3.0",
     "ng2-animate-on-scroll": "^2.3.2",
+    "ngx-izitoast": "^1.0.1",
     "ngx-pagination": "^6.0.2",
     "rxjs": "~7.5.0",
+    "storage-crypter": "^2.3.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

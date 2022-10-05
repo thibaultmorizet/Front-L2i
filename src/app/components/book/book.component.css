@@ -161,7 +161,7 @@ a {
   border: 1px solid #dee2e6;
 }
 
-.page-link:hover, .page-link:focus {
+.page-link:hover:not([disabled]), .page-link:focus {
   color: #348e7b;
   text-decoration: none;
   background-color: #e9ecef;

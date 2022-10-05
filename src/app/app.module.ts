@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BookComponent } from './components/book/book.component';
 import { UserComponent } from './components/user/user.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
+import { NgxIziToastModule } from 'ngx-izitoast';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -24,6 +25,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     FormsModule,
     NgbModule,
+    NgxIziToastModule
   ],
   providers: [],
   bootstrap: [AppComponent],
