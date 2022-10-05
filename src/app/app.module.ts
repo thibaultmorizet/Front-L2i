@@ -11,6 +11,7 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
 import { NgxIziToastModule } from 'ngx-izitoast';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { BasketDetailsComponent } from './components/basket-details/basket-details.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     BookComponent,
     UserComponent,
     BookDetailsComponent,
+    BasketDetailsComponent,
   ],
   imports: [
     BrowserModule,

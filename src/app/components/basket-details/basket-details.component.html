@@ -1,0 +1,103 @@
+<header>
+  <div id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offer mb-3 mb-lg-0 d-flex align-items-center">
+          <a [routerLink]="['/books']" class="fa-2x home-link pointer">L2i</a>
+        </div>
+        <div class="col-lg-6 d-flex justify-content-end align-items-center">
+          <!--  <ul class="menu list-inline mb-0">
+              <li class="list-inline-item">
+                <a href="#" data-toggle="modal" data-target="#login-modal"
+                  >Login</a
+                >
+              </li>
+              <li class="list-inline-item">
+                <a href="register.html">Register</a>
+              </li>
+            </ul> -->
+
+          <div id="bag-shopping-count-container">
+            <a [routerLink]="['/basket']">
+              <span id="bag-shopping-count" aria-hidden="true">{{
+                basket.length
+              }}</span>
+              <i class="fa-solid fa-bag-shopping fa-2x text-white"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="content">
+  <div class="container">
+    <div class="row">
+      <h1>Mon Panier</h1>
+      <table>
+        <thead>
+          <th></th>
+          <th>Produit</th>
+          <th>Prix</th>
+          <th>Quantité</th>
+          <th>Total</th>
+          <th></th>
+        </thead>
+        <tbody *ngFor="let elt of basket">
+          <td>
+            <a [routerLink]="['/books/', elt.id]">
+              <img src="{{ elt.book_image }}" alt="" class="img-icon"
+            /></a>
+          </td>
+          <td>
+            <a [routerLink]="['/books/', elt.id]"> {{ elt.book_title }}</a>
+          </td>
+          <td>
+            {{ elt.book_unit_price }}
+          </td>
+          <td>
+            <span class="d-flex align-items-center">
+              <button
+                (click)="decreaseBookQuantity(elt.id)"
+                type="button"
+                aria-label="Diminuer"
+                class="page-link modify-quantity-button"
+              >
+                <span aria-hidden="true"><</span>
+              </button>
+              <span class="mx-2">
+                {{ elt.book_number_ordered }}
+              </span>
+              <button
+                (click)="increaseBookQuantity(elt.id)"
+                type="button"
+                aria-label="Augmenter"
+                class="page-link modify-quantity-button"
+              >
+                <span aria-hidden="true">></span>
+              </button></span
+            >
+          </td>
+          <td>{{ elt.book_total_price }}</td>
+          <td>
+            <button
+              class="btn btn-danger border-0 border-radius-5px"
+              (click)="deleteBookOfBasket(elt.id)"
+
+            >
+              <span
+                data-toggle="tooltip"
+                data-placement="top"
+                data-boundary="window"
+                title="Supprimer"
+              >
+                <i class="fa fa-times-circle"></i
+              ></span>
+            </button>
+          </td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

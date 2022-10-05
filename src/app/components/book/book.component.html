@@ -2,7 +2,9 @@
   <div id="top">
     <div class="container">
       <div class="row">
-        <div class="col-lg-6 offer mb-3 mb-lg-0"></div>
+        <div class="col-lg-6 offer mb-3 mb-lg-0 d-flex align-items-center">
+          <a [routerLink]="['/books']" class="fa-2x home-link pointer">L2i</a>
+        </div>
         <div class="col-lg-6 d-flex justify-content-end align-items-center">
           <!--  <ul class="menu list-inline mb-0">
             <li class="list-inline-item">
@@ -16,10 +18,12 @@
           </ul> -->
 
           <div id="bag-shopping-count-container">
-            <span id="bag-shopping-count" aria-hidden="true">{{
-              basket.length
-            }}</span>
-            <i class="fa-solid fa-bag-shopping fa-2x text-white"></i>
+            <a [routerLink]="['/basket']">
+              <span id="bag-shopping-count" aria-hidden="true">{{
+                basket.length
+              }}</span>
+              <i class="fa-solid fa-bag-shopping fa-2x text-white"></i
+            ></a>
           </div>
         </div>
       </div>
@@ -64,13 +68,6 @@
             </div>
           </form>
         </div>
-      </div>
-      <div class="col-lg-12 my-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Livres</li>
-          </ol>
-        </nav>
       </div>
 
       <div class="col-lg-3">
@@ -174,20 +171,17 @@
                 <div class="d-flex justify-content-between px-1">
                   <button
                     [routerLink]="['/books/', elt.id]"
-                    class="btn btn-outline-secondary col-5"
+                    class="btn btn-outline-secondary col-5 mt-4"
                   >
                     Voir le détail
                   </button>
                   <div class="col-6">
                     <form
                       #addBookForm="ngForm"
-                      (ngSubmit)="addBookToBasket($event,elt.id)"
+                      (ngSubmit)="addBookToBasket($event, elt.id)"
                     >
                       Quantité :
-                      <select
-                        id="quantity_to_order"
-                        name="quantity_to_order"
-                      >
+                      <select id="quantity_to_order" name="quantity_to_order">
                         <option
                           *ngFor="
                             let quantity of [
@@ -196,7 +190,7 @@
                               28, 29, 30
                             ]
                           "
-                          value='{{ quantity }}'
+                          value="{{ quantity }}"
                           [selected]="quantity == 1"
                         >
                           {{ quantity }}

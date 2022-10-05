@@ -50,7 +50,7 @@ export class BookComponent implements OnInit {
     this.setPaginationArray();
 
     if (this.storageCrypter.getItem('basket', 'local') != '') {
-      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));      
+      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
     }
   }
   getBooks() {
@@ -123,10 +123,6 @@ export class BookComponent implements OnInit {
       this.types = res;
     });
   }
-  goToBookDetails(id: number) {
-    this.router.navigateByUrl('/books/' + id);
-  }
-
   getPreviousPage() {
     if (this.actualPage - 1 >= 1) {
       this.getAllBooksByPage(this.actualPage - 1);
@@ -221,6 +217,11 @@ export class BookComponent implements OnInit {
               if (el.book_number_ordered != undefined) {
                 el.book_number_ordered =
                   el.book_number_ordered + parseInt(this.numberToOrder);
+                if (el.book_unit_price) {
+                  el.book_total_price = parseFloat(
+                    (el.book_number_ordered * el.book_unit_price).toFixed(2)
+                  );
+                }
                 this.iziToast.success({
                   message: 'Article ajouté au panier',
                   position: 'topRight',
@@ -248,6 +249,12 @@ export class BookComponent implements OnInit {
             });
           } else {
             res.book_number_ordered = parseInt(this.numberToOrder);
+            if (res.book_unit_price) {
+              res.book_total_price = parseFloat(
+                (res.book_number_ordered * res.book_unit_price).toFixed(2)
+              );
+            }
+
             this.basket.push(res);
             this.iziToast.success({
               message: 'Article ajouté au panier',

@@ -1,5 +1,10 @@
 body {
   overflow-x: hidden;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
   background-color: #f0f0f0;
 }
 
@@ -124,19 +129,6 @@ body {
   border-color: #6c757d;
 }
 
-body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  background-color: #f0f0f0;
-}
-
-a {
-  text-decoration: none;
-}
-
 .page-item:first-child .page-link {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
@@ -199,9 +191,14 @@ a {
   margin-bottom: 1rem;
 }
 
+a {
+  text-decoration: none;
+}
+
 .pointer {
   cursor: pointer;
 }
+
 
 .img-book-details {
   max-height: 450px;
@@ -283,7 +280,7 @@ a {
   position: relative;
   width: 50px;
   height: 50px;
-} 
+}
 
 #bag-shopping-count {
   display: flex;
@@ -296,4 +293,8 @@ a {
   border-radius: 50px;
   width: 20px;
   height: 20px;
+}
+
+.home-link {
+  color: #dadada;
 }

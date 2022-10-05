@@ -15,4 +15,5 @@ export interface Book {
     book_author?: Array<Author>;
     book_year?: string;
     book_number_ordered?: number;
+    book_total_price?: number;
 }
