@@ -7,6 +7,8 @@ import { User } from 'src/app/interfaces/user';
 import { Format } from 'src/app/interfaces/format';
 import { Type } from 'src/app/interfaces/type';
 import { TypeService } from 'src/app/services/type.service';
+import StorageCrypter from 'storage-crypter';
+import { NgxIzitoastService } from 'ngx-izitoast';
 
 @Component({
   selector: 'app-book',
@@ -14,7 +16,7 @@ import { TypeService } from 'src/app/services/type.service';
   styleUrls: ['./book.component.css'],
 })
 export class BookComponent implements OnInit {
-  basketCount: number = 0;
+  basket: Array<Book> = [];
   books: Array<Book> = [];
   allBooks: Array<Book> = [];
   formats: Array<Format> = [];
@@ -27,13 +29,17 @@ export class BookComponent implements OnInit {
   formatFilter: Array<string> = [];
   typeFilter: Array<string> = [];
   searchText: string = '';
+  bookExistinBasket: Boolean = false;
+  numberToOrder: string = '1';
+  storageCrypter = new StorageCrypter('Secret');
 
   constructor(
     private bs: BookService,
     private fs: FormatService,
     private ts: TypeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public iziToast: NgxIzitoastService
   ) {}
 
   ngOnInit(): void {
@@ -42,15 +48,25 @@ export class BookComponent implements OnInit {
     this.getAllFormatsfunc();
     this.getAllTypesfunc();
     this.setPaginationArray();
+
+    if (this.storageCrypter.getItem('basket', 'local') != '') {
+      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
+      console.log(this.basket);
+      
+    }
   }
   getBooks() {
     this.bs.getAllBooks().subscribe((res) => {
       this.books = res;
     });
   }
-  getAllBooks(formatFilter: Array<string> = [],typeFilter: Array<string> = [], searchText: string = '') {
+  getAllBooks(
+    formatFilter: Array<string> = [],
+    typeFilter: Array<string> = [],
+    searchText: string = ''
+  ) {
     this.bs
-      .getAllBooksWithoutLimit(formatFilter,typeFilter, searchText)
+      .getAllBooksWithoutLimit(formatFilter, typeFilter, searchText)
       .subscribe((res) => {
         this.allBooks = res;
       });
@@ -177,5 +193,76 @@ export class BookComponent implements OnInit {
           this.searchText
         );
       });
+  }
+  addBookToBasket(event: any, bookId: number | undefined) {
+    this.numberToOrder = event.target.querySelector('select').value;
+
+    this.bookExistinBasket = false;
+    if (bookId != undefined) {
+      this.bs.getOneBook(bookId).subscribe((res) => {
+        this.basket.forEach((el) => {
+          if (res.id == el.id) {
+            this.bookExistinBasket = true;
+
+            if (
+              el.book_stock &&
+              el.book_number_ordered &&
+              el.book_number_ordered + parseInt(this.numberToOrder) >
+                el.book_stock
+            ) {
+              this.iziToast.error({
+                title: 'Manque de stock',
+                message:
+                  'Il reste ' +
+                  res.book_stock +
+                  ' exemplaires de ce livre et vous en demandez ' +
+                  (el.book_number_ordered + parseInt(this.numberToOrder)),
+                position: 'topRight',
+              });
+            } else {
+              if (el.book_number_ordered != undefined) {
+                el.book_number_ordered =
+                  el.book_number_ordered + parseInt(this.numberToOrder);
+                this.iziToast.success({
+                  message: 'Article ajouté au panier',
+                  position: 'topRight',
+                });
+                this.storageCrypter.setItem(
+                  'basket',
+                  JSON.stringify(this.basket),
+                  'local'
+                );
+              }
+            }
+          }
+        });
+
+        if (!this.bookExistinBasket) {
+          if (res.book_stock && parseInt(this.numberToOrder) > res.book_stock) {
+            this.iziToast.error({
+              title: 'Manque de stock',
+              message:
+                'Il reste ' +
+                res.book_stock +
+                ' exemplaires de ce livre et vous en demandez ' +
+                parseInt(this.numberToOrder),
+              position: 'topRight',
+            });
+          } else {
+            res.book_number_ordered = parseInt(this.numberToOrder);
+            this.basket.push(res);
+            this.iziToast.success({
+              message: 'Article ajouté au panier',
+              position: 'topRight',
+            });
+            this.storageCrypter.setItem(
+              'basket',
+              JSON.stringify(this.basket),
+              'local'
+            );
+          }
+        }
+      });
+    }
   }
 }

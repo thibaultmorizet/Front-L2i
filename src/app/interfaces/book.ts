@@ -14,4 +14,5 @@ export interface Book {
     book_editor?: Editor;
     book_author?: Array<Author>;
     book_year?: string;
+    book_number_ordered?: number;
 }

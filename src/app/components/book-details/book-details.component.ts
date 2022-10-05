@@ -12,7 +12,7 @@ import { FormatService } from 'src/app/services/format.service';
 export class BookDetailsComponent implements OnInit {
   book: Book = {};
   idBook: number = 0;
-  basketCount: number = 0;
+  basket: Array<Book> = [];
 
   constructor(
     private bs: BookService,
@@ -29,7 +29,7 @@ export class BookDetailsComponent implements OnInit {
       });
     });
   }
-  
+
   scroll(el: HTMLElement) {
     el.scrollIntoView();
   }

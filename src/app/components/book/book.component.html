@@ -16,14 +16,11 @@
           </ul> -->
 
           <div id="bag-shopping-count-container">
-            <span
-              id="bag-shopping-count"
-              aria-hidden="true"
-              >{{basketCount}}</span
-            >
+            <span id="bag-shopping-count" aria-hidden="true">{{
+              basket.length
+            }}</span>
             <i class="fa-solid fa-bag-shopping fa-2x text-white"></i>
           </div>
-
         </div>
       </div>
     </div>
@@ -174,18 +171,43 @@
                   </a>
                 </h3>
                 <p class="price"><del></del>{{ elt.book_unit_price }} €</p>
-                <p class="d-flex justify-content-between px-1">
+                <div class="d-flex justify-content-between px-1">
                   <button
                     [routerLink]="['/books/', elt.id]"
-                    class="btn btn-outline-secondary"
+                    class="btn btn-outline-secondary col-5"
                   >
                     Voir le détail
                   </button>
-
-                  <button href="basket.html" class="btn btn-primary">
-                    <i class="fa fa-shopping-cart"></i>Ajouter au panier
-                  </button>
-                </p>
+                  <div class="col-6">
+                    <form
+                      #addBookForm="ngForm"
+                      (ngSubmit)="addBookToBasket($event,elt.id)"
+                    >
+                      Quantité :
+                      <select
+                        id="quantity_to_order"
+                        name="quantity_to_order"
+                      >
+                        <option
+                          *ngFor="
+                            let quantity of [
+                              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+                              16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+                              28, 29, 30
+                            ]
+                          "
+                          value='{{ quantity }}'
+                          [selected]="quantity == 1"
+                        >
+                          {{ quantity }}
+                        </option>
+                      </select>
+                      <button type="submit" class="btn btn-primary mt-2">
+                        <i class="fa fa-shopping-cart"></i>Ajouter au panier
+                      </button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
