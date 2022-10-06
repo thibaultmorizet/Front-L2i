@@ -9,7 +9,11 @@ import { Type } from 'src/app/interfaces/type';
 import { TypeService } from 'src/app/services/type.service';
 import StorageCrypter from 'storage-crypter';
 import { NgxIzitoastService } from 'ngx-izitoast';
-
+import {
+  NgbActiveModal,
+  NgbModal,
+  ModalDismissReasons,
+} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
@@ -32,6 +36,8 @@ export class BookComponent implements OnInit {
   bookExistinBasket: Boolean = false;
   numberToOrder: string = '1';
   storageCrypter = new StorageCrypter('Secret');
+  userInscription: User = {};
+  closeResult = '';
 
   constructor(
     private bs: BookService,
@@ -39,7 +45,8 @@ export class BookComponent implements OnInit {
     private ts: TypeService,
     private route: ActivatedRoute,
     private router: Router,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -269,5 +276,31 @@ export class BookComponent implements OnInit {
         }
       });
     }
+  }
+  registerModal(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  register() {
+    console.log(this.userInscription);
+    
   }
 }

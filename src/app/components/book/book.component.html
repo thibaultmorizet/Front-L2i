@@ -6,16 +6,88 @@
           <a [routerLink]="['/books']" class="fa-2x home-link pointer">L2i</a>
         </div>
         <div class="col-lg-6 d-flex justify-content-end align-items-center">
-          <!--  <ul class="menu list-inline mb-0">
-            <li class="list-inline-item">
+          <ul class="menu list-inline mb-0 mx-3">
+            <!-- <li class="list-inline-item">
               <a href="#" data-toggle="modal" data-target="#login-modal"
                 >Login</a
               >
-            </li>
+            </li> -->
+            <ng-template #content let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Inscription</h4>
+                <button
+                  type="button"
+                  class="btn-close"
+                  aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form #registerForm="ngForm" (ngSubmit)="register()">
+                  <div class="mb-3">
+                    <label for="lastname">Nom</label>
+                    <div class="input-group">
+                      <input
+                        id="lastname"
+                        class="form-control"
+                        placeholder="Nom"
+                        name="lastname"
+                        [(ngModel)]="userInscription.user_lastname"
+                      />
+                    </div>
+                    <div class="input-group">
+                      <input
+                        id="firstname"
+                        class="form-control"
+                        placeholder="Prénom"
+                        name="firstname"
+                        [(ngModel)]="userInscription.user_firstname"
+                      />
+                    </div>
+                    <div class="input-group">
+                      <input
+                        id="email"
+                        class="form-control"
+                        placeholder="Email"
+                        name="email"
+                        type="email"
+                        [(ngModel)]="userInscription.user_email"
+                      />
+                    </div>
+                    <div class="input-group">
+                      <input
+                        id="password"
+                        class="form-control"
+                        placeholder="Mot de Passe"
+                        name="password"
+                        type="password"
+                        [(ngModel)]="userInscription.user_password"
+                      />
+                    </div>
+                    <div class="input-group">
+                      <input
+                        id="passwordConfirm"
+                        class="form-control"
+                        placeholder="Confirmer le mot de passe"
+                        name="passwordConfirm"
+                        type="password"
+                        [(ngModel)]="userInscription.user_password_confirm"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      class="btn btn-default btn-sm btn-primary"
+                    >
+                      Continuer
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
             <li class="list-inline-item">
-              <a href="register.html">Register</a>
+              <a (click)="registerModal(content)">Inscription</a>
             </li>
-          </ul> -->
+          </ul>
 
           <div id="bag-shopping-count-container">
             <a [routerLink]="['/basket']">
