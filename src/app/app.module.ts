@@ -6,7 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookComponent } from './components/book/book.component';
-import { UserComponent } from './components/user/user.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { NgxIziToastModule } from 'ngx-izitoast';
 
@@ -17,7 +16,6 @@ import { BasketDetailsComponent } from './components/basket-details/basket-detai
   declarations: [
     AppComponent,
     BookComponent,
-    UserComponent,
     BookDetailsComponent,
     BasketDetailsComponent,
   ],

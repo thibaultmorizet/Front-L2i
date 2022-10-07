@@ -25,61 +25,67 @@
               <div class="modal-body">
                 <form #registerForm="ngForm" (ngSubmit)="register()">
                   <div class="mb-3">
-                    <label for="lastname">Nom</label>
+                    <label class="mb-2" for="lastname">Nom</label>
                     <div class="input-group">
                       <input
                         id="lastname"
-                        class="form-control"
+                        class="form-control mb-3"
                         placeholder="Nom"
                         name="lastname"
                         [(ngModel)]="userInscription.user_lastname"
                       />
                     </div>
+                    <label class="mb-2" for="lastname">Prenom</label>
                     <div class="input-group">
                       <input
                         id="firstname"
-                        class="form-control"
+                        class="form-control mb-3"
                         placeholder="Prénom"
                         name="firstname"
                         [(ngModel)]="userInscription.user_firstname"
                       />
                     </div>
+                    <label class="mb-2" for="lastname">Email</label>
                     <div class="input-group">
                       <input
                         id="email"
-                        class="form-control"
+                        class="form-control mb-3"
                         placeholder="Email"
                         name="email"
                         type="email"
                         [(ngModel)]="userInscription.user_email"
                       />
                     </div>
+                    <label class="mb-2" for="lastname">Mot de Passe</label>
                     <div class="input-group">
                       <input
                         id="password"
-                        class="form-control"
+                        class="form-control mb-3"
                         placeholder="Mot de Passe"
                         name="password"
                         type="password"
                         [(ngModel)]="userInscription.user_password"
                       />
                     </div>
+                    <label class="mb-2" for="lastname">Mot de Passe</label>
                     <div class="input-group">
                       <input
                         id="passwordConfirm"
-                        class="form-control"
-                        placeholder="Confirmer le mot de passe"
+                        class="form-control mb-3"
+                        placeholder="Confirmer le Mot de Passe"
                         name="passwordConfirm"
                         type="password"
                         [(ngModel)]="userInscription.user_password_confirm"
                       />
                     </div>
-                    <button
-                      type="submit"
-                      class="btn btn-default btn-sm btn-primary"
-                    >
-                      Continuer
-                    </button>
+                    <div class="d-flex justify-content-end">
+                      <button
+                        type="submit"
+                        class="btn btn-default btn-sm btn-primary"
+                      >
+                        Continuer
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>

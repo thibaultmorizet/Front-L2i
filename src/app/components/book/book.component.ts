@@ -14,6 +14,7 @@ import {
   NgbModal,
   ModalDismissReasons,
 } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
@@ -43,6 +44,7 @@ export class BookComponent implements OnInit {
     private bs: BookService,
     private fs: FormatService,
     private ts: TypeService,
+    private us: UserService,
     private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
@@ -300,7 +302,10 @@ export class BookComponent implements OnInit {
     }
   }
   register() {
-    console.log(this.userInscription);
-    
+    this.us.register(this.userInscription).subscribe({
+      next: (res) => {
+        this.router.navigateByUrl('/books');
+      },
+    });
   }
 }
