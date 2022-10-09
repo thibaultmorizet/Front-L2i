@@ -12,7 +12,7 @@
                 >Login</a
               >
             </li> -->
-            <ng-template #content let-modal>
+            <ng-template #registerContent let-modal>
               <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title">Inscription</h4>
                 <button
@@ -32,7 +32,8 @@
                         class="form-control mb-3"
                         placeholder="Nom"
                         name="lastname"
-                        [(ngModel)]="userInscription.user_lastname"
+                        [(ngModel)]="userInscription.lastname"
+                        required
                       />
                     </div>
                     <label class="mb-2" for="lastname">Prenom</label>
@@ -42,7 +43,8 @@
                         class="form-control mb-3"
                         placeholder="Prénom"
                         name="firstname"
-                        [(ngModel)]="userInscription.user_firstname"
+                        [(ngModel)]="userInscription.firstname"
+                        required
                       />
                     </div>
                     <label class="mb-2" for="lastname">Email</label>
@@ -53,9 +55,14 @@
                         placeholder="Email"
                         name="email"
                         type="email"
-                        [(ngModel)]="userInscription.user_email"
+                        [(ngModel)]="userInscription.email"
+                        required
                       />
                     </div>
+                    <div *ngIf="errorEmail" class="mb-2 text-danger">
+                      {{ errorEmail }}
+                    </div>
+
                     <label class="mb-2" for="lastname">Mot de Passe</label>
                     <div class="input-group">
                       <input
@@ -64,9 +71,14 @@
                         placeholder="Mot de Passe"
                         name="password"
                         type="password"
-                        [(ngModel)]="userInscription.user_password"
+                        [(ngModel)]="userInscription.password"
+                        required
                       />
                     </div>
+                    <div *ngIf="errorPassword" class="mb-2 text-danger">
+                      {{ errorPassword }}
+                    </div>
+
                     <label class="mb-2" for="lastname">Mot de Passe</label>
                     <div class="input-group">
                       <input
@@ -75,13 +87,15 @@
                         placeholder="Confirmer le Mot de Passe"
                         name="passwordConfirm"
                         type="password"
-                        [(ngModel)]="userInscription.user_password_confirm"
+                        [(ngModel)]="userInscription.passwordConfirm"
+                        required
                       />
                     </div>
                     <div class="d-flex justify-content-end">
                       <button
                         type="submit"
                         class="btn btn-default btn-sm btn-primary"
+                        [disabled]="!registerForm.valid"
                       >
                         Continuer
                       </button>
@@ -90,8 +104,68 @@
                 </form>
               </div>
             </ng-template>
-            <li class="list-inline-item">
-              <a (click)="registerModal(content)">Inscription</a>
+            <ng-template #loginContent let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Connexion</h4>
+                <button
+                  type="button"
+                  class="btn-close"
+                  aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form #loginForm="ngForm" (ngSubmit)="login()">
+                  <div class="mb-3">
+                    <label class="mb-2" for="lastname">Email</label>
+                    <div class="input-group">
+                      <input
+                        id="email"
+                        class="form-control mb-3"
+                        placeholder="Email"
+                        name="email"
+                        type="email"
+                        [(ngModel)]="userLogin.email"
+                        required
+                      />
+                    </div>
+
+                    <label class="mb-2" for="lastname">Mot de Passe</label>
+                    <div class="input-group">
+                      <input
+                        id="password"
+                        class="form-control mb-3"
+                        placeholder="Mot de Passe"
+                        name="password"
+                        type="password"
+                        [(ngModel)]="userLogin.password"
+                        required
+                      />
+                    </div>
+                    <div *ngIf="errorConnexion" class="mb-2 text-danger">
+                      {{ errorConnexion }}
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button
+                        type="submit"
+                        class="btn btn-default btn-sm btn-primary"
+                        [disabled]="!loginForm.valid"
+                      >
+                        Connexion
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+            <li class="list-inline-item" *ngIf="connectedUser == null">
+              <a (click)="loginModal(loginContent)">Connexion</a>
+            </li>
+            <li class="list-inline-item" *ngIf="connectedUser == null">
+              <a (click)="registerModal(registerContent)">Inscription</a>
+            </li>
+            <li class="list-inline-item" *ngIf="connectedUser != null">
+              <a (click)="logout()">Deconnexion</a>
             </li>
           </ul>
 
@@ -122,7 +196,7 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Recherche"
                 class="form-control"
                 value="{{ searchText }}"
                 [(ngModel)]="searchText"

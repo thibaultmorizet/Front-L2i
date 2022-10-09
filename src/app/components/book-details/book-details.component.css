@@ -1,20 +1,10 @@
-/* 
-========================================= 
-========================================= 
-
-   Bootstrapious Boilerplate Template
-
-========================================= 
-========================================= */
-/*
-*
-* ======================================================================
-* GENERAL
-* ======================================================================
-*
-*/
 body {
   overflow-x: hidden;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
   background-color: #f0f0f0;
 }
 
@@ -24,13 +14,6 @@ a, button {
   outline: none;
 }
 
-/*
-  *
-  * ======================================================================
-  * BOXES
-  * ======================================================================
-  *
-  */
 .box {
   background: #fff;
   margin: 0 0 30px;
@@ -145,17 +128,6 @@ a, button {
   border-color: #3aa18c;
 }
 
-/*
-   * 3. TYPE
-   */
-body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  background-color: #f0f0f0;
-}
 
 a {
   text-decoration: none;
@@ -212,7 +184,6 @@ a {
 #top ul.menu {
   padding-top: 5px;
   margin: 0;
-  font-size: 0.738rem;
 }
 
 #top ul.menu>li {

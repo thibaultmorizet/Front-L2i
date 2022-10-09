@@ -8,8 +8,9 @@ import { AppComponent } from './app.component';
 import { BookComponent } from './components/book/book.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { NgxIziToastModule } from 'ngx-izitoast';
+import { AuthInterceptor } from './services/auth.interceptor';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BasketDetailsComponent } from './components/basket-details/basket-details.component';
 
 @NgModule({
@@ -25,9 +26,11 @@ import { BasketDetailsComponent } from './components/basket-details/basket-detai
     HttpClientModule,
     FormsModule,
     NgbModule,
-    NgxIziToastModule
+    NgxIziToastModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

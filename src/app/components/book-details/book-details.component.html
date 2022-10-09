@@ -6,16 +6,164 @@
           <a [routerLink]="['/books']" class="fa-2x home-link pointer">L2i</a>
         </div>
         <div class="col-lg-6 d-flex justify-content-end align-items-center">
-          <!--  <ul class="menu list-inline mb-0">
-            <li class="list-inline-item">
+          <ul class="menu list-inline mb-0 mx-3">
+            <!-- <li class="list-inline-item">
               <a href="#" data-toggle="modal" data-target="#login-modal"
                 >Login</a
               >
+            </li> -->
+            <ng-template #registerContent let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Inscription</h4>
+                <button
+                  type="button"
+                  class="btn-close"
+                  aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form #registerForm="ngForm" (ngSubmit)="register()">
+                  <div class="mb-3">
+                    <label class="mb-2" for="lastname">Nom</label>
+                    <div class="input-group">
+                      <input
+                        id="lastname"
+                        class="form-control mb-3"
+                        placeholder="Nom"
+                        name="lastname"
+                        [(ngModel)]="userInscription.lastname"
+                        required
+                      />
+                    </div>
+                    <label class="mb-2" for="lastname">Prenom</label>
+                    <div class="input-group">
+                      <input
+                        id="firstname"
+                        class="form-control mb-3"
+                        placeholder="Prénom"
+                        name="firstname"
+                        [(ngModel)]="userInscription.firstname"
+                        required
+                      />
+                    </div>
+                    <label class="mb-2" for="lastname">Email</label>
+                    <div class="input-group">
+                      <input
+                        id="email"
+                        class="form-control mb-3"
+                        placeholder="Email"
+                        name="email"
+                        type="email"
+                        [(ngModel)]="userInscription.email"
+                        required
+                      />
+                    </div>
+                    <div *ngIf="errorEmail" class="mb-2 text-danger">{{ errorEmail }}</div>
+
+                    <label class="mb-2" for="lastname">Mot de Passe</label>
+                    <div class="input-group">
+                      <input
+                        id="password"
+                        class="form-control mb-3"
+                        placeholder="Mot de Passe"
+                        name="password"
+                        type="password"
+                        [(ngModel)]="userInscription.password"
+                        required
+                      />
+                    </div>
+                    <div *ngIf="errorPassword" class="mb-2 text-danger">{{ errorPassword }}</div>
+
+                    <label class="mb-2" for="lastname">Mot de Passe</label>
+                    <div class="input-group">
+                      <input
+                        id="passwordConfirm"
+                        class="form-control mb-3"
+                        placeholder="Confirmer le Mot de Passe"
+                        name="passwordConfirm"
+                        type="password"
+                        [(ngModel)]="userInscription.passwordConfirm"
+                        required
+                      />
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button
+                        type="submit"
+                        class="btn btn-default btn-sm btn-primary"
+                        [disabled]="!registerForm.valid"
+                        >
+                        Continuer
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+            <ng-template #loginContent let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Connexion</h4>
+                <button
+                  type="button"
+                  class="btn-close"
+                  aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form #loginForm="ngForm" (ngSubmit)="login()">
+                  <div class="mb-3">
+                    <label class="mb-2" for="lastname">Email</label>
+                    <div class="input-group">
+                      <input
+                        id="email"
+                        class="form-control mb-3"
+                        placeholder="Email"
+                        name="email"
+                        type="email"
+                        [(ngModel)]="userLogin.email"
+                        required
+                      />
+                    </div>
+
+                    <label class="mb-2" for="lastname">Mot de Passe</label>
+                    <div class="input-group">
+                      <input
+                        id="password"
+                        class="form-control mb-3"
+                        placeholder="Mot de Passe"
+                        name="password"
+                        type="password"
+                        [(ngModel)]="userLogin.password"
+                        required
+                      />
+                    </div>
+                    <div *ngIf="errorConnexion" class="mb-2 text-danger">
+                      {{ errorConnexion }}
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button
+                        type="submit"
+                        class="btn btn-default btn-sm btn-primary"
+                        [disabled]="!loginForm.valid"
+                      >
+                        Connexion
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+            <li class="list-inline-item" *ngIf="connectedUser == null">
+              <a (click)="loginModal(loginContent)">Connexion</a>
             </li>
-            <li class="list-inline-item">
-              <a href="register.html">Register</a>
+            <li class="list-inline-item" *ngIf="connectedUser == null">
+              <a (click)="registerModal(registerContent)">Inscription</a>
             </li>
-          </ul> -->
+            <li class="list-inline-item" *ngIf="connectedUser != null">
+              <a (click)="logout()">Deconnexion</a>
+            </li>
+          </ul>
 
           <div id="bag-shopping-count-container">
             <a [routerLink]="['/basket']">

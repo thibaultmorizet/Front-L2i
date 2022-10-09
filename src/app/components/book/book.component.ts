@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from 'src/app/interfaces/book';
 import { BookService } from 'src/app/services/book.service';
 import { FormatService } from 'src/app/services/format.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/interfaces/user';
 import { Format } from 'src/app/interfaces/format';
 import { Type } from 'src/app/interfaces/type';
@@ -38,13 +39,19 @@ export class BookComponent implements OnInit {
   numberToOrder: string = '1';
   storageCrypter = new StorageCrypter('Secret');
   userInscription: User = {};
+  userLogin: User = {};
   closeResult = '';
+  errorPassword: string | null = null;
+  errorEmail: string | null = null;
+  errorConnexion: string | null = null;
+  connectedUser: User | null = {};
 
   constructor(
     private bs: BookService,
     private fs: FormatService,
     private ts: TypeService,
     private us: UserService,
+    private as: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
@@ -57,7 +64,13 @@ export class BookComponent implements OnInit {
     this.getAllFormatsfunc();
     this.getAllTypesfunc();
     this.setPaginationArray();
-
+    try {
+      this.connectedUser = JSON.parse(
+        this.storageCrypter.getItem('user', 'session')
+      );
+    } catch (error) {
+      this.connectedUser = null;
+    }
     if (this.storageCrypter.getItem('basket', 'local') != '') {
       this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
     }
@@ -287,11 +300,28 @@ export class BookComponent implements OnInit {
           this.closeResult = `Closed with: ${result}`;
         },
         (reason) => {
+          if (reason == 0 || reason == 'Cross click') {
+            this.userInscription = {};
+          }
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
   }
-
+  loginModal(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          if (reason == 0 || reason == 'Cross click') {
+            this.userLogin = {};
+          }
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -302,10 +332,69 @@ export class BookComponent implements OnInit {
     }
   }
   register() {
-    this.us.register(this.userInscription).subscribe({
+    if (this.userInscription.password == this.userInscription.passwordConfirm) {
+      this.errorPassword = '';
+
+      //delete this.userInscription.passwordConfirm;
+      this.us.getTheUser(this.userInscription.email).subscribe((res) => {
+        if (res[0] == undefined) {
+          this.errorEmail = '';
+
+          this.us.register(this.userInscription).subscribe((resRegister) => {
+            this.modalService.dismissAll();
+            this.userInscription = {};
+            this.iziToast.success({
+              message: 'Inscription réussie',
+              position: 'topRight',
+            });
+          });
+        } else {
+          this.errorEmail = 'Cet email est déjà utilisé';
+        }
+      });
+    } else {
+      this.errorPassword = 'Les mots de passes ne sont pas identiques';
+    }
+  }
+  login() {
+    this.as.login(this.userLogin).subscribe({
       next: (res) => {
-        this.router.navigateByUrl('/books');
+        if (res.token != null) {
+          this.storageCrypter.setItem('jeton', res.token, 'local');
+
+          this.as.getTheUser(this.userLogin.email).subscribe((res) => {
+            this.storageCrypter.setItem(
+              'user',
+              JSON.stringify(res[0]),
+              'session'
+            );
+
+            this.connectedUser = JSON.parse(
+              this.storageCrypter.getItem('user', 'session')
+            );
+            this.modalService.dismissAll();
+            this.userLogin = {};
+            this.iziToast.success({
+              message: 'Connexion réussie',
+              position: 'topRight',
+            });
+          });
+        }
       },
+      error: (res) => {
+        this.errorConnexion = res.message;
+      },
+    });
+  }
+  logout() {
+    this.storageCrypter.removeItem('jeton', 'local');
+    this.storageCrypter.removeItem('basket', 'local');
+    this.storageCrypter.removeItem('user', 'session');
+    this.connectedUser = null;
+    this.router.navigateByUrl('/books');
+    this.iziToast.success({
+      message: 'Vous êtes déconnecté',
+      position: 'topRight',
     });
   }
 }
