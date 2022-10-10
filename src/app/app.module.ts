@@ -13,6 +13,15 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BasketDetailsComponent } from './components/basket-details/basket-details.component';
 
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from 'angularx-social-login';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,9 +36,33 @@ import { BasketDetailsComponent } from './components/basket-details/basket-detai
     FormsModule,
     NgbModule,
     NgxIziToastModule,
+    SocialLoginModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+/*           {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '551834067320-ohrbta48itj429tg6pr6fmqtf0uo2hrm.apps.googleusercontent.com'
+            ),
+          }, */
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(
+              '496421065692400'
+            ),
+          },
+        ],
+        onError: (err) => {
+          console.error(err);
+        },
+      } as SocialAuthServiceConfig,
+    },
   ],
   bootstrap: [AppComponent],
 })

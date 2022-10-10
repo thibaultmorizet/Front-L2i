@@ -6,9 +6,9 @@ import { Book } from '../interfaces/book';
   providedIn: 'root',
 })
 export class BookService {
-  private url: string = 'https://localhost:8000/ws/books';
+  private url: string = 'https://thibaultmorizet.fr/ws/books';
   private urlWithoutLimit: string =
-    'https://localhost:8000/ws/books?itemsPerPage=10000';
+    'https://thibaultmorizet.fr/ws/books?itemsPerPage=10000';
   private books: Array<object> = [];
   private formatsString: string = '';
   private typesString: string = '';
@@ -20,7 +20,7 @@ export class BookService {
     return this.http.get<Array<Book>>(this.url);
   }
   getOneBook(id: number) {
-    return this.http.get<Book>('https://localhost:8000/ws/books/' + id);
+    return this.http.get<Book>('https://thibaultmorizet.fr/ws/books/' + id);
   }
   getAllBooksWithoutLimit(
     formats: Array<string>,
@@ -79,7 +79,7 @@ export class BookService {
       this.typesString += '&book_type.type_name[]=' + el;
     });
     return this.http.get<Array<Book>>(
-      'https://localhost:8000/ws/books?page=' +
+      'https://thibaultmorizet.fr/ws/books?page=' +
         page +
         this.formatsString +
         this.typesString +
@@ -113,7 +113,7 @@ export class BookService {
     });
 
     return this.http.get<Array<Book>>(
-      'https://localhost:8000/ws/books?' +
+      'https://thibaultmorizet.fr/ws/books?' +
         this.formatsString +
         this.typesString +
         this.searchString

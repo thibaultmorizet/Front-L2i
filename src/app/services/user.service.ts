@@ -6,7 +6,7 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class UserService {
-  private url: string = 'https://localhost:8000/ws/users';
+  private url: string = 'https://thibaultmorizet.fr/ws/users';
 
   constructor(private http: HttpClient) {}
 
@@ -15,6 +15,6 @@ export class UserService {
   }
 
   getTheUser(email: String|undefined){    
-    return this.http.get<Array<User>>("https://localhost:8000/ws/users?email="+email);
+    return this.http.get<Array<User>>("https://thibaultmorizet.fr/ws/users?email="+email);
   }
 }

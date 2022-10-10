@@ -6,13 +6,13 @@ import { User } from '../interfaces/user';
   providedIn: 'root'
 })
 export class AuthService {
-  private url: string = "https://localhost:8000/authentication_token";
+  private url: string = "https://thibaultmorizet.fr/authentication_token";
   constructor(private http: HttpClient) { }
 
   login(user: User) {    
     return this.http.post<{ token: string }>(this.url, user);
   }
   getTheUser(email: String|undefined){    
-    return this.http.get<Array<User>>("https://localhost:8000/ws/users?email="+email);
+    return this.http.get<Array<User>>("https://thibaultmorizet.fr/ws/users?email="+email);
   }
 }

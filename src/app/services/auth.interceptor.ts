@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url !== "https://localhost:8000/authentication_token" && request.url !== "https://localhost:8001/ws/users") {            
+    if (request.url !== "https://thibaultmorizet.fr/authentication_token" && request.url !== "https://thibaultmorizet.fr/ws/users") {            
       let jeton = this.storageCrypter.getItem('jeton', 'local');
       request = request.clone({
         setHeaders: {

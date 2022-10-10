@@ -6,7 +6,7 @@ import { Type } from '../interfaces/type';
   providedIn: 'root',
 })
 export class TypeService {
-  private url: string = 'https://localhost:8000/ws/types';
+  private url: string = 'https://thibaultmorizet.fr/ws/types';
   private types: Array<object> = [];
 
   constructor(private http: HttpClient) {}

@@ -16,6 +16,12 @@ import {
   ModalDismissReasons,
 } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user.service';
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+} from 'angularx-social-login';
+
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
@@ -46,6 +52,10 @@ export class BookComponent implements OnInit {
   errorConnexion: string | null = null;
   connectedUser: User | null = {};
 
+  socialUser!: SocialUser;
+  isLoggedin?: boolean;
+
+
   constructor(
     private bs: BookService,
     private fs: FormatService,
@@ -55,7 +65,8 @@ export class BookComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +85,11 @@ export class BookComponent implements OnInit {
     if (this.storageCrypter.getItem('basket', 'local') != '') {
       this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
     }
+    this.authService.authState.subscribe((user) => {      
+      this.socialUser = user;
+      this.isLoggedin = user != null;
+    });
+    
   }
   getBooks() {
     this.bs.getAllBooks().subscribe((res) => {
@@ -386,15 +402,28 @@ export class BookComponent implements OnInit {
       },
     });
   }
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('basket', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.authService.signOut();
     this.connectedUser = null;
     this.router.navigateByUrl('/books');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
       position: 'topRight',
     });
+  }
+
+  refreshToken(): void {
+    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
   }
 }

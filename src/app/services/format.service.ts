@@ -6,7 +6,7 @@ import { Format } from '../interfaces/format';
   providedIn: 'root',
 })
 export class FormatService {
-  private url: string = 'https://localhost:8000/ws/formats';
+  private url: string = 'https://thibaultmorizet.fr/ws/formats';
   private formats: Array<object> = [];
 
   constructor(private http: HttpClient) {}
