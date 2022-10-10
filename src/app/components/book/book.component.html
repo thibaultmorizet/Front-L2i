@@ -173,7 +173,13 @@
                       <img src="./assets/logo-google.png" alt="logo Google" class="logo-google">
                       Connexion avec Google
                       </button><br>
-                      
+                      <button
+                        class="btn btn-facebook mt-3"
+                        (click)="signInWithFB()"
+                      >
+                        <i class="fa-brands fa-facebook mr-1"></i> Connexion avec
+                        Facebook
+                      </button>
                     </div>
 
                     <div class="d-flex justify-content-end mt-2">
@@ -186,13 +192,7 @@
                       </button>
                     </div>
                   </div>
-                </form><button
-                        class="btn btn-facebook mt-3"
-                        (click)="signInWithFB()"
-                      >
-                        <i class="fa-brands fa-facebook mr-1"></i> Connexion avec
-                        Facebook
-                      </button>
+                </form>
               </div>
             </ng-template>
             <li class="list-inline-item pointer" *ngIf="connectedUser == null">
