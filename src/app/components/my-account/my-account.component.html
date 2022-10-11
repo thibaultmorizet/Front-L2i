@@ -1,36 +1,50 @@
 <header>
-    <div id="top">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 offer mb-3 mb-lg-0 d-flex align-items-center">
-            <a [routerLink]="['/books']" class="fa-2x home-link pointer">L2i</a>
-          </div>
-          <div class="col-lg-6 d-flex justify-content-end align-items-center">
-            <ul class="menu list-inline mb-0 mx-3">
-              <!-- <li class="list-inline-item">
+  <div id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offer mb-3 mb-lg-0 d-flex align-items-center">
+          <a [routerLink]="['/books']" class="fa-2x home-link pointer">L2i</a>
+        </div>
+        <div class="col-lg-6 d-flex justify-content-end align-items-center">
+          <ul class="menu list-inline mb-0 mx-3">
+            <!-- <li class="list-inline-item">
                 <a href="#" data-toggle="modal" data-target="#login-modal"
                   >Login</a
                 >
               </li> -->
-              <li class="list-inline-item pointer" *ngIf="connectedUser != null">
-                <a [routerLink]="['/my-account']">Mon Compte</a>
-              </li>
-              <li class="list-inline-item pointer" *ngIf="connectedUser != null">
-                <a (click)="logout()">Deconnexion</a>
-              </li>
-            </ul>
-  
-            <div id="bag-shopping-count-container">
-              <a [routerLink]="['/basket']">
-                <span id="bag-shopping-count" aria-hidden="true">{{
-                  basket.length
-                }}</span>
-                <i class="fa-solid fa-bag-shopping fa-2x text-white"></i
-              ></a>
-            </div>
+            <li class="list-inline-item pointer" *ngIf="connectedUser != null">
+              <a [routerLink]="['/my-account']">Mon Compte</a>
+            </li>
+            <li class="list-inline-item pointer" *ngIf="connectedUser != null">
+              <a (click)="logout()">Deconnexion</a>
+            </li>
+          </ul>
+
+          <div id="bag-shopping-count-container">
+            <a [routerLink]="['/basket']">
+              <span id="bag-shopping-count" aria-hidden="true">{{
+                basket.length
+              }}</span>
+              <i class="fa-solid fa-bag-shopping fa-2x text-white"></i
+            ></a>
           </div>
         </div>
       </div>
     </div>
-  </header>
-  
+  </div>
+</header>
+<div id="content">
+  <div class="container">
+    <div class="row">
+      <ul>
+        <li>{{connectedUser}}</li>
+        <li>{{connectedUser?.firstname}}</li>
+        <li>{{connectedUser?.lastname}}</li>
+        <li>{{connectedUser?.email}}</li>
+        <li>{{connectedUser?.password}}</li>
+        <li>{{connectedUser?.billingAddress}}</li>
+        <li>{{connectedUser?.deliveryAddress}}</li>
+      </ul>
+    </div>
+  </div>
+</div>

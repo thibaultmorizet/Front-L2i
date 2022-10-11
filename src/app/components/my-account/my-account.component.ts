@@ -4,6 +4,7 @@ import { NgxIzitoastService } from 'ngx-izitoast';
 import StorageCrypter from 'storage-crypter';
 import { User } from 'src/app/interfaces/user';
 import { Book } from 'src/app/interfaces/book';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-my-account',
@@ -22,20 +23,28 @@ export class MyAccountComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private us: UserService
   ) {}
 
   ngOnInit(): void {
     try {
-      this.connectedUser = JSON.parse(
+      this.getUserByEmail(JSON.parse(
         this.storageCrypter.getItem('user', 'session')
-      );
+      ).email)
     } catch (error) {
       this.connectedUser = null;
     }
     if (this.storageCrypter.getItem('basket', 'local') != '') {
       this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
     }
+  }
+  getUserByEmail(email: string) {
+    this.us.getTheUser(email).subscribe((res) => {
+      console.log(res[0]);
+      
+      this.connectedUser = res[0];
+    });
   }
 
   logout() {

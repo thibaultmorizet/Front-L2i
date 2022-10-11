@@ -60,9 +60,9 @@ export class BookDetailsComponent implements OnInit {
         this.book = b;
       });
       try {
-        this.connectedUser = JSON.parse(
+        this.getUserByEmail(JSON.parse(
           this.storageCrypter.getItem('user', 'session')
-        );
+        ).email)
       } catch (error) {
         this.connectedUser = null;
       }
@@ -73,6 +73,12 @@ export class BookDetailsComponent implements OnInit {
         this.socialUser = user;
         this.isLoggedin = user != null;
       });  
+    });
+  }
+
+  getUserByEmail(email: string) {
+    this.us.getTheUser(email).subscribe((res) => {
+      this.connectedUser = res[0];
     });
   }
 

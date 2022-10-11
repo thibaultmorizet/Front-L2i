@@ -53,9 +53,9 @@ export class BasketDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      this.connectedUser = JSON.parse(
+      this.getUserByEmail(JSON.parse(
         this.storageCrypter.getItem('user', 'session')
-      );
+      ).email)
     } catch (error) {
       this.connectedUser = null;
     }
@@ -68,7 +68,11 @@ export class BasketDetailsComponent implements OnInit {
       this.isLoggedin = user != null;
     });
   }
-
+  getUserByEmail(email: string) {
+    this.us.getTheUser(email).subscribe((res) => {
+      this.connectedUser = res[0];
+    });
+  }
   decreaseBookQuantity(bookId: number | undefined) {
     this.basket.forEach((el) => {
       if (el.id == bookId) {
