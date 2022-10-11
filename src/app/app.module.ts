@@ -45,12 +45,12 @@ import {
       useValue: {
         autoLogin: false,
         providers: [
-          {
+/*           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
               '551834067320-ohrbta48itj429tg6pr6fmqtf0uo2hrm.apps.googleusercontent.com'
             ),
-          },
+          }, */
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider(
