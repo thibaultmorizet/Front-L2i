@@ -1,0 +1,58 @@
+body {
+    overflow-x: hidden;
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #f0f0f0;
+}
+
+#content .product .text {
+    padding: 10px 10px 0;
+}
+
+#content .product .text .buttons {
+    clear: both;
+    text-align: center;
+}
+
+#content .product .text .buttons .btn {
+    margin-bottom: 10px;
+}
+
+#content .product {
+    background: #fff;
+    border: solid 1px #e6e6e6;
+    margin-bottom: 30px;
+}
+
+#content .product .text h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    height: 42px;
+    text-align: center;
+    overflow: hidden;
+}
+
+#content .product .text h3 a {
+    color: #555;
+}
+
+#content .product .text p.price {
+    font-size: 1.125rem;
+    text-align: center;
+    font-weight: 300;
+}
+
+#content .product .text p.price del {
+    color: #999;
+}
+
+.img-book-details {
+    max-height: 450px;
+  }
+  
+  .home-link {
+    color: #dadada;
+}

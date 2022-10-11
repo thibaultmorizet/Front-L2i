@@ -13,11 +13,15 @@ import {
 import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+} from 'angularx-social-login';
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
-  styleUrls: ['./book-details.component.css'],
+  styleUrls: ['./book-details.component.css','./../../../css/header.css','./../../../css/main.css'],
 })
 export class BookDetailsComponent implements OnInit {
   book: Book = {};
@@ -34,6 +38,9 @@ export class BookDetailsComponent implements OnInit {
   errorConnexion: string | null = null;
   connectedUser: User | null = {};
 
+  socialUser!: SocialUser;
+  isLoggedin?: boolean;
+
   constructor(
     private bs: BookService,
     private fs: FormatService,
@@ -42,7 +49,8 @@ export class BookDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: SocialAuthService
     ) {}
 
   ngOnInit(): void {
@@ -61,7 +69,10 @@ export class BookDetailsComponent implements OnInit {
       if (this.storageCrypter.getItem('basket', 'local') != '') {
         this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));        
       }
-  
+      this.authService.authState.subscribe((user) => {      
+        this.socialUser = user;
+        this.isLoggedin = user != null;
+      });  
     });
   }
 
@@ -202,7 +213,7 @@ export class BookDetailsComponent implements OnInit {
 
           this.us.register(this.userInscription).subscribe((resRegister) => {
             this.modalService.dismissAll();
-            this.userInscription={};
+            this.userInscription = {};
             this.iziToast.success({
               message: 'Inscription réussie',
               position: 'topRight',
@@ -246,16 +257,29 @@ export class BookDetailsComponent implements OnInit {
       },
     });
   }
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('basket', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.authService.signOut();
     this.connectedUser = null;
     this.router.navigateByUrl('/books');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
       position: 'topRight',
     });
+  }
+
+  refreshToken(): void {
+    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
   }
 
 }

@@ -21,6 +21,7 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from 'angularx-social-login';
+import { MyAccountComponent } from './components/my-account/my-account.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {
     BookComponent,
     BookDetailsComponent,
     BasketDetailsComponent,
+    MyAccountComponent,
   ],
   imports: [
     BrowserModule,

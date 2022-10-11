@@ -12,11 +12,20 @@ import {
   NgbModal,
   ModalDismissReasons,
 } from '@ng-bootstrap/ng-bootstrap';
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+} from 'angularx-social-login';
 
 @Component({
   selector: 'app-basket-details',
   templateUrl: './basket-details.component.html',
-  styleUrls: ['./basket-details.component.css'],
+  styleUrls: [
+    './basket-details.component.css',
+    './../../../css/header.css',
+    './../../../css/main.css',
+  ],
 })
 export class BasketDetailsComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
@@ -29,13 +38,17 @@ export class BasketDetailsComponent implements OnInit {
   errorPassword: string | null = null;
   errorEmail: string | null = null;
 
+  socialUser!: SocialUser;
+  isLoggedin?: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
     private as: AuthService,
     private us: UserService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +63,10 @@ export class BasketDetailsComponent implements OnInit {
     if (this.storageCrypter.getItem('basket', 'local') != '') {
       this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
     }
+    this.authService.authState.subscribe((user) => {
+      this.socialUser = user;
+      this.isLoggedin = user != null;
+    });
   }
 
   decreaseBookQuantity(bookId: number | undefined) {
@@ -222,10 +239,19 @@ export class BasketDetailsComponent implements OnInit {
       },
     });
   }
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('basket', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.authService.signOut();
     this.connectedUser = null;
     this.router.navigateByUrl('/books');
     this.iziToast.success({
@@ -234,4 +260,7 @@ export class BasketDetailsComponent implements OnInit {
     });
   }
 
+  refreshToken(): void {
+    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+  }
 }

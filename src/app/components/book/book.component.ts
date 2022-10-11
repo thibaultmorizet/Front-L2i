@@ -25,7 +25,11 @@ import {
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
-  styleUrls: ['./book.component.css'],
+  styleUrls: [
+    './book.component.css',
+    './../../../css/header.css',
+    './../../../css/main.css',
+  ],
 })
 export class BookComponent implements OnInit {
   basket: Array<Book> = [];
@@ -54,7 +58,6 @@ export class BookComponent implements OnInit {
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
-
 
   constructor(
     private bs: BookService,
@@ -85,11 +88,10 @@ export class BookComponent implements OnInit {
     if (this.storageCrypter.getItem('basket', 'local') != '') {
       this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
     }
-    this.authService.authState.subscribe((user) => {      
+    this.authService.authState.subscribe((user) => {
       this.socialUser = user;
       this.isLoggedin = user != null;
     });
-    
   }
   getBooks() {
     this.bs.getAllBooks().subscribe((res) => {
