@@ -398,8 +398,11 @@ export class BookComponent implements OnInit {
       next: (res) => {
         if (res.token != null) {
           this.storageCrypter.setItem('jeton', res.token, 'local');
+console.log(1);
 
           this.as.getTheUser(this.userLogin.email).subscribe((res) => {
+            console.log(3);
+            
             this.storageCrypter.setItem(
               'user',
               JSON.stringify(res[0]),
