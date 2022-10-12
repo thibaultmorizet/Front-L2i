@@ -10,7 +10,11 @@ export class AddressService {
 
   constructor(private http: HttpClient) {}
 
-  updateAddress(id: number | undefined, address: Address) {    
+  getTheAddress(id: number | undefined) {
+    return this.http.get<Array<Address>>(this.url + '/' + id);
+  }
+
+  updateAddress(id: number | undefined, address: Address) {
     return this.http.put<{ token: string }>(this.url + '/' + id, address);
   }
 }

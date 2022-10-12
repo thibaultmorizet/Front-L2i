@@ -117,6 +117,9 @@ export class MyAccountComponent implements OnInit {
     this.us.getTheUser(email).subscribe((res) => {
       this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
+
+      console.log(res[0]);
+      
     });
   }
 
