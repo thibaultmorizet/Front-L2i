@@ -79,11 +79,13 @@ export class MyAccountComponent implements OnInit {
           this.iziToast.success({
             message: 'Modification réussie',
             position: 'topRight',
-          });
+          });          
         });
     } else {
       this.errorPassword = 'Les mots de passes ne sont pas identiques';
     }
+    console.log(this.connectedUser);
+    
   }
   setNewAddressBilling() {
     this.addressService
@@ -116,10 +118,7 @@ export class MyAccountComponent implements OnInit {
   getUserByEmail(email: string) {
     this.us.getTheUser(email).subscribe((res) => {
       this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
-      this.connectedUser = res[0];
-
-      console.log(res[0]);
-      
+      this.connectedUser = res[0];      
     });
   }
 
