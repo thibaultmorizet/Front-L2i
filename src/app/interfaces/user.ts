@@ -10,4 +10,5 @@ export interface User {
     billing_address?: Address;
     delivery_address?: Address;
     orders?: object;
+    roles?: Array<string>;
 }
