@@ -83,10 +83,9 @@ export class MyAccountComponent implements OnInit {
         });
     } else {
       this.errorPassword = 'Les mots de passes ne sont pas identiques';
-    }
-    console.log(this.connectedUser);
-    
+    }    
   }
+  
   setNewAddressBilling() {
     this.addressService
       .updateAddress(this.newAddressBilling.id, this.newAddressBilling)
