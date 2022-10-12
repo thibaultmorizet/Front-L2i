@@ -99,7 +99,125 @@
               type="submit"
               class="btn btn-primary button-update-personnal-data h-100"
             >
-              Mofifier
+              Modifier
+            </button>
+          </form>
+          <form
+            #AddressBillingForm="ngForm"
+            role="AddressBilling"
+            (ngSubmit)="setNewAddressBilling()"
+          >
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{
+                  connectedUser?.billing_address?.address_street
+                }}"
+                class="form-control"
+                value="{{ connectedUser?.billing_address?.address_street }}"
+                [(ngModel)]="newAddressBilling.address_street"
+                name="Street"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{
+                  connectedUser?.billing_address?.address_postalcode
+                }}"
+                class="form-control"
+                value="{{ connectedUser?.billing_address?.address_postalcode }}"
+                [(ngModel)]="newAddressBilling.address_postalcode"
+                name="Postalcode"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser?.billing_address?.address_city }}"
+                class="form-control"
+                value="{{ connectedUser?.billing_address?.address_city }}"
+                [(ngModel)]="newAddressBilling.address_city"
+                name="City"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{
+                  connectedUser?.billing_address?.address_country
+                }}"
+                class="form-control"
+                value="{{ connectedUser?.billing_address?.address_country }}"
+                [(ngModel)]="newAddressBilling.address_country"
+                name="Country"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary button-update-personnal-data h-100"
+            >
+              Modifier
+            </button>
+          </form>
+          <form
+            #AddressDeliveryForm="ngForm"
+            role="AddressDelivery"
+            (ngSubmit)="setNewAddressDelivery()"
+          >
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{
+                  connectedUser?.delivery_address?.address_street
+                }}"
+                class="form-control"
+                value="{{ connectedUser?.delivery_address?.address_street }}"
+                [(ngModel)]="newAddressDelivery.address_street"
+                name="Street"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{
+                  connectedUser?.delivery_address?.address_postalcode
+                }}"
+                class="form-control"
+                value="{{ connectedUser?.delivery_address?.address_postalcode }}"
+                [(ngModel)]="newAddressDelivery.address_postalcode"
+                name="Postalcode"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser?.delivery_address?.address_city }}"
+                class="form-control"
+                value="{{ connectedUser?.delivery_address?.address_city }}"
+                [(ngModel)]="newAddressDelivery.address_city"
+                name="City"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{
+                  connectedUser?.delivery_address?.address_country
+                }}"
+                class="form-control"
+                value="{{ connectedUser?.delivery_address?.address_country }}"
+                [(ngModel)]="newAddressDelivery.address_country"
+                name="Country"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary button-update-personnal-data h-100"
+            >
+              Modifier
             </button>
           </form>
         </div>

@@ -7,7 +7,7 @@ export interface User {
     email?: string;
     password?: string;
     passwordConfirm?: string;
-    billingAddress?: Address;
-    deliveryAddress?: Address;
+    billing_address?: Address;
+    delivery_address?: Address;
     orders?: object;
 }

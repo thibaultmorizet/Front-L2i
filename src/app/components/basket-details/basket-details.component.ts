@@ -67,9 +67,11 @@ export class BasketDetailsComponent implements OnInit {
       this.socialUser = user;
       this.isLoggedin = user != null;
     });
-    if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-      this.logout();
-    } 
+    if (this.storageCrypter.getItem('jeton', 'local')) {
+      if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
+        this.logout();
+      }
+    }
   }
 
   tokenExpired(token: string) {

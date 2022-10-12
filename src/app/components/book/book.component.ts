@@ -79,9 +79,9 @@ export class BookComponent implements OnInit {
     this.getAllTypesfunc();
     this.setPaginationArray();
     try {
-      this.getUserByEmail(JSON.parse(
-        this.storageCrypter.getItem('user', 'session')
-      ).email)
+      this.getUserByEmail(
+        JSON.parse(this.storageCrypter.getItem('user', 'session')).email
+      );
     } catch (error) {
       this.connectedUser = null;
     }
@@ -92,9 +92,11 @@ export class BookComponent implements OnInit {
       this.socialUser = user;
       this.isLoggedin = user != null;
     });
-    if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-      this.logout();
-    } 
+    if (this.storageCrypter.getItem('jeton', 'local')) {
+      if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
+        this.logout();
+      }
+    }
   }
 
   tokenExpired(token: string) {
@@ -104,11 +106,7 @@ export class BookComponent implements OnInit {
 
   getUserByEmail(email: string) {
     this.us.getTheUser(email).subscribe((res) => {
-      this.storageCrypter.setItem(
-        'user',
-        JSON.stringify(res[0]),
-        'session'
-      );
+      this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
     });
   }
@@ -400,7 +398,6 @@ export class BookComponent implements OnInit {
           this.storageCrypter.setItem('jeton', res.token, 'local');
 
           this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-            
             this.storageCrypter.setItem(
               'user',
               JSON.stringify(res[0]),
