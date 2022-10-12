@@ -20,6 +20,8 @@ export class MyAccountComponent implements OnInit {
   basket: Array<Book> = [];
   connectedUser: User | null = {};
   newUserData: User = {};
+  errorPassword: string | null = null;
+  errorEmail: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,11 +55,31 @@ export class MyAccountComponent implements OnInit {
   }
 
   setNewPersonnalData() {
-    console.log(this.newUserData);
+    if (this.newUserData.password == this.newUserData.passwordConfirm) {
+      this.errorPassword = '';
+      this.us
+        .updateUser(this.newUserData.id, this.newUserData)
+        .subscribe((res) => {
+          this.newUserData = {};
+          this.newUserData.id = this.connectedUser?.id;
+          this.ngOnInit();
+          this.iziToast.success({
+            message: 'Modification réussie',
+            position: 'topRight',
+          });
+        });
+    } else {
+      this.errorPassword = 'Les mots de passes ne sont pas identiques';
+    }
   }
 
   getUserByEmail(email: string) {
     this.us.getTheUser(email).subscribe((res) => {
+      this.storageCrypter.setItem(
+        'user',
+        JSON.stringify(res[0]),
+        'session'
+      );
       this.connectedUser = res[0];
     });
   }

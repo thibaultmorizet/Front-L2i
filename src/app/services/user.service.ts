@@ -10,15 +10,17 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  register(user: User) {    
-    return this.http.post<{ token: string }>(this.url,user);
+  register(user: User) {
+    return this.http.post<{ token: string }>(this.url, user);
   }
 
-  getTheUser(email: String|undefined){    
-    return this.http.get<Array<User>>("https://thibaultmorizet.fr/ws/users?email="+email);
+  getTheUser(email: String | undefined) {
+    return this.http.get<Array<User>>(
+      'https://thibaultmorizet.fr/ws/users?email=' + email
+    );
   }
 
-  updateUser(user: User) {    
-    return this.http.put<{ token: string }>(this.url,user);
+  updateUser(id: number | undefined, user: User) {
+    return this.http.put<{ token: string }>(this.url + '/' + id, user);
   }
 }

@@ -50,7 +50,7 @@
                 class="form-control"
                 value="{{ connectedUser?.firstname }}"
                 [(ngModel)]="newUserData.firstname"
-                name="personnalDataFirstname"
+                name="Firstname"
               />
             </div>
             <div class="input-group">
@@ -60,7 +60,7 @@
                 class="form-control"
                 value="{{ connectedUser?.lastname }}"
                 [(ngModel)]="newUserData.lastname"
-                name="personnalDataLastname"
+                name="Lastname"
               />
             </div>
             <div class="input-group">
@@ -68,28 +68,31 @@
                 type="text"
                 class="form-control"
                 value="{{ connectedUser?.email }}"
-                name="personnalDataEmail"
+                name="Email"
                 disabled
               />
             </div>
             <div class="input-group">
               <input
-                type="text"
+                type="password"
                 placeholder="Insérez votre nouveau mot de passe"
                 class="form-control"
                 value=""
                 [(ngModel)]="newUserData.password"
-                name="personnalDataPassword"
+                name="Password"
               />
+            </div>
+            <div *ngIf="errorPassword" class="mb-2 text-danger">
+              {{ errorPassword }}
             </div>
             <div class="input-group">
               <input
-                type="text"
+                type="password"
                 placeholder="Confirmez votre nouveau mot de passe"
                 class="form-control"
                 value=""
                 [(ngModel)]="newUserData.passwordConfirm"
-                name="personnalDataPasswordConfirm"
+                name="PasswordConfirm"
               />
             </div>
             <button

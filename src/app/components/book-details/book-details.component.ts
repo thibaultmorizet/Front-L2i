@@ -86,6 +86,11 @@ export class BookDetailsComponent implements OnInit {
 
   getUserByEmail(email: string) {
     this.us.getTheUser(email).subscribe((res) => {
+      this.storageCrypter.setItem(
+        'user',
+        JSON.stringify(res[0]),
+        'session'
+      );
       this.connectedUser = res[0];
     });
   }
