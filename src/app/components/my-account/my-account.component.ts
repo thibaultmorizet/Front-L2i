@@ -99,7 +99,7 @@ export class MyAccountComponent implements OnInit {
       });
   }
 
-  setNewAddressDelivery() {
+  setNewAddressDelivery() {    
     this.addressService
       .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
       .subscribe((res) => {
