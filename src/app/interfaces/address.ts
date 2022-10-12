@@ -2,9 +2,9 @@ import { User } from "./user";
 
 export interface Address {
     id?: number;
-    street?: string;
-    postalcode?: number;
-    city?: string;
-    country?: string;
+    address_street?: string;
+    address_postalcode?: number;
+    address_city?: string;
+    address_country?: string;
     users?: Array<User>;
 }
