@@ -67,7 +67,16 @@ export class BasketDetailsComponent implements OnInit {
       this.socialUser = user;
       this.isLoggedin = user != null;
     });
+    if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
+      this.logout();
+    } 
   }
+
+  tokenExpired(token: string) {
+    const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+    return Math.floor(new Date().getTime() / 1000) >= expiry;
+  }
+
   getUserByEmail(email: string) {
     this.us.getTheUser(email).subscribe((res) => {
       this.connectedUser = res[0];

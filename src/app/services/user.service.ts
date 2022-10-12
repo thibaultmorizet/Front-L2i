@@ -17,4 +17,8 @@ export class UserService {
   getTheUser(email: String|undefined){    
     return this.http.get<Array<User>>("https://thibaultmorizet.fr/ws/users?email="+email);
   }
+
+  updateUser(user: User) {    
+    return this.http.put<{ token: string }>(this.url,user);
+  }
 }

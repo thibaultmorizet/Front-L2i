@@ -13,7 +13,7 @@
                 >
               </li> -->
             <li class="list-inline-item pointer" *ngIf="connectedUser != null">
-              <a [routerLink]="['/my-account']">Mon Compte</a>
+              <a [routerLink]="['/my-account']">Mon Profil</a>
             </li>
             <li class="list-inline-item pointer" *ngIf="connectedUser != null">
               <a (click)="logout()">Deconnexion</a>
@@ -36,15 +36,71 @@
 <div id="content">
   <div class="container">
     <div class="row">
-      <ul>
-        <li>{{connectedUser}}</li>
-        <li>{{connectedUser?.firstname}}</li>
-        <li>{{connectedUser?.lastname}}</li>
-        <li>{{connectedUser?.email}}</li>
-        <li>{{connectedUser?.password}}</li>
-        <li>{{connectedUser?.billingAddress}}</li>
-        <li>{{connectedUser?.deliveryAddress}}</li>
-      </ul>
+      <div id="personnalData" class="my-3">
+        <div class="container d-flex justify-content-end">
+          <form
+            #personnalDataForm="ngForm"
+            role="personnalData"
+            (ngSubmit)="setNewPersonnalData()"
+          >
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser?.firstname }}"
+                class="form-control"
+                value="{{ connectedUser?.firstname }}"
+                [(ngModel)]="newUserData.firstname"
+                name="personnalDataFirstname"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser?.lastname }}"
+                class="form-control"
+                value="{{ connectedUser?.lastname }}"
+                [(ngModel)]="newUserData.lastname"
+                name="personnalDataLastname"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                value="{{ connectedUser?.email }}"
+                name="personnalDataEmail"
+                disabled
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="Insérez votre nouveau mot de passe"
+                class="form-control"
+                value=""
+                [(ngModel)]="newUserData.password"
+                name="personnalDataPassword"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="Confirmez votre nouveau mot de passe"
+                class="form-control"
+                value=""
+                [(ngModel)]="newUserData.passwordConfirm"
+                name="personnalDataPasswordConfirm"
+              />
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary button-update-personnal-data h-100"
+            >
+              Mofifier
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -210,7 +210,7 @@
               <a (click)="registerModal(registerContent)">Inscription</a>
             </li>
             <li class="list-inline-item pointer" *ngIf="connectedUser != null">
-              <a [routerLink]="['/my-account']">Mon Compte</a>
+              <a [routerLink]="['/my-account']">Mon Profil</a>
             </li>
             <li class="list-inline-item pointer" *ngIf="connectedUser != null">
               <a (click)="logout()">Deconnexion</a>
