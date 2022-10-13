@@ -56,7 +56,7 @@ import { AdminRegisterComponent } from './components/admin-register/admin-regist
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '551834067320-3nvcgrcqoe6hh2qpdh4dauegr0bomt7s.apps.googleusercontent.com'
+              '191085854417-q1nheuh4v1hgspdo64vs87hn3ovajlh3.apps.googleusercontent.com'
             ),
           },
           {
