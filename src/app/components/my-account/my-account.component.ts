@@ -139,6 +139,10 @@ export class MyAccountComponent implements OnInit {
   }
 
   refreshToken() {
+    if (!this.storageCrypter.getItem('user', 'session')) {
+      this.storageCrypter.removeItem('jeton', 'local');
+    }
+
     this.as
       .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
       .subscribe({

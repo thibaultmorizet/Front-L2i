@@ -422,7 +422,8 @@ export class BookComponent implements OnInit {
               this.modalService.dismissAll();
               this.userLogin = {};
               this.iziToast.error({
-                message: 'Vous ne pouvez pas vous connecter ici en tant qu\'administrateur',
+                message:
+                  "Vous ne pouvez pas vous connecter ici en tant qu'administrateur",
                 position: 'topRight',
               });
             }
@@ -459,6 +460,10 @@ export class BookComponent implements OnInit {
     this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
   }
   refreshToken() {
+    if (!this.storageCrypter.getItem('user', 'session')) {
+      this.storageCrypter.removeItem('jeton', 'local');
+    }
+
     this.as
       .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
       .subscribe({

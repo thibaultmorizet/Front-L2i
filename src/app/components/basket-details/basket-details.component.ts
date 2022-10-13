@@ -297,6 +297,10 @@ export class BasketDetailsComponent implements OnInit {
     this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
   }
   refreshToken() {
+    if (!this.storageCrypter.getItem('user', 'session')) {
+      this.storageCrypter.removeItem('jeton', 'local');
+    }
+
     this.as
       .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
       .subscribe({
