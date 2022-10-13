@@ -53,12 +53,12 @@ import { AdminRegisterComponent } from './components/admin-register/admin-regist
       useValue: {
         autoLogin: false,
         providers: [
-/*           {
+          {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '551834067320-ohrbta48itj429tg6pr6fmqtf0uo2hrm.apps.googleusercontent.com'
+              '551834067320-ivcinhr7e04d7mlfb0nh32q5safif9oi.apps.googleusercontent.com'
             ),
-          }, */
+          },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider(
