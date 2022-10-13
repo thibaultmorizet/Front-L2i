@@ -6,7 +6,7 @@ export interface Book {
     id?: number;
     title?: string;
     summary?: string;
-    unit_price?: number;
+    unitprice?: number;
     stock?: number;
     isbn?: string;
     image?: string;
@@ -15,5 +15,5 @@ export interface Book {
     author?: Array<Author>;
     year?: string;
     number_ordered?: number;
-    total_price?: number;
+    totalprice?: number;
 }

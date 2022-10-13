@@ -99,10 +99,10 @@ export class BasketDetailsComponent implements OnInit {
           this.deleteBookOfBasket(el.id);
         }
         if (el.number_ordered != undefined && el.number_ordered > 0) {
-          if (el.total_price != undefined && el.unit_price) {
+          if (el.totalprice != undefined && el.unitprice) {
             el.number_ordered--;
-            el.total_price -= el.unit_price;
-            el.total_price = parseFloat(el.total_price.toFixed(2));
+            el.totalprice -= el.unitprice;
+            el.totalprice = parseFloat(el.totalprice.toFixed(2));
             this.storageCrypter.setItem(
               'basket',
               JSON.stringify(this.basket),
@@ -127,10 +127,10 @@ export class BasketDetailsComponent implements OnInit {
           el.stock != undefined &&
           el.number_ordered < el.stock
         ) {
-          if (el.total_price != undefined && el.unit_price) {
+          if (el.totalprice != undefined && el.unitprice) {
             el.number_ordered++;
-            el.total_price += el.unit_price;
-            el.total_price = parseFloat(el.total_price.toFixed(2));
+            el.totalprice += el.unitprice;
+            el.totalprice = parseFloat(el.totalprice.toFixed(2));
             this.storageCrypter.setItem(
               'basket',
               JSON.stringify(this.basket),

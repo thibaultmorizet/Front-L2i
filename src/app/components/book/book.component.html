@@ -409,10 +409,10 @@
                         type="number"
                         step="0.01"
                         min="0"
-                        placeholder="{{ elt.unit_price }}"
+                        placeholder="{{ elt.unitprice }}"
                         class="form-control mb-3"
-                        value="{{ elt.unit_price }}"
-                        [(ngModel)]="elt.unit_price"
+                        value="{{ elt.unitprice }}"
+                        [(ngModel)]="elt.unitprice"
                         name="unitPrice"
                         required
                       />
@@ -580,7 +580,7 @@
                     {{ elt.title }}
                   </a>
                 </h3>
-                <p class="price"><del></del>{{ elt.unit_price }} €</p>
+                <p class="price"><del></del>{{ elt.unitprice }} €</p>
                 <div class="d-flex justify-content-between px-1">
                   <button
                     [routerLink]="['/books/', elt.id]"
