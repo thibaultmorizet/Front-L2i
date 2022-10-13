@@ -12,6 +12,15 @@
                   >Login</a
                 >
               </li> -->
+            <li
+              class="list-inline-item pointer"
+              *ngIf="
+                connectedUser != null &&
+                this.connectedUser?.roles?.includes('ROLE_ADMIN')
+              "
+            >
+              <a [routerLink]="['/admin-home']">Paramètre Admin</a>
+            </li>
             <li class="list-inline-item pointer" *ngIf="connectedUser != null">
               <a [routerLink]="['/my-account']">Mon Profil</a>
             </li>
@@ -110,9 +119,7 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{
-                  connectedUser?.billing_address?.street
-                }}"
+                placeholder="{{ connectedUser?.billing_address?.street }}"
                 class="form-control"
                 value="{{ connectedUser?.billing_address?.street }}"
                 [(ngModel)]="newAddressBilling.street"
@@ -122,9 +129,7 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{
-                  connectedUser?.billing_address?.postalcode
-                }}"
+                placeholder="{{ connectedUser?.billing_address?.postalcode }}"
                 class="form-control"
                 value="{{ connectedUser?.billing_address?.postalcode }}"
                 [(ngModel)]="newAddressBilling.postalcode"
@@ -144,9 +149,7 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{
-                  connectedUser?.billing_address?.country
-                }}"
+                placeholder="{{ connectedUser?.billing_address?.country }}"
                 class="form-control"
                 value="{{ connectedUser?.billing_address?.country }}"
                 [(ngModel)]="newAddressBilling.country"
@@ -169,9 +172,7 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{
-                  connectedUser?.delivery_address?.street
-                }}"
+                placeholder="{{ connectedUser?.delivery_address?.street }}"
                 class="form-control"
                 value="{{ connectedUser?.delivery_address?.street }}"
                 [(ngModel)]="newAddressDelivery.street"
@@ -181,9 +182,7 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{
-                  connectedUser?.delivery_address?.postalcode
-                }}"
+                placeholder="{{ connectedUser?.delivery_address?.postalcode }}"
                 class="form-control"
                 value="{{ connectedUser?.delivery_address?.postalcode }}"
                 [(ngModel)]="newAddressDelivery.postalcode"
@@ -203,9 +202,7 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{
-                  connectedUser?.delivery_address?.country
-                }}"
+                placeholder="{{ connectedUser?.delivery_address?.country }}"
                 class="form-control"
                 value="{{ connectedUser?.delivery_address?.country }}"
                 [(ngModel)]="newAddressDelivery.country"

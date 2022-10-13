@@ -209,6 +209,15 @@
             <li class="list-inline-item pointer" *ngIf="connectedUser == null">
               <a (click)="registerModal(registerContent)">Inscription</a>
             </li>
+            <li
+              class="list-inline-item pointer"
+              *ngIf="
+                connectedUser != null &&
+                this.connectedUser?.roles?.includes('ROLE_ADMIN')
+              "
+            >
+              <a [routerLink]="['/admin-home']">Paramètre Admin</a>
+            </li>
             <li class="list-inline-item pointer" *ngIf="connectedUser != null">
               <a [routerLink]="['/my-account']">Mon Profil</a>
             </li>
@@ -234,30 +243,29 @@
 <div id="content">
   <div class="container">
     <div class="row">
-
       <div class="col-lg-9 order-1 order-lg-2 mt-5">
         <div id="productMain" class="row">
           <div class="col-md-6">
             <img
-              src="{{ book.book_image }}"
+              src="{{ book.image }}"
               alt=""
               class="img-fluid img-book-details"
             />
           </div>
           <div class="col-md-6">
             <div class="box">
-              <h2 class="text-center">{{ book.book_title }}</h2>
+              <h2 class="text-center">{{ book.title }}</h2>
 
               <p class="goToDescription">
                 <a (click)="scroll(details)" class="scroll-to pointer"
                   >Scroll to product details, material &amp; care and sizing</a
                 >
               </p>
-              <p class="price">{{ book.book_unit_price }} € (HT)</p>
+              <p class="price">{{ book.unit_price }} € (HT)</p>
               <div class="row">
                 <div class="col-6 d-flex align-items-center">
                   <p class="small mb-0">
-                    Stock restant : <br />{{ book.book_stock }} exemplaire(s)
+                    Stock restant : <br />{{ book.stock }} exemplaire(s)
                   </p>
                 </div>
 
@@ -296,26 +304,32 @@
           <br />
           <h5>Description</h5>
           <p>
-            {{ book.book_summary }}
+            {{ book.summary }}
           </p>
           <br />
           <ul>
             <li>
               <span>
                 <span class="font-weight-bold">ISBN : </span>
-                <span>{{ book.book_isbn }}</span>
+                <span>{{ book.isbn }}</span>
+              </span>
+            </li>
+            <li>
+              <span>
+                <span class="font-weight-bold">Auteur : </span>
+                <span>{{ book.author }}</span>
               </span>
             </li>
             <li>
               <span>
                 <span class="font-weight-bold">Éditeur : </span>
-                <span>{{ book.book_editor?.editor_name }}</span>
+                <span>{{ book.editor?.editor_name }}</span>
               </span>
             </li>
             <li>
               <span>
                 <span class="font-weight-bold">Année de parution : </span>
-                <span>{{ book.book_year }}</span>
+                <span>{{ book.year }}</span>
               </span>
             </li>
           </ul>

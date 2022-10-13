@@ -22,7 +22,6 @@ import {
   FacebookLoginProvider,
 } from 'angularx-social-login';
 import { MyAccountComponent } from './components/my-account/my-account.component';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
 
@@ -33,7 +32,6 @@ import { AdminRegisterComponent } from './components/admin-register/admin-regist
     BookDetailsComponent,
     BasketDetailsComponent,
     MyAccountComponent,
-    AdminLoginComponent,
     AdminHomeComponent,
     AdminRegisterComponent,
   ],

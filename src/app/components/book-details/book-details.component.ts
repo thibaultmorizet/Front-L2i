@@ -96,9 +96,6 @@ export class BookDetailsComponent implements OnInit {
     this.us.getTheUser(email).subscribe((res) => {
       this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
-      if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-        this.logout();
-      }
     });
   }
 
@@ -117,27 +114,27 @@ export class BookDetailsComponent implements OnInit {
             this.bookExistinBasket = true;
 
             if (
-              el.book_stock &&
-              el.book_number_ordered &&
-              el.book_number_ordered + parseInt(this.numberToOrder) >
-                el.book_stock
+              el.stock &&
+              el.number_ordered &&
+              el.number_ordered + parseInt(this.numberToOrder) >
+                el.stock
             ) {
               this.iziToast.error({
                 title: 'Manque de stock',
                 message:
                   'Il reste ' +
-                  res.book_stock +
+                  res.stock +
                   ' exemplaires de ce livre et vous en demandez ' +
-                  (el.book_number_ordered + parseInt(this.numberToOrder)),
+                  (el.number_ordered + parseInt(this.numberToOrder)),
                 position: 'topRight',
               });
             } else {
-              if (el.book_number_ordered != undefined) {
-                el.book_number_ordered =
-                  el.book_number_ordered + parseInt(this.numberToOrder);
-                if (el.book_unit_price) {
-                  el.book_total_price = parseFloat(
-                    (el.book_number_ordered * el.book_unit_price).toFixed(2)
+              if (el.number_ordered != undefined) {
+                el.number_ordered =
+                  el.number_ordered + parseInt(this.numberToOrder);
+                if (el.unit_price) {
+                  el.total_price = parseFloat(
+                    (el.number_ordered * el.unit_price).toFixed(2)
                   );
                 }
                 this.iziToast.success({
@@ -155,21 +152,21 @@ export class BookDetailsComponent implements OnInit {
         });
 
         if (!this.bookExistinBasket) {
-          if (res.book_stock && parseInt(this.numberToOrder) > res.book_stock) {
+          if (res.stock && parseInt(this.numberToOrder) > res.stock) {
             this.iziToast.error({
               title: 'Manque de stock',
               message:
                 'Il reste ' +
-                res.book_stock +
+                res.stock +
                 ' exemplaires de ce livre et vous en demandez ' +
                 parseInt(this.numberToOrder),
               position: 'topRight',
             });
           } else {
-            res.book_number_ordered = parseInt(this.numberToOrder);
-            if (res.book_unit_price) {
-              res.book_total_price = parseFloat(
-                (res.book_number_ordered * res.book_unit_price).toFixed(2)
+            res.number_ordered = parseInt(this.numberToOrder);
+            if (res.unit_price) {
+              res.total_price = parseFloat(
+                (res.number_ordered * res.unit_price).toFixed(2)
               );
             }
 
@@ -260,7 +257,6 @@ export class BookDetailsComponent implements OnInit {
           this.storageCrypter.setItem('jeton', res.token, 'local');
 
           this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-            if (!res[0].roles?.includes('ROLE_ADMIN')) {
               this.storageCrypter.setItem(
                 'user',
                 JSON.stringify(res[0]),
@@ -276,16 +272,6 @@ export class BookDetailsComponent implements OnInit {
                 message: 'Connexion réussie',
                 position: 'topRight',
               });
-            } else {
-              this.storageCrypter.removeItem('jeton', 'local');
-              this.modalService.dismissAll();
-              this.userLogin = {};
-              this.iziToast.error({
-                message:
-                  "Vous ne pouvez pas vous connecter ici en tant qu'administrateur",
-                position: 'topRight',
-              });
-            }
           });
         }
       },

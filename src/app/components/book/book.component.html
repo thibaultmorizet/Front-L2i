@@ -209,6 +209,15 @@
             <li class="list-inline-item pointer" *ngIf="connectedUser == null">
               <a (click)="registerModal(registerContent)">Inscription</a>
             </li>
+            <li
+              class="list-inline-item pointer"
+              *ngIf="
+                connectedUser != null &&
+                this.connectedUser?.roles?.includes('ROLE_ADMIN')
+              "
+            >
+              <a [routerLink]="['/admin-home']">Paramètre Admin</a>
+            </li>
             <li class="list-inline-item pointer" *ngIf="connectedUser != null">
               <a [routerLink]="['/my-account']">Mon Profil</a>
             </li>
@@ -252,8 +261,8 @@
                 list="searchList"
               />
               <datalist *ngIf="searchText.length > 0" id="searchList">
-                <option *ngFor="let elt of allBooks" [value]="elt.book_title">
-                  {{ elt.book_title }}
+                <option *ngFor="let elt of allBooks" [value]="elt.title">
+                  {{ elt.title }}
                 </option>
               </datalist>
 
@@ -352,11 +361,215 @@
       <div class="col-lg-9">
         <div class="row">
           <div *ngFor="let elt of books" class="col-lg-4 col-md-6 mb-5">
+            <ng-template #updatebookContent let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">
+                  Modifier le livre
+                </h4>
+                <button
+                  type="button"
+                  class="btn-close"
+                  aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form #updatebookForm="ngForm" (ngSubmit)="updatebook()">
+                  <div class="mb-3">
+                    <label class="mb-2" for="title">Titre</label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        placeholder="{{ elt.title }}"
+                        class="form-control mb-3"
+                        value="{{ elt.title }}"
+                        [(ngModel)]="elt.title"
+                        name="title"
+                        required
+                      />
+                    </div>
+
+                    <label class="mb-2" for="summary">Description</label>
+                    <div class="input-group">
+                      <textarea
+                        placeholder="{{ elt.summary }}"
+                        class="form-control mb-3"
+                        value="{{ elt.summary }}"
+                        [(ngModel)]="elt.summary"
+                        name="summary"
+                        cols="30"
+                        rows="10"
+                        required
+                      ></textarea>
+                    </div>
+
+                    <label class="mb-2" for="unitPrice">Prix unitaire</label>
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        placeholder="{{ elt.unit_price }}"
+                        class="form-control mb-3"
+                        value="{{ elt.unit_price }}"
+                        [(ngModel)]="elt.unit_price"
+                        name="unitPrice"
+                        required
+                      />
+                    </div>
+
+                    <label class="mb-2" for="stock">Stock</label>
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        step="1"
+                        min="0"
+                        placeholder="{{ elt.stock }}"
+                        class="form-control mb-3"
+                        value="{{ elt.stock }}"
+                        [(ngModel)]="elt.stock"
+                        name="stock"
+                        required
+                      />
+                    </div>
+
+                    <label class="mb-2" for="isbn">ISBN</label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        placeholder="{{ elt.isbn }}"
+                        class="form-control mb-3"
+                        value="{{ elt.isbn }}"
+                        [(ngModel)]="elt.isbn"
+                        name="isbn"
+                        required
+                      />
+                    </div>
+
+                    <label class="mb-2" for="year">Année de parution</label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        placeholder="{{ elt.year }}"
+                        class="form-control mb-3"
+                        value="{{ elt.year }}"
+                        [(ngModel)]="elt.year"
+                        name="year"
+                        required
+                      />
+                    </div>
+
+                    <label class="mb-2" for="format">Format</label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        placeholder="{{ elt.format?.format_name }}"
+                        class="form-control mb-3"
+                        value="{{ elt.format?.format_name }}"
+                        list="formatlist"
+                        name="format"
+                        required
+                      />
+                      <datalist id="formatlist">
+                        <option
+                          *ngFor="let aFormat of formats"
+                          value="{{ aFormat.format_name }}"
+                        ></option>
+                      </datalist>
+                    </div>
+
+                    <label class="mb-2" for="editor">Éditeur</label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        placeholder="{{ elt.editor?.editor_name }}"
+                        class="form-control mb-3"
+                        value="{{ elt.editor?.editor_name }}"
+                        list="editorlist"
+                        name="editor"
+                        required
+                      />
+                      <datalist id="editorlist">
+                        <option
+                          *ngFor="let anEditor of editors"
+                          value="{{ anEditor.editor_name }}"
+                        ></option>
+                      </datalist>
+                    </div>
+
+                    <fieldset>
+                      <legend>Auteurs :</legend>
+
+                      <div *ngFor="let anAuthor of authors">
+                        <div *ngFor="let aBookAuthor of elt.author">
+                          <input
+                            type="checkbox"
+                            name="{{ anAuthor.author_firstname }}_{{
+                              anAuthor.author_lastname
+                            }}"
+                            [checked]="
+                              aBookAuthor.author_firstname?.includes(
+                                anAuthor.author_firstname
+                                  ? anAuthor.author_firstname
+                                  : ''
+                              ) &&
+                              aBookAuthor.author_lastname?.includes(
+                                anAuthor.author_lastname
+                                  ? anAuthor.author_lastname
+                                  : ''
+                              )
+                            "
+                          />
+
+                          <label
+                            for="{{ anAuthor.author_firstname }}_{{
+                              anAuthor.author_lastname
+                            }}"
+                            >{{ anAuthor.author_firstname }}
+                            {{ anAuthor.author_lastname }}</label
+                          >
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <label class="mb-2" for="coverImage"
+                      >Image de couverture</label
+                    >
+                    <div class="input-group">
+                      <input
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        class="form-control mb-3"
+                        name="coverImage"
+                        required
+                      />
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-2">
+                      <button
+                        type="submit"
+                        class="btn btn-default btn-sm btn-primary"
+                        [disabled]="!updatebookForm.valid"
+                      >
+                        Connexion
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+
             <div class="product h-100 d-flex align-items-center flex-column">
               <div class="">
-                <div class="">
+                <div class="update-book-admin-container">
+                  <span
+                    class="update-book-admin text-white pointer"
+                    (click)="updatebookModal(updatebookContent)"
+                  >
+                    <i class="fa-solid fa-pen-to-square"></i
+                  ></span>
                   <a [routerLink]="['/books/', elt.id]">
-                    <img src="{{ elt.book_image }}" alt="" class="img-fluid"
+                    <img src="{{ elt.image }}" alt="" class="img-fluid"
                   /></a>
                 </div>
               </div>
@@ -364,10 +577,10 @@
               <div class="text p-2 mt-auto w-100">
                 <h3>
                   <a [routerLink]="['/books/', elt.id]">
-                    {{ elt.book_title }}
+                    {{ elt.title }}
                   </a>
                 </h3>
-                <p class="price"><del></del>{{ elt.book_unit_price }} €</p>
+                <p class="price"><del></del>{{ elt.unit_price }} €</p>
                 <div class="d-flex justify-content-between px-1">
                   <button
                     [routerLink]="['/books/', elt.id]"
@@ -461,8 +674,8 @@
           </div>
 
           <!--     <div class="text-center">
-      {{ elt.book_year }}<br /><br />
-      <div *ngFor="let an_author of elt.book_author" class="">
+      {{ elt.year }}<br /><br />
+      <div *ngFor="let an_author of elt.author" class="">
         {{ an_author.author_firstname }}
         {{ an_author.author_lastname }}
         {{ an_author.author_language }}<br /><br />

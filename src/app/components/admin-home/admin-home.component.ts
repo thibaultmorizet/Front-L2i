@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
+import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -18,13 +20,18 @@ import StorageCrypter from 'storage-crypter';
 export class AdminHomeComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
+  basket: Array<Book> = [];
+
+  socialUser!: SocialUser;
+  isLoggedin?: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
     private us: UserService,
-    private as: AuthService
+    private as: AuthService,
+    private authService: SocialAuthService,
   ) {}
 
   ngOnInit(): void {
@@ -35,12 +42,18 @@ export class AdminHomeComponent implements OnInit {
     } catch (error) {
       this.connectedUser = null;
     }
-
+    if (this.storageCrypter.getItem('basket', 'local') != '') {
+      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
+    }
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
         this.refreshToken();
       }
     }
+    this.authService.authState.subscribe((user) => {
+      this.socialUser = user;
+      this.isLoggedin = user != null;
+    });
   }
 
   getUserByEmail(email: string) {
@@ -48,7 +61,11 @@ export class AdminHomeComponent implements OnInit {
       this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
       if (!this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-        this.logout();
+        this.iziToast.warning({
+          message: 'Accès impossible si vous nêtes pas admin',
+          position: 'topRight',
+        });
+        this.router.navigateByUrl('/books')
       }
     });
   }
@@ -63,12 +80,13 @@ export class AdminHomeComponent implements OnInit {
     this.storageCrypter.removeItem('basket', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.connectedUser = null;
-    this.router.navigateByUrl('/admin-login');
+    this.router.navigateByUrl('/books');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
       position: 'topRight',
     });
   }
+  
   refreshToken() {
     if (!this.storageCrypter.getItem('user', 'session')) {
       this.storageCrypter.removeItem('jeton', 'local');

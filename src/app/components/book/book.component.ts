@@ -21,6 +21,10 @@ import {
   FacebookLoginProvider,
   GoogleLoginProvider,
 } from 'angularx-social-login';
+import { Editor } from 'src/app/interfaces/editor';
+import { EditorService } from 'src/app/services/editor.service';
+import { AuthorService } from 'src/app/services/author.service';
+import { Author } from 'src/app/interfaces/author';
 
 @Component({
   selector: 'app-book',
@@ -36,6 +40,8 @@ export class BookComponent implements OnInit {
   books: Array<Book> = [];
   allBooks: Array<Book> = [];
   formats: Array<Format> = [];
+  editors: Array<Editor> = [];
+  authors: Array<Author> = [];
   types: Array<Type> = [];
   totalBooksCount: number = 0;
   pageCount: number = 0;
@@ -55,6 +61,7 @@ export class BookComponent implements OnInit {
   errorEmail: string | null = null;
   errorConnexion: string | null = null;
   connectedUser: User | null = {};
+  actualUpdatebook: Book = {};
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -62,6 +69,8 @@ export class BookComponent implements OnInit {
   constructor(
     private bs: BookService,
     private fs: FormatService,
+    private es: EditorService,
+    private authorService: AuthorService,
     private ts: TypeService,
     private us: UserService,
     private as: AuthService,
@@ -76,6 +85,8 @@ export class BookComponent implements OnInit {
     this.getBooks();
     this.getAllBooks();
     this.getAllFormatsfunc();
+    this.getAllEditorsfunc();
+    this.getAllAuthorsfunc();
     this.getAllTypesfunc();
     this.setPaginationArray();
     try {
@@ -108,9 +119,6 @@ export class BookComponent implements OnInit {
     this.us.getTheUser(email).subscribe((res) => {
       this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
-      if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-        this.logout();
-      }
     });
   }
   getBooks() {
@@ -163,6 +171,16 @@ export class BookComponent implements OnInit {
       });
 
       this.formats = res;
+    });
+  }
+  getAllEditorsfunc() {
+    this.es.getAllEditors().subscribe((res) => {
+      this.editors = res;
+    });
+  }
+  getAllAuthorsfunc() {
+    this.authorService.getAllAuthors().subscribe((res) => {
+      this.authors = res;
     });
   }
   getAllTypesfunc() {
@@ -259,27 +277,27 @@ export class BookComponent implements OnInit {
             this.bookExistinBasket = true;
 
             if (
-              el.book_stock &&
-              el.book_number_ordered &&
-              el.book_number_ordered + parseInt(this.numberToOrder) >
-                el.book_stock
+              el.stock &&
+              el.number_ordered &&
+              el.number_ordered + parseInt(this.numberToOrder) >
+                el.stock
             ) {
               this.iziToast.error({
                 title: 'Manque de stock',
                 message:
                   'Il reste ' +
-                  res.book_stock +
+                  res.stock +
                   ' exemplaires de ce livre et vous en demandez ' +
-                  (el.book_number_ordered + parseInt(this.numberToOrder)),
+                  (el.number_ordered + parseInt(this.numberToOrder)),
                 position: 'topRight',
               });
             } else {
-              if (el.book_number_ordered != undefined) {
-                el.book_number_ordered =
-                  el.book_number_ordered + parseInt(this.numberToOrder);
-                if (el.book_unit_price) {
-                  el.book_total_price = parseFloat(
-                    (el.book_number_ordered * el.book_unit_price).toFixed(2)
+              if (el.number_ordered != undefined) {
+                el.number_ordered =
+                  el.number_ordered + parseInt(this.numberToOrder);
+                if (el.unit_price) {
+                  el.total_price = parseFloat(
+                    (el.number_ordered * el.unit_price).toFixed(2)
                   );
                 }
                 this.iziToast.success({
@@ -297,21 +315,21 @@ export class BookComponent implements OnInit {
         });
 
         if (!this.bookExistinBasket) {
-          if (res.book_stock && parseInt(this.numberToOrder) > res.book_stock) {
+          if (res.stock && parseInt(this.numberToOrder) > res.stock) {
             this.iziToast.error({
               title: 'Manque de stock',
               message:
                 'Il reste ' +
-                res.book_stock +
+                res.stock +
                 ' exemplaires de ce livre et vous en demandez ' +
                 parseInt(this.numberToOrder),
               position: 'topRight',
             });
           } else {
-            res.book_number_ordered = parseInt(this.numberToOrder);
-            if (res.book_unit_price) {
-              res.book_total_price = parseFloat(
-                (res.book_number_ordered * res.book_unit_price).toFixed(2)
+            res.number_ordered = parseInt(this.numberToOrder);
+            if (res.unit_price) {
+              res.total_price = parseFloat(
+                (res.number_ordered * res.unit_price).toFixed(2)
               );
             }
 
@@ -360,6 +378,21 @@ export class BookComponent implements OnInit {
         }
       );
   }
+  updatebookModal(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          if (reason == 0 || reason == 'Cross click') {
+            this.actualUpdatebook = {};
+          }
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -401,32 +434,21 @@ export class BookComponent implements OnInit {
           this.storageCrypter.setItem('jeton', res.token, 'local');
 
           this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-            if (!res[0].roles?.includes('ROLE_ADMIN')) {
-              this.storageCrypter.setItem(
-                'user',
-                JSON.stringify(res[0]),
-                'session'
-              );
+            this.storageCrypter.setItem(
+              'user',
+              JSON.stringify(res[0]),
+              'session'
+            );
 
-              this.connectedUser = JSON.parse(
-                this.storageCrypter.getItem('user', 'session')
-              );
-              this.modalService.dismissAll();
-              this.userLogin = {};
-              this.iziToast.success({
-                message: 'Connexion réussie',
-                position: 'topRight',
-              });
-            } else {
-              this.storageCrypter.removeItem('jeton', 'local');
-              this.modalService.dismissAll();
-              this.userLogin = {};
-              this.iziToast.error({
-                message:
-                  "Vous ne pouvez pas vous connecter ici en tant qu'administrateur",
-                position: 'topRight',
-              });
-            }
+            this.connectedUser = JSON.parse(
+              this.storageCrypter.getItem('user', 'session')
+            );
+            this.modalService.dismissAll();
+            this.userLogin = {};
+            this.iziToast.success({
+              message: 'Connexion réussie',
+              position: 'topRight',
+            });
           });
         }
       },
@@ -434,6 +456,9 @@ export class BookComponent implements OnInit {
         this.errorConnexion = res.message;
       },
     });
+  }
+  updatebook() {
+    console.log(this.actualUpdatebook);
   }
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);

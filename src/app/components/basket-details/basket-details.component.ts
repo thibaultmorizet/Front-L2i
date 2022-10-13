@@ -87,25 +87,22 @@ export class BasketDetailsComponent implements OnInit {
         'session'
       );
       this.connectedUser = res[0];
-      if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-        this.logout();
-      }
     });
   }
   decreaseBookQuantity(bookId: number | undefined) {
     this.basket.forEach((el) => {
       if (el.id == bookId) {
         if (
-          el.book_number_ordered != undefined &&
-          el.book_number_ordered == 1
+          el.number_ordered != undefined &&
+          el.number_ordered == 1
         ) {
           this.deleteBookOfBasket(el.id);
         }
-        if (el.book_number_ordered != undefined && el.book_number_ordered > 0) {
-          if (el.book_total_price != undefined && el.book_unit_price) {
-            el.book_number_ordered--;
-            el.book_total_price -= el.book_unit_price;
-            el.book_total_price = parseFloat(el.book_total_price.toFixed(2));
+        if (el.number_ordered != undefined && el.number_ordered > 0) {
+          if (el.total_price != undefined && el.unit_price) {
+            el.number_ordered--;
+            el.total_price -= el.unit_price;
+            el.total_price = parseFloat(el.total_price.toFixed(2));
             this.storageCrypter.setItem(
               'basket',
               JSON.stringify(this.basket),
@@ -126,14 +123,14 @@ export class BasketDetailsComponent implements OnInit {
     this.basket.forEach((el) => {
       if (el.id == bookId) {
         if (
-          el.book_number_ordered != undefined &&
-          el.book_stock != undefined &&
-          el.book_number_ordered < el.book_stock
+          el.number_ordered != undefined &&
+          el.stock != undefined &&
+          el.number_ordered < el.stock
         ) {
-          if (el.book_total_price != undefined && el.book_unit_price) {
-            el.book_number_ordered++;
-            el.book_total_price += el.book_unit_price;
-            el.book_total_price = parseFloat(el.book_total_price.toFixed(2));
+          if (el.total_price != undefined && el.unit_price) {
+            el.number_ordered++;
+            el.total_price += el.unit_price;
+            el.total_price = parseFloat(el.total_price.toFixed(2));
             this.storageCrypter.setItem(
               'basket',
               JSON.stringify(this.basket),
@@ -144,7 +141,7 @@ export class BasketDetailsComponent implements OnInit {
           this.iziToast.error({
             message:
               'Cet article est disponible en ' +
-              el.book_stock +
+              el.stock +
               ' exemplaire(s)',
             position: 'topRight',
           });
@@ -239,7 +236,6 @@ export class BasketDetailsComponent implements OnInit {
           this.storageCrypter.setItem('jeton', res.token, 'local');
 
           this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-            if (!res[0].roles?.includes('ROLE_ADMIN')) {
               this.storageCrypter.setItem(
                 'user',
                 JSON.stringify(res[0]),
@@ -255,15 +251,6 @@ export class BasketDetailsComponent implements OnInit {
                 message: 'Connexion réussie',
                 position: 'topRight',
               });
-            } else {
-              this.storageCrypter.removeItem('jeton', 'local');
-              this.modalService.dismissAll();
-              this.userLogin = {};
-              this.iziToast.error({
-                message: 'Vous ne pouvez pas vous connecter ici en tant qu\'administrateur',
-                position: 'topRight',
-              });
-            }
           });
         }
       },

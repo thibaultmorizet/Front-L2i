@@ -33,18 +33,18 @@ export class BookService {
 
     if (search.length > 0) {
       this.searchString =
-        '&book_title=' +
+        '&title=' +
         search +
-        '&book_author.author_firstname=' +
+        '&author.author_firstname=' +
         search +
-        '&book_author.author_lastname=' +
+        '&author.author_lastname=' +
         search;
     }
     formats.forEach((el) => {
-      this.formatsString += '&book_format.format_name[]=' + el;
+      this.formatsString += '&format.format_name[]=' + el;
     });
     types.forEach((el) => {
-      this.typesString += '&book_type.type_name[]=' + el;
+      this.typesString += '&type.type_name[]=' + el;
     });
     return this.http.get<Array<Book>>(
       this.urlWithoutLimit +
@@ -65,18 +65,18 @@ export class BookService {
 
     if (search.length > 0) {
       this.searchString =
-        '&book_title=' +
+        '&title=' +
         search +
-        '&book_author.author_firstname=' +
+        '&author.author_firstname=' +
         search +
-        '&book_author.author_lastname=' +
+        '&author.author_lastname=' +
         search;
     }
     formats.forEach((el) => {
-      this.formatsString += '&book_format.format_name[]=' + el;
+      this.formatsString += '&format.format_name[]=' + el;
     });
     types.forEach((el) => {
-      this.typesString += '&book_type.type_name[]=' + el;
+      this.typesString += '&type.type_name[]=' + el;
     });
     return this.http.get<Array<Book>>(
       'https://thibaultmorizet.fr/ws/books?page=' +
@@ -98,18 +98,18 @@ export class BookService {
 
     if (search.length > 0) {
       this.searchString =
-        '&book_title=' +
+        '&title=' +
         search +
-        '&book_author.author_firstname=' +
+        '&author.author_firstname=' +
         search +
-        '&book_author.author_lastname=' +
+        '&author.author_lastname=' +
         search;
     }
     formats.forEach((el) => {
-      this.formatsString += '&book_format.format_name[]=' + el;
+      this.formatsString += '&format.format_name[]=' + el;
     });
     types.forEach((el) => {
-      this.typesString += '&book_type.type_name[]=' + el;
+      this.typesString += '&type.type_name[]=' + el;
     });
 
     return this.http.get<Array<Book>>(

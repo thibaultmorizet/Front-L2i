@@ -120,9 +120,6 @@ export class MyAccountComponent implements OnInit {
     this.us.getTheUser(email).subscribe((res) => {
       this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
-      if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-        this.logout();
-      }
     });
   }
 

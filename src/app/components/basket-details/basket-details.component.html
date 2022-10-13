@@ -209,6 +209,15 @@
             <li class="list-inline-item pointer" *ngIf="connectedUser == null">
               <a (click)="registerModal(registerContent)">Inscription</a>
             </li>
+            <li
+              class="list-inline-item pointer"
+              *ngIf="
+                connectedUser != null &&
+                this.connectedUser?.roles?.includes('ROLE_ADMIN')
+              "
+            >
+              <a [routerLink]="['/admin-home']">Paramètre Admin</a>
+            </li>
             <li class="list-inline-item pointer" *ngIf="connectedUser != null">
               <a [routerLink]="['/my-account']">Mon Profil</a>
             </li>
@@ -231,7 +240,6 @@
   </div>
 </header>
 
-
 <div id="content">
   <div class="container">
     <div class="row">
@@ -248,14 +256,14 @@
         <tbody *ngFor="let elt of basket">
           <td>
             <a [routerLink]="['/books/', elt.id]">
-              <img src="{{ elt.book_image }}" alt="" class="img-icon"
+              <img src="{{ elt.image }}" alt="" class="img-icon"
             /></a>
           </td>
           <td>
-            <a [routerLink]="['/books/', elt.id]"> {{ elt.book_title }}</a>
+            <a [routerLink]="['/books/', elt.id]"> {{ elt.title }}</a>
           </td>
           <td>
-            {{ elt.book_unit_price }}
+            {{ elt.unit_price }}
           </td>
           <td>
             <span class="d-flex align-items-center">
@@ -268,7 +276,7 @@
                 <span aria-hidden="true"><</span>
               </button>
               <span class="mx-2">
-                {{ elt.book_number_ordered }}
+                {{ elt.number_ordered }}
               </span>
               <button
                 (click)="increaseBookQuantity(elt.id)"
@@ -280,12 +288,11 @@
               </button></span
             >
           </td>
-          <td>{{ elt.book_total_price }}</td>
+          <td>{{ elt.total_price }}</td>
           <td>
             <button
               class="btn btn-danger border-0 border-radius-5px"
               (click)="deleteBookOfBasket(elt.id)"
-
             >
               <span
                 data-toggle="tooltip"
