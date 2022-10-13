@@ -94,7 +94,7 @@ export class BookComponent implements OnInit {
     });
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-        this.logout();
+        this.refreshToken();
       }
     }
   }
@@ -108,6 +108,9 @@ export class BookComponent implements OnInit {
     this.us.getTheUser(email).subscribe((res) => {
       this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
+      if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
+        this.logout();
+      }
     });
   }
   getBooks() {
@@ -452,7 +455,18 @@ export class BookComponent implements OnInit {
     });
   }
 
-  refreshToken(): void {
+  refreshTokenAuth(): void {
     this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+  }
+  refreshToken() {
+    this.as
+      .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
+      .subscribe({
+        next: (res) => {
+          if (res.token != null) {
+            this.storageCrypter.setItem('jeton', res.token, 'local');
+          }
+        },
+      });
   }
 }

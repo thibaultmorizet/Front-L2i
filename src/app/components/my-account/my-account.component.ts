@@ -7,6 +7,7 @@ import { Book } from 'src/app/interfaces/book';
 import { UserService } from 'src/app/services/user.service';
 import { Address } from 'src/app/interfaces/address';
 import { AddressService } from 'src/app/services/address.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-my-account',
@@ -32,7 +33,8 @@ export class MyAccountComponent implements OnInit {
     private router: Router,
     private iziToast: NgxIzitoastService,
     private us: UserService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private as: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +44,7 @@ export class MyAccountComponent implements OnInit {
       );
       this.newUserData.id = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
-      ).id;      
+      ).id;
       this.newAddressBilling.id = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
       ).billing_address.id;
@@ -57,7 +59,7 @@ export class MyAccountComponent implements OnInit {
     }
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-        this.logout();
+        this.refreshToken();
       }
     }
   }
@@ -79,13 +81,13 @@ export class MyAccountComponent implements OnInit {
           this.iziToast.success({
             message: 'Modification réussie',
             position: 'topRight',
-          });          
+          });
         });
     } else {
       this.errorPassword = 'Les mots de passes ne sont pas identiques';
-    }    
+    }
   }
-  
+
   setNewAddressBilling() {
     this.addressService
       .updateAddress(this.newAddressBilling.id, this.newAddressBilling)
@@ -100,7 +102,7 @@ export class MyAccountComponent implements OnInit {
       });
   }
 
-  setNewAddressDelivery() {    
+  setNewAddressDelivery() {
     this.addressService
       .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
       .subscribe((res) => {
@@ -117,7 +119,10 @@ export class MyAccountComponent implements OnInit {
   getUserByEmail(email: string) {
     this.us.getTheUser(email).subscribe((res) => {
       this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
-      this.connectedUser = res[0];      
+      this.connectedUser = res[0];
+      if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
+        this.logout();
+      }
     });
   }
 
@@ -131,5 +136,17 @@ export class MyAccountComponent implements OnInit {
       message: 'Vous êtes déconnecté',
       position: 'topRight',
     });
+  }
+
+  refreshToken() {
+    this.as
+      .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
+      .subscribe({
+        next: (res) => {
+          if (res.token != null) {
+            this.storageCrypter.setItem('jeton', res.token, 'local');
+          }
+        },
+      });
   }
 }

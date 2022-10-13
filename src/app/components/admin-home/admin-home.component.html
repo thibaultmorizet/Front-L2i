@@ -1,0 +1,41 @@
+<header>
+  <div id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offer mb-3 mb-lg-0 d-flex align-items-center">
+          <a [routerLink]="['/admin-home']" class="fa-2x home-link pointer"
+            >Accueil</a
+          >
+        </div>
+        <div class="col-lg-6 d-flex justify-content-end align-items-center">
+          <ul class="menu list-inline mb-0 mx-3">
+            <!-- <li class="list-inline-item">
+                  <a href="#" data-toggle="modal" data-target="#login-modal"
+                    >Login</a
+                  >
+                </li> -->
+            <li class="list-inline-item pointer" *ngIf="connectedUser != null">
+              <a [routerLink]="['/admin-account']">Mon Profil</a>
+            </li>
+            <li class="list-inline-item pointer" *ngIf="connectedUser != null">
+              <a (click)="logout()">Deconnexion</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="content">
+  <div class="container">
+    <div class="row p-3">
+      <div
+        class="col-md-3 shadow border border-muted rounded-xl p-2 px-2 pointer"
+        [routerLink]="['/admin-register']"
+      >
+        <span>Créer un nouvel Administrateur</span>
+      </div>
+    </div>
+  </div>
+</div>

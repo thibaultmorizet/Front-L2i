@@ -1,0 +1,14 @@
+<h2 class="container text-primary text-center">Se connecter</h2>
+<form #monForm="ngForm" class="container" (ngSubmit)="adminLogin()">
+    <div class="mb-3 mt-3">
+        <label for="email" class="form-label">Email :</label>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="userLogin.email" required>
+        <span *ngIf="errorConnexion">{{ errorConnexion }}</span>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe :</label>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="userLogin.password" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!monForm.valid">Se connecter</button>
+</form>

@@ -51,8 +51,12 @@ body {
 
 .img-book-details {
     max-height: 450px;
-  }
-  
-  .home-link {
+}
+
+.home-link {
     color: #dadada;
+}
+
+.rounded-xl {
+    border-radius: 0.5rem !important;
 }

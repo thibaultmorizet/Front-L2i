@@ -75,7 +75,7 @@ export class BookDetailsComponent implements OnInit {
       });  
       if (this.storageCrypter.getItem('jeton', 'local')) {
         if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-          this.logout();
+          this.refreshToken();
         }
       }
     });
@@ -94,6 +94,9 @@ export class BookDetailsComponent implements OnInit {
         'session'
       );
       this.connectedUser = res[0];
+      if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
+        this.logout();
+      }
     });
   }
 
@@ -255,21 +258,31 @@ export class BookDetailsComponent implements OnInit {
           this.storageCrypter.setItem('jeton', res.token, 'local');
 
           this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-            this.storageCrypter.setItem(
-              'user',
-              JSON.stringify(res[0]),
-              'session'
-            );
+            if (!res[0].roles?.includes('ROLE_ADMIN')) {
+              this.storageCrypter.setItem(
+                'user',
+                JSON.stringify(res[0]),
+                'session'
+              );
 
-            this.connectedUser = JSON.parse(
-              this.storageCrypter.getItem('user', 'session')
-            );
-            this.modalService.dismissAll();
-            this.userLogin = {};
-            this.iziToast.success({
-              message: 'Connexion réussie',
-              position: 'topRight',
-            });
+              this.connectedUser = JSON.parse(
+                this.storageCrypter.getItem('user', 'session')
+              );
+              this.modalService.dismissAll();
+              this.userLogin = {};
+              this.iziToast.success({
+                message: 'Connexion réussie',
+                position: 'topRight',
+              });
+            } else {
+              this.storageCrypter.removeItem('jeton', 'local');
+              this.modalService.dismissAll();
+              this.userLogin = {};
+              this.iziToast.error({
+                message: 'Vous ne pouvez pas vous connecter ici en tant qu\'administrateur',
+                position: 'topRight',
+              });
+            }
           });
         }
       },
@@ -299,8 +312,19 @@ export class BookDetailsComponent implements OnInit {
     });
   }
 
-  refreshToken(): void {
+  refreshTokenAuth(): void {
     this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+  }
+  refreshToken() {
+    this.as
+      .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
+      .subscribe({
+        next: (res) => {
+          if (res.token != null) {
+            this.storageCrypter.setItem('jeton', res.token, 'local');
+          }
+        },
+      });
   }
 
 }
