@@ -242,13 +242,13 @@ export class BookComponent implements OnInit {
     this.typeFilter = [];
 
     this.formats.forEach((el) => {
-      if (el.filter_is_selected && el.format_name != undefined) {
-        this.formatFilter.push(el.format_name);
+      if (el.filter_is_selected && el.name != undefined) {
+        this.formatFilter.push(el.name);
       }
     });
     this.types.forEach((el) => {
-      if (el.filter_is_selected && el.type_name != undefined) {
-        this.typeFilter.push(el.type_name);
+      if (el.filter_is_selected && el.name != undefined) {
+        this.typeFilter.push(el.name);
       }
     });
     this.bs

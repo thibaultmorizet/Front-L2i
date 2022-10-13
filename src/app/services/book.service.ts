@@ -35,16 +35,16 @@ export class BookService {
       this.searchString =
         '&title=' +
         search +
-        '&author.author_firstname=' +
+        '&author.firstname=' +
         search +
-        '&author.author_lastname=' +
+        '&author.lastname=' +
         search;
     }
     formats.forEach((el) => {
-      this.formatsString += '&format.format_name[]=' + el;
+      this.formatsString += '&format.name[]=' + el;
     });
     types.forEach((el) => {
-      this.typesString += '&type.type_name[]=' + el;
+      this.typesString += '&type.name[]=' + el;
     });
     return this.http.get<Array<Book>>(
       this.urlWithoutLimit +
@@ -67,16 +67,16 @@ export class BookService {
       this.searchString =
         '&title=' +
         search +
-        '&author.author_firstname=' +
+        '&author.firstname=' +
         search +
-        '&author.author_lastname=' +
+        '&author.lastname=' +
         search;
     }
     formats.forEach((el) => {
-      this.formatsString += '&format.format_name[]=' + el;
+      this.formatsString += '&format.name[]=' + el;
     });
     types.forEach((el) => {
-      this.typesString += '&type.type_name[]=' + el;
+      this.typesString += '&type.name[]=' + el;
     });
     return this.http.get<Array<Book>>(
       'https://thibaultmorizet.fr/ws/books?page=' +
@@ -100,16 +100,16 @@ export class BookService {
       this.searchString =
         '&title=' +
         search +
-        '&author.author_firstname=' +
+        '&author.firstname=' +
         search +
-        '&author.author_lastname=' +
+        '&author.lastname=' +
         search;
     }
     formats.forEach((el) => {
-      this.formatsString += '&format.format_name[]=' + el;
+      this.formatsString += '&format.name[]=' + el;
     });
     types.forEach((el) => {
-      this.typesString += '&type.type_name[]=' + el;
+      this.typesString += '&type.name[]=' + el;
     });
 
     return this.http.get<Array<Book>>(

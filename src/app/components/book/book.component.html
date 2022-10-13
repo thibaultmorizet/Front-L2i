@@ -304,11 +304,11 @@
                     <input
                       type="checkbox"
                       name="format"
-                      value="{{ elt.format_name }}"
+                      value="{{ elt.name }}"
                       [(ngModel)]="elt.filter_is_selected"
                       [checked]="elt.filter_is_selected"
                     />
-                    {{ elt.format_name }} ({{ elt.count_books }})</label
+                    {{ elt.name }} ({{ elt.count_books }})</label
                   >
                 </div>
               </div>
@@ -342,11 +342,11 @@
                     <input
                       type="checkbox"
                       name="type"
-                      value="{{ elt.type_name }}"
+                      value="{{ elt.name }}"
                       [(ngModel)]="elt.filter_is_selected"
                       [checked]="elt.filter_is_selected"
                     />
-                    {{ elt.type_name }} ({{ elt.count_books }})</label
+                    {{ elt.name }} ({{ elt.count_books }})</label
                   >
                 </div>
               </div>
@@ -463,9 +463,9 @@
                     <div class="input-group">
                       <input
                         type="text"
-                        placeholder="{{ elt.format?.format_name }}"
+                        placeholder="{{ elt.format?.name }}"
                         class="form-control mb-3"
-                        value="{{ elt.format?.format_name }}"
+                        value="{{ elt.format?.name }}"
                         list="formatlist"
                         name="format"
                         required
@@ -473,7 +473,7 @@
                       <datalist id="formatlist">
                         <option
                           *ngFor="let aFormat of formats"
-                          value="{{ aFormat.format_name }}"
+                          value="{{ aFormat.name }}"
                         ></option>
                       </datalist>
                     </div>
@@ -482,9 +482,9 @@
                     <div class="input-group">
                       <input
                         type="text"
-                        placeholder="{{ elt.editor?.editor_name }}"
+                        placeholder="{{ elt.editor?.name }}"
                         class="form-control mb-3"
-                        value="{{ elt.editor?.editor_name }}"
+                        value="{{ elt.editor?.name }}"
                         list="editorlist"
                         name="editor"
                         required
@@ -492,7 +492,7 @@
                       <datalist id="editorlist">
                         <option
                           *ngFor="let anEditor of editors"
-                          value="{{ anEditor.editor_name }}"
+                          value="{{ anEditor.name }}"
                         ></option>
                       </datalist>
                     </div>
@@ -504,29 +504,29 @@
                         <div *ngFor="let aBookAuthor of elt.author">
                           <input
                             type="checkbox"
-                            name="{{ anAuthor.author_firstname }}_{{
-                              anAuthor.author_lastname
+                            name="{{ anAuthor.firstname }}_{{
+                              anAuthor.lastname
                             }}"
                             [checked]="
-                              aBookAuthor.author_firstname?.includes(
-                                anAuthor.author_firstname
-                                  ? anAuthor.author_firstname
+                              aBookAuthor.firstname?.includes(
+                                anAuthor.firstname
+                                  ? anAuthor.firstname
                                   : ''
                               ) &&
-                              aBookAuthor.author_lastname?.includes(
-                                anAuthor.author_lastname
-                                  ? anAuthor.author_lastname
+                              aBookAuthor.lastname?.includes(
+                                anAuthor.lastname
+                                  ? anAuthor.lastname
                                   : ''
                               )
                             "
                           />
 
                           <label
-                            for="{{ anAuthor.author_firstname }}_{{
-                              anAuthor.author_lastname
+                            for="{{ anAuthor.firstname }}_{{
+                              anAuthor.lastname
                             }}"
-                            >{{ anAuthor.author_firstname }}
-                            {{ anAuthor.author_lastname }}</label
+                            >{{ anAuthor.firstname }}
+                            {{ anAuthor.lastname }}</label
                           >
                         </div>
                       </div>
@@ -676,9 +676,9 @@
           <!--     <div class="text-center">
       {{ elt.year }}<br /><br />
       <div *ngFor="let an_author of elt.author" class="">
-        {{ an_author.author_firstname }}
-        {{ an_author.author_lastname }}
-        {{ an_author.author_language }}<br /><br />
+        {{ an_author.firstname }}
+        {{ an_author.lastname }}
+        {{ an_author.language }}<br /><br />
       </div>
     </div> -->
         </div>
