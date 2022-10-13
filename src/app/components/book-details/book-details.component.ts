@@ -21,7 +21,11 @@ import {
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
-  styleUrls: ['./book-details.component.css','./../../../css/header.css','./../../../css/main.css'],
+  styleUrls: [
+    './book-details.component.css',
+    './../../../css/header.css',
+    './../../../css/main.css',
+  ],
 })
 export class BookDetailsComponent implements OnInit {
   book: Book = {};
@@ -51,7 +55,7 @@ export class BookDetailsComponent implements OnInit {
     private iziToast: NgxIzitoastService,
     private modalService: NgbModal,
     private authService: SocialAuthService
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((res) => {
@@ -60,19 +64,21 @@ export class BookDetailsComponent implements OnInit {
         this.book = b;
       });
       try {
-        this.getUserByEmail(JSON.parse(
-          this.storageCrypter.getItem('user', 'session')
-        ).email)
+        this.getUserByEmail(
+          JSON.parse(this.storageCrypter.getItem('user', 'session')).email
+        );
       } catch (error) {
         this.connectedUser = null;
       }
       if (this.storageCrypter.getItem('basket', 'local') != '') {
-        this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));        
+        this.basket = JSON.parse(
+          this.storageCrypter.getItem('basket', 'local')
+        );
       }
-      this.authService.authState.subscribe((user) => {      
+      this.authService.authState.subscribe((user) => {
         this.socialUser = user;
         this.isLoggedin = user != null;
-      });  
+      });
       if (this.storageCrypter.getItem('jeton', 'local')) {
         if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
           this.refreshToken();
@@ -88,11 +94,7 @@ export class BookDetailsComponent implements OnInit {
 
   getUserByEmail(email: string) {
     this.us.getTheUser(email).subscribe((res) => {
-      this.storageCrypter.setItem(
-        'user',
-        JSON.stringify(res[0]),
-        'session'
-      );
+      this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
       if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
         this.logout();
@@ -279,7 +281,8 @@ export class BookDetailsComponent implements OnInit {
               this.modalService.dismissAll();
               this.userLogin = {};
               this.iziToast.error({
-                message: 'Vous ne pouvez pas vous connecter ici en tant qu\'administrateur',
+                message:
+                  "Vous ne pouvez pas vous connecter ici en tant qu'administrateur",
                 position: 'topRight',
               });
             }
@@ -330,5 +333,4 @@ export class BookDetailsComponent implements OnInit {
         },
       });
   }
-
 }
