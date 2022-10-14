@@ -116,8 +116,7 @@ export class BookDetailsComponent implements OnInit {
             if (
               el.stock &&
               el.number_ordered &&
-              el.number_ordered + parseInt(this.numberToOrder) >
-                el.stock
+              el.number_ordered + parseInt(this.numberToOrder) > el.stock
             ) {
               this.iziToast.error({
                 title: 'Manque de stock',
@@ -257,21 +256,19 @@ export class BookDetailsComponent implements OnInit {
           this.storageCrypter.setItem('jeton', res.token, 'local');
 
           this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-              this.storageCrypter.setItem(
-                'user',
-                JSON.stringify(res[0]),
-                'session'
-              );
+            this.storageCrypter.setItem(
+              'user',
+              JSON.stringify(res[0]),
+              'session'
+            );
 
-              this.connectedUser = JSON.parse(
-                this.storageCrypter.getItem('user', 'session')
-              );
-              this.modalService.dismissAll();
-              this.userLogin = {};
-              this.iziToast.success({
-                message: 'Connexion réussie',
-                position: 'topRight',
-              });
+            this.connectedUser = res[0];
+            this.modalService.dismissAll();
+            this.userLogin = {};
+            this.iziToast.success({
+              message: 'Connexion réussie',
+              position: 'topRight',
+            });
           });
         }
       },
@@ -316,6 +313,9 @@ export class BookDetailsComponent implements OnInit {
           if (res.token != null) {
             this.storageCrypter.setItem('jeton', res.token, 'local');
           }
+        },
+        error: (res) => {
+          this.logout();
         },
       });
   }

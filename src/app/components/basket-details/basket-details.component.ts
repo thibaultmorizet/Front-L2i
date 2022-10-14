@@ -242,9 +242,7 @@ export class BasketDetailsComponent implements OnInit {
                 'session'
               );
 
-              this.connectedUser = JSON.parse(
-                this.storageCrypter.getItem('user', 'session')
-              );
+              this.connectedUser = res[0];
               this.modalService.dismissAll();
               this.userLogin = {};
               this.iziToast.success({
@@ -295,6 +293,8 @@ export class BasketDetailsComponent implements OnInit {
           if (res.token != null) {
             this.storageCrypter.setItem('jeton', res.token, 'local');
           }
+        },error: (res) => {
+          this.logout();
         },
       });
   }

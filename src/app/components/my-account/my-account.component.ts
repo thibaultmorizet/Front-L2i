@@ -148,6 +148,9 @@ export class MyAccountComponent implements OnInit {
             this.storageCrypter.setItem('jeton', res.token, 'local');
           }
         },
+        error: (res) => {
+          this.logout();
+        },
       });
   }
 }

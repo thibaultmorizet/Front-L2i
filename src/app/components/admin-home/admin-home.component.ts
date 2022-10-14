@@ -31,7 +31,7 @@ export class AdminHomeComponent implements OnInit {
     private iziToast: NgxIzitoastService,
     private us: UserService,
     private as: AuthService,
-    private authService: SocialAuthService,
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +65,7 @@ export class AdminHomeComponent implements OnInit {
           message: 'Accès impossible si vous nêtes pas admin',
           position: 'topRight',
         });
-        this.router.navigateByUrl('/books')
+        this.router.navigateByUrl('/books');
       }
     });
   }
@@ -86,7 +86,7 @@ export class AdminHomeComponent implements OnInit {
       position: 'topRight',
     });
   }
-  
+
   refreshToken() {
     if (!this.storageCrypter.getItem('user', 'session')) {
       this.storageCrypter.removeItem('jeton', 'local');
@@ -99,6 +99,9 @@ export class AdminHomeComponent implements OnInit {
           if (res.token != null) {
             this.storageCrypter.setItem('jeton', res.token, 'local');
           }
+        },
+        error: (res) => {
+          this.logout();
         },
       });
   }

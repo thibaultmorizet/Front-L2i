@@ -20,7 +20,7 @@ import StorageCrypter from 'storage-crypter';
 export class AdminRegisterComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
-  userInscription: User = {};
+  userInscription: User = { roles: ['ROLE_ADMIN'] };
   errorPassword: string | null = null;
   errorEmail: string | null = null;
   basket: Array<Book> = [];
@@ -68,7 +68,7 @@ export class AdminRegisterComponent implements OnInit {
           message: 'Accès impossible si vous nêtes pas admin',
           position: 'topRight',
         });
-        this.router.navigateByUrl('/books')
+        this.router.navigateByUrl('/books');
       }
     });
   }
@@ -87,7 +87,7 @@ export class AdminRegisterComponent implements OnInit {
           this.errorEmail = '';
 
           this.us.register(this.userInscription).subscribe((resRegister) => {
-            this.userInscription = {};
+            this.userInscription = { roles: ['ROLE_ADMIN'] };
             this.iziToast.success({
               message: 'Inscription du nouvel admin réussie',
               position: 'topRight',
@@ -127,6 +127,8 @@ export class AdminRegisterComponent implements OnInit {
           if (res.token != null) {
             this.storageCrypter.setItem('jeton', res.token, 'local');
           }
+        },error: (res) => {
+          this.logout();
         },
       });
   }

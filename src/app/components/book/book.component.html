@@ -383,7 +383,7 @@
                         placeholder="{{ elt.title }}"
                         class="form-control mb-3"
                         value="{{ elt.title }}"
-                        [(ngModel)]="elt.title"
+                        [(ngModel)]="actualUpdatebook.title"
                         name="title"
                         required
                       />
@@ -395,7 +395,7 @@
                         placeholder="{{ elt.summary }}"
                         class="form-control mb-3"
                         value="{{ elt.summary }}"
-                        [(ngModel)]="elt.summary"
+                        [(ngModel)]="actualUpdatebook.summary"
                         name="summary"
                         cols="30"
                         rows="10"
@@ -412,7 +412,7 @@
                         placeholder="{{ elt.unitprice }}"
                         class="form-control mb-3"
                         value="{{ elt.unitprice }}"
-                        [(ngModel)]="elt.unitprice"
+                        [(ngModel)]="actualUpdatebook.unitprice"
                         name="unitPrice"
                         required
                       />
@@ -427,7 +427,7 @@
                         placeholder="{{ elt.stock }}"
                         class="form-control mb-3"
                         value="{{ elt.stock }}"
-                        [(ngModel)]="elt.stock"
+                        [(ngModel)]="actualUpdatebook.stock"
                         name="stock"
                         required
                       />
@@ -440,7 +440,7 @@
                         placeholder="{{ elt.isbn }}"
                         class="form-control mb-3"
                         value="{{ elt.isbn }}"
-                        [(ngModel)]="elt.isbn"
+                        [(ngModel)]="actualUpdatebook.isbn"
                         name="isbn"
                         required
                       />
@@ -453,7 +453,7 @@
                         placeholder="{{ elt.year }}"
                         class="form-control mb-3"
                         value="{{ elt.year }}"
-                        [(ngModel)]="elt.year"
+                        [(ngModel)]="actualUpdatebook.year"
                         name="year"
                         required
                       />
@@ -466,6 +466,10 @@
                         placeholder="{{ elt.format?.name }}"
                         class="form-control mb-3"
                         value="{{ elt.format?.name }}"
+                        [(ngModel)]="
+                          actualUpdatebook.format &&
+                          actualUpdatebook.format.name
+                        "
                         list="formatlist"
                         name="format"
                         required
@@ -485,6 +489,10 @@
                         placeholder="{{ elt.editor?.name }}"
                         class="form-control mb-3"
                         value="{{ elt.editor?.name }}"
+                        [(ngModel)]="
+                          actualUpdatebook.editor &&
+                          actualUpdatebook.editor.name
+                        "
                         list="editorlist"
                         name="editor"
                         required
@@ -499,36 +507,37 @@
 
                     <fieldset>
                       <legend>Auteurs :</legend>
-
                       <div *ngFor="let anAuthor of authors">
-                        <div *ngFor="let aBookAuthor of elt.author">
-                          <input
-                            type="checkbox"
-                            name="{{ anAuthor.firstname }}_{{
-                              anAuthor.lastname
-                            }}"
-                            [checked]="
-                              aBookAuthor.firstname?.includes(
-                                anAuthor.firstname
-                                  ? anAuthor.firstname
-                                  : ''
-                              ) &&
-                              aBookAuthor.lastname?.includes(
-                                anAuthor.lastname
-                                  ? anAuthor.lastname
-                                  : ''
-                              )
-                            "
-                          />
+                        <input
+                          type="checkbox"
+                          name="{{ anAuthor.firstname }}_{{
+                            anAuthor.lastname
+                          }}"
+                          id="{{ anAuthor.firstname }}_{{
+                            anAuthor.lastname
+                          }}"                          [checked]="anAuthor.isChecked"
+                          [(ngModel)]="anAuthor.isChecked"
+                        />
 
-                          <label
-                            for="{{ anAuthor.firstname }}_{{
-                              anAuthor.lastname
-                            }}"
-                            >{{ anAuthor.firstname }}
-                            {{ anAuthor.lastname }}</label
-                          >
-                        </div>
+                        <label
+                          for="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
+                          >{{ anAuthor.firstname }}
+                          {{ anAuthor.lastname }}</label
+                        >
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>Types :</legend>
+                      <div *ngFor="let aType of types">
+                        <input
+                          type="checkbox"
+                          name="{{ aType.name }}"
+                          id="{{ aType.name }}"
+                          [checked]="aType.isChecked"
+                          [(ngModel)]="aType.isChecked"
+                        />
+
+                        <label for="{{ aType.name }}">{{ aType.name }}</label>
                       </div>
                     </fieldset>
 
@@ -564,7 +573,8 @@
                 <div class="update-book-admin-container">
                   <span
                     class="update-book-admin text-white pointer"
-                    (click)="updatebookModal(updatebookContent)"
+                    (click)="updatebookModal(updatebookContent, elt.id)"
+                    *ngIf="connectedUser?.roles?.includes('ROLE_ADMIN')"
                   >
                     <i class="fa-solid fa-pen-to-square"></i
                   ></span>

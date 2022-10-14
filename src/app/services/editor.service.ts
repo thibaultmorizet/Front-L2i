@@ -14,4 +14,15 @@ export class EditorService {
   getAllEditors() {
     return this.http.get<Array<Editor>>(this.url);
   }
+  getEditorByName(name: String | undefined) {
+    return this.http.get<Array<Editor>>(
+      'https://thibaultmorizet.fr/ws/editors?name=' + name
+    );
+  }
+  setEditor(editor: Editor) {
+    return this.http.post<{ token: string }>(
+      'https://thibaultmorizet.fr/ws/editors',
+      editor
+    );
+  }
 }

@@ -1,3 +1,4 @@
+import { Type } from "./type";
 import { Author } from "./author";
 import { Editor } from "./editor";
 import { Format } from "./format";
@@ -13,6 +14,7 @@ export interface Book {
     format?: Format;
     editor?: Editor;
     author?: Array<Author>;
+    type?: Array<Type>;
     year?: string;
     number_ordered?: number;
     totalprice?: number;

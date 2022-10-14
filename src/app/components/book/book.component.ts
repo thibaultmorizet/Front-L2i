@@ -211,13 +211,11 @@ export class BookComponent implements OnInit {
       this.getAllBooksByPage(this.actualPage + 1);
     }
   }
-
   removeFormatFilter() {
     this.getAllFormatsfunc();
     this.formatFilter = [];
     this.getAllBooksByPage(1);
   }
-
   removeTypeFilter() {
     this.getAllTypesfunc();
     this.typeFilter = [];
@@ -236,7 +234,6 @@ export class BookComponent implements OnInit {
         this.actualPage = page;
       });
   }
-
   getBooksWithFormatAndTypeAndSearch() {
     this.formatFilter = [];
     this.typeFilter = [];
@@ -279,8 +276,7 @@ export class BookComponent implements OnInit {
             if (
               el.stock &&
               el.number_ordered &&
-              el.number_ordered + parseInt(this.numberToOrder) >
-                el.stock
+              el.number_ordered + parseInt(this.numberToOrder) > el.stock
             ) {
               this.iziToast.error({
                 title: 'Manque de stock',
@@ -378,7 +374,44 @@ export class BookComponent implements OnInit {
         }
       );
   }
-  updatebookModal(content: any) {
+  updatebookModal(content: any, id: number | undefined) {
+    if (id != undefined) {
+      this.bs.getOneBook(id).subscribe((b) => {
+        this.actualUpdatebook = b;
+
+        this.authors.forEach((anAuthor) => {
+          if (
+            this.actualUpdatebook.author &&
+            this.actualUpdatebook.author.length > 0
+          ) {
+            this.actualUpdatebook.author.forEach((aBookAuthor) => {
+              if (anAuthor.id == aBookAuthor.id) {
+                anAuthor.isChecked = true;
+              } else {
+                anAuthor.isChecked = false;
+              }
+            });
+          } else {
+            anAuthor.isChecked = false;
+          }
+        });
+        this.types.forEach((aType) => {
+          aType.isChecked = false;
+          if (
+            this.actualUpdatebook.type &&
+            this.actualUpdatebook.type.length > 0
+          ) {
+            this.actualUpdatebook.type.forEach((aBookType) => {
+              if (aType.id == aBookType.id) {
+                aType.isChecked = true;
+              }
+            });
+          } else {
+            aType.isChecked = false;
+          }
+        });
+      });
+    }
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -440,9 +473,7 @@ export class BookComponent implements OnInit {
               'session'
             );
 
-            this.connectedUser = JSON.parse(
-              this.storageCrypter.getItem('user', 'session')
-            );
+            this.connectedUser = res[0];
             this.modalService.dismissAll();
             this.userLogin = {};
             this.iziToast.success({
@@ -458,7 +489,74 @@ export class BookComponent implements OnInit {
     });
   }
   updatebook() {
-    console.log(this.actualUpdatebook);
+    if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
+      this.es
+        .getEditorByName(this.actualUpdatebook.editor?.name)
+        .subscribe((resGetEditor) => {
+          if (!resGetEditor[0]) {
+            this.es
+              .setEditor({ name: this.actualUpdatebook.editor?.name })
+              .subscribe((resSetEditor) => {
+                this.es
+                  .getEditorByName(this.actualUpdatebook.editor?.name)
+                  .subscribe((resGetEditor2) => {
+                    this.actualUpdatebook.editor = resGetEditor2[0];
+                  });
+              });
+          } else {
+            this.actualUpdatebook.editor = resGetEditor[0];
+          }
+        });
+
+      this.fs
+        .getFormatByName(this.actualUpdatebook.format?.name)
+        .subscribe((resGetFormat) => {
+          if (!resGetFormat[0]) {
+            this.fs
+              .setFormat({ name: this.actualUpdatebook.format?.name })
+              .subscribe((resSetFormat) => {
+                this.fs
+                  .getFormatByName(this.actualUpdatebook.format?.name)
+                  .subscribe((resGetFormat2) => {
+                    this.actualUpdatebook.format = resGetFormat2[0];
+                  });
+              });
+          } else {
+            this.actualUpdatebook.format = resGetFormat[0];
+          }
+        });
+      this.actualUpdatebook.type = [];
+      this.types.forEach((aType) => {
+        if (aType.isChecked) {
+          this.actualUpdatebook.type?.push(aType);
+        }
+      });
+      this.actualUpdatebook.author = [];
+      this.authors.forEach((anAuthor) => {
+        if (anAuthor.isChecked) {
+          this.actualUpdatebook.author?.push(anAuthor);
+        }
+      });
+
+      setTimeout(() => {
+        this.bs
+          .updateBook(this.actualUpdatebook.id, this.actualUpdatebook)
+          .subscribe((res) => {
+            this.actualUpdatebook = {};
+            this.modalService.dismissAll();
+            this.ngOnInit();
+            this.iziToast.success({
+              message: 'Modification réussie',
+              position: 'topRight',
+            });
+          });
+      }, 1200);
+    } else {
+      this.iziToast.error({
+        message: "Impossible de modifier un livre si vous n'êtes pas admin",
+        position: 'topRight',
+      });
+    }
   }
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
@@ -496,6 +594,9 @@ export class BookComponent implements OnInit {
           if (res.token != null) {
             this.storageCrypter.setItem('jeton', res.token, 'local');
           }
+        },
+        error: (res) => {
+          this.logout();
         },
       });
   }

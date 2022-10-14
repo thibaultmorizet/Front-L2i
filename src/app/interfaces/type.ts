@@ -6,5 +6,5 @@ export interface Type {
     books?: Array<Book>;
     count_books?: number;
     filter_is_selected?: Boolean;
-
+    isChecked?:Boolean;
 }
