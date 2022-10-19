@@ -62,6 +62,14 @@ export class BookDetailsComponent implements OnInit {
       this.idBook = +(res.get('id') ?? '0');
       this.bs.getOneBook(this.idBook).subscribe((b) => {
         this.book = b;
+
+        if (this.book.visitnumber) {
+          this.book.visitnumber += 1;
+        } else {
+          this.book.visitnumber = 1;
+        }
+
+        this.bs.updateBook(this.book.id, this.book).subscribe(() => {});
       });
       try {
         this.getUserByEmail(

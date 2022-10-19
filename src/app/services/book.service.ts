@@ -119,9 +119,7 @@ export class BookService {
         this.searchString
     );
   }
-
-  updateBook(id: number | undefined, book: Book) {
-    
+  updateBook(id: number | undefined, book: Book) {    
     return this.http.put<{ token: string }>(this.url + '/' + id, book);
   }
 }

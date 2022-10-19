@@ -490,18 +490,21 @@ export class BookComponent implements OnInit {
   }
   updatebook() {
     if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-        this.actualUpdatebook.format = {};
-        this.formats.forEach((aFormat) => {
-          if (aFormat.isChecked) {
-            this.actualUpdatebook.format = aFormat;
+      this.es
+        .getEditorByName(this.actualUpdatebook.editor?.name)
+        .subscribe((resGetEditor) => {
+          if (resGetEditor[0]) {
+            this.actualUpdatebook.editor = resGetEditor[0];
           }
         });
-      this.actualUpdatebook.editor = {};
-      this.editors.forEach((anEditor) => {
-        if (anEditor.isChecked) {
-          this.actualUpdatebook.editor = anEditor;
-        }
-      });
+
+      this.fs
+        .getFormatByName(this.actualUpdatebook.format?.name)
+        .subscribe((resGetFormat) => {
+          if (resGetFormat[0]) {
+            this.actualUpdatebook.format = resGetFormat[0];
+          }
+        });
       this.actualUpdatebook.type = [];
       this.types.forEach((aType) => {
         if (aType.isChecked) {
@@ -515,9 +518,7 @@ export class BookComponent implements OnInit {
         }
       });
 
-      console.log(this.actualUpdatebook);
-
-      /*       setTimeout(() => {
+      setTimeout(() => {
         this.bs
           .updateBook(this.actualUpdatebook.id, this.actualUpdatebook)
           .subscribe((res) => {
@@ -529,7 +530,7 @@ export class BookComponent implements OnInit {
               position: 'topRight',
             });
           });
-      }, 1200); */
+      }, 1000);
     } else {
       this.iziToast.error({
         message: "Impossible de modifier un livre si vous n'êtes pas admin",
