@@ -490,41 +490,18 @@ export class BookComponent implements OnInit {
   }
   updatebook() {
     if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-      this.es
-        .getEditorByName(this.actualUpdatebook.editor?.name)
-        .subscribe((resGetEditor) => {
-          if (!resGetEditor[0]) {
-            this.es
-              .setEditor({ name: this.actualUpdatebook.editor?.name })
-              .subscribe((resSetEditor) => {
-                this.es
-                  .getEditorByName(this.actualUpdatebook.editor?.name)
-                  .subscribe((resGetEditor2) => {
-                    this.actualUpdatebook.editor = resGetEditor2[0];
-                  });
-              });
-          } else {
-            this.actualUpdatebook.editor = resGetEditor[0];
+        this.actualUpdatebook.format = {};
+        this.formats.forEach((aFormat) => {
+          if (aFormat.isChecked) {
+            this.actualUpdatebook.format = aFormat;
           }
         });
-
-      this.fs
-        .getFormatByName(this.actualUpdatebook.format?.name)
-        .subscribe((resGetFormat) => {
-          if (!resGetFormat[0]) {
-            this.fs
-              .setFormat({ name: this.actualUpdatebook.format?.name })
-              .subscribe((resSetFormat) => {
-                this.fs
-                  .getFormatByName(this.actualUpdatebook.format?.name)
-                  .subscribe((resGetFormat2) => {
-                    this.actualUpdatebook.format = resGetFormat2[0];
-                  });
-              });
-          } else {
-            this.actualUpdatebook.format = resGetFormat[0];
-          }
-        });
+      this.actualUpdatebook.editor = {};
+      this.editors.forEach((anEditor) => {
+        if (anEditor.isChecked) {
+          this.actualUpdatebook.editor = anEditor;
+        }
+      });
       this.actualUpdatebook.type = [];
       this.types.forEach((aType) => {
         if (aType.isChecked) {
@@ -538,7 +515,9 @@ export class BookComponent implements OnInit {
         }
       });
 
-      setTimeout(() => {
+      console.log(this.actualUpdatebook);
+
+      /*       setTimeout(() => {
         this.bs
           .updateBook(this.actualUpdatebook.id, this.actualUpdatebook)
           .subscribe((res) => {
@@ -550,7 +529,7 @@ export class BookComponent implements OnInit {
               position: 'topRight',
             });
           });
-      }, 1200);
+      }, 1200); */
     } else {
       this.iziToast.error({
         message: "Impossible de modifier un livre si vous n'êtes pas admin",

@@ -459,51 +459,41 @@
                       />
                     </div>
 
-                    <label class="mb-2" for="format">Format</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        placeholder="{{ elt.format?.name }}"
-                        class="form-control mb-3"
-                        value="{{ elt.format?.name }}"
-                        [(ngModel)]="
-                          actualUpdatebook.format &&
-                          actualUpdatebook.format.name
-                        "
-                        list="formatlist"
-                        name="format"
-                        required
-                      />
-                      <datalist id="formatlist">
-                        <option
-                          *ngFor="let aFormat of formats"
-                          value="{{ aFormat.name }}"
-                        ></option>
-                      </datalist>
-                    </div>
+                    <fieldset>
+                      <legend>Format :</legend>
+                      <div *ngFor="let aFormat of formats">
+                        <input
+                          type="radio"
+                          name="{{ aFormat.name }}"
+                          id="{{ aFormat.name }}"
+                          [checked]="aFormat.isChecked"
+                          [(ngModel)]="aFormat.isChecked"
+                        />
 
-                    <label class="mb-2" for="editor">Éditeur</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        placeholder="{{ elt.editor?.name }}"
-                        class="form-control mb-3"
-                        value="{{ elt.editor?.name }}"
-                        [(ngModel)]="
-                          actualUpdatebook.editor &&
-                          actualUpdatebook.editor.name
-                        "
-                        list="editorlist"
-                        name="editor"
-                        required
-                      />
-                      <datalist id="editorlist">
-                        <option
-                          *ngFor="let anEditor of editors"
-                          value="{{ anEditor.name }}"
-                        ></option>
-                      </datalist>
-                    </div>
+                        <label
+                          for="{{ aFormat.name }}"
+                          >{{ aFormat.name }}</label
+                        >
+                      </div>
+                    </fieldset>
+
+                    <fieldset>
+                      <legend>Éditeur :</legend>
+                      <div *ngFor="let anEditor of editors">
+                        <input
+                          type="radio"
+                          name="{{ anEditor.name }}"
+                          id="{{ anEditor.name }}"
+                          [checked]="anEditor.isChecked"
+                          [(ngModel)]="anEditor.isChecked"
+                        />
+
+                        <label
+                          for="{{ anEditor.name }}"
+                          >{{ anEditor.name }}</label
+                        >
+                      </div>
+                    </fieldset>
 
                     <fieldset>
                       <legend>Auteurs :</legend>
@@ -513,9 +503,8 @@
                           name="{{ anAuthor.firstname }}_{{
                             anAuthor.lastname
                           }}"
-                          id="{{ anAuthor.firstname }}_{{
-                            anAuthor.lastname
-                          }}"                          [checked]="anAuthor.isChecked"
+                          id="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
+                          [checked]="anAuthor.isChecked"
                           [(ngModel)]="anAuthor.isChecked"
                         />
 
