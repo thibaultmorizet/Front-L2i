@@ -128,7 +128,7 @@ export class BookService {
         
     formData.append("file", file, file.name);
       
-    return this.http.post<{ token: string }>('https://www.thibaultmorizet.fr/assets', formData)
+    return this.http.post<{ token: string }>('https://www.thibaultmorizet.fr/assets/', formData)
 
   }
 }
