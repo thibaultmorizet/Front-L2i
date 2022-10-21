@@ -545,11 +545,12 @@
                     >
                     <div class="input-group">
                       <input
+                        #imageInput
                         type="file"
-                        accept="image/png, image/jpeg"
-                        class="form-control mb-3"
+                        accept="image/*"
+                        class="form-control mb-3 file-upload"
+                        (change)="uploadFile(imageInput)"
                         name="coverImage"
-                        required
                       />
                     </div>
 
@@ -559,7 +560,7 @@
                         class="btn btn-default btn-sm btn-primary"
                         [disabled]="!updatebookForm.valid"
                       >
-                        Connexion
+                        Modifier le livre
                       </button>
                     </div>
                   </div>

@@ -62,6 +62,7 @@ export class BookComponent implements OnInit {
   errorConnexion: string | null = null;
   connectedUser: User | null = {};
   actualUpdatebook: Book = {};
+  fileToUpload: any = {};
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -108,6 +109,7 @@ export class BookComponent implements OnInit {
         this.refreshToken();
       }
     }
+    this.fileToUpload = {};
   }
 
   tokenExpired(token: string) {
@@ -579,5 +581,8 @@ export class BookComponent implements OnInit {
           this.logout();
         },
       });
+  }
+  uploadFile(file: any) {
+    this.fileToUpload = file.files[0];
   }
 }
