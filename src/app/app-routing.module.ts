@@ -6,6 +6,7 @@ import { BasketDetailsComponent } from './components/basket-details/basket-detai
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
+import { NewBookComponent } from './components/new-book/new-book.component';
 
 const routes: Routes = [
   { path: 'books', component: BookComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'my-account', component: MyAccountComponent },
   { path: 'admin-home', component: AdminHomeComponent },
   { path: 'admin-register', component: AdminRegisterComponent },
+  { path: 'new-book', component: NewBookComponent },
 ];
 
 @NgModule({

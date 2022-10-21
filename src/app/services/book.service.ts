@@ -122,6 +122,9 @@ export class BookService {
   updateBook(id: number | undefined, book: Book) {
     return this.http.put<{ token: string }>(this.url + '/' + id, book);
   }
+  createBook(book: Book) {
+    return this.http.post<Book>(this.url, book);
+  }
 
   uploadCoverImage(file: File) {
     const formData = new FormData(); 

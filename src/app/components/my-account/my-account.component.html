@@ -111,11 +111,13 @@
               Modifier
             </button>
           </form>
+
           <form
             #AddressBillingForm="ngForm"
             role="AddressBilling"
             (ngSubmit)="setNewAddressBilling()"
           >
+            <label for="Street">Rue</label>
             <div class="input-group">
               <input
                 type="text"
@@ -124,8 +126,11 @@
                 value="{{ connectedUser?.billing_address?.street }}"
                 [(ngModel)]="newAddressBilling.street"
                 name="Street"
+                required
               />
             </div>
+
+            <label for="Postalcode">Code postal</label>
             <div class="input-group">
               <input
                 type="text"
@@ -134,8 +139,11 @@
                 value="{{ connectedUser?.billing_address?.postalcode }}"
                 [(ngModel)]="newAddressBilling.postalcode"
                 name="Postalcode"
+                required
               />
             </div>
+
+            <label for="City">Ville</label>
             <div class="input-group">
               <input
                 type="text"
@@ -144,8 +152,10 @@
                 value="{{ connectedUser?.billing_address?.city }}"
                 [(ngModel)]="newAddressBilling.city"
                 name="City"
+                required
               />
             </div>
+            <label for="Country">Pays</label>
             <div class="input-group">
               <input
                 type="text"
@@ -154,21 +164,26 @@
                 value="{{ connectedUser?.billing_address?.country }}"
                 [(ngModel)]="newAddressBilling.country"
                 name="Country"
+                required
               />
             </div>
 
             <button
               type="submit"
               class="btn btn-primary button-update-billing-address h-100"
+              [disabled]="!AddressBillingForm.valid"
             >
               Modifier
             </button>
           </form>
+
           <form
             #AddressDeliveryForm="ngForm"
             role="AddressDelivery"
             (ngSubmit)="setNewAddressDelivery()"
           >
+
+            <label for="Street">Rue</label>
             <div class="input-group">
               <input
                 type="text"
@@ -177,8 +192,11 @@
                 value="{{ connectedUser?.delivery_address?.street }}"
                 [(ngModel)]="newAddressDelivery.street"
                 name="Street"
+                required
               />
             </div>
+
+            <label for="Postalcode">Code postal</label>
             <div class="input-group">
               <input
                 type="text"
@@ -187,8 +205,11 @@
                 value="{{ connectedUser?.delivery_address?.postalcode }}"
                 [(ngModel)]="newAddressDelivery.postalcode"
                 name="Postalcode"
+                required
               />
             </div>
+
+            <label for="City">Ville</label>
             <div class="input-group">
               <input
                 type="text"
@@ -197,8 +218,11 @@
                 value="{{ connectedUser?.delivery_address?.city }}"
                 [(ngModel)]="newAddressDelivery.city"
                 name="City"
+                required
               />
             </div>
+
+            <label for="Country">Pays</label>
             <div class="input-group">
               <input
                 type="text"
@@ -207,12 +231,14 @@
                 value="{{ connectedUser?.delivery_address?.country }}"
                 [(ngModel)]="newAddressDelivery.country"
                 name="Country"
+                required
               />
             </div>
 
             <button
               type="submit"
               class="btn btn-primary button-update-delivery-address h-100"
+              [disabled]="!AddressDeliveryForm.valid"
             >
               Modifier
             </button>

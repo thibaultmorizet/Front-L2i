@@ -381,6 +381,20 @@ export class BookComponent implements OnInit {
       this.bs.getOneBook(id).subscribe((b) => {
         this.actualUpdatebook = b;
 
+        this.formats.forEach((aFormat) => {
+          if (this.actualUpdatebook.format?.id == aFormat.id) {
+            aFormat.isChecked = true;
+          } else {
+            aFormat.isChecked = false;
+          }
+        });
+        this.editors.forEach((anEditor) => {
+          if (this.actualUpdatebook.editor?.id == anEditor.id) {
+            anEditor.isChecked = true;
+          } else {
+            anEditor.isChecked = false;
+          }
+        });
         this.authors.forEach((anAuthor) => {
           if (
             this.actualUpdatebook.author &&
@@ -492,21 +506,6 @@ export class BookComponent implements OnInit {
   }
   updatebook() {
     if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-      this.es
-        .getEditorByName(this.actualUpdatebook.editor?.name)
-        .subscribe((resGetEditor) => {
-          if (resGetEditor[0]) {
-            this.actualUpdatebook.editor = resGetEditor[0];
-          }
-        });
-
-      this.fs
-        .getFormatByName(this.actualUpdatebook.format?.name)
-        .subscribe((resGetFormat) => {
-          if (resGetFormat[0]) {
-            this.actualUpdatebook.format = resGetFormat[0];
-          }
-        });
       this.actualUpdatebook.type = [];
       this.types.forEach((aType) => {
         if (aType.isChecked) {
@@ -584,12 +583,12 @@ export class BookComponent implements OnInit {
   }
   uploadFile(file: any) {
     this.fileToUpload = file.files[0];
-    if (this.fileToUpload) {
+    /*  if (this.fileToUpload) {
       this.bs.uploadCoverImage(this.fileToUpload).subscribe(resp => {
         alert("Uploaded")
       })
     } else {
       alert("Please select a file first")
-    }
+    } */
   }
 }

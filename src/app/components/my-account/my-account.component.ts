@@ -89,20 +89,38 @@ export class MyAccountComponent implements OnInit {
   }
 
   setNewAddressBilling() {
-    this.addressService
-      .updateAddress(this.newAddressBilling.id, this.newAddressBilling)
-      .subscribe((res) => {
-        this.newAddressBilling = {};
-        this.newAddressBilling.id = this.connectedUser?.billing_address?.id;
-        this.ngOnInit();
-        this.iziToast.success({
-          message: 'Modification réussie',
-          position: 'topRight',
+    if (this.newAddressBilling.id != undefined) {
+      this.addressService
+        .updateAddress(this.newAddressBilling.id, this.newAddressBilling)
+        .subscribe((res) => {
+          this.newAddressBilling = {
+            id: this.connectedUser?.billing_address?.id,
+          };
+          this.newAddressBilling.id = this.connectedUser?.billing_address?.id;
+          this.ngOnInit();
+          this.iziToast.success({
+            message: 'Modification réussie',
+            position: 'topRight',
+          });
         });
-      });
+    } else {
+      this.addressService
+        .createAddress(this.newAddressBilling)
+        .subscribe((res) => {
+          this.newAddressBilling = { id: res.id };
+
+          this.ngOnInit();
+          this.iziToast.success({
+            message: 'Modification réussie',
+            position: 'topRight',
+          });
+        });
+    }
   }
 
   setNewAddressDelivery() {
+    if (this.newAddressDelivery.id != undefined) {
+
     this.addressService
       .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
       .subscribe((res) => {
@@ -114,6 +132,21 @@ export class MyAccountComponent implements OnInit {
           position: 'topRight',
         });
       });
+    } else {
+      this.addressService
+        .createAddress(this.newAddressDelivery)
+        .subscribe((res) => {
+          this.newAddressDelivery = { id: res.id };
+
+          this.ngOnInit();
+          this.iziToast.success({
+            message: 'Modification réussie',
+            position: 'topRight',
+          });
+        });
+    }
+
+
   }
 
   getUserByEmail(email: string) {

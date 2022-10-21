@@ -17,4 +17,8 @@ export class AddressService {
   updateAddress(id: number | undefined, address: Address) {
     return this.http.put<{ token: string }>(this.url + '/' + id, address);
   }
+
+  createAddress( address: Address) {
+    return this.http.post< Address >(this.url, address);
+  }
 }

@@ -24,6 +24,7 @@ import {
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
+import { NewBookComponent } from './components/new-book/new-book.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AdminRegisterComponent } from './components/admin-register/admin-regist
     MyAccountComponent,
     AdminHomeComponent,
     AdminRegisterComponent,
+    NewBookComponent,
   ],
   imports: [
     BrowserModule,
