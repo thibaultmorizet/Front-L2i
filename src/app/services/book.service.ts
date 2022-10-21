@@ -119,7 +119,16 @@ export class BookService {
         this.searchString
     );
   }
-  updateBook(id: number | undefined, book: Book) {    
+  updateBook(id: number | undefined, book: Book) {
     return this.http.put<{ token: string }>(this.url + '/' + id, book);
+  }
+
+  uploadCoverImage(file: File) {
+    const formData = new FormData(); 
+        
+    formData.append("file", file, file.name);
+      
+    return this.http.post('https://www.thibaultmorizet.fr/assets/', formData)
+
   }
 }

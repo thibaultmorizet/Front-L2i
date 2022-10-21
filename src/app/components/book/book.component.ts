@@ -584,5 +584,12 @@ export class BookComponent implements OnInit {
   }
   uploadFile(file: any) {
     this.fileToUpload = file.files[0];
+    if (this.fileToUpload) {
+      this.bs.uploadCoverImage(this.fileToUpload).subscribe(resp => {
+        alert("Uploaded")
+      })
+    } else {
+      alert("Please select a file first")
+    }
   }
 }
