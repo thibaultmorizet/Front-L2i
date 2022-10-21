@@ -11,7 +11,7 @@ export class AddressService {
   constructor(private http: HttpClient) {}
 
   getTheAddress(id: number | undefined) {
-    return this.http.get<Array<Address>>(this.url + '/' + id);
+    return this.http.get<Address>(this.url + '/' + id);
   }
 
   updateAddress(id: number | undefined, address: Address) {

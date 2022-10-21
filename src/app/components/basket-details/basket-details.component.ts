@@ -37,6 +37,7 @@ export class BasketDetailsComponent implements OnInit {
   closeResult = '';
   errorPassword: string | null = null;
   errorEmail: string | null = null;
+  basketTotalPrice: number = 0;
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -53,9 +54,9 @@ export class BasketDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      this.getUserByEmail(JSON.parse(
-        this.storageCrypter.getItem('user', 'session')
-      ).email)
+      this.getUserByEmail(
+        JSON.parse(this.storageCrypter.getItem('user', 'session')).email
+      );
     } catch (error) {
       this.connectedUser = null;
     }
@@ -63,6 +64,12 @@ export class BasketDetailsComponent implements OnInit {
     if (this.storageCrypter.getItem('basket', 'local') != '') {
       this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
     }
+    this.basket.forEach((el) => {
+      if (el.totalprice) {
+        this.basketTotalPrice += el.totalprice;
+        this.basketTotalPrice = parseFloat(this.basketTotalPrice.toFixed(2));
+      }
+    });
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
       this.isLoggedin = user != null;
@@ -81,27 +88,22 @@ export class BasketDetailsComponent implements OnInit {
 
   getUserByEmail(email: string) {
     this.us.getTheUser(email).subscribe((res) => {
-      this.storageCrypter.setItem(
-        'user',
-        JSON.stringify(res[0]),
-        'session'
-      );
+      this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
     });
   }
   decreaseBookQuantity(bookId: number | undefined) {
     this.basket.forEach((el) => {
       if (el.id == bookId) {
-        if (
-          el.number_ordered != undefined &&
-          el.number_ordered == 1
-        ) {
+        if (el.number_ordered != undefined && el.number_ordered == 1) {
           this.deleteBookOfBasket(el.id);
         }
         if (el.number_ordered != undefined && el.number_ordered > 0) {
           if (el.totalprice != undefined && el.unitprice) {
             el.number_ordered--;
             el.totalprice -= el.unitprice;
+            this.basketTotalPrice -= el.unitprice;
+            this.basketTotalPrice = parseFloat(this.basketTotalPrice.toFixed(2));
             el.totalprice = parseFloat(el.totalprice.toFixed(2));
             this.storageCrypter.setItem(
               'basket',
@@ -130,6 +132,8 @@ export class BasketDetailsComponent implements OnInit {
           if (el.totalprice != undefined && el.unitprice) {
             el.number_ordered++;
             el.totalprice += el.unitprice;
+            this.basketTotalPrice += el.unitprice;
+            this.basketTotalPrice = parseFloat(this.basketTotalPrice.toFixed(2));
             el.totalprice = parseFloat(el.totalprice.toFixed(2));
             this.storageCrypter.setItem(
               'basket',
@@ -140,9 +144,7 @@ export class BasketDetailsComponent implements OnInit {
         } else {
           this.iziToast.error({
             message:
-              'Cet article est disponible en ' +
-              el.stock +
-              ' exemplaire(s)',
+              'Cet article est disponible en ' + el.stock + ' exemplaire(s)',
             position: 'topRight',
           });
         }
@@ -153,6 +155,11 @@ export class BasketDetailsComponent implements OnInit {
   deleteBookOfBasket(bookId: number | undefined) {
     this.basket.forEach((el) => {
       if (el.id == bookId) {
+        if (el.totalprice) {
+          this.basketTotalPrice -= el.totalprice;
+          this.basketTotalPrice = parseFloat(this.basketTotalPrice.toFixed(2));
+
+        }
         const index = this.basket.indexOf(el, 0);
         if (index > -1) {
           this.basket.splice(index, 1);
@@ -236,19 +243,19 @@ export class BasketDetailsComponent implements OnInit {
           this.storageCrypter.setItem('jeton', res.token, 'local');
 
           this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-              this.storageCrypter.setItem(
-                'user',
-                JSON.stringify(res[0]),
-                'session'
-              );
+            this.storageCrypter.setItem(
+              'user',
+              JSON.stringify(res[0]),
+              'session'
+            );
 
-              this.connectedUser = res[0];
-              this.modalService.dismissAll();
-              this.userLogin = {};
-              this.iziToast.success({
-                message: 'Connexion réussie',
-                position: 'topRight',
-              });
+            this.connectedUser = res[0];
+            this.modalService.dismissAll();
+            this.userLogin = {};
+            this.iziToast.success({
+              message: 'Connexion réussie',
+              position: 'topRight',
+            });
           });
         }
       },
@@ -293,7 +300,8 @@ export class BasketDetailsComponent implements OnInit {
           if (res.token != null) {
             this.storageCrypter.setItem('jeton', res.token, 'local');
           }
-        },error: (res) => {
+        },
+        error: (res) => {
           this.logout();
         },
       });

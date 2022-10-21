@@ -55,9 +55,9 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.firstname }}"
+                placeholder="{{ connectedUser.firstname }}"
                 class="form-control"
-                value="{{ connectedUser?.firstname }}"
+                value="{{ connectedUser.firstname }}"
                 [(ngModel)]="newUserData.firstname"
                 name="Firstname"
               />
@@ -65,9 +65,9 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.lastname }}"
+                placeholder="{{ connectedUser.lastname }}"
                 class="form-control"
-                value="{{ connectedUser?.lastname }}"
+                value="{{ connectedUser.lastname }}"
                 [(ngModel)]="newUserData.lastname"
                 name="Lastname"
               />
@@ -76,7 +76,7 @@
               <input
                 type="text"
                 class="form-control"
-                value="{{ connectedUser?.email }}"
+                value="{{ connectedUser.email }}"
                 name="Email"
                 disabled
               />
@@ -121,9 +121,9 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.billing_address?.street }}"
+                placeholder="{{ connectedUser.billingAddress?.street }}"
                 class="form-control"
-                value="{{ connectedUser?.billing_address?.street }}"
+                value="{{ connectedUser.billingAddress?.street }}"
                 [(ngModel)]="newAddressBilling.street"
                 name="Street"
                 required
@@ -134,9 +134,9 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.billing_address?.postalcode }}"
+                placeholder="{{ connectedUser.billingAddress?.postalcode }}"
                 class="form-control"
-                value="{{ connectedUser?.billing_address?.postalcode }}"
+                value="{{ connectedUser.billingAddress?.postalcode }}"
                 [(ngModel)]="newAddressBilling.postalcode"
                 name="Postalcode"
                 required
@@ -147,9 +147,9 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.billing_address?.city }}"
+                placeholder="{{ connectedUser.billingAddress?.city }}"
                 class="form-control"
-                value="{{ connectedUser?.billing_address?.city }}"
+                value="{{ connectedUser.billingAddress?.city }}"
                 [(ngModel)]="newAddressBilling.city"
                 name="City"
                 required
@@ -159,9 +159,9 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.billing_address?.country }}"
+                placeholder="{{ connectedUser.billingAddress?.country }}"
                 class="form-control"
-                value="{{ connectedUser?.billing_address?.country }}"
+                value="{{ connectedUser.billingAddress?.country }}"
                 [(ngModel)]="newAddressBilling.country"
                 name="Country"
                 required
@@ -182,14 +182,13 @@
             role="AddressDelivery"
             (ngSubmit)="setNewAddressDelivery()"
           >
-
             <label for="Street">Rue</label>
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.delivery_address?.street }}"
+                placeholder="{{ connectedUser.deliveryAddress?.street }}"
                 class="form-control"
-                value="{{ connectedUser?.delivery_address?.street }}"
+                value="{{ connectedUser.deliveryAddress?.street }}"
                 [(ngModel)]="newAddressDelivery.street"
                 name="Street"
                 required
@@ -200,9 +199,9 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.delivery_address?.postalcode }}"
+                placeholder="{{ connectedUser.deliveryAddress?.postalcode }}"
                 class="form-control"
-                value="{{ connectedUser?.delivery_address?.postalcode }}"
+                value="{{ connectedUser.deliveryAddress?.postalcode }}"
                 [(ngModel)]="newAddressDelivery.postalcode"
                 name="Postalcode"
                 required
@@ -213,9 +212,9 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.delivery_address?.city }}"
+                placeholder="{{ connectedUser.deliveryAddress?.city }}"
                 class="form-control"
-                value="{{ connectedUser?.delivery_address?.city }}"
+                value="{{ connectedUser.deliveryAddress?.city }}"
                 [(ngModel)]="newAddressDelivery.city"
                 name="City"
                 required
@@ -226,9 +225,9 @@
             <div class="input-group">
               <input
                 type="text"
-                placeholder="{{ connectedUser?.delivery_address?.country }}"
+                placeholder="{{ connectedUser.deliveryAddress?.country }}"
                 class="form-control"
-                value="{{ connectedUser?.delivery_address?.country }}"
+                value="{{ connectedUser.deliveryAddress?.country }}"
                 [(ngModel)]="newAddressDelivery.country"
                 name="Country"
                 required

@@ -101,7 +101,7 @@ export class BookDetailsComponent implements OnInit {
   }
 
   getUserByEmail(email: string) {
-    this.us.getTheUser(email).subscribe((res) => {
+    this.us.getTheUser(email).subscribe((res) => {      
       this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
       this.connectedUser = res[0];
     });
@@ -263,7 +263,7 @@ export class BookDetailsComponent implements OnInit {
         if (res.token != null) {
           this.storageCrypter.setItem('jeton', res.token, 'local');
 
-          this.as.getTheUser(this.userLogin.email).subscribe((res) => {
+          this.as.getTheUser(this.userLogin.email).subscribe((res) => {            
             this.storageCrypter.setItem(
               'user',
               JSON.stringify(res[0]),

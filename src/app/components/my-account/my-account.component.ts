@@ -21,7 +21,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class MyAccountComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   basket: Array<Book> = [];
-  connectedUser: User | null = {};
+  connectedUser: User = {};
   newUserData: User = {};
   newAddressBilling: Address = {};
   newAddressDelivery: Address = {};
@@ -45,15 +45,54 @@ export class MyAccountComponent implements OnInit {
       this.newUserData.id = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
       ).id;
-      this.newAddressBilling.id = JSON.parse(
-        this.storageCrypter.getItem('user', 'session')
-      ).billing_address.id;
-      this.newAddressDelivery.id = JSON.parse(
-        this.storageCrypter.getItem('user', 'session')
-      ).delivery_address.id;
     } catch (error) {
-      this.connectedUser = null;
+      this.connectedUser = {};
     }
+
+    try {
+      if (
+        JSON.parse(this.storageCrypter.getItem('user', 'session'))
+          ?.billingAddress?.id != undefined
+      ) {
+        this.addressService
+          .getTheAddress(
+            JSON.parse(this.storageCrypter.getItem('user', 'session'))
+              .billingAddress.id
+          )
+          .subscribe((res) => {
+            this.newAddressBilling = res;
+          });
+      }
+    } catch (error) {
+      this.iziToast.warning({
+        title: "Erreur de chargement de l'addresse de facturation",
+        message: 'Veuillez recharger la page',
+        position: 'topRight',
+      });
+    }
+    try {
+      if (
+        JSON.parse(this.storageCrypter.getItem('user', 'session'))
+          ?.deliveryAddress?.id != undefined
+      ) {
+        this.addressService
+          .getTheAddress(
+            JSON.parse(this.storageCrypter.getItem('user', 'session'))
+              .deliveryAddress.id
+          )
+          .subscribe((res) => {
+            
+            this.newAddressDelivery = res;
+          });
+      }
+    } catch (error) {
+      this.iziToast.warning({
+        title: "Erreur de chargement de l'addresse de livraison",
+        message: 'Veuillez recharger la page',
+        position: 'topRight',
+      });
+    }
+
     if (this.storageCrypter.getItem('basket', 'local') != '') {
       this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
     }
@@ -75,9 +114,6 @@ export class MyAccountComponent implements OnInit {
       this.us
         .updateUser(this.newUserData.id, this.newUserData)
         .subscribe((res) => {
-          this.newUserData = {};
-          this.newUserData.id = this.connectedUser?.id;
-          this.ngOnInit();
           this.iziToast.success({
             message: 'Modification réussie',
             position: 'topRight',
@@ -93,11 +129,6 @@ export class MyAccountComponent implements OnInit {
       this.addressService
         .updateAddress(this.newAddressBilling.id, this.newAddressBilling)
         .subscribe((res) => {
-          this.newAddressBilling = {
-            id: this.connectedUser?.billing_address?.id,
-          };
-          this.newAddressBilling.id = this.connectedUser?.billing_address?.id;
-          this.ngOnInit();
           this.iziToast.success({
             message: 'Modification réussie',
             position: 'topRight',
@@ -107,46 +138,46 @@ export class MyAccountComponent implements OnInit {
       this.addressService
         .createAddress(this.newAddressBilling)
         .subscribe((res) => {
-          this.newAddressBilling = { id: res.id };
+          this.connectedUser.billingAddress = res;
 
-          this.ngOnInit();
-          this.iziToast.success({
-            message: 'Modification réussie',
-            position: 'topRight',
-          });
+          this.us
+            .updateUser(this.connectedUser?.id, this.connectedUser)
+            .subscribe((res) => {
+              this.iziToast.success({
+                message: 'Modification réussie',
+                position: 'topRight',
+              });
+            });
         });
     }
   }
 
   setNewAddressDelivery() {
     if (this.newAddressDelivery.id != undefined) {
-
-    this.addressService
-      .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
-      .subscribe((res) => {
-        this.newAddressDelivery = {};
-        this.newAddressDelivery.id = this.connectedUser?.delivery_address?.id;
-        this.ngOnInit();
-        this.iziToast.success({
-          message: 'Modification réussie',
-          position: 'topRight',
-        });
-      });
-    } else {
       this.addressService
-        .createAddress(this.newAddressDelivery)
+        .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
         .subscribe((res) => {
-          this.newAddressDelivery = { id: res.id };
-
-          this.ngOnInit();
           this.iziToast.success({
             message: 'Modification réussie',
             position: 'topRight',
           });
         });
+    } else {
+      this.addressService
+        .createAddress(this.newAddressDelivery)
+        .subscribe((res) => {
+          this.connectedUser.deliveryAddress = res;
+
+          this.us
+            .updateUser(this.connectedUser?.id, this.connectedUser)
+            .subscribe((res) => {
+              this.iziToast.success({
+                message: 'Modification réussie',
+                position: 'topRight',
+              });
+            });
+        });
     }
-
-
   }
 
   getUserByEmail(email: string) {
@@ -160,7 +191,7 @@ export class MyAccountComponent implements OnInit {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('basket', 'local');
     this.storageCrypter.removeItem('user', 'session');
-    this.connectedUser = null;
+    this.connectedUser = {};
     this.router.navigateByUrl('/books');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
