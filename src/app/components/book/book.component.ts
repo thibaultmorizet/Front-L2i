@@ -380,19 +380,18 @@ export class BookComponent implements OnInit {
     if (id != undefined) {
       this.bs.getOneBook(id).subscribe((b) => {
         this.actualUpdatebook = b;
-
         this.formats.forEach((aFormat) => {
-          if (this.actualUpdatebook.format?.id == aFormat.id) {
-            aFormat.isChecked = true;
-          } else {
-            aFormat.isChecked = false;
+          if (this.actualUpdatebook.format) {
+            if (this.actualUpdatebook.format.id == aFormat.id) {
+              aFormat = this.actualUpdatebook.format;
+            }
           }
         });
         this.editors.forEach((anEditor) => {
-          if (this.actualUpdatebook.editor?.id == anEditor.id) {
-            anEditor.isChecked = true;
-          } else {
-            anEditor.isChecked = false;
+          if (this.actualUpdatebook.editor) {
+            if (this.actualUpdatebook.editor.id == anEditor.id) {
+              anEditor = this.actualUpdatebook.editor;
+            }
           }
         });
         this.authors.forEach((anAuthor) => {
@@ -426,21 +425,29 @@ export class BookComponent implements OnInit {
             aType.isChecked = false;
           }
         });
+        this.modalService
+          .open(content, { ariaLabelledBy: 'modal-basic-title' })
+          .result.then(
+            (result) => {
+              this.closeResult = `Closed with: ${result}`;
+            },
+            (reason) => {
+              if (reason == 0 || reason == 'Cross click') {
+                this.actualUpdatebook = {};
+              }
+              this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            }
+          );
+        setTimeout(() => {
+          if (this.actualUpdatebook.format?.name) {
+              document.getElementById(this.actualUpdatebook.format.name)?.click();
+          }
+          if (this.actualUpdatebook.editor?.name) {
+            document.getElementById(this.actualUpdatebook.editor.name)?.click();
+        }
+        }, 500);
       });
     }
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          if (reason == 0 || reason == 'Cross click') {
-            this.actualUpdatebook = {};
-          }
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -478,13 +485,11 @@ export class BookComponent implements OnInit {
   }
   login() {
     this.as.login(this.userLogin).subscribe({
-      next: (res) => {        
+      next: (res) => {
         if (res.token != null) {
           this.storageCrypter.setItem('jeton', res.token, 'local');
 
           this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-            console.log(res);
-            
             this.storageCrypter.setItem(
               'user',
               JSON.stringify(res[0]),
@@ -521,19 +526,17 @@ export class BookComponent implements OnInit {
         }
       });
 
-      setTimeout(() => {
-        this.bs
-          .updateBook(this.actualUpdatebook.id, this.actualUpdatebook)
-          .subscribe((res) => {
-            this.actualUpdatebook = {};
-            this.modalService.dismissAll();
-            this.ngOnInit();
-            this.iziToast.success({
-              message: 'Modification réussie',
-              position: 'topRight',
-            });
+      this.bs
+        .updateBook(this.actualUpdatebook.id, this.actualUpdatebook)
+        .subscribe((res) => {
+          this.actualUpdatebook = {};
+          this.modalService.dismissAll();
+          this.ngOnInit();
+          this.iziToast.success({
+            message: 'Modification réussie',
+            position: 'topRight',
           });
-      }, 1000);
+        });
     } else {
       this.iziToast.error({
         message: "Impossible de modifier un livre si vous n'êtes pas admin",

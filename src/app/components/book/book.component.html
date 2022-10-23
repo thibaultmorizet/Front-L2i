@@ -468,8 +468,7 @@
                           id="{{ aFormat.name }}"
                           [value]="aFormat"
                           [(ngModel)]="actualUpdatebook.format"
-                          [checked]="actualUpdatebook.format"
-
+                          ng-checked="true"
                         />
 
                         <label for="{{ aFormat.name }}">{{
@@ -487,12 +486,11 @@
                           id="{{ anEditor.name }}"
                           [value]="anEditor"
                           [(ngModel)]="actualUpdatebook.editor"
-                          [checked]="actualUpdatebook.editor"
                         />
 
-                        <label for="{{ anEditor.name }}">{{
-                          anEditor.name
-                        }}</label>
+                        <label for="{{ anEditor.name }}"
+                          >{{ anEditor.name }}
+                        </label>
                       </div>
                     </fieldset>
 
@@ -516,6 +514,7 @@
                         >
                       </div>
                     </fieldset>
+
                     <fieldset>
                       <legend>Types :</legend>
                       <div *ngFor="let aType of types">
@@ -673,15 +672,6 @@
               </ul>
             </nav>
           </div>
-
-          <!--     <div class="text-center">
-      {{ elt.year }}<br /><br />
-      <div *ngFor="let an_author of elt.author" class="">
-        {{ an_author.firstname }}
-        {{ an_author.lastname }}
-        {{ an_author.language }}<br /><br />
-      </div>
-    </div> -->
         </div>
       </div>
     </div>
