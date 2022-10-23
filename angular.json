@@ -21,14 +21,10 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/css/header.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/@fortawesome/fontawesome-free/css/all.css",
               "./node_modules/izitoast/dist/css/iziToast.min.css"
             ],
             "scripts": [
-              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./node_modules/izitoast/dist/js/iziToast.min.js"
             ]
           },
@@ -93,14 +89,10 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/css/header.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/@fortawesome/fontawesome-free/css/all.css",
               "./node_modules/izitoast/dist/css/iziToast.min.css"
             ],
             "scripts": [
-              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./node_modules/izitoast/dist/js/iziToast.min.js"
             ]
           }
