@@ -19,4 +19,5 @@ export interface Book {
     number_ordered?: number;
     totalprice?: number;
     visitnumber?:number;
+    soldnumber?:number;
 }
