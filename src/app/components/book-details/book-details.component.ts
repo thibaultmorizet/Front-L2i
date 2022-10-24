@@ -18,6 +18,7 @@ import {
   FacebookLoginProvider,
   GoogleLoginProvider,
 } from 'angularx-social-login';
+
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
