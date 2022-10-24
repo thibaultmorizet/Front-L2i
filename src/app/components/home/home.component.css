@@ -11,7 +11,9 @@
     width: 367px;
     height: 404px
 }
-
+.best-sell-img:hover {
+    opacity: 0.6;
+}
 .img-best-sell {
     /* object-fit: cover; */
     width: 367px;
@@ -21,6 +23,9 @@
 .best-sell-title {
     text-align: center;
     padding: 10px 1rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
 }
 
 .best-sell-price {
@@ -33,14 +38,14 @@
     margin-bottom: 1rem;
 }
 
-.best-sell-pagination{
+.best-sell-pagination {
     display: flex;
     justify-content: center;
 }
 
 .best-sell-button {
-    color: #6c757d ;
-    background: #f8f9fa ;
+    color: #6c757d;
+    background: #f8f9fa;
     transition: all 0.3s;
     padding: .5rem 1rem;
     cursor: pointer;
@@ -52,9 +57,9 @@
     color: #fff;
 }
 
-.best-sell-description{
+.best-sell-description {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }

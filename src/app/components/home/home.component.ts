@@ -20,6 +20,8 @@ import StorageCrypter from 'storage-crypter';
 })
 export class HomeComponent implements OnInit {
   menuIsVisible: boolean = false;
+  bestBookSelected: number = 0;
+  bestBookArray: Array<number> = [0, 1, 2];
   basket: Array<Book> = [];
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
@@ -33,9 +35,8 @@ export class HomeComponent implements OnInit {
     private bs: BookService,
     private authService: SocialAuthService,
     private router: Router,
-    private iziToast: NgxIzitoastService,
-  ) {
-  }
+    private iziToast: NgxIzitoastService
+  ) {}
 
   ngOnInit(): void {
     this.getBooksBestSell();
@@ -109,5 +110,20 @@ export class HomeComponent implements OnInit {
 
   toggleMenu() {
     this.menuIsVisible = !this.menuIsVisible;
+  }
+
+  nextBestBook() {
+    if (this.bestBookSelected < 9) {
+      this.bestBookSelected++;
+    } else {
+      this.bestBookSelected = 0;
+    }
+  }
+  prevBestBook() {
+    if (this.bestBookSelected > 0) {
+      this.bestBookSelected--;
+    } else {
+      this.bestBookSelected = 9;
+    }
   }
 }
