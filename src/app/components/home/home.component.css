@@ -24,7 +24,6 @@
 }
 
 .img-best-sell {
-    /* object-fit: cover; */
     width: 300px;
     height: 404px;
 }
@@ -150,11 +149,33 @@
     .best-sell-fifth-element {
         display: flex;
     }
+
     .best-sell-title {
         font-size: 1.5rem;
     }
 
     .best-sell-price {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+    }
+
+    .best-sell-button {
+        font-size: 1.4rem;
+        padding: 0.8rem 1.7rem;
+    }
+
+    .best-sell-img {
+        width: 340px;
+        height: 450px;
+
+    }
+
+    .best-sell-description {
+        width: 340px;
+    }
+
+    .img-best-sell {
+        width: 340px;
+        height: 450px;
+
     }
 }

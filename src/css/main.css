@@ -31,7 +31,7 @@
     }
 }
 
-@media (min-width: 2000px) {
+@media (min-width: 1800px) {
     .title {
         font-size: 2.5rem;
     }

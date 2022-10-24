@@ -193,7 +193,7 @@ header{
     }
 }
 
-@media (min-width: 2000px) {
+@media (min-width: 1800px) {
     .navbar-brand img {
         width: 150px;
     }
