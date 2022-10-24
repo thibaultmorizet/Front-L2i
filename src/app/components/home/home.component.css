@@ -8,15 +8,25 @@
 }
 
 .best-sell-img {
-    width: 367px;
-    height: 404px
+    width: 300px;
+    height: 404px;
+    position: relative;
+
 }
-.best-sell-img:hover {
+
+.best-sell-img:hover .img-best-sell {
     opacity: 0.6;
+    transition: all 0.5s;
+
 }
+
+.best-sell-img:hover .article-hover-actions {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
 .img-best-sell {
     /* object-fit: cover; */
-    width: 367px;
+    width: 300px;
     height: 404px;
 }
 
@@ -28,8 +38,16 @@
     align-items: center;
 }
 
+.best-sell-title:hover {
+    color: #30336B;
+}
+
 .best-sell-price {
     font-weight: 400;
+}
+
+.best-sell-price:hover {
+    color: #30336B;
 }
 
 .all-best-sell-container {
@@ -45,16 +63,19 @@
 
 .best-sell-button {
     color: #6c757d;
-    background: #f8f9fa;
-    transition: all 0.3s;
+    background-color: #F0F0F0;
     padding: .5rem 1rem;
     cursor: pointer;
     margin: 1rem .5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    font-weight: 400;
+
 }
 
 .best-sell-button:hover {
-    background: #4650dd;
-    color: #fff;
+    background-color: #95CFBC;
+    color: #000;
+    transition: all 0.3s;
 }
 
 .best-sell-description {
@@ -62,4 +83,37 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 1rem;
+}
+
+.article-hover-actions {
+    display: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.best-sell-img:hover .article-hover-actions {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.article-hover-actions-add-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    width: 50px;
+    height: 50px;
+    color: #000;
+    border-radius: 15px;
+}
+
+.article-hover-actions-add-cart:hover{
+    background-color: #95CFBC;
+    transition: all 0.3s;
+
+
 }

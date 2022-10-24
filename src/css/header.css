@@ -139,7 +139,7 @@ header{
     margin-bottom: 3rem;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 600px) {
     .navbar-toggler {
         display: none;
     }

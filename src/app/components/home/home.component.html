@@ -92,30 +92,44 @@
             <img
               src="{{ bookBestSell[bestBookSelected].image }}"
               [alt]="bookBestSell[bestBookSelected].title"
-              class="img-best-sell"
+              class="img-best-sell pointer"
+              [routerLink]="['/books/', bookBestSell[bestBookSelected].id]"
             />
+            <div class="article-hover-actions">
+              <div class="article-hover-actions-add-cart" (click)="addBookToBasket(bookBestSell[bestBookSelected].id)">
+                <i class="fa fa-shopping-cart"></i>
+              </div>
+            </div>
           </div>
           <div class="best-sell-description">
-            <span class="best-sell-title">{{ bookBestSell[bestBookSelected].title }}</span>
-            <span class="best-sell-price">{{ bookBestSell[bestBookSelected].unitprice }} €</span>
+            <span
+              class="best-sell-title pointer"
+              [routerLink]="['/books/', bookBestSell[bestBookSelected].id]"
+              >{{ bookBestSell[bestBookSelected].title }}</span
+            >
+            <span
+              class="best-sell-price pointer"
+              [routerLink]="['/books/', bookBestSell[bestBookSelected].id]"
+              >{{ bookBestSell[bestBookSelected].unitprice }} €</span
+            >
           </div>
         </div>
-      
 
-      <div class="best-sell-pagination">
-        <div
-          class="best-sell-button best-sell-button-prev"
-          (click)="prevBestBook()"
-        >
-          Prev
-        </div>
-        <div
-          class="best-sell-button best-sell-button-next"
-          (click)="nextBestBook()"
-        >
-          Next
+        <div class="best-sell-pagination">
+          <div
+            class="best-sell-button best-sell-button-prev"
+            (click)="prevBestBook()"
+          >
+          <i class="far fa-arrow-left"></i> Prev
+          </div>
+          <div
+            class="best-sell-button best-sell-button-next"
+            (click)="nextBestBook()"
+          >
+            Next <i class="far fa-arrow-right"></i>
+          </div>
         </div>
       </div>
     </div>
-  </div></div>
+  </div>
 </div>
