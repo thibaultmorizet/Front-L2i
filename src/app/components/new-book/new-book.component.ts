@@ -27,6 +27,7 @@ import StorageCrypter from 'storage-crypter';
   ],
 })
 export class NewBookComponent implements OnInit {
+  menuIsVisible: boolean = false;
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
   basket: Array<Book> = [];
@@ -224,5 +225,8 @@ export class NewBookComponent implements OnInit {
     } else {
       alert("Please select a file first")
     } */
+  }
+  toggleMenu() {
+    this.menuIsVisible = !this.menuIsVisible;
   }
 }

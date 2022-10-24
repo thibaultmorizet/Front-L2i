@@ -1,17 +1,94 @@
 <header>
   <div id="top">
+    <nav class="navbar">
+      <div class="container">
+        <div class="visible-lg" *ngIf="!menuIsVisible">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="home-link text-uppercase active"
+                [routerLink]="['/home']"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="home-link text-uppercase" [routerLink]="['/books']"
+                >Shop</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <a class="navbar-brand pointer" [routerLink]="['/home']"
+          ><img
+            src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
+            alt="logo-l2i"
+            width="100"
+        /></a>
+
+        <div class="navbar-icons visible-lg" *ngIf="!menuIsVisible">
+          <div id="bag-shopping-count-container">
+            <a [routerLink]="['/basket']">
+              <span id="bag-shopping-count" aria-hidden="true">{{
+                basket.length
+              }}</span>
+              <i class="fas fa-bag-shopping text-white"></i
+            ></a>
+          </div>
+          <a [routerLink]="['/user']">
+            <i class="fas fa-user text-white"></i
+          ></a>
+        </div>
+
+        <button
+          class="navbar-toggler pointer"
+          type="button"
+          (click)="toggleMenu()"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+      <div *ngIf="menuIsVisible">
+        <div class="element-center">
+          <ul class="navbar-nav text-center">
+            <li class="nav-item">
+              <a
+                class="home-link text-uppercase active"
+                [routerLink]="['/home']"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="home-link text-uppercase" [routerLink]="['/books']"
+                >Shop</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="navbar-icons element-center">
+          <div id="bag-shopping-count-container">
+            <a [routerLink]="['/basket']">
+              <span id="bag-shopping-count" aria-hidden="true">{{
+                basket.length
+              }}</span>
+              <i class="fas fa-bag-shopping text-white"></i
+            ></a>
+          </div>
+          <a [routerLink]="['/user']">
+            <i class="fas fa-user text-white"></i
+          ></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- <header>
+  <div id="top">
     <div class="container">
       <div class="row">
-        <div class="col-lg-6 offer mb-3 mb-lg-0 d-flex align-items-center">
-          <a [routerLink]="['/books']" class="fa-2x home-link pointer"><img src="https://www.thibaultmorizet.fr/assets/logo-l2i.png" alt=""></a>
-        </div>
         <div class="col-lg-6 d-flex justify-content-end align-items-center">
           <ul class="menu list-inline mb-0 mx-3">
-            <!-- <li class="list-inline-item">
-              <a href="#" data-toggle="modal" data-target="#login-modal"
-                >Login</a
-              >
-            </li> -->
             <ng-template #registerContent let-modal>
               <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title">Inscription</h4>
@@ -225,25 +302,17 @@
               <a (click)="logout()">Deconnexion</a>
             </li>
           </ul>
-
-          <div id="bag-shopping-count-container">
-            <a [routerLink]="['/basket']">
-              <span id="bag-shopping-count" aria-hidden="true">{{
-                basket.length
-              }}</span>
-              <i class="fa-solid fa-bag-shopping fa-2x text-white"></i
-            ></a>
-          </div>
         </div>
       </div>
     </div>
   </div>
 </header>
+ -->
 
 <div id="content">
   <div class="container">
     <div class="row">
-      <div id="search" class="my-3">
+      <div id="search" class="">
         <div class="container d-flex justify-content-end">
           <form
             #searchForm="ngForm"
@@ -569,7 +638,7 @@
                     <i class="fa-solid fa-pen-to-square"></i
                   ></span>
                   <a [routerLink]="['/books/', elt.id]">
-                    <img src="{{ elt.image }}" alt="" class="img-fluid"
+                    <img src="{{ elt.image }}" alt="" class="img-book-details"
                   /></a>
                 </div>
               </div>

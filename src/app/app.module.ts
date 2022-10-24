@@ -1,6 +1,6 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +26,8 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
 import { NewBookComponent } from './components/new-book/new-book.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +47,8 @@ import { NewBookComponent } from './components/new-book/new-book.component';
     NgbModule,
     NgxIziToastModule,
     SocialLoginModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -61,9 +65,7 @@ import { NewBookComponent } from './components/new-book/new-book.component';
           }, */
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider(
-              '496421065692400'
-            ),
+            provider: new FacebookLoginProvider('496421065692400'),
           },
         ],
         onError: (err) => {

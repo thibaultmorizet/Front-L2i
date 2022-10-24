@@ -14,6 +14,7 @@ import {
   NgbActiveModal,
   NgbModal,
   ModalDismissReasons,
+  NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user.service';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
@@ -36,6 +37,8 @@ import { Author } from 'src/app/interfaces/author';
   ],
 })
 export class BookComponent implements OnInit {
+  menuIsVisible: boolean = false;
+
   basket: Array<Book> = [];
   books: Array<Book> = [];
   allBooks: Array<Book> = [];
@@ -63,6 +66,8 @@ export class BookComponent implements OnInit {
   connectedUser: User | null = {};
   actualUpdatebook: Book = {};
   fileToUpload: any = {};
+
+  gfg: boolean = true;
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -440,11 +445,11 @@ export class BookComponent implements OnInit {
           );
         setTimeout(() => {
           if (this.actualUpdatebook.format?.name) {
-              document.getElementById(this.actualUpdatebook.format.name)?.click();
+            document.getElementById(this.actualUpdatebook.format.name)?.click();
           }
           if (this.actualUpdatebook.editor?.name) {
             document.getElementById(this.actualUpdatebook.editor.name)?.click();
-        }
+          }
         }, 500);
       });
     }
@@ -595,5 +600,8 @@ export class BookComponent implements OnInit {
     } else {
       alert("Please select a file first")
     } */
+  }
+  toggleMenu() {
+    this.menuIsVisible = !this.menuIsVisible;
   }
 }

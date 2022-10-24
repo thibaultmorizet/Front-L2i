@@ -28,6 +28,7 @@ import {
   ],
 })
 export class BookDetailsComponent implements OnInit {
+  menuIsVisible: boolean = false;
   book: Book = {};
   idBook: number = 0;
   basket: Array<Book> = [];
@@ -326,5 +327,8 @@ export class BookDetailsComponent implements OnInit {
           this.logout();
         },
       });
+  }
+  toggleMenu() {
+    this.menuIsVisible = !this.menuIsVisible;
   }
 }

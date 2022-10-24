@@ -18,6 +18,7 @@ import StorageCrypter from 'storage-crypter';
   ],
 })
 export class AdminRegisterComponent implements OnInit {
+  menuIsVisible: boolean = false;
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
   userInscription: User = { roles: ['ROLE_ADMIN'] };
@@ -131,5 +132,8 @@ export class AdminRegisterComponent implements OnInit {
           this.logout();
         },
       });
+  }
+  toggleMenu() {
+    this.menuIsVisible = !this.menuIsVisible;
   }
 }
