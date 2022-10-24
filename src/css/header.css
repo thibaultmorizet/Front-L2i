@@ -136,10 +136,10 @@ a {
 }
 
 header{
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 650px) {
     .navbar-toggler {
         display: none;
     }

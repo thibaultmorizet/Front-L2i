@@ -21,7 +21,7 @@ import StorageCrypter from 'storage-crypter';
 export class HomeComponent implements OnInit {
   menuIsVisible: boolean = false;
   bestBookSelected: number = 0;
-  bestBookArray: Array<number> = [0, 1, 2];
+  bestBookArray: Array<number> = [0, 1, 2, 3,4];
   basket: Array<Book> = [];
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
@@ -115,17 +115,21 @@ export class HomeComponent implements OnInit {
   }
 
   nextBestBook() {
-    if (this.bestBookSelected < 9) {
-      this.bestBookSelected++;
-    } else {
-      this.bestBookSelected = 0;
+    for (let index = 0; index < this.bestBookArray.length; index++) {
+      if (this.bestBookArray[index] < 9) {
+        this.bestBookArray[index]++;
+      } else {
+        this.bestBookArray[index] = 0;
+      }
     }
   }
   prevBestBook() {
-    if (this.bestBookSelected > 0) {
-      this.bestBookSelected--;
-    } else {
-      this.bestBookSelected = 9;
+    for (let index = 0; index < this.bestBookArray.length; index++) {
+      if (this.bestBookArray[index] > 0) {
+        this.bestBookArray[index]--;
+      } else {
+        this.bestBookArray[index] = 9;
+      }
     }
   }
 
