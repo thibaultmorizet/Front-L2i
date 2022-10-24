@@ -14,7 +14,7 @@
 }
 
 .best-sell-img:hover .img-best-sell {
-    opacity: 0.6;
+    opacity: 0.9;
     transition: all 0.3s;
 
 }
@@ -178,4 +178,8 @@
         height: 450px;
 
     }
+}
+
+body {
+    background-color: #000;
 }

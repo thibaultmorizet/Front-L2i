@@ -28,6 +28,8 @@ import { NewBookComponent } from './components/new-book/new-book.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+import {  } from 'mdb-angular-ui-kit/';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { HomeComponent } from './components/home/home.component';
     SocialLoginModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    MdbCollapseModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
