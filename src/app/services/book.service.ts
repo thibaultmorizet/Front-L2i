@@ -119,19 +119,27 @@ export class BookService {
         this.searchString
     );
   }
+
   updateBook(id: number | undefined, book: Book) {
     return this.http.put<{ token: string }>(this.url + '/' + id, book);
   }
+
   createBook(book: Book) {
     return this.http.post<Book>(this.url, book);
   }
 
   uploadCoverImage(file: File) {
-    const formData = new FormData(); 
-        
-    formData.append("file", file, file.name);
-      
-    return this.http.post<{ token: string }>('https://www.thibaultmorizet.fr/assets/', formData)
+    const formData = new FormData();
 
+    formData.append('file', file, file.name);
+
+    return this.http.post<{ token: string }>(
+      'https://www.thibaultmorizet.fr/assets/',
+      formData
+    );
+  }
+
+  getBooksBestSell() {
+    return this.http.get<Array<Book>>(this.url + '?itemsPerPage=10');
   }
 }

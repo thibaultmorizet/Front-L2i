@@ -1,3 +1,10 @@
+#content {
+    font-family: "Quicksand", Arial, sans-serif;
+    color: rgba(0, 0, 0);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
 .img-book-details {
     max-height: 450px;
 }
@@ -6,6 +13,10 @@
     border-radius: 0.5rem !important;
 }
 
-.d-none{
+.d-none {
     display: none;
+}
+
+.text-center {
+    text-align: center;
 }

@@ -135,6 +135,10 @@ a {
     display: none;
 }
 
+header{
+    margin-bottom: 3rem;
+}
+
 @media (min-width: 500px) {
     .navbar-toggler {
         display: none;

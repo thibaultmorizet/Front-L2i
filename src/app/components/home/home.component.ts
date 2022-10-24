@@ -5,33 +5,40 @@ import { NgxIzitoastService } from 'ngx-izitoast';
 import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { BookService } from 'src/app/services/book.service';
 import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: [
+    './home.component.css',
+    './../../../css/header.css',
+    './../../../css/main.css',
+  ],
 })
 export class HomeComponent implements OnInit {
   menuIsVisible: boolean = false;
   basket: Array<Book> = [];
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
-
+  bookBestSell: Array<Book> = [];
   socialUser!: SocialUser;
   isLoggedin?: boolean;
 
   constructor(
     private us: UserService,
     private as: AuthService,
+    private bs: BookService,
     private authService: SocialAuthService,
     private router: Router,
     private iziToast: NgxIzitoastService,
-
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
+    this.getBooksBestSell();
     try {
       this.getUserByEmail(
         JSON.parse(this.storageCrypter.getItem('user', 'session')).email
@@ -51,6 +58,11 @@ export class HomeComponent implements OnInit {
         this.refreshToken();
       }
     }
+  }
+  getBooksBestSell() {
+    this.bs.getBooksBestSell().subscribe((res) => {
+      this.bookBestSell = res;
+    });
   }
   tokenExpired(token: string) {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
