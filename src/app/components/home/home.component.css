@@ -11,6 +11,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
+    min-height: 400px;
 }
 
 .best-sell-container {
@@ -124,27 +125,14 @@
     transition: all 0.3s;
 }
 
-.best-sell-second-element, .best-sell-third-element, .best-sell-fourth-element, .best-sell-fifth-element {
-    display: none;
-}
-
 @media (min-width: 650px) {
-    .best-sell-second-element {
-        display: flex;
-    }
 }
 
 @media (min-width: 1000px) {
-    .best-sell-third-element {
-        display: flex;
-    }
+
 }
 
 @media (min-width: 1300px) {
-    .best-sell-fourth-element {
-        display: flex;
-    }
-
     .best-sell-title {
         font-size: 1.2rem;
     }
@@ -152,15 +140,16 @@
     .best-sell-price {
         font-size: 1.2rem;
     }
+    .all-best-sell-container {
+        min-height: 500px;
+    }
+    
+    
 }
 
 @media (min-width: 1800px) {
     .container{
         max-width: 1600px;
-    }
-
-    .best-sell-fifth-element {
-        display: flex;
     }
 
     .best-sell-title {
@@ -199,42 +188,4 @@
 
 
 
-.bg-yellow {
-    background-color: yellow;
-  }
-  .transition {
-    transition: background 0.25s ease, color 0.25s ease;
-  }
-  .active-slide {
-    background-color: green;
-    color: #fff;
-  }
-  .bg-blue {
-    background-color: blue;
-    color: #fff;
-  }
 
-
-
-  @import "~swiper/swiper-bundle";
-
-body,
-html {
-  padding: 0;
-  margin: 0;
-  position: relative;
-  height: 100%;
-}
-
-.swiper-container {
-  width: 100%;
-  height: 300px;
-  margin: 50px auto;
-}
-
-.swiper-slide {
-  background: #f1f1f1;
-  color: #000;
-  text-align: center;
-  line-height: 300px;
-}

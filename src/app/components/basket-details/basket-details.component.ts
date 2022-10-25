@@ -28,7 +28,6 @@ import {
   ],
 })
 export class BasketDetailsComponent implements OnInit {
-  menuIsVisible: boolean = false;
   storageCrypter = new StorageCrypter('Secret');
   basket: Array<Book> = [];
   errorConnexion: string | null = null;
@@ -306,8 +305,5 @@ export class BasketDetailsComponent implements OnInit {
           this.logout();
         },
       });
-  }
-  toggleMenu() {
-    this.menuIsVisible = !this.menuIsVisible;
   }
 }

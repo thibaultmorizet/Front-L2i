@@ -19,7 +19,6 @@ import { AuthService } from 'src/app/services/auth.service';
   ],
 })
 export class MyAccountComponent implements OnInit {
-  menuIsVisible: boolean = false;
   storageCrypter = new StorageCrypter('Secret');
   basket: Array<Book> = [];
   connectedUser: User = {};
@@ -218,7 +217,5 @@ export class MyAccountComponent implements OnInit {
         },
       });
   }
-  toggleMenu() {
-    this.menuIsVisible = !this.menuIsVisible;
-  }
+
 }

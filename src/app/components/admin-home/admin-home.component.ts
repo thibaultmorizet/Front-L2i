@@ -18,7 +18,6 @@ import StorageCrypter from 'storage-crypter';
   ],
 })
 export class AdminHomeComponent implements OnInit {
-  menuIsVisible: boolean = false;
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
   basket: Array<Book> = [];
@@ -105,8 +104,5 @@ export class AdminHomeComponent implements OnInit {
           this.logout();
         },
       });
-  }
-  toggleMenu() {
-    this.menuIsVisible = !this.menuIsVisible;
   }
 }

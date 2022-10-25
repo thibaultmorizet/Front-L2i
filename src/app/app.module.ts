@@ -28,7 +28,8 @@ import { NewBookComponent } from './components/new-book/new-book.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
-import { SwiperModule } from "swiper/angular";
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { SwiperModule } from "swiper/angular";
     SocialLoginModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    SwiperModule,
+    NgbCarouselModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

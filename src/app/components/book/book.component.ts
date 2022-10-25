@@ -37,8 +37,6 @@ import { Author } from 'src/app/interfaces/author';
   ],
 })
 export class BookComponent implements OnInit {
-  menuIsVisible: boolean = false;
-
   basket: Array<Book> = [];
   books: Array<Book> = [];
   allBooks: Array<Book> = [];
@@ -601,7 +599,5 @@ export class BookComponent implements OnInit {
       alert("Please select a file first")
     } */
   }
-  toggleMenu() {
-    this.menuIsVisible = !this.menuIsVisible;
-  }
+
 }
