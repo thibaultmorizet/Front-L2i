@@ -32,6 +32,17 @@
 
 <div id="content">
   <div class="container">
+
+    <swiper #swiperVirtualRef [slidesPerView]="3" [spaceBetween]="50" [pagination]="{ type: 'fraction' }"
+    [virtual]="true" slideActiveClass="swiper-active whyWouldIuseCustomClass" [centeredSlides]="true"
+    [navigation]="true" class="mySwiper" id="mySwiperID">
+    <ng-template swiperSlide *ngFor="let slide of virtualSlides; index as i">Slide {{ slide }}</ng-template>
+    <ng-template swiperSlide>Slide</ng-template>
+    <ng-template swiperSlide>Slide</ng-template>
+  </swiper>
+
+
+
     <div class="general-best-sell-container">
       <p class="title text-center">Nos meilleures ventes</p>
       <div class="all-best-sell-container">
@@ -78,20 +89,20 @@
           </div>
         </div>
       </div>
-        <div class="best-sell-pagination">
-      <div
-        class="best-sell-button best-sell-button-prev"
-        (click)="prevBestBook()"
-      >
-        <i class="far fa-arrow-left"></i> Prev
-      </div>
-      <div
-        class="best-sell-button best-sell-button-next"
-        (click)="nextBestBook()"
-      >
-        Next <i class="far fa-arrow-right"></i>
+      <div class="best-sell-pagination">
+        <div
+          class="best-sell-button best-sell-button-prev"
+          (click)="prevBestBook()"
+        >
+          <i class="far fa-arrow-left"></i> Prev
+        </div>
+        <div
+          class="best-sell-button best-sell-button-next"
+          (click)="nextBestBook()"
+        >
+          Next <i class="far fa-arrow-right"></i>
+        </div>
       </div>
     </div>
-</div>
   </div>
 </div>

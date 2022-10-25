@@ -28,6 +28,7 @@ import { NewBookComponent } from './components/new-book/new-book.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
+import { SwiperModule } from "swiper/angular";
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { HomeComponent } from './components/home/home.component';
     SocialLoginModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    SwiperModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
