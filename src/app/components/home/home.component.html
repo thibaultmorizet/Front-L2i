@@ -32,52 +32,53 @@
 
 <div id="content">
   <div class="container">
-    <p class="title text-center">Nos meilleures ventes</p>
-    <div class="all-best-sell-container">
-      <div
-        class="best-sell-container"
-        *ngFor="let OneBook of bestBookArray"
-        [ngClass]="{
-          'best-sell-first-element': bestBookArray.indexOf(OneBook) == 0,
-          'best-sell-second-element': bestBookArray.indexOf(OneBook) == 1,
-          'best-sell-third-element': bestBookArray.indexOf(OneBook) == 2,
-          'best-sell-fourth-element': bestBookArray.indexOf(OneBook) == 3,
-          'best-sell-fifth-element': bestBookArray.indexOf(OneBook) == 4
-        }"
-      >
-        <div>
-          <div class="best-sell-img">
-            <img
-              src="{{ bookBestSell[OneBook].image }}"
-              [alt]="bookBestSell[OneBook].title"
-              class="img-best-sell pointer"
-              [routerLink]="['/books/', bookBestSell[OneBook].id]"
-            />
-            <div class="article-hover-actions">
-              <div
-                class="article-hover-actions-add-cart"
-                (click)="addBookToBasket(bookBestSell[OneBook].id)"
-              >
-                <i class="fa fa-shopping-cart"></i>
+    <div class="general-best-sell-container">
+      <p class="title text-center">Nos meilleures ventes</p>
+      <div class="all-best-sell-container">
+        <div
+          class="best-sell-container"
+          *ngFor="let OneBook of bestBookArray"
+          [ngClass]="{
+            'best-sell-first-element': bestBookArray.indexOf(OneBook) == 0,
+            'best-sell-second-element': bestBookArray.indexOf(OneBook) == 1,
+            'best-sell-third-element': bestBookArray.indexOf(OneBook) == 2,
+            'best-sell-fourth-element': bestBookArray.indexOf(OneBook) == 3,
+            'best-sell-fifth-element': bestBookArray.indexOf(OneBook) == 4
+          }"
+        >
+          <div>
+            <div class="best-sell-img">
+              <img
+                src="{{ bookBestSell[OneBook].image }}"
+                [alt]="bookBestSell[OneBook].title"
+                class="img-best-sell pointer"
+                [routerLink]="['/books/', bookBestSell[OneBook].id]"
+              />
+              <div class="article-hover-actions">
+                <div
+                  class="article-hover-actions-add-cart"
+                  (click)="addBookToBasket(bookBestSell[OneBook].id)"
+                >
+                  <i class="fa fa-shopping-cart"></i>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="best-sell-description">
-            <span
-              class="best-sell-title pointer"
-              [routerLink]="['/books/', bookBestSell[OneBook].id]"
-              >{{ bookBestSell[OneBook].title }}</span
-            >
-            <span
-              class="best-sell-price pointer"
-              [routerLink]="['/books/', bookBestSell[OneBook].id]"
-              >{{ bookBestSell[OneBook].unitprice }} €</span
-            >
+            <div class="best-sell-description">
+              <span
+                class="best-sell-title pointer"
+                [routerLink]="['/books/', bookBestSell[OneBook].id]"
+                >{{ bookBestSell[OneBook].title }}</span
+              >
+              <span
+                class="best-sell-price pointer"
+                [routerLink]="['/books/', bookBestSell[OneBook].id]"
+                >{{ bookBestSell[OneBook].unitprice }} €</span
+              >
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="best-sell-pagination">
+        <div class="best-sell-pagination">
       <div
         class="best-sell-button best-sell-button-prev"
         (click)="prevBestBook()"
@@ -91,5 +92,6 @@
         Next <i class="far fa-arrow-right"></i>
       </div>
     </div>
+</div>
   </div>
 </div>
