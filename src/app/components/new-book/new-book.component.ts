@@ -24,6 +24,7 @@ import StorageCrypter from 'storage-crypter';
     './new-book.component.css',
     './../../../css/header.css',
     './../../../css/main.css',
+    './../../../css/footer.css',
   ],
 })
 export class NewBookComponent implements OnInit {

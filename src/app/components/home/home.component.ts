@@ -17,6 +17,7 @@ import StorageCrypter from 'storage-crypter';
     './home.component.css',
     './../../../css/header.css',
     './../../../css/main.css',
+    './../../../css/footer.css',
   ],
   encapsulation: ViewEncapsulation.None,
 })
@@ -74,7 +75,7 @@ export class HomeComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.getBooksBestSell();
     try {
       this.getUserByEmail(
@@ -94,9 +95,14 @@ export class HomeComponent implements OnInit {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
         this.refreshToken();
       }
-    }    (
-      document.getElementsByClassName('p-carousel-indicators')[0] as HTMLElement
-    ).click();
+    }
+    if (document.getElementsByClassName('p-carousel-indicators')[0]) {
+      (
+        document.getElementsByClassName(
+          'p-carousel-indicators'
+        )[0] as HTMLElement
+      ).click();
+    }
   }
 
   getBooksBestSell() {

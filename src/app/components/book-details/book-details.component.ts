@@ -26,6 +26,7 @@ import {
     './book-details.component.css',
     './../../../css/header.css',
     './../../../css/main.css',
+    './../../../css/footer.css',
   ],
 })
 export class BookDetailsComponent implements OnInit {

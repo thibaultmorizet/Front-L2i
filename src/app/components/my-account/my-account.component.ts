@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
     './my-account.component.css',
     './../../../css/header.css',
     './../../../css/main.css',
+    './../../../css/footer.css',
   ],
 })
 export class MyAccountComponent implements OnInit {

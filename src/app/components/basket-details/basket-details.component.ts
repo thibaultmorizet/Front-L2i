@@ -25,6 +25,7 @@ import {
     './basket-details.component.css',
     './../../../css/header.css',
     './../../../css/main.css',
+    './../../../css/footer.css',
   ],
 })
 export class BasketDetailsComponent implements OnInit {

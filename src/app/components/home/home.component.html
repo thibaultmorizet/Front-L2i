@@ -1,100 +1,112 @@
-<header>
-  <div id="top">
-    <nav class="navbar">
-      <div class="container">
-        <a class="navbar-brand pointer" [routerLink]="['/home']"
-          ><img
-            src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
-            alt="logo-l2i"
-            width="40"
-        /></a>
-        <a class="home-link text-uppercase active" [routerLink]="['/home']"
-          >Home</a
-        >
-        <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
-
-        <a class="home-link text-uppercase" [routerLink]="['/user']"
-          >My Account</a
-        >
-
-        <div id="bag-shopping-count-container">
-          <a [routerLink]="['/basket']" class="home-link text-uppercase">
-            <span id="bag-shopping-count" aria-hidden="true">{{
-              basket.length
-            }}</span>
-            My Basket</a
+<div class="general-content">
+  <header>
+    <div id="top">
+      <nav class="navbar">
+        <div class="container">
+          <a class="navbar-brand pointer" [routerLink]="['/home']"
+            ><img
+              src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
+              alt="logo-l2i"
+              width="40"
+          /></a>
+          <a class="home-link text-uppercase active" [routerLink]="['/home']"
+            >Home</a
           >
-        </div>
-      </div>
-    </nav>
-  </div>
-</header>
+          <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
 
-<div id="content">
-  <div class="container">
-    <div class="general-best-sell-container">
-      <div>
-        <p-carousel
-          #bestSellCarousel
-          [value]="bookBestSell"
-          styleClass="custom-carousel"
-          [numVisible]="1"
-          [numScroll]="1"
-          [circular]="true"
-          [autoplayInterval]="7000"
-          [responsiveOptions]="responsiveOptions"
-        >
-          <ng-template pTemplate="header">
-            <p class="title text-center">Nos meilleures ventes</p>
-          </ng-template>
-          <ng-template let-oneBook pTemplate="item">
-            <div class="best-sell-container">
-              <div class="best-sell-img">
-                <img
-                  src="{{ oneBook.image }}"
-                  [alt]="oneBook.title"
-                  class="img-best-sell pointer"
-                  [routerLink]="['/books/', oneBook.id]"
-                />
-                <div class="article-hover-actions">
-                  <div
-                    class="article-hover-actions-add-cart"
-                    (click)="addBookToBasket(oneBook.id)"
-                  >
-                    <i class="fa fa-shopping-cart"></i>
+          <a class="home-link text-uppercase" [routerLink]="['/user']"
+            >My Account</a
+          >
+
+          <div id="bag-shopping-count-container">
+            <a [routerLink]="['/basket']" class="home-link text-uppercase">
+              <span id="bag-shopping-count" aria-hidden="true">{{
+                basket.length
+              }}</span>
+              My Basket</a
+            >
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="container">
+      <div class="general-best-sell-container">
+        <div>
+          <p-carousel
+            #bestSellCarousel
+            [value]="bookBestSell"
+            styleClass="custom-carousel"
+            [numVisible]="1"
+            [numScroll]="1"
+            [circular]="true"
+            [autoplayInterval]="7000"
+            [responsiveOptions]="responsiveOptions"
+          >
+            <ng-template pTemplate="header">
+              <p class="title text-center">Nos meilleures ventes</p>
+            </ng-template>
+            <ng-template let-oneBook pTemplate="item">
+              <div class="best-sell-container">
+                <div class="best-sell-img">
+                  <img
+                    src="{{ oneBook.image }}"
+                    [alt]="oneBook.title"
+                    class="img-best-sell pointer"
+                    [routerLink]="['/books/', oneBook.id]"
+                  />
+                  <div class="article-hover-actions">
+                    <div
+                      class="article-hover-actions-add-cart"
+                      (click)="addBookToBasket(oneBook.id)"
+                    >
+                      <i class="fa fa-shopping-cart"></i>
+                    </div>
                   </div>
                 </div>
+                <div class="best-sell-description">
+                  <span
+                    class="best-sell-title pointer"
+                    [routerLink]="['/books/', oneBook.id]"
+                    >{{ oneBook.title }}</span
+                  >
+                  <span
+                    class="best-sell-price pointer"
+                    [routerLink]="['/books/', oneBook.id]"
+                    >{{ oneBook.unitprice }} €</span
+                  >
+                </div>
               </div>
-              <div class="best-sell-description">
-                <span
-                  class="best-sell-title pointer"
-                  [routerLink]="['/books/', oneBook.id]"
-                  >{{ oneBook.title }}</span
-                >
-                <span
-                  class="best-sell-price pointer"
-                  [routerLink]="['/books/', oneBook.id]"
-                  >{{ oneBook.unitprice }} €</span
-                >
-              </div>
-            </div>
-          </ng-template>
-        </p-carousel>
-      </div>
-      <div class="best-sell-pagination"><!-- p-ripple p-element p-carousel-prev p-link -->
-        <div
-          class="best-sell-button best-sell-button-prev"
-          (click)="prevBestBook()"
-        >
-          <i class="far fa-arrow-left"></i> Prev
+            </ng-template>
+          </p-carousel>
         </div>
-        <div
-          class="best-sell-button best-sell-button-next"
-          (click)="nextBestBook()"
-        >
-          Next <i class="far fa-arrow-right"></i>
+        <div class="best-sell-pagination">
+          <!-- p-ripple p-element p-carousel-prev p-link -->
+          <div
+            class="best-sell-button best-sell-button-prev"
+            (click)="prevBestBook()"
+          >
+            <i class="far fa-arrow-left"></i> Prev
+          </div>
+          <div
+            class="best-sell-button best-sell-button-next"
+            (click)="nextBestBook()"
+          >
+            Next <i class="far fa-arrow-right"></i>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
+  <footer>
+    <nav class="navbar">
+      <ul>
+        <li>Contact</li>
+        <li>Mentions Légales</li>
+        <li>Conditions générales de ventes</li>
+      </ul>
+    </nav>
+  </footer>
 </div>

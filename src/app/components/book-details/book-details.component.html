@@ -1,368 +1,138 @@
-<header>
-  <div id="top">
-    <nav class="navbar">
-      <div class="container">
-        <a class="navbar-brand pointer" [routerLink]="['/home']"
-          ><img
-            src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
-            alt="logo-l2i"
-            width="50"
-        /></a>
-        <a class="home-link text-uppercase active" [routerLink]="['/home']"
-          >Home</a
-        >
-        <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
-
-        <a class="home-link text-uppercase" [routerLink]="['/user']"
-          >My Account</a
-        >
-
-        <div id="bag-shopping-count-container">
-          <a [routerLink]="['/basket']" class="home-link text-uppercase">
-            <span id="bag-shopping-count" aria-hidden="true">{{
-              basket.length
-            }}</span>
-            My Basket</a
+<div class="general-content">
+  <header>
+    <div id="top">
+      <nav class="navbar">
+        <div class="container">
+          <a class="navbar-brand pointer" [routerLink]="['/home']"
+            ><img
+              src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
+              alt="logo-l2i"
+              width="50"
+          /></a>
+          <a class="home-link text-uppercase active" [routerLink]="['/home']"
+            >Home</a
           >
-        </div>
-      </div>
-    </nav>
-  </div>
-</header>
+          <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
 
-
-<!-- <header>
-  <div id="top">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 offer mb-3 mb-lg-0 d-flex align-items-center">
-          <a [routerLink]="['/books']" class="fa-2x home-link pointer"><img src="https://www.thibaultmorizet.fr/assets/logo-l2i.png" alt=""></a>
-        </div>
-        <div class="col-lg-6 d-flex justify-content-end align-items-center">
-          <ul class="menu list-inline mb-0 mx-3">
-            <ng-template #registerContent let-modal>
-              <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title">Inscription</h4>
-                <button
-                  type="button"
-                  class="btn-close"
-                  aria-label="Close"
-                  (click)="modal.dismiss('Cross click')"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form #registerForm="ngForm" (ngSubmit)="register()">
-                  <div class="mb-3">
-                    <label class="mb-2" for="lastname">Nom</label>
-                    <div class="input-group">
-                      <input
-                        id="lastname"
-                        class="form-control mb-3"
-                        placeholder="Nom"
-                        name="lastname"
-                        [(ngModel)]="userInscription.lastname"
-                        required
-                      />
-                    </div>
-                    <label class="mb-2" for="lastname">Prenom</label>
-                    <div class="input-group">
-                      <input
-                        id="firstname"
-                        class="form-control mb-3"
-                        placeholder="Prénom"
-                        name="firstname"
-                        [(ngModel)]="userInscription.firstname"
-                        required
-                      />
-                    </div>
-                    <label class="mb-2" for="lastname">Email</label>
-                    <div class="input-group">
-                      <input
-                        id="email"
-                        class="form-control mb-3"
-                        placeholder="Email"
-                        name="email"
-                        type="email"
-                        [(ngModel)]="userInscription.email"
-                        required
-                      />
-                    </div>
-                    <div *ngIf="errorEmail" class="mb-2 text-danger">
-                      {{ errorEmail }}
-                    </div>
-
-                    <label class="mb-2" for="lastname">Mot de Passe</label>
-                    <div class="input-group">
-                      <input
-                        id="password"
-                        class="form-control mb-3"
-                        placeholder="Mot de Passe"
-                        name="password"
-                        type="password"
-                        [(ngModel)]="userInscription.password"
-                        required
-                      />
-                    </div>
-                    <div *ngIf="errorPassword" class="mb-2 text-danger">
-                      {{ errorPassword }}
-                    </div>
-
-                    <label class="mb-2" for="lastname">Mot de Passe</label>
-                    <div class="input-group">
-                      <input
-                        id="passwordConfirm"
-                        class="form-control mb-3"
-                        placeholder="Confirmer le Mot de Passe"
-                        name="passwordConfirm"
-                        type="password"
-                        [(ngModel)]="userInscription.passwordConfirm"
-                        required
-                      />
-                    </div>
-                    <div *ngIf="!isLoggedin">
-                      <div>
-                        <button
-                          type="button"
-                          (click)="signInWithGoogle()"
-                          class="btn btn-google mt-3"
-                        >
-                          <img
-                            src="./assets/logo-google.png"
-                            alt="logo Google"
-                            class="logo-google"
-                          />
-                          Connexion avec Google</button
-                        ><br />
-                        <button
-                          class="btn btn-facebook mt-3"
-                          (click)="signInWithFB()"
-                        >
-                          <i class="fa-brands fa-facebook mr-1"></i> Connexion
-                          avec Facebook
-                        </button>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-end mt-2">
-                      <button
-                        type="submit"
-                        class="btn btn-default btn-sm btn-primary"
-                        [disabled]="!registerForm.valid"
-                      >
-                        Continuer
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </ng-template>
-            <ng-template #loginContent let-modal>
-              <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title">Connexion</h4>
-                <button
-                  type="button"
-                  class="btn-close"
-                  aria-label="Close"
-                  (click)="modal.dismiss('Cross click')"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form #loginForm="ngForm" (ngSubmit)="login()">
-                  <div class="mb-3">
-                    <label class="mb-2" for="lastname">Email</label>
-                    <div class="input-group">
-                      <input
-                        id="email"
-                        class="form-control mb-3"
-                        placeholder="Email"
-                        name="email"
-                        type="email"
-                        [(ngModel)]="userLogin.email"
-                        required
-                      />
-                    </div>
-
-                    <label class="mb-2" for="lastname">Mot de Passe</label>
-                    <div class="input-group">
-                      <input
-                        id="password"
-                        class="form-control mb-3"
-                        placeholder="Mot de Passe"
-                        name="password"
-                        type="password"
-                        [(ngModel)]="userLogin.password"
-                        required
-                      />
-                    </div>
-                    <div *ngIf="errorConnexion" class="mb-2 text-danger">
-                      {{ errorConnexion }}
-                    </div>
-
-                    <div class="d-flex justify-content-end mt-2">
-                      <button
-                        type="submit"
-                        class="btn btn-default btn-sm btn-primary"
-                        [disabled]="!loginForm.valid"
-                      >
-                        Connexion
-                      </button>
-                    </div>
-                  </div>
-                </form>
-                <div>
-                  <button
-                    type="button"
-                    (click)="signInWithGoogle()"
-                    class="btn btn-google mt-3"
-                  >
-                    <img
-                      src="./assets/logo-google.png"
-                      alt="logo Google"
-                      class="logo-google"
-                    />
-                    Connexion avec Google</button
-                  ><br />
-                  <button
-                    class="btn btn-facebook mt-3"
-                    (click)="signInWithFB()"
-                  >
-                    <i class="fa-brands fa-facebook mr-1"></i> Connexion avec
-                    Facebook
-                  </button>
-                </div>
-              </div>
-            </ng-template>
-            <li class="list-inline-item pointer" *ngIf="connectedUser == null">
-              <a (click)="loginModal(loginContent)">Connexion</a>
-            </li>
-            <li class="list-inline-item pointer" *ngIf="connectedUser == null">
-              <a (click)="registerModal(registerContent)">Inscription</a>
-            </li>
-            <li
-              class="list-inline-item pointer"
-              *ngIf="
-                connectedUser != null &&
-                this.connectedUser?.roles?.includes('ROLE_ADMIN')
-              "
-            >
-              <a [routerLink]="['/admin-home']">Paramètre Admin</a>
-            </li>
-            <li class="list-inline-item pointer" *ngIf="connectedUser != null">
-              <a [routerLink]="['/my-account']">Mon Profil</a>
-            </li>
-            <li class="list-inline-item pointer" *ngIf="connectedUser != null">
-              <a (click)="logout()">Deconnexion</a>
-            </li>
-          </ul>
+          <a class="home-link text-uppercase" [routerLink]="['/user']"
+            >My Account</a
+          >
 
           <div id="bag-shopping-count-container">
-            <a [routerLink]="['/basket']">
+            <a [routerLink]="['/basket']" class="home-link text-uppercase">
               <span id="bag-shopping-count" aria-hidden="true">{{
                 basket.length
               }}</span>
-              <i class="fa-solid fa-bag-shopping fa-2x text-white"></i
-            ></a>
+              My Basket</a
+            >
           </div>
         </div>
-      </div>
+      </nav>
     </div>
-  </div>
-</header> -->
+  </header>
 
-<div id="content">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-9 order-1 order-lg-2 mt-5">
-        <div id="productMain" class="row">
-          <div class="col-md-6">
-            <img
-              src="{{ book.image }}"
-              alt=""
-              class="img-book-details"
-            />
-          </div>
-          <div class="col-md-6">
-            <div class="box">
-              <h2 class="text-center">{{ book.title }}</h2>
+  <main id="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 order-1 order-lg-2 mt-5">
+          <div id="productMain" class="row">
+            <div class="col-md-6">
+              <img src="{{ book.image }}" alt="" class="img-book-details" />
+            </div>
+            <div class="col-md-6">
+              <div class="box">
+                <h2 class="text-center">{{ book.title }}</h2>
 
-              <p class="goToDescription">
-                <a (click)="scroll(details)" class="scroll-to pointer"
-                  >Scroll to product details, material &amp; care and sizing</a
-                >
-              </p>
-              <p class="price">{{ book.unitprice }} € (HT)</p>
-              <div class="row">
-                <div class="col-6 d-flex align-items-center">
-                  <p class="small mb-0">
-                    Stock restant : <br />{{ book.stock }} exemplaire(s)
-                  </p>
-                </div>
-
-                <div class="col-6">
-                  <form
-                    #addBookForm="ngForm"
-                    (ngSubmit)="addBookToBasket($event, book.id)"
+                <p class="goToDescription">
+                  <a (click)="scroll(details)" class="scroll-to pointer"
+                    >Scroll to product details, material &amp; care and
+                    sizing</a
                   >
-                    Quantité :
-                    <select id="quantity_to_order" name="quantity_to_order">
-                      <option
-                        *ngFor="
-                          let quantity of [
-                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-                            16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
-                            29, 30
-                          ]
-                        "
-                        value="{{ quantity }}"
-                        [selected]="quantity == 1"
-                      >
-                        {{ quantity }}
-                      </option>
-                    </select>
-                    <button type="submit" class="btn btn-primary mt-2">
-                      <i class="fa fa-shopping-cart"></i>Ajouter au panier
-                    </button>
-                  </form>
+                </p>
+                <p class="price">{{ book.unitprice }} € (HT)</p>
+                <div class="row">
+                  <div class="col-6 d-flex align-items-center">
+                    <p class="small mb-0">
+                      Stock restant : <br />{{ book.stock }} exemplaire(s)
+                    </p>
+                  </div>
+
+                  <div class="col-6">
+                    <form
+                      #addBookForm="ngForm"
+                      (ngSubmit)="addBookToBasket($event, book.id)"
+                    >
+                      Quantité :
+                      <select id="quantity_to_order" name="quantity_to_order">
+                        <option
+                          *ngFor="
+                            let quantity of [
+                              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+                              16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+                              28, 29, 30
+                            ]
+                          "
+                          value="{{ quantity }}"
+                          [selected]="quantity == 1"
+                        >
+                          {{ quantity }}
+                        </option>
+                      </select>
+                      <button type="submit" class="btn btn-primary mt-2">
+                        <i class="fa fa-shopping-cart"></i>Ajouter au panier
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div #details class="box">
-          <h3>Détail sur le produit</h3>
-          <br />
-          <h5>Description</h5>
-          <p>
-            {{ book.summary }}
-          </p>
-          <br />
-          <ul>
-            <li>
-              <span>
-                <span class="font-weight-bold">ISBN : </span>
-                <span>{{ book.isbn }}</span>
-              </span>
-            </li>
-            <li>
-              <span>
-                <span class="font-weight-bold">Auteur : </span>
-                <span>{{ book.author }}</span>
-              </span>
-            </li>
-            <li>
-              <span>
-                <span class="font-weight-bold">Éditeur : </span>
-                <span>{{ book.editor?.name }}</span>
-              </span>
-            </li>
-            <li>
-              <span>
-                <span class="font-weight-bold">Année de parution : </span>
-                <span>{{ book.year }}</span>
-              </span>
-            </li>
-          </ul>
+          <div #details class="box">
+            <h3>Détail sur le produit</h3>
+            <br />
+            <h5>Description</h5>
+            <p>
+              {{ book.summary }}
+            </p>
+            <br />
+            <ul>
+              <li>
+                <span>
+                  <span class="font-weight-bold">ISBN : </span>
+                  <span>{{ book.isbn }}</span>
+                </span>
+              </li>
+              <li>
+                <span>
+                  <span class="font-weight-bold">Auteur : </span>
+                  <span>{{ book.author }}</span>
+                </span>
+              </li>
+              <li>
+                <span>
+                  <span class="font-weight-bold">Éditeur : </span>
+                  <span>{{ book.editor?.name }}</span>
+                </span>
+              </li>
+              <li>
+                <span>
+                  <span class="font-weight-bold">Année de parution : </span>
+                  <span>{{ book.year }}</span>
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
+  <footer>
+    <nav class="navbar">
+      <ul>
+        <li>Contact</li>
+        <li>Mentions Légales</li>
+        <li>Conditions générales de ventes</li>
+      </ul>
+    </nav>
+  </footer>
 </div>

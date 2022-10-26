@@ -34,6 +34,7 @@ import { Author } from 'src/app/interfaces/author';
     './book.component.css',
     './../../../css/header.css',
     './../../../css/main.css',
+    './../../../css/footer.css',
   ],
 })
 export class BookComponent implements OnInit {

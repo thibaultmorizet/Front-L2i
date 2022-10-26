@@ -1,253 +1,208 @@
-<header>
-  <div id="top">
-    <nav class="navbar">
-      <div class="container">
-        <a class="navbar-brand pointer" [routerLink]="['/home']"
-          ><img
-            src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
-            alt="logo-l2i"
-            width="50"
-        /></a>
-        <a class="home-link text-uppercase active" [routerLink]="['/home']"
-          >Home</a
-        >
-        <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
-
-        <a class="home-link text-uppercase" [routerLink]="['/user']"
-          >My Account</a
-        >
-
-        <div id="bag-shopping-count-container">
-          <a [routerLink]="['/basket']" class="home-link text-uppercase">
-            <span id="bag-shopping-count" aria-hidden="true">{{
-              basket.length
-            }}</span>
-            My Basket</a
-          >
-        </div>
-      </div>
-    </nav>
-  </div>
-</header>
-
-
-<!-- <header>
+<div class="general-content">
+  <header>
     <div id="top">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 offer mb-3 mb-lg-0 d-flex align-items-center">
-            <a [routerLink]="['/books']" class="fa-2x home-link pointer"><img src="https://www.thibaultmorizet.fr/assets/logo-l2i.png" alt=""></a>
-          </div>
-          <div class="col-lg-6 d-flex justify-content-end align-items-center">
-            <ul class="menu list-inline mb-0 mx-3">
+      <nav class="navbar">
+        <div class="container">
+          <a class="navbar-brand pointer" [routerLink]="['/home']"
+            ><img
+              src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
+              alt="logo-l2i"
+              width="50"
+          /></a>
+          <a class="home-link text-uppercase active" [routerLink]="['/home']"
+            >Home</a
+          >
+          <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
 
-              <li
-                class="list-inline-item pointer"
-                *ngIf="
-                  connectedUser != null &&
-                  this.connectedUser?.roles?.includes('ROLE_ADMIN')
-                "
-              >
-                <a [routerLink]="['/admin-home']">Paramètre Admin</a>
-              </li>
-              <li class="list-inline-item pointer" *ngIf="connectedUser != null">
-                <a [routerLink]="['/my-account']">Mon Profil</a>
-              </li>
-              <li class="list-inline-item pointer" *ngIf="connectedUser != null">
-                <a (click)="logout()">Deconnexion</a>
-              </li>
-            </ul>
-  
-            <div id="bag-shopping-count-container">
-              <a [routerLink]="['/basket']">
-                <span id="bag-shopping-count" aria-hidden="true">{{
-                  basket.length
-                }}</span>
-                <i class="fa-solid fa-bag-shopping fa-2x text-white"></i
-              ></a>
-            </div>
+          <a class="home-link text-uppercase" [routerLink]="['/user']"
+            >My Account</a
+          >
+
+          <div id="bag-shopping-count-container">
+            <a [routerLink]="['/basket']" class="home-link text-uppercase">
+              <span id="bag-shopping-count" aria-hidden="true">{{
+                basket.length
+              }}</span>
+              My Basket</a
+            >
           </div>
         </div>
-      </div>
+      </nav>
     </div>
   </header>
- -->  
-  <h2 class="container text-primary text-center">Créer un nouveau livre</h2>
-  <form #newBookForm="ngForm" (ngSubmit)="setBook()">
-    <div class="mb-3">
-      <label class="mb-2" for="title">Titre</label>
-      <div class="input-group">
-        <input
-          type="text"
-          placeholder="Titre"
-          class="form-control mb-3"
-          [(ngModel)]="newBook.title"
-          name="title"
-          required
-        />
-      </div>
 
-      <label class="mb-2" for="summary">Description</label>
-      <div class="input-group">
-        <textarea
-          placeholder="Description"
-          class="form-control mb-3"
-          [(ngModel)]="newBook.summary"
-          name="summary"
-          cols="30"
-          rows="10"
-          required
-        ></textarea>
-      </div>
-
-      <label class="mb-2" for="unitPrice">Prix unitaire</label>
-      <div class="input-group">
-        <input
-          type="number"
-          step="0.01"
-          min="0"
-          placeholder="Prix unitaire"
-          class="form-control mb-3"
-          [(ngModel)]="newBook.unitprice"
-          name="unitPrice"
-          required
-        />
-      </div>
-
-      <label class="mb-2" for="stock">Stock</label>
-      <div class="input-group">
-        <input
-          type="number"
-          step="1"
-          min="0"
-          placeholder="Stock"
-          class="form-control mb-3"
-          [(ngModel)]="newBook.stock"
-          name="stock"
-          required
-        />
-      </div>
-
-      <label class="mb-2" for="isbn">ISBN</label>
-      <div class="input-group">
-        <input
-          type="text"
-          placeholder="ISBN"
-          class="form-control mb-3"
-          [(ngModel)]="newBook.isbn"
-          name="isbn"
-          required
-        />
-      </div>
-
-      <label class="mb-2" for="year">Année de parution</label>
-      <div class="input-group">
-        <input
-          type="text"
-          placeholder="Année de parution"
-          class="form-control mb-3"
-          [(ngModel)]="newBook.year"
-          name="year"
-          required
-        />
-      </div>
-
-      <fieldset>
-        <legend>Format :</legend>
-        <div *ngFor="let aFormat of formats">
+  <main id="content">
+    <h2 class="container text-primary text-center">Créer un nouveau livre</h2>
+    <form #newBookForm="ngForm" (ngSubmit)="setBook()">
+      <div class="mb-3">
+        <label class="mb-2" for="title">Titre</label>
+        <div class="input-group">
           <input
-            type="radio"
-            name="format"
-            id="{{ aFormat.name }}"
-            [value]="aFormat"
-            [(ngModel)]="newBook.format"
+            type="text"
+            placeholder="Titre"
+            class="form-control mb-3"
+            [(ngModel)]="newBook.title"
+            name="title"
+            required
           />
+        </div>
 
-          <label
-            for="{{ aFormat.name }}"
-            >{{ aFormat.name }}</label
+        <label class="mb-2" for="summary">Description</label>
+        <div class="input-group">
+          <textarea
+            placeholder="Description"
+            class="form-control mb-3"
+            [(ngModel)]="newBook.summary"
+            name="summary"
+            cols="30"
+            rows="10"
+            required
+          ></textarea>
+        </div>
+
+        <label class="mb-2" for="unitPrice">Prix unitaire</label>
+        <div class="input-group">
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            placeholder="Prix unitaire"
+            class="form-control mb-3"
+            [(ngModel)]="newBook.unitprice"
+            name="unitPrice"
+            required
+          />
+        </div>
+
+        <label class="mb-2" for="stock">Stock</label>
+        <div class="input-group">
+          <input
+            type="number"
+            step="1"
+            min="0"
+            placeholder="Stock"
+            class="form-control mb-3"
+            [(ngModel)]="newBook.stock"
+            name="stock"
+            required
+          />
+        </div>
+
+        <label class="mb-2" for="isbn">ISBN</label>
+        <div class="input-group">
+          <input
+            type="text"
+            placeholder="ISBN"
+            class="form-control mb-3"
+            [(ngModel)]="newBook.isbn"
+            name="isbn"
+            required
+          />
+        </div>
+
+        <label class="mb-2" for="year">Année de parution</label>
+        <div class="input-group">
+          <input
+            type="text"
+            placeholder="Année de parution"
+            class="form-control mb-3"
+            [(ngModel)]="newBook.year"
+            name="year"
+            required
+          />
+        </div>
+
+        <fieldset>
+          <legend>Format :</legend>
+          <div *ngFor="let aFormat of formats">
+            <input
+              type="radio"
+              name="format"
+              id="{{ aFormat.name }}"
+              [value]="aFormat"
+              [(ngModel)]="newBook.format"
+            />
+
+            <label for="{{ aFormat.name }}">{{ aFormat.name }}</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Éditeur :</legend>
+          <div *ngFor="let anEditor of editors">
+            <input
+              type="radio"
+              name="editor"
+              id="{{ anEditor.name }}"
+              [value]="anEditor"
+              [(ngModel)]="newBook.editor"
+            />
+
+            <label for="{{ anEditor.name }}">{{ anEditor.name }}</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Auteurs :</legend>
+          <div *ngFor="let anAuthor of authors">
+            <input
+              type="checkbox"
+              name="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
+              id="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
+              [(ngModel)]="anAuthor.isChecked"
+            />
+
+            <label for="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
+              >{{ anAuthor.firstname }} {{ anAuthor.lastname }}</label
+            >
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Types :</legend>
+          <div *ngFor="let aType of types">
+            <input
+              type="checkbox"
+              name="{{ aType.name }}"
+              id="{{ aType.name }}"
+              [(ngModel)]="aType.isChecked"
+            />
+
+            <label for="{{ aType.name }}">{{ aType.name }}</label>
+          </div>
+        </fieldset>
+
+        <label class="mb-2" for="coverImage">Image de couverture</label>
+        <div class="input-group">
+          <input
+            #imageInput
+            type="file"
+            accept="image/*"
+            class="form-control mb-3 file-upload"
+            (change)="uploadFile(imageInput)"
+            name="coverImage"
+            required
+          />
+        </div>
+
+        <div class="d-flex justify-content-end mt-2">
+          <button
+            type="submit"
+            class="btn btn-default btn-sm btn-primary"
+            [disabled]="!newBookForm.valid"
           >
+            Ajouter un livre
+          </button>
         </div>
-      </fieldset>
-
-
-      <fieldset>
-        <legend>Éditeur :</legend>
-        <div *ngFor="let anEditor of editors">
-          <input
-            type="radio"
-            name="editor"
-            id="{{ anEditor.name }}"
-            [value]="anEditor"
-            [(ngModel)]="newBook.editor"
-          />
-
-          <label
-            for="{{ anEditor.name }}"
-            >{{ anEditor.name }}</label
-          >
-        </div>
-      </fieldset>
-
-
-
-
-      <fieldset>
-        <legend>Auteurs :</legend>
-        <div *ngFor="let anAuthor of authors">
-          <input
-            type="checkbox"
-            name="{{ anAuthor.firstname }}_{{
-              anAuthor.lastname
-            }}"
-            id="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
-            [(ngModel)]="anAuthor.isChecked"
-          />
-
-          <label
-            for="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
-            >{{ anAuthor.firstname }}
-            {{ anAuthor.lastname }}</label
-          >
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Types :</legend>
-        <div *ngFor="let aType of types">
-          <input
-            type="checkbox"
-            name="{{ aType.name }}"
-            id="{{ aType.name }}"
-            [(ngModel)]="aType.isChecked"
-          />
-
-          <label for="{{ aType.name }}">{{ aType.name }}</label>
-        </div>
-      </fieldset>
-
-      <label class="mb-2" for="coverImage"
-        >Image de couverture</label
-      >
-      <div class="input-group">
-        <input
-          #imageInput
-          type="file"
-          accept="image/*"
-          class="form-control mb-3 file-upload"
-          (change)="uploadFile(imageInput)"
-          name="coverImage"
-          required
-        />
       </div>
-
-      <div class="d-flex justify-content-end mt-2">
-        <button
-          type="submit"
-          class="btn btn-default btn-sm btn-primary"
-          [disabled]="!newBookForm.valid"
-        >
-          Ajouter un livre
-        </button>
-      </div>
-    </div>
-  </form>
+    </form>
+  </main>
+  <footer>
+    <nav class="navbar">
+      <ul>
+        <li>Contact</li>
+        <li>Mentions Légales</li>
+        <li>Conditions générales de ventes</li>
+      </ul>
+    </nav>
+  </footer>
+</div>
