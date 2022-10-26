@@ -14,7 +14,7 @@ footer nav {
     background-color: rgba(207, 221, 224, 0.2);
     backdrop-filter: blur(1px);
     color: white;
-    padding: 0 !important;
+    padding: 0px 20px !important;
 }
 
 footer ul {
