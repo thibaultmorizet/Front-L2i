@@ -51,7 +51,10 @@ export class BasketDetailsComponent implements OnInit {
     private us: UserService,
     private modalService: NgbModal,
     private authService: SocialAuthService
-  ) {}
+  ) {
+    document.body.style.backgroundColor = '#fff';
+    document.body.style.backgroundImage = ""
+  }
 
   ngOnInit(): void {
     try {
@@ -104,7 +107,9 @@ export class BasketDetailsComponent implements OnInit {
             el.number_ordered--;
             el.totalprice -= el.unitprice;
             this.basketTotalPrice -= el.unitprice;
-            this.basketTotalPrice = parseFloat(this.basketTotalPrice.toFixed(2));
+            this.basketTotalPrice = parseFloat(
+              this.basketTotalPrice.toFixed(2)
+            );
             el.totalprice = parseFloat(el.totalprice.toFixed(2));
             this.storageCrypter.setItem(
               'basket',
@@ -134,7 +139,9 @@ export class BasketDetailsComponent implements OnInit {
             el.number_ordered++;
             el.totalprice += el.unitprice;
             this.basketTotalPrice += el.unitprice;
-            this.basketTotalPrice = parseFloat(this.basketTotalPrice.toFixed(2));
+            this.basketTotalPrice = parseFloat(
+              this.basketTotalPrice.toFixed(2)
+            );
             el.totalprice = parseFloat(el.totalprice.toFixed(2));
             this.storageCrypter.setItem(
               'basket',
@@ -159,7 +166,6 @@ export class BasketDetailsComponent implements OnInit {
         if (el.totalprice) {
           this.basketTotalPrice -= el.totalprice;
           this.basketTotalPrice = parseFloat(this.basketTotalPrice.toFixed(2));
-
         }
         const index = this.basket.indexOf(el, 0);
         if (index > -1) {

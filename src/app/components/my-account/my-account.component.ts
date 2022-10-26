@@ -36,7 +36,10 @@ export class MyAccountComponent implements OnInit {
     private us: UserService,
     private addressService: AddressService,
     private as: AuthService
-  ) {}
+  ) {
+    document.body.style.backgroundColor = '#fff';
+    document.body.style.backgroundImage = '';
+  }
 
   ngOnInit(): void {
     try {
@@ -82,7 +85,6 @@ export class MyAccountComponent implements OnInit {
               .deliveryAddress.id
           )
           .subscribe((res) => {
-            
             this.newAddressDelivery = res;
           });
       }
@@ -218,5 +220,4 @@ export class MyAccountComponent implements OnInit {
         },
       });
   }
-
 }

@@ -53,7 +53,10 @@ export class NewBookComponent implements OnInit {
     private authorService: AuthorService,
     private ts: TypeService,
     private bs: BookService
-  ) {}
+  ) {
+    document.body.style.backgroundColor = '#fff';
+    document.body.style.backgroundImage = '';
+  }
 
   ngOnInit(): void {
     try {

@@ -41,6 +41,12 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private iziToast: NgxIzitoastService
   ) {
+    document.body.style.backgroundImage =
+      "url('https://www.thibaultmorizet.fr/assets/home-background.jpg')";
+    document.body.style.backgroundPosition = 'center center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundSize = 'cover';
     this.responsiveOptions = [
       {
         breakpoint: '3000px',

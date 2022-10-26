@@ -84,7 +84,10 @@ export class BookComponent implements OnInit {
     private iziToast: NgxIzitoastService,
     private modalService: NgbModal,
     private authService: SocialAuthService
-  ) {}
+  ) {
+    document.body.style.backgroundColor = '#fff';
+    document.body.style.backgroundImage = '';
+  }
 
   ngOnInit(): void {
     this.getBooks();
@@ -600,5 +603,4 @@ export class BookComponent implements OnInit {
       alert("Please select a file first")
     } */
   }
-
 }

@@ -35,7 +35,10 @@ export class AdminRegisterComponent implements OnInit {
     private us: UserService,
     private as: AuthService,
     private authService: SocialAuthService
-  ) {}
+  ) {
+    document.body.style.backgroundColor = '#fff';
+    document.body.style.backgroundImage = '';
+  }
 
   ngOnInit(): void {
     try {
@@ -127,10 +130,10 @@ export class AdminRegisterComponent implements OnInit {
           if (res.token != null) {
             this.storageCrypter.setItem('jeton', res.token, 'local');
           }
-        },error: (res) => {
+        },
+        error: (res) => {
           this.logout();
         },
       });
   }
-
 }

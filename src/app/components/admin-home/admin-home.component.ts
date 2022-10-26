@@ -32,7 +32,10 @@ export class AdminHomeComponent implements OnInit {
     private us: UserService,
     private as: AuthService,
     private authService: SocialAuthService
-  ) {}
+  ) {
+    document.body.style.backgroundColor = '#fff';
+    document.body.style.backgroundImage = '';
+  }
 
   ngOnInit(): void {
     try {
