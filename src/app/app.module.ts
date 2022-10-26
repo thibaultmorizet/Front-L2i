@@ -30,6 +30,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
+import {CarouselModule} from 'primeng/carousel';  
+import {ButtonModule} from 'primeng/button';  
+
 
 @NgModule({
   declarations: [
@@ -54,6 +57,8 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     NgbCarouselModule,
+    CarouselModule,
+    ButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

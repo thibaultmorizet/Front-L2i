@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
+import { CarouselModule } from 'primeng/carousel';
 import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,6 +18,7 @@ import StorageCrypter from 'storage-crypter';
     './../../../css/header.css',
     './../../../css/main.css',
   ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
   basket: Array<Book> = [];
@@ -25,9 +26,8 @@ export class HomeComponent implements OnInit {
   connectedUser: User | null = {};
   bookBestSell: Array<Book> = [];
   bookExistinBasket: Boolean = false;
-
-  @ViewChild('bestSellCarousel') bestSellCarousel?: NgbCarousel;
-  intervalCarousel: number = 7000;
+  responsiveOptions;
+  @ViewChild('bestSellCarousel') bestSellCarousel?: CarouselModule;
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -39,9 +39,42 @@ export class HomeComponent implements OnInit {
     private authService: SocialAuthService,
     private router: Router,
     private iziToast: NgxIzitoastService
-  ) {}
+  ) {
+    this.responsiveOptions = [
+      {
+        breakpoint: '3000px',
+        numVisible: 6,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '2600px',
+        numVisible: 5,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '1800px',
+        numVisible: 4,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '1300px',
+        numVisible: 3,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '1000px',
+        numVisible: 2,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '650px',
+        numVisible: 1,
+        numScroll: 1,
+      },
+    ];
+  }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.getBooksBestSell();
     try {
       this.getUserByEmail(
@@ -61,8 +94,11 @@ export class HomeComponent implements OnInit {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
         this.refreshToken();
       }
-    }
+    }    (
+      document.getElementsByClassName('p-carousel-indicators')[0] as HTMLElement
+    ).click();
   }
+
   getBooksBestSell() {
     this.bs.getBooksBestSell().subscribe((res) => {
       this.bookBestSell = res;
@@ -112,19 +148,15 @@ export class HomeComponent implements OnInit {
   }
 
   nextBestBook() {
-    this.bestSellCarousel?.next();
-    this.intervalCarousel = 0;
-
-    setTimeout(() => {
-      this.intervalCarousel = 7000;
-    }, 7000);
+    (
+      document.getElementsByClassName('p-carousel-next')[0] as HTMLElement
+    ).click();
   }
+
   prevBestBook() {
-    this.bestSellCarousel?.prev();
-    this.intervalCarousel = 0;
-    setTimeout(() => {
-      this.intervalCarousel = 7000;
-    }, 7000);
+    (
+      document.getElementsByClassName('p-carousel-prev')[0] as HTMLElement
+    ).click();
   }
 
   addBookToBasket(bookId: number | undefined) {

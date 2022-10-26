@@ -6,26 +6,17 @@
     border-radius: 20px;
     padding-bottom: 0;
 }
-
-.all-best-sell-container {
-    display: flex;
-    justify-content: center;
-    min-height: 400px;
-}
-
 .best-sell-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 367px;
-    min-height: 330px;
 }
-
 .best-sell-img {
+    display: flex;
+    justify-content: center;
     width: 200px;
     height: 280px;
     position: relative;
-
 }
 
 .best-sell-img:hover .img-best-sell {
@@ -49,6 +40,7 @@
     min-height: 60px;
     display: flex;
     align-items: center;
+    width: 200px;
 }
 
 .best-sell-title:hover {
@@ -75,9 +67,9 @@
     cursor: pointer;
     margin: 1rem .5rem;
     font-weight: 400;
-    box-shadow: 0px 2px 14px -8px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75);
     border-radius: 10px;
-       
+
 }
 
 .best-sell-button:hover {
@@ -87,10 +79,11 @@
 }
 
 .best-sell-description {
+    font-family: "Quicksand", Arial, sans-serif;
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 200px;
 }
 
 .article-hover-actions {
@@ -125,13 +118,53 @@
 }
 
 @media (min-width: 650px) {
+
+    .carousel-item.active+.carousel-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 30px !important;
+    }
+
+    .carousel-item.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 30px !important;
+
+    }
+
+    .carousel {
+        width: 100%;
+    }
+
+    .carousel-inner {
+        display: flex !important;
+    }
+
+    .picsum-img-wrapper {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 @media (min-width: 1000px) {
-
+    .carousel-item.active+.carousel-item+.carousel-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 30px !important;
+    }
 }
 
 @media (min-width: 1300px) {
+    .carousel-item.active+.carousel-item+.carousel-item+.carousel-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 30px !important;
+    }
+
     .best-sell-title {
         font-size: 1.2rem;
     }
@@ -139,15 +172,17 @@
     .best-sell-price {
         font-size: 1.2rem;
     }
-    .all-best-sell-container {
-        min-height: 500px;
-    }
-    
-    
 }
 
 @media (min-width: 1800px) {
-    .container{
+    .carousel-item.active+.carousel-item+.carousel-item+.carousel-item+.carousel-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 30px !important;
+    }
+
+    .container {
         max-width: 1600px;
     }
 
@@ -180,11 +215,13 @@
     }
 }
 
+.p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    background-color: #000;
+}
 
-
-
-
-
-
-
-
+.p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next
+{    display: none;
+}
+.p-carousel-items-content {
+    margin: 0 2rem;
+}

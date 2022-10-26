@@ -29,107 +29,59 @@
     </nav>
   </div>
 </header>
-<main>
-  <div></div>
-</main>
+
 <div id="content">
   <div class="container">
     <div class="general-best-sell-container">
-      <p class="title text-center">Nos meilleures ventes</p>
-      <div class="all-best-sell-container">
-        <ngb-carousel
+      <div>
+        <p-carousel
           #bestSellCarousel
-          *ngIf="bookBestSell"
-          [showNavigationArrows]="false"
-          [keyboard]="false"
-          [pauseOnHover]="true"
-          [interval]="intervalCarousel"
-          class="all-best-sell-container"
+          [value]="bookBestSell"
+          styleClass="custom-carousel"
+          [numVisible]="1"
+          [numScroll]="1"
+          [circular]="true"
+          [autoplayInterval]="7000"
+          [responsiveOptions]="responsiveOptions"
         >
-          <ng-template
-            ngbSlide
-            *ngFor="let OneBook of bookBestSell"
-            class="best-sell-container"
-          >
-            <div class="picsum-img-wrapper">
+          <ng-template pTemplate="header">
+            <p class="title text-center">Nos meilleures ventes</p>
+          </ng-template>
+          <ng-template let-oneBook pTemplate="item">
+            <div class="best-sell-container">
               <div class="best-sell-img">
                 <img
-                  src="{{ OneBook.image }}"
-                  [alt]="OneBook.title"
+                  src="{{ oneBook.image }}"
+                  [alt]="oneBook.title"
                   class="img-best-sell pointer"
-                  [routerLink]="['/books/', OneBook.id]"
+                  [routerLink]="['/books/', oneBook.id]"
                 />
                 <div class="article-hover-actions">
                   <div
                     class="article-hover-actions-add-cart"
-                    (click)="addBookToBasket(OneBook.id)"
+                    (click)="addBookToBasket(oneBook.id)"
                   >
                     <i class="fa fa-shopping-cart"></i>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="best-sell-description">
-              <span
-                class="best-sell-title pointer"
-                [routerLink]="['/books/', OneBook.id]"
-                >{{ OneBook.title }}</span
-              >
-              <span
-                class="best-sell-price pointer"
-                [routerLink]="['/books/', OneBook.id]"
-                >{{ OneBook.unitprice }} €</span
-              >
-            </div>
-          </ng-template>
-        </ngb-carousel>
-      </div>
-
-      <!-- <div class="all-best-sell-container">
-        <div
-          class="best-sell-container"
-          *ngFor="let OneBook of bestBookArray"
-          [ngClass]="{
-            'best-sell-first-element': bestBookArray.indexOf(OneBook) == 0,
-            'best-sell-second-element': bestBookArray.indexOf(OneBook) == 1,
-            'best-sell-third-element': bestBookArray.indexOf(OneBook) == 2,
-            'best-sell-fourth-element': bestBookArray.indexOf(OneBook) == 3,
-            'best-sell-fifth-element': bestBookArray.indexOf(OneBook) == 4
-          }"
-        >
-          <div>
-            <div class="best-sell-img">
-              <img
-                src="{{ bookBestSell[OneBook].image }}"
-                [alt]="bookBestSell[OneBook].title"
-                class="img-best-sell pointer"
-                [routerLink]="['/books/', bookBestSell[OneBook].id]"
-              />
-              <div class="article-hover-actions">
-                <div
-                  class="article-hover-actions-add-cart"
-                  (click)="addBookToBasket(bookBestSell[OneBook].id)"
+              <div class="best-sell-description">
+                <span
+                  class="best-sell-title pointer"
+                  [routerLink]="['/books/', oneBook.id]"
+                  >{{ oneBook.title }}</span
                 >
-                  <i class="fa fa-shopping-cart"></i>
-                </div>
+                <span
+                  class="best-sell-price pointer"
+                  [routerLink]="['/books/', oneBook.id]"
+                  >{{ oneBook.unitprice }} €</span
+                >
               </div>
             </div>
-            <div class="best-sell-description">
-              <span
-                class="best-sell-title pointer"
-                [routerLink]="['/books/', bookBestSell[OneBook].id]"
-                >{{ bookBestSell[OneBook].title }}</span
-              >
-              <span
-                class="best-sell-price pointer"
-                [routerLink]="['/books/', bookBestSell[OneBook].id]"
-                >{{ bookBestSell[OneBook].unitprice }} €</span
-              >
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <div class="best-sell-pagination">
+          </ng-template>
+        </p-carousel>
+      </div>
+      <div class="best-sell-pagination"><!-- p-ripple p-element p-carousel-prev p-link -->
         <div
           class="best-sell-button best-sell-button-prev"
           (click)="prevBestBook()"
