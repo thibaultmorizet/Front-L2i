@@ -10,6 +10,7 @@ import { Type } from 'src/app/interfaces/type';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { AuthorService } from 'src/app/services/author.service';
+import { BasketService } from 'src/app/services/basket.service';
 import { BookService } from 'src/app/services/book.service';
 import { EditorService } from 'src/app/services/editor.service';
 import { FormatService } from 'src/app/services/format.service';
@@ -20,12 +21,7 @@ import StorageCrypter from 'storage-crypter';
 @Component({
   selector: 'app-new-book',
   templateUrl: './new-book.component.html',
-  styleUrls: [
-    './new-book.component.css',
-    './../../../css/header.css',
-    './../../../css/main.css',
-    './../../../css/footer.css',
-  ],
+  styleUrls: ['./new-book.component.css', './../../../css/main.css'],
 })
 export class NewBookComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
@@ -52,16 +48,14 @@ export class NewBookComponent implements OnInit {
     private es: EditorService,
     private authorService: AuthorService,
     private ts: TypeService,
-    private bs: BookService
-  ) {
-    document.body.style.backgroundColor = '#fff';
-    document.body.style.backgroundImage = '';
-  }
+    private bs: BookService,
+    private basketService: BasketService
+  ) {}
 
   ngOnInit(): void {
     try {
-      this.getUserByEmail(
-        JSON.parse(this.storageCrypter.getItem('user', 'session')).email
+      this.connectedUser = JSON.parse(
+        this.storageCrypter.getItem('user', 'session')
       );
     } catch (error) {
       this.connectedUser = null;
@@ -71,7 +65,6 @@ export class NewBookComponent implements OnInit {
       });
       this.router.navigateByUrl('/books');
     }
-
     if (this.storageCrypter.getItem('basket', 'local') != '') {
       this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
     }
@@ -90,19 +83,6 @@ export class NewBookComponent implements OnInit {
     this.getAllTypesfunc();
   }
 
-  getUserByEmail(email: string) {
-    this.us.getTheUser(email).subscribe((res) => {
-      this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
-      this.connectedUser = res[0];
-      if (!this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-        this.iziToast.warning({
-          message: 'Accès impossible si vous nêtes pas admin',
-          position: 'topRight',
-        });
-        this.router.navigateByUrl('/books');
-      }
-    });
-  }
   getAllFormatsfunc() {
     this.fs.getAllFormats().subscribe((res) => {
       res.forEach((el) => {
@@ -160,7 +140,7 @@ export class NewBookComponent implements OnInit {
     this.storageCrypter.removeItem('basket', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.connectedUser = null;
-    this.router.navigateByUrl('/books');
+    this.router.navigateByUrl('/home');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
       position: 'topRight',

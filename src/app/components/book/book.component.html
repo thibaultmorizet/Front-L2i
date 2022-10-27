@@ -1,45 +1,5 @@
 <div class="general-content">
-  <header>
-    <div id="top">
-      <nav class="navbar">
-        <div class="container">
-          <a class="navbar-brand pointer" [routerLink]="['/home']"
-            ><img
-              src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
-              alt="logo-l2i"
-              width="50"
-          /></a>
-          <a class="home-link text-uppercase" [routerLink]="['/home']">Home</a>
-          <a class="home-link text-uppercase active" [routerLink]="['/books']"
-            >Shop</a
-          >
-
-          <a
-            *ngIf="connectedUser"
-            class="home-link text-uppercase"
-            [routerLink]="['/my-account']"
-            >My Account</a
-          >
-
-          <a
-            *ngIf="!connectedUser"
-            class="home-link text-uppercase"
-            [routerLink]="['/my-account']"
-            >Login / Sign in</a
-          >
-
-          <div id="bag-shopping-count-container">
-            <a [routerLink]="['/basket']" class="home-link text-uppercase">
-              <span id="bag-shopping-count" aria-hidden="true">{{
-                basket.length
-              }}</span>
-              My Basket</a
-            >
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
+  <app-header></app-header>
 
   <main id="content">
     <div class="container">
@@ -491,13 +451,5 @@
       </div>
     </div>
   </main>
-  <footer>
-    <nav class="navbar">
-      <ul>
-        <li>Contact</li>
-        <li>Mentions Légales</li>
-        <li>Conditions générales de ventes</li>
-      </ul>
-    </nav>
-  </footer>
+  <app-footer></app-footer>
 </div>

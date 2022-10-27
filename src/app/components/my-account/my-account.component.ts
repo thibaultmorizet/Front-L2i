@@ -8,16 +8,17 @@ import { UserService } from 'src/app/services/user.service';
 import { Address } from 'src/app/interfaces/address';
 import { AddressService } from 'src/app/services/address.service';
 import { AuthService } from 'src/app/services/auth.service';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  SocialAuthService,
+} from 'angularx-social-login';
+import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
   selector: 'app-my-account',
   templateUrl: './my-account.component.html',
-  styleUrls: [
-    './my-account.component.css',
-    './../../../css/header.css',
-    './../../../css/main.css',
-    './../../../css/footer.css',
-  ],
+  styleUrls: ['./my-account.component.css', './../../../css/main.css'],
 })
 export class MyAccountComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
@@ -28,6 +29,8 @@ export class MyAccountComponent implements OnInit {
   newAddressDelivery: Address = {};
   errorPassword: string | null = null;
   errorEmail: string | null = null;
+  userLogin: User = {};
+  errorConnexion: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,16 +38,15 @@ export class MyAccountComponent implements OnInit {
     private iziToast: NgxIzitoastService,
     private us: UserService,
     private addressService: AddressService,
-    private as: AuthService
-  ) {
-    document.body.style.backgroundColor = '#fff';
-    document.body.style.backgroundImage = '';
-  }
+    private as: AuthService,
+    private authService: SocialAuthService,
+    private basketService: BasketService
+  ) {}
 
   ngOnInit(): void {
     try {
-      this.getUserByEmail(
-        JSON.parse(this.storageCrypter.getItem('user', 'session')).email
+      this.connectedUser = JSON.parse(
+        this.storageCrypter.getItem('user', 'session')
       );
       this.newUserData.id = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
@@ -52,8 +54,6 @@ export class MyAccountComponent implements OnInit {
     } catch (error) {
       this.connectedUser = {};
     }
-    console.log(this.connectedUser);
-    
 
     if (this.connectedUser.id) {
       try {
@@ -187,19 +187,12 @@ export class MyAccountComponent implements OnInit {
     }
   }
 
-  getUserByEmail(email: string) {
-    this.us.getTheUser(email).subscribe((res) => {
-      this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
-      this.connectedUser = res[0];
-    });
-  }
-
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('basket', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.connectedUser = {};
-    this.router.navigateByUrl('/books');
+    this.router.navigateByUrl('/home');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
       position: 'topRight',
@@ -223,5 +216,44 @@ export class MyAccountComponent implements OnInit {
           this.logout();
         },
       });
+  }
+
+  login() {
+    this.as.login(this.userLogin).subscribe({
+      next: (res) => {
+        if (res.token != null) {
+          this.storageCrypter.setItem('jeton', res.token, 'local');
+
+          this.as.getTheUser(this.userLogin.email).subscribe((res) => {
+            this.storageCrypter.setItem(
+              'user',
+              JSON.stringify(res[0]),
+              'session'
+            );
+
+            this.connectedUser = res[0];
+            this.userLogin = {};
+            this.iziToast.success({
+              message: 'Connexion réussie',
+              position: 'topRight',
+            });
+            this.router.navigateByUrl('/home');
+          });
+        }
+      },
+      error: (res) => {
+        this.errorConnexion = res.message;
+      },
+    });
+  }
+  refreshTokenAuth(): void {
+    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+  }
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 }

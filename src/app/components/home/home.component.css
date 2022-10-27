@@ -1,3 +1,11 @@
+body {
+    background-image: url('https://www.thibaultmorizet.fr/assets/home-background.jpg');
+    background-position: 'center center';
+    background-repeat: 'no-repeat';
+    background-attachment: 'fixed';
+    background-size: 'cover';
+}
+
 .general-best-sell-container {
     padding: 2em 1em;
     background-color: rgba(255, 255, 255, .4);
@@ -6,11 +14,13 @@
     border-radius: 20px;
     padding-bottom: 0;
 }
+
 .best-sell-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .best-sell-img {
     display: flex;
     justify-content: center;
@@ -219,9 +229,11 @@
     background-color: #000;
 }
 
-.p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next
-{    display: none;
+.p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next {
+    display: none;
 }
+
 .p-carousel-items-content {
     margin: 0 2rem;
 }
+

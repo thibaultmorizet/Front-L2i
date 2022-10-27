@@ -1,50 +1,76 @@
 <div class="general-content">
-  <header>
-    <div id="top">
-      <nav class="navbar">
-        <div class="container">
-          <a class="navbar-brand pointer" [routerLink]="['/home']"
-            ><img
-              src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
-              alt="logo-l2i"
-              width="50"
-          /></a>
-          <a class="home-link text-uppercase" [routerLink]="['/home']">Home</a>
-          <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
-
-          <a
-            *ngIf="connectedUser.id"
-            class="home-link text-uppercase active"
-            [routerLink]="['/my-account']"
-            >My Account</a
-          >
-
-          <a
-            *ngIf="!connectedUser.id"
-            class="home-link text-uppercase active"
-            [routerLink]="['/my-account']"
-            >Login / Sign in</a
-          >
-
-          <div id="bag-shopping-count-container">
-            <a [routerLink]="['/basket']" class="home-link text-uppercase">
-              <span id="bag-shopping-count" aria-hidden="true">{{
-                basket.length
-              }}</span>
-              My Basket</a
-            >
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
+  <app-header></app-header>
 
   <main id="content">
     <div class="container" *ngIf="!connectedUser.id">
-      
+      <div class="login-container">
+        <p class="title text-center">Login</p>
+
+        <form #loginForm="ngForm" (ngSubmit)="login()">
+          <div class="mb-3">
+            <div class="input-group">
+              <input
+                id="email"
+                class="form-control mb-3"
+                placeholder="Email"
+                name="email"
+                type="email"
+                [(ngModel)]="userLogin.email"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <input
+                id="password"
+                class="form-control mb-3"
+                placeholder="Password"
+                name="password"
+                type="password"
+                [(ngModel)]="userLogin.password"
+                required
+              />
+            </div>
+            <div *ngIf="errorConnexion" class="mb-2 text-danger">
+              {{ errorConnexion }}
+            </div>
+
+            <div class="d-flex justify-content-end mt-2">
+              <button
+                type="submit"
+                class="btn btn-default btn-sm btn-primary"
+                [disabled]="!loginForm.valid"
+              >
+                Login
+              </button>
+            </div>
+          </div>
+        </form>
+        <div>
+          <button
+            type="button"
+            (click)="signInWithGoogle()"
+            class="btn btn-google mt-3"
+          >
+            <img
+              src="https://www.thibaultmorizet.fr/assets/logo-google.png"
+              alt="logo Google"
+              class="logo-google"
+            />
+            Login with Google</button
+          ><br />
+          <button class="btn btn-facebook mt-3" (click)="signInWithFB()">
+            <i class="fa-brands fa-facebook mr-1"></i> Login with Facebook
+          </button>
+        </div>
+        <p class="text-center text-underline pointer">You're not registered</p>
+      </div>
     </div>
     <div class="container" *ngIf="connectedUser.id">
       <div id="personnalData" class="my-3">
+        <button type="button" (click)="logout()" class="btn btn-outline-danger">
+          Logout
+        </button>
         <div class="container d-flex justify-content-end">
           <form
             #personnalDataForm="ngForm"
@@ -245,13 +271,5 @@
       </div>
     </div>
   </main>
-  <footer>
-    <nav class="navbar">
-      <ul>
-        <li>Contact</li>
-        <li>Mentions Légales</li>
-        <li>Conditions générales de ventes</li>
-      </ul>
-    </nav>
-  </footer>
+  <app-footer></app-footer>
 </div>

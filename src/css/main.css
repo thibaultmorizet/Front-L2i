@@ -1,31 +1,7 @@
-/* .btn-facebook {
-    background-color: #3B5998;
-    color: #fff;
-    border-radius: 0.25rem;
+body {
+    margin: 0px;
 }
 
-.btn-facebook:hover {
-    color: #fff;
-    background-color: #3B5998;
-    opacity: 0.9;
-}
-
-.logo-google {
-    width: 14px;
-    height: 14px;
-}
-
-.btn-google {
-    background-color: #fff;
-    color: #303030;
-    box-shadow: inset 0 0 0 1px #bfbfbf;
-    border-radius: 0.25rem;
-}
-
-.btn-google:hover {
-    box-shadow: inset 0 0 0 2px #868686, 0 2px 2px 0 rgba(0, 0, 0, 0.08);
-    background-color: #f0f0f0;
-} */
 #content {
     font-family: "Quicksand", Arial, sans-serif;
     color: rgba(0, 0, 0);
@@ -54,10 +30,14 @@
     cursor: pointer;
 }
 
+.text-underline {
+    text-decoration: underline;
+}
+
 .title {
     font-size: 1.5rem;
-    font-family: "Pacifico","Quicksand", Arial, sans-serif;
-
+    font-family: "Pacifico", "Quicksand", Arial, sans-serif;
+    padding-bottom: 1rem;
 }
 
 @media (min-width: 1000px) {

@@ -8,6 +8,5 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Front-L2i';
   constructor() {
-    document.body.style.margin = '0px';
   }
 }

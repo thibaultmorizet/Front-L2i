@@ -14,20 +14,12 @@ import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import {
-  FacebookLoginProvider,
-  GoogleLoginProvider,
-} from 'angularx-social-login';
+import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
-  styleUrls: [
-    './book-details.component.css',
-    './../../../css/header.css',
-    './../../../css/main.css',
-    './../../../css/footer.css',
-  ],
+  styleUrls: ['./book-details.component.css', './../../../css/main.css'],
 })
 export class BookDetailsComponent implements OnInit {
   book: Book = {};
@@ -37,11 +29,9 @@ export class BookDetailsComponent implements OnInit {
   bookExistinBasket: Boolean = false;
   numberToOrder: string = '1';
   userInscription: User = {};
-  userLogin: User = {};
   closeResult = '';
   errorPassword: string | null = null;
   errorEmail: string | null = null;
-  errorConnexion: string | null = null;
   connectedUser: User | null = {};
 
   socialUser!: SocialUser;
@@ -56,11 +46,9 @@ export class BookDetailsComponent implements OnInit {
     private router: Router,
     private iziToast: NgxIzitoastService,
     private modalService: NgbModal,
-    private authService: SocialAuthService
-  ) {
-    document.body.style.backgroundColor = '#fff';
-    document.body.style.backgroundImage = '';
-  }
+    private authService: SocialAuthService,
+    private basketService: BasketService
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((res) => {
@@ -77,8 +65,8 @@ export class BookDetailsComponent implements OnInit {
         this.bs.updateBook(this.book.id, this.book).subscribe(() => {});
       });
       try {
-        this.getUserByEmail(
-          JSON.parse(this.storageCrypter.getItem('user', 'session')).email
+        this.connectedUser = JSON.parse(
+          this.storageCrypter.getItem('user', 'session')
         );
       } catch (error) {
         this.connectedUser = null;
@@ -103,13 +91,6 @@ export class BookDetailsComponent implements OnInit {
   tokenExpired(token: string) {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
     return Math.floor(new Date().getTime() / 1000) >= expiry;
-  }
-
-  getUserByEmail(email: string) {
-    this.us.getTheUser(email).subscribe((res) => {
-      this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
-      this.connectedUser = res[0];
-    });
   }
 
   scroll(el: HTMLElement) {
@@ -212,21 +193,6 @@ export class BookDetailsComponent implements OnInit {
         }
       );
   }
-  loginModal(content: any) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          if (reason == 0 || reason == 'Cross click') {
-            this.userLogin = {};
-          }
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -262,41 +228,6 @@ export class BookDetailsComponent implements OnInit {
       this.errorPassword = 'Les mots de passes ne sont pas identiques';
     }
   }
-  login() {
-    this.as.login(this.userLogin).subscribe({
-      next: (res) => {
-        if (res.token != null) {
-          this.storageCrypter.setItem('jeton', res.token, 'local');
-
-          this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-            this.storageCrypter.setItem(
-              'user',
-              JSON.stringify(res[0]),
-              'session'
-            );
-
-            this.connectedUser = res[0];
-            this.modalService.dismissAll();
-            this.userLogin = {};
-            this.iziToast.success({
-              message: 'Connexion réussie',
-              position: 'topRight',
-            });
-          });
-        }
-      },
-      error: (res) => {
-        this.errorConnexion = res.message;
-      },
-    });
-  }
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
-
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  }
 
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
@@ -304,16 +235,13 @@ export class BookDetailsComponent implements OnInit {
     this.storageCrypter.removeItem('user', 'session');
     this.authService.signOut();
     this.connectedUser = null;
-    this.router.navigateByUrl('/books');
+    this.router.navigateByUrl('/home');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
       position: 'topRight',
     });
   }
 
-  refreshTokenAuth(): void {
-    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
-  }
   refreshToken() {
     if (!this.storageCrypter.getItem('user', 'session')) {
       this.storageCrypter.removeItem('jeton', 'local');

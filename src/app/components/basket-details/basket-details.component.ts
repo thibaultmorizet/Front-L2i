@@ -13,28 +13,17 @@ import {
   ModalDismissReasons,
 } from '@ng-bootstrap/ng-bootstrap';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import {
-  FacebookLoginProvider,
-  GoogleLoginProvider,
-} from 'angularx-social-login';
 
 @Component({
   selector: 'app-basket-details',
   templateUrl: './basket-details.component.html',
-  styleUrls: [
-    './basket-details.component.css',
-    './../../../css/header.css',
-    './../../../css/main.css',
-    './../../../css/footer.css',
-  ],
+  styleUrls: ['./basket-details.component.css', './../../../css/main.css'],
 })
 export class BasketDetailsComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   basket: Array<Book> = [];
-  errorConnexion: string | null = null;
   connectedUser: User | null = {};
   userInscription: User = {};
-  userLogin: User = {};
   closeResult = '';
   errorPassword: string | null = null;
   errorEmail: string | null = null;
@@ -50,16 +39,14 @@ export class BasketDetailsComponent implements OnInit {
     private as: AuthService,
     private us: UserService,
     private modalService: NgbModal,
-    private authService: SocialAuthService
-  ) {
-    document.body.style.backgroundColor = '#fff';
-    document.body.style.backgroundImage = ""
-  }
+    private authService: SocialAuthService,
+    private basketService: BasketService
+  ) {}
 
   ngOnInit(): void {
     try {
-      this.getUserByEmail(
-        JSON.parse(this.storageCrypter.getItem('user', 'session')).email
+      this.connectedUser = JSON.parse(
+        this.storageCrypter.getItem('user', 'session')
       );
     } catch (error) {
       this.connectedUser = null;
@@ -90,12 +77,6 @@ export class BasketDetailsComponent implements OnInit {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 
-  getUserByEmail(email: string) {
-    this.us.getTheUser(email).subscribe((res) => {
-      this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
-      this.connectedUser = res[0];
-    });
-  }
   decreaseBookQuantity(bookId: number | undefined) {
     this.basket.forEach((el) => {
       if (el.id == bookId) {
@@ -116,7 +97,7 @@ export class BasketDetailsComponent implements OnInit {
               JSON.stringify(this.basket),
               'local'
             );
-          }
+      }
         } else {
           this.iziToast.error({
             message: 'Vous ne pouvez pas demander une quantité négative',
@@ -194,21 +175,6 @@ export class BasketDetailsComponent implements OnInit {
         }
       );
   }
-  loginModal(content: any) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          if (reason == 0 || reason == 'Cross click') {
-            this.userLogin = {};
-          }
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -243,41 +209,6 @@ export class BasketDetailsComponent implements OnInit {
       this.errorPassword = 'Les mots de passes ne sont pas identiques';
     }
   }
-  login() {
-    this.as.login(this.userLogin).subscribe({
-      next: (res) => {
-        if (res.token != null) {
-          this.storageCrypter.setItem('jeton', res.token, 'local');
-
-          this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-            this.storageCrypter.setItem(
-              'user',
-              JSON.stringify(res[0]),
-              'session'
-            );
-
-            this.connectedUser = res[0];
-            this.modalService.dismissAll();
-            this.userLogin = {};
-            this.iziToast.success({
-              message: 'Connexion réussie',
-              position: 'topRight',
-            });
-          });
-        }
-      },
-      error: (res) => {
-        this.errorConnexion = res.message;
-      },
-    });
-  }
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
-
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  }
 
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
@@ -285,16 +216,13 @@ export class BasketDetailsComponent implements OnInit {
     this.storageCrypter.removeItem('user', 'session');
     this.authService.signOut();
     this.connectedUser = null;
-    this.router.navigateByUrl('/books');
+    this.router.navigateByUrl('/home');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
       position: 'topRight',
     });
   }
 
-  refreshTokenAuth(): void {
-    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
-  }
   refreshToken() {
     if (!this.storageCrypter.getItem('user', 'session')) {
       this.storageCrypter.removeItem('jeton', 'local');

@@ -1,34 +1,4 @@
-<header>
-  <div id="top">
-    <nav class="navbar">
-      <div class="container">
-        <a class="navbar-brand pointer" [routerLink]="['/home']"
-          ><img
-            src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
-            alt="logo-l2i"
-            width="50"
-        /></a>
-        <a class="home-link text-uppercase active" [routerLink]="['/home']"
-          >Home</a
-        >
-        <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
-
-        <a class="home-link text-uppercase" [routerLink]="['/my-account']"
-          >My Account</a
-        >
-
-        <div id="bag-shopping-count-container">
-          <a [routerLink]="['/basket']" class="home-link text-uppercase">
-            <span id="bag-shopping-count" aria-hidden="true">{{
-              basket.length
-            }}</span>
-            My Basket</a
-          >
-        </div>
-      </div>
-    </nav>
-  </div>
-</header>
+<app-header></app-header>
 
 <h2 class="container text-primary text-center">Inscrire un nouvel admin</h2>
 <form #adminRegisterForm="ngForm" (ngSubmit)="adminRegister()">
@@ -110,3 +80,4 @@
     </div>
   </div>
 </form>
+<app-footer></app-footer>

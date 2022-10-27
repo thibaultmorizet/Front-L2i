@@ -5,17 +5,14 @@ import { NgxIzitoastService } from 'ngx-izitoast';
 import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { BasketService } from 'src/app/services/basket.service';
 import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
   selector: 'app-admin-register',
   templateUrl: './admin-register.component.html',
-  styleUrls: [
-    './admin-register.component.css',
-    './../../../css/header.css',
-    './../../../css/main.css',
-  ],
+  styleUrls: ['./admin-register.component.css', './../../../css/main.css'],
 })
 export class AdminRegisterComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
@@ -34,16 +31,14 @@ export class AdminRegisterComponent implements OnInit {
     private iziToast: NgxIzitoastService,
     private us: UserService,
     private as: AuthService,
-    private authService: SocialAuthService
-  ) {
-    document.body.style.backgroundColor = '#fff';
-    document.body.style.backgroundImage = '';
-  }
+    private authService: SocialAuthService,
+    private basketService: BasketService
+  ) {}
 
   ngOnInit(): void {
     try {
-      this.getUserByEmail(
-        JSON.parse(this.storageCrypter.getItem('user', 'session')).email
+      this.connectedUser = JSON.parse(
+        this.storageCrypter.getItem('user', 'session')
       );
     } catch (error) {
       this.connectedUser = null;
@@ -59,20 +54,6 @@ export class AdminRegisterComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
       this.isLoggedin = user != null;
-    });
-  }
-
-  getUserByEmail(email: string) {
-    this.us.getTheUser(email).subscribe((res) => {
-      this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
-      this.connectedUser = res[0];
-      if (!this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-        this.iziToast.warning({
-          message: 'Accès impossible si vous nêtes pas admin',
-          position: 'topRight',
-        });
-        this.router.navigateByUrl('/books');
-      }
     });
   }
 
@@ -111,7 +92,7 @@ export class AdminRegisterComponent implements OnInit {
     this.storageCrypter.removeItem('basket', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.connectedUser = null;
-    this.router.navigateByUrl('/books');
+    this.router.navigateByUrl('/home');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
       position: 'topRight',

@@ -13,12 +13,7 @@ import StorageCrypter from 'storage-crypter';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: [
-    './home.component.css',
-    './../../../css/header.css',
-    './../../../css/main.css',
-    './../../../css/footer.css',
-  ],
+  styleUrls: ['./home.component.css', './../../../css/main.css'],
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
@@ -26,8 +21,7 @@ export class HomeComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
   bookBestSell: Array<Book> = [];
-  bookExistinBasket: Boolean = false;
-  responsiveOptions;
+  responsiveOptions: any;
   @ViewChild('bestSellCarousel') bestSellCarousel?: CarouselModule;
 
   socialUser!: SocialUser;
@@ -40,13 +34,9 @@ export class HomeComponent implements OnInit {
     private authService: SocialAuthService,
     private router: Router,
     private iziToast: NgxIzitoastService
-  ) {
-    document.body.style.backgroundImage =
-      "url('https://www.thibaultmorizet.fr/assets/home-background.jpg')";
-    document.body.style.backgroundPosition = 'center center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundAttachment = 'fixed';
-    document.body.style.backgroundSize = 'cover';
+  ) {}
+
+  ngOnInit(): void {
     this.responsiveOptions = [
       {
         breakpoint: '3000px',
@@ -79,13 +69,11 @@ export class HomeComponent implements OnInit {
         numScroll: 1,
       },
     ];
-  }
 
-  ngOnInit(): void {
     this.getBooksBestSell();
     try {
-      this.getUserByEmail(
-        JSON.parse(this.storageCrypter.getItem('user', 'session')).email
+      this.connectedUser = JSON.parse(
+        this.storageCrypter.getItem('user', 'session')
       );
     } catch (error) {
       this.connectedUser = null;
@@ -121,12 +109,6 @@ export class HomeComponent implements OnInit {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 
-  getUserByEmail(email: string) {
-    this.us.getTheUser(email).subscribe((res) => {
-      this.storageCrypter.setItem('user', JSON.stringify(res[0]), 'session');
-      this.connectedUser = res[0];
-    });
-  }
   refreshToken() {
     if (!this.storageCrypter.getItem('user', 'session')) {
       this.storageCrypter.removeItem('jeton', 'local');
@@ -152,7 +134,7 @@ export class HomeComponent implements OnInit {
     this.storageCrypter.removeItem('user', 'session');
     this.authService.signOut();
     this.connectedUser = null;
-    this.router.navigateByUrl('/books');
+    this.router.navigateByUrl('/home');
     this.iziToast.success({
       message: 'Vous êtes déconnecté',
       position: 'topRight',
@@ -169,84 +151,5 @@ export class HomeComponent implements OnInit {
     (
       document.getElementsByClassName('p-carousel-prev')[0] as HTMLElement
     ).click();
-  }
-
-  addBookToBasket(bookId: number | undefined) {
-    this.bookExistinBasket = false;
-    if (bookId != undefined) {
-      this.bs.getOneBook(bookId).subscribe((res) => {
-        this.basket.forEach((el) => {
-          if (res.id == el.id) {
-            this.bookExistinBasket = true;
-
-            if (
-              el.stock &&
-              el.number_ordered &&
-              el.number_ordered + 1 > el.stock
-            ) {
-              this.iziToast.error({
-                title: 'Manque de stock',
-                message:
-                  'Il reste ' +
-                  res.stock +
-                  ' exemplaires de ce livre et vous en demandez ' +
-                  (el.number_ordered + 1),
-                position: 'topRight',
-              });
-            } else {
-              if (el.number_ordered != undefined) {
-                el.number_ordered = el.number_ordered + 1;
-                if (el.unitprice) {
-                  el.totalprice = parseFloat(
-                    (el.number_ordered * el.unitprice).toFixed(2)
-                  );
-                }
-                this.iziToast.success({
-                  message: 'Article ajouté au panier',
-                  position: 'topRight',
-                });
-                this.storageCrypter.setItem(
-                  'basket',
-                  JSON.stringify(this.basket),
-                  'local'
-                );
-              }
-            }
-          }
-        });
-
-        if (!this.bookExistinBasket) {
-          if (res.stock && 1 > res.stock) {
-            this.iziToast.error({
-              title: 'Manque de stock',
-              message:
-                'Il reste ' +
-                res.stock +
-                ' exemplaires de ce livre et vous en demandez ' +
-                1,
-              position: 'topRight',
-            });
-          } else {
-            res.number_ordered = 1;
-            if (res.unitprice) {
-              res.totalprice = parseFloat(
-                (res.number_ordered * res.unitprice).toFixed(2)
-              );
-            }
-
-            this.basket.push(res);
-            this.iziToast.success({
-              message: 'Article ajouté au panier',
-              position: 'topRight',
-            });
-            this.storageCrypter.setItem(
-              'basket',
-              JSON.stringify(this.basket),
-              'local'
-            );
-          }
-        }
-      });
-    }
   }
 }

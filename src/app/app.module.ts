@@ -31,7 +31,10 @@ import { HomeComponent } from './components/home/home.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 import {CarouselModule} from 'primeng/carousel';  
-import {ButtonModule} from 'primeng/button';  
+import {ButtonModule} from 'primeng/button';
+import { HeaderComponent } from './components/partial/header/header.component';
+import { FooterComponent } from './components/partial/footer/footer.component';
+import { OneBookComponent } from './components/one-book/one-book.component';  
 
 
 @NgModule({
@@ -45,6 +48,9 @@ import {ButtonModule} from 'primeng/button';
     AdminRegisterComponent,
     NewBookComponent,
     HomeComponent,
+    HeaderComponent,
+    FooterComponent,
+    OneBookComponent,
   ],
   imports: [
     BrowserModule,

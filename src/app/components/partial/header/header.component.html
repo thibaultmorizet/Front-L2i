@@ -1,0 +1,55 @@
+<header>
+  <div id="top">
+    <nav class="navbar">
+      <div class="container">
+        <a class="navbar-brand pointer" [routerLink]="['/home']"
+          ><img
+            src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
+            alt="logo-l2i"
+            width="40"
+        /></a>
+        <a
+          class="home-link text-uppercase"
+          [routerLink]="['/home']"
+          [ngClass]="{ active: path === 'home' }"
+          >Home</a
+        >
+        <a
+          class="home-link text-uppercase"
+          [routerLink]="['/books']"
+          [ngClass]="{ active: path === 'books' }"
+          >Shop</a
+        >
+
+        <a
+          *ngIf="connectedUser"
+          class="home-link text-uppercase"
+          [routerLink]="['/my-account']"
+          [ngClass]="{ active: path === 'my-account' }"
+          >My Account</a
+        >
+
+        <a
+          *ngIf="!connectedUser"
+          class="home-link text-uppercase"
+          [routerLink]="['/my-account']"
+          [ngClass]="{ active: path === 'my-account' }"
+          >Login / Sign in</a
+        >
+
+        <div id="bag-shopping-count-container">
+          <a
+            [routerLink]="['/basket']"
+            class="home-link text-uppercase"
+            [ngClass]="{ active: path === 'basket' }"
+          >
+            <span id="bag-shopping-count" aria-hidden="true">{{
+              basket.length
+            }}</span>
+            My Basket</a
+          >
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
