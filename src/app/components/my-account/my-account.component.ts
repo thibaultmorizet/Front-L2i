@@ -52,48 +52,52 @@ export class MyAccountComponent implements OnInit {
     } catch (error) {
       this.connectedUser = {};
     }
+    console.log(this.connectedUser);
+    
 
-    try {
-      if (
-        JSON.parse(this.storageCrypter.getItem('user', 'session'))
-          ?.billingAddress?.id != undefined
-      ) {
-        this.addressService
-          .getTheAddress(
-            JSON.parse(this.storageCrypter.getItem('user', 'session'))
-              .billingAddress.id
-          )
-          .subscribe((res) => {
-            this.newAddressBilling = res;
-          });
+    if (this.connectedUser.id) {
+      try {
+        if (
+          JSON.parse(this.storageCrypter.getItem('user', 'session'))
+            ?.billingAddress?.id != undefined
+        ) {
+          this.addressService
+            .getTheAddress(
+              JSON.parse(this.storageCrypter.getItem('user', 'session'))
+                .billingAddress.id
+            )
+            .subscribe((res) => {
+              this.newAddressBilling = res;
+            });
+        }
+      } catch (error) {
+        this.iziToast.warning({
+          title: "Erreur de chargement de l'addresse de facturation",
+          message: 'Veuillez recharger la page',
+          position: 'topRight',
+        });
       }
-    } catch (error) {
-      this.iziToast.warning({
-        title: "Erreur de chargement de l'addresse de facturation",
-        message: 'Veuillez recharger la page',
-        position: 'topRight',
-      });
-    }
-    try {
-      if (
-        JSON.parse(this.storageCrypter.getItem('user', 'session'))
-          ?.deliveryAddress?.id != undefined
-      ) {
-        this.addressService
-          .getTheAddress(
-            JSON.parse(this.storageCrypter.getItem('user', 'session'))
-              .deliveryAddress.id
-          )
-          .subscribe((res) => {
-            this.newAddressDelivery = res;
-          });
+      try {
+        if (
+          JSON.parse(this.storageCrypter.getItem('user', 'session'))
+            ?.deliveryAddress?.id != undefined
+        ) {
+          this.addressService
+            .getTheAddress(
+              JSON.parse(this.storageCrypter.getItem('user', 'session'))
+                .deliveryAddress.id
+            )
+            .subscribe((res) => {
+              this.newAddressDelivery = res;
+            });
+        }
+      } catch (error) {
+        this.iziToast.warning({
+          title: "Erreur de chargement de l'addresse de livraison",
+          message: 'Veuillez recharger la page',
+          position: 'topRight',
+        });
       }
-    } catch (error) {
-      this.iziToast.warning({
-        title: "Erreur de chargement de l'addresse de livraison",
-        message: 'Veuillez recharger la page',
-        position: 'topRight',
-      });
     }
 
     if (this.storageCrypter.getItem('basket', 'local') != '') {

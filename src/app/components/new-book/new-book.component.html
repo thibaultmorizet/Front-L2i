@@ -14,10 +14,19 @@
           >
           <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
 
-          <a class="home-link text-uppercase" [routerLink]="['/user']"
+          <a
+            *ngIf="connectedUser"
+            class="home-link text-uppercase"
+            [routerLink]="['/my-account']"
             >My Account</a
           >
 
+          <a
+            *ngIf="!connectedUser"
+            class="home-link text-uppercase"
+            [routerLink]="['/my-account']"
+            >Login / Sign in</a
+          >
           <div id="bag-shopping-count-container">
             <a [routerLink]="['/basket']" class="home-link text-uppercase">
               <span id="bag-shopping-count" aria-hidden="true">{{

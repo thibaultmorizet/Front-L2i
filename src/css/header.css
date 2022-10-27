@@ -83,6 +83,8 @@ header {
 
     #top .container {
         font-size: 1.3rem;
-
+    }
+    #bag-shopping-count{
+        font-size: 1rem;
     }
 }

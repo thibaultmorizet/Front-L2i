@@ -9,13 +9,21 @@
               alt="logo-l2i"
               width="50"
           /></a>
-          <a class="home-link text-uppercase active" [routerLink]="['/home']"
-            >Home</a
-          >
+          <a class="home-link text-uppercase" [routerLink]="['/home']">Home</a>
           <a class="home-link text-uppercase" [routerLink]="['/books']">Shop</a>
 
-          <a class="home-link text-uppercase" [routerLink]="['/user']"
+          <a
+            *ngIf="connectedUser.id"
+            class="home-link text-uppercase active"
+            [routerLink]="['/my-account']"
             >My Account</a
+          >
+
+          <a
+            *ngIf="!connectedUser.id"
+            class="home-link text-uppercase active"
+            [routerLink]="['/my-account']"
+            >Login / Sign in</a
           >
 
           <div id="bag-shopping-count-container">
@@ -32,206 +40,207 @@
   </header>
 
   <main id="content">
-    <div class="container">
-      <div class="row">
-        <div id="personnalData" class="my-3">
-          <div class="container d-flex justify-content-end">
-            <form
-              #personnalDataForm="ngForm"
-              role="personnalData"
-              (ngSubmit)="setNewPersonnalData()"
+    <div class="container" *ngIf="!connectedUser.id">
+      
+    </div>
+    <div class="container" *ngIf="connectedUser.id">
+      <div id="personnalData" class="my-3">
+        <div class="container d-flex justify-content-end">
+          <form
+            #personnalDataForm="ngForm"
+            role="personnalData"
+            (ngSubmit)="setNewPersonnalData()"
+          >
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.firstname }}"
+                class="form-control"
+                value="{{ connectedUser.firstname }}"
+                [(ngModel)]="newUserData.firstname"
+                name="Firstname"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.lastname }}"
+                class="form-control"
+                value="{{ connectedUser.lastname }}"
+                [(ngModel)]="newUserData.lastname"
+                name="Lastname"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                value="{{ connectedUser.email }}"
+                name="Email"
+                disabled
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="password"
+                placeholder="Insérez votre nouveau mot de passe"
+                class="form-control"
+                value=""
+                [(ngModel)]="newUserData.password"
+                name="Password"
+              />
+            </div>
+            <div *ngIf="errorPassword" class="mb-2 text-danger">
+              {{ errorPassword }}
+            </div>
+            <div class="input-group">
+              <input
+                type="password"
+                placeholder="Confirmez votre nouveau mot de passe"
+                class="form-control"
+                value=""
+                [(ngModel)]="newUserData.passwordConfirm"
+                name="PasswordConfirm"
+              />
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary button-update-personnal-data h-100"
             >
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.firstname }}"
-                  class="form-control"
-                  value="{{ connectedUser.firstname }}"
-                  [(ngModel)]="newUserData.firstname"
-                  name="Firstname"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.lastname }}"
-                  class="form-control"
-                  value="{{ connectedUser.lastname }}"
-                  [(ngModel)]="newUserData.lastname"
-                  name="Lastname"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  value="{{ connectedUser.email }}"
-                  name="Email"
-                  disabled
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  type="password"
-                  placeholder="Insérez votre nouveau mot de passe"
-                  class="form-control"
-                  value=""
-                  [(ngModel)]="newUserData.password"
-                  name="Password"
-                />
-              </div>
-              <div *ngIf="errorPassword" class="mb-2 text-danger">
-                {{ errorPassword }}
-              </div>
-              <div class="input-group">
-                <input
-                  type="password"
-                  placeholder="Confirmez votre nouveau mot de passe"
-                  class="form-control"
-                  value=""
-                  [(ngModel)]="newUserData.passwordConfirm"
-                  name="PasswordConfirm"
-                />
-              </div>
-              <button
-                type="submit"
-                class="btn btn-primary button-update-personnal-data h-100"
-              >
-                Modifier
-              </button>
-            </form>
+              Modifier
+            </button>
+          </form>
 
-            <form
-              #AddressBillingForm="ngForm"
-              role="AddressBilling"
-              (ngSubmit)="setNewAddressBilling()"
+          <form
+            #AddressBillingForm="ngForm"
+            role="AddressBilling"
+            (ngSubmit)="setNewAddressBilling()"
+          >
+            <label for="Street">Rue</label>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.billingAddress?.street }}"
+                class="form-control"
+                value="{{ connectedUser.billingAddress?.street }}"
+                [(ngModel)]="newAddressBilling.street"
+                name="Street"
+                required
+              />
+            </div>
+
+            <label for="Postalcode">Code postal</label>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.billingAddress?.postalcode }}"
+                class="form-control"
+                value="{{ connectedUser.billingAddress?.postalcode }}"
+                [(ngModel)]="newAddressBilling.postalcode"
+                name="Postalcode"
+                required
+              />
+            </div>
+
+            <label for="City">Ville</label>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.billingAddress?.city }}"
+                class="form-control"
+                value="{{ connectedUser.billingAddress?.city }}"
+                [(ngModel)]="newAddressBilling.city"
+                name="City"
+                required
+              />
+            </div>
+            <label for="Country">Pays</label>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.billingAddress?.country }}"
+                class="form-control"
+                value="{{ connectedUser.billingAddress?.country }}"
+                [(ngModel)]="newAddressBilling.country"
+                name="Country"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary button-update-billing-address h-100"
+              [disabled]="!AddressBillingForm.valid"
             >
-              <label for="Street">Rue</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.billingAddress?.street }}"
-                  class="form-control"
-                  value="{{ connectedUser.billingAddress?.street }}"
-                  [(ngModel)]="newAddressBilling.street"
-                  name="Street"
-                  required
-                />
-              </div>
+              Modifier
+            </button>
+          </form>
 
-              <label for="Postalcode">Code postal</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.billingAddress?.postalcode }}"
-                  class="form-control"
-                  value="{{ connectedUser.billingAddress?.postalcode }}"
-                  [(ngModel)]="newAddressBilling.postalcode"
-                  name="Postalcode"
-                  required
-                />
-              </div>
+          <form
+            #AddressDeliveryForm="ngForm"
+            role="AddressDelivery"
+            (ngSubmit)="setNewAddressDelivery()"
+          >
+            <label for="Street">Rue</label>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.deliveryAddress?.street }}"
+                class="form-control"
+                value="{{ connectedUser.deliveryAddress?.street }}"
+                [(ngModel)]="newAddressDelivery.street"
+                name="Street"
+                required
+              />
+            </div>
 
-              <label for="City">Ville</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.billingAddress?.city }}"
-                  class="form-control"
-                  value="{{ connectedUser.billingAddress?.city }}"
-                  [(ngModel)]="newAddressBilling.city"
-                  name="City"
-                  required
-                />
-              </div>
-              <label for="Country">Pays</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.billingAddress?.country }}"
-                  class="form-control"
-                  value="{{ connectedUser.billingAddress?.country }}"
-                  [(ngModel)]="newAddressBilling.country"
-                  name="Country"
-                  required
-                />
-              </div>
+            <label for="Postalcode">Code postal</label>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.deliveryAddress?.postalcode }}"
+                class="form-control"
+                value="{{ connectedUser.deliveryAddress?.postalcode }}"
+                [(ngModel)]="newAddressDelivery.postalcode"
+                name="Postalcode"
+                required
+              />
+            </div>
 
-              <button
-                type="submit"
-                class="btn btn-primary button-update-billing-address h-100"
-                [disabled]="!AddressBillingForm.valid"
-              >
-                Modifier
-              </button>
-            </form>
+            <label for="City">Ville</label>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.deliveryAddress?.city }}"
+                class="form-control"
+                value="{{ connectedUser.deliveryAddress?.city }}"
+                [(ngModel)]="newAddressDelivery.city"
+                name="City"
+                required
+              />
+            </div>
 
-            <form
-              #AddressDeliveryForm="ngForm"
-              role="AddressDelivery"
-              (ngSubmit)="setNewAddressDelivery()"
+            <label for="Country">Pays</label>
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="{{ connectedUser.deliveryAddress?.country }}"
+                class="form-control"
+                value="{{ connectedUser.deliveryAddress?.country }}"
+                [(ngModel)]="newAddressDelivery.country"
+                name="Country"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary button-update-delivery-address h-100"
+              [disabled]="!AddressDeliveryForm.valid"
             >
-              <label for="Street">Rue</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.deliveryAddress?.street }}"
-                  class="form-control"
-                  value="{{ connectedUser.deliveryAddress?.street }}"
-                  [(ngModel)]="newAddressDelivery.street"
-                  name="Street"
-                  required
-                />
-              </div>
-
-              <label for="Postalcode">Code postal</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.deliveryAddress?.postalcode }}"
-                  class="form-control"
-                  value="{{ connectedUser.deliveryAddress?.postalcode }}"
-                  [(ngModel)]="newAddressDelivery.postalcode"
-                  name="Postalcode"
-                  required
-                />
-              </div>
-
-              <label for="City">Ville</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.deliveryAddress?.city }}"
-                  class="form-control"
-                  value="{{ connectedUser.deliveryAddress?.city }}"
-                  [(ngModel)]="newAddressDelivery.city"
-                  name="City"
-                  required
-                />
-              </div>
-
-              <label for="Country">Pays</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="{{ connectedUser.deliveryAddress?.country }}"
-                  class="form-control"
-                  value="{{ connectedUser.deliveryAddress?.country }}"
-                  [(ngModel)]="newAddressDelivery.country"
-                  name="Country"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                class="btn btn-primary button-update-delivery-address h-100"
-                [disabled]="!AddressDeliveryForm.valid"
-              >
-                Modifier
-              </button>
-            </form>
-          </div>
+              Modifier
+            </button>
+          </form>
         </div>
       </div>
     </div>
