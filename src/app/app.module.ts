@@ -34,7 +34,6 @@ import {CarouselModule} from 'primeng/carousel';
 import {ButtonModule} from 'primeng/button';
 import { HeaderComponent } from './components/partial/header/header.component';
 import { FooterComponent } from './components/partial/footer/footer.component';
-import { OneBookComponent } from './components/one-book/one-book.component';  
 
 
 @NgModule({
@@ -50,7 +49,6 @@ import { OneBookComponent } from './components/one-book/one-book.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    OneBookComponent,
   ],
   imports: [
     BrowserModule,

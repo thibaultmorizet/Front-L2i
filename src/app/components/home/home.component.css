@@ -1,9 +1,9 @@
-body {
+body:has(.general-best-sell-container) {
     background-image: url('https://www.thibaultmorizet.fr/assets/home-background.jpg');
-    background-position: 'center center';
-    background-repeat: 'no-repeat';
-    background-attachment: 'fixed';
-    background-size: 'cover';
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .general-best-sell-container {

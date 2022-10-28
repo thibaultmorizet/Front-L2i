@@ -1,5 +1,5 @@
 <div class="general-content">
-<app-header></app-header>
+  <app-header [basketLength]="basket.length"></app-header>
 
   <main id="content">
     <div class="container">
@@ -19,7 +19,36 @@
               <p class="title text-center">Our best sell</p>
             </ng-template>
             <ng-template let-oneBook pTemplate="item">
-              <app-one-book [oneBook]="oneBook"></app-one-book>
+              <div class="best-sell-container">
+                <div class="best-sell-img">
+                  <img
+                    src="{{ oneBook.image }}"
+                    [alt]="oneBook.title"
+                    class="img-best-sell pointer"
+                    [routerLink]="['/books/', oneBook.id]"
+                  />
+                  <div class="article-hover-actions">
+                    <div
+                      class="article-hover-actions-add-cart"
+                      (click)="addBookToBasket(oneBook.id)"
+                    >
+                      <i class="fa fa-shopping-cart"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="best-sell-description">
+                  <span
+                    class="best-sell-title pointer"
+                    [routerLink]="['/books/', oneBook.id]"
+                    >{{ oneBook.title }}</span
+                  >
+                  <span
+                    class="best-sell-price pointer"
+                    [routerLink]="['/books/', oneBook.id]"
+                    >{{ oneBook.unitprice }} €</span
+                  >
+                </div>
+              </div>
             </ng-template>
           </p-carousel>
         </div>

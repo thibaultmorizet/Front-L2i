@@ -1,5 +1,5 @@
 <div class="general-content">
-  <app-header></app-header>
+  <app-header [basketLength]="basket.length"></app-header>
 
   <main id="content">
     <div class="container" *ngIf="!connectedUser.id">

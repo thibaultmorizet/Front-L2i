@@ -97,7 +97,7 @@ export class BasketDetailsComponent implements OnInit {
               JSON.stringify(this.basket),
               'local'
             );
-      }
+          }
         } else {
           this.iziToast.error({
             message: 'Vous ne pouvez pas demander une quantité négative',
