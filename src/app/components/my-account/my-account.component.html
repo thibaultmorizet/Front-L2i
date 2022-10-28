@@ -2,7 +2,7 @@
   <app-header [basketLength]="basket.length"></app-header>
 
   <main id="content">
-    <div class="container" *ngIf="!connectedUser.id">
+    <div class="container" *ngIf="!connectedUser.id && isLoginPage">
       <div class="login-container">
         <p class="title text-center">Login</p>
 
@@ -63,7 +63,116 @@
             <i class="fa-brands fa-facebook mr-1"></i> Login with Facebook
           </button>
         </div>
-        <p class="text-center text-underline pointer">You're not registered</p>
+        <p
+          class="text-center text-underline pointer"
+          (click)="toggleIsLoginPage()"
+        >
+          You're not registered
+        </p>
+      </div>
+    </div>
+    <div class="container" *ngIf="!connectedUser.id && !isLoginPage">
+      <div class="register-container">
+        <p class="title text-center">Register</p>
+
+        <form #registerForm="ngForm" (ngSubmit)="register()">
+          <div class="mb-3">
+            <div class="input-group">
+              <input
+                id="lastname"
+                class="form-control mb-3"
+                placeholder="Lastname"
+                name="lastname"
+                [(ngModel)]="userInscription.lastname"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <input
+                id="firstname"
+                class="form-control mb-3"
+                placeholder="Firstname"
+                name="firstname"
+                [(ngModel)]="userInscription.firstname"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <input
+                id="email"
+                class="form-control mb-3"
+                placeholder="Email"
+                name="email"
+                type="email"
+                [(ngModel)]="userInscription.email"
+                required
+              />
+            </div>
+            <div *ngIf="errorEmail" class="mb-2 text-danger">
+              {{ errorEmail }}
+            </div>
+
+            <div class="input-group">
+              <input
+                id="password"
+                class="form-control mb-3"
+                placeholder="Password"
+                name="password"
+                type="password"
+                [(ngModel)]="userInscription.password"
+                required
+              />
+            </div>
+            <div *ngIf="errorPassword" class="mb-2 text-danger">
+              {{ errorPassword }}
+            </div>
+
+            <div class="input-group">
+              <input
+                id="passwordConfirm"
+                class="form-control mb-3"
+                placeholder="Confirm password"
+                name="passwordConfirm"
+                type="password"
+                [(ngModel)]="userInscription.passwordConfirm"
+                required
+              />
+            </div>
+            <div class="d-flex justify-content-end mt-2">
+              <button
+                type="submit"
+                class="btn btn-default btn-sm btn-primary"
+                [disabled]="!registerForm.valid"
+              >
+                Register
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div>
+          <button
+            type="button"
+            (click)="signInWithGoogle()"
+            class="btn btn-google mt-3"
+          >
+            <img
+              src="https://www.thibaultmorizet.fr/assets/logo-google.png"
+              alt="logo Google"
+              class="logo-google"
+            />
+            Register with Google</button
+          ><br />
+          <button class="btn btn-facebook mt-3" (click)="signInWithFB()">
+            <i class="fa-brands fa-facebook mr-1"></i> Register with Facebook
+          </button>
+        </div>
+        <p
+          class="text-center text-underline pointer"
+          (click)="toggleIsLoginPage()"
+        >
+          You already have an account
+        </p>
       </div>
     </div>
     <div class="container" *ngIf="connectedUser.id">

@@ -10,6 +10,7 @@ import { NewBookComponent } from './components/new-book/new-book.component';
 import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'books', component: BookComponent },
   { path: 'basket', component: BasketDetailsComponent },
   { path: 'books/:id', component: BookDetailsComponent },

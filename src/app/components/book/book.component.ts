@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Book } from 'src/app/interfaces/book';
 import { BookService } from 'src/app/services/book.service';
 import { FormatService } from 'src/app/services/format.service';
@@ -11,19 +11,15 @@ import { TypeService } from 'src/app/services/type.service';
 import StorageCrypter from 'storage-crypter';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
-  NgbActiveModal,
   NgbModal,
   ModalDismissReasons,
-  NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import { UserService } from 'src/app/services/user.service';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 
 import { Editor } from 'src/app/interfaces/editor';
 import { EditorService } from 'src/app/services/editor.service';
 import { AuthorService } from 'src/app/services/author.service';
 import { Author } from 'src/app/interfaces/author';
-import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
   selector: 'app-book',
@@ -66,14 +62,11 @@ export class BookComponent implements OnInit {
     private es: EditorService,
     private authorService: AuthorService,
     private ts: TypeService,
-    private us: UserService,
     private as: AuthService,
-    private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
     private modalService: NgbModal,
     private authService: SocialAuthService,
-    private basketService: BasketService
   ) {}
 
   ngOnInit(): void {
@@ -334,21 +327,6 @@ export class BookComponent implements OnInit {
       });
     }
   }
-  registerModal(content: any) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          if (reason == 0 || reason == 'Cross click') {
-            this.userInscription = {};
-          }
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
   updatebookModal(content: any, id: number | undefined) {
     if (id != undefined) {
       this.bs.getOneBook(id).subscribe((b) => {
@@ -431,32 +409,6 @@ export class BookComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-  register() {
-    if (this.userInscription.password == this.userInscription.passwordConfirm) {
-      this.errorPassword = '';
-
-      //delete this.userInscription.passwordConfirm;
-      this.us.getTheUser(this.userInscription.email).subscribe((res) => {
-        if (res[0] == undefined) {
-          this.errorEmail = '';
-
-          this.us.register(this.userInscription).subscribe((resRegister) => {
-            this.modalService.dismissAll();
-            this.userInscription = {};
-            this.iziToast.success({
-              message: 'Inscription réussie',
-              position: 'topRight',
-            });
-          });
-        } else {
-          this.errorEmail = 'Cet email est déjà utilisé';
-        }
-      });
-    } else {
-      this.errorPassword = 'Les mots de passes ne sont pas identiques';
-    }
-  }
-
   updatebook() {
     if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
       this.actualUpdatebook.type = [];

@@ -7,7 +7,6 @@ import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookService } from 'src/app/services/book.service';
-import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -29,7 +28,6 @@ export class HomeComponent implements OnInit {
   isLoggedin?: boolean;
 
   constructor(
-    private us: UserService,
     private as: AuthService,
     private bs: BookService,
     private authService: SocialAuthService,
@@ -230,8 +228,5 @@ export class HomeComponent implements OnInit {
         }
       });
     }
-  }
-  testlog() {
-    console.log(this.basket);
   }
 }

@@ -1,17 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { Book } from 'src/app/interfaces/book';
 import StorageCrypter from 'storage-crypter';
-import { BasketService } from 'src/app/services/basket.service';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
-import {
-  NgbActiveModal,
-  NgbModal,
-  ModalDismissReasons,
-} from '@ng-bootstrap/ng-bootstrap';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 
 @Component({
@@ -23,7 +16,6 @@ export class BasketDetailsComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   basket: Array<Book> = [];
   connectedUser: User | null = {};
-  userInscription: User = {};
   closeResult = '';
   errorPassword: string | null = null;
   errorEmail: string | null = null;
@@ -33,14 +25,10 @@ export class BasketDetailsComponent implements OnInit {
   isLoggedin?: boolean;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
     private as: AuthService,
-    private us: UserService,
-    private modalService: NgbModal,
-    private authService: SocialAuthService,
-    private basketService: BasketService
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {
@@ -159,55 +147,6 @@ export class BasketDetailsComponent implements OnInit {
         );
       }
     });
-  }
-  registerModal(content: any) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          if (reason == 0 || reason == 'Cross click') {
-            this.userInscription = {};
-          }
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-  register() {
-    if (this.userInscription.password == this.userInscription.passwordConfirm) {
-      this.errorPassword = '';
-
-      //delete this.userInscription.passwordConfirm;
-      this.us.getTheUser(this.userInscription.email).subscribe((res) => {
-        if (res[0] == undefined) {
-          this.errorEmail = '';
-
-          this.us.register(this.userInscription).subscribe((resRegister) => {
-            this.modalService.dismissAll();
-            this.userInscription = {};
-            this.iziToast.success({
-              message: 'Inscription réussie',
-              position: 'topRight',
-            });
-          });
-        } else {
-          this.errorEmail = 'Cet email est déjà utilisé';
-        }
-      });
-    } else {
-      this.errorPassword = 'Les mots de passes ne sont pas identiques';
-    }
   }
 
   logout() {

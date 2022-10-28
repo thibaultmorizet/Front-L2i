@@ -1,14 +1,6 @@
-body:has(.general-best-sell-container) {
-    background-image: url('https://www.thibaultmorizet.fr/assets/home-background.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-}
-
 .general-best-sell-container {
     padding: 2em 1em;
-    background-color: rgba(255, 255, 255, .4);
+    background-color: rgba(255, 255, 255, .6);
     box-shadow: 5px 6px 13px -8px rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(2px);
     border-radius: 20px;
@@ -83,8 +75,8 @@ body:has(.general-best-sell-container) {
 }
 
 .best-sell-button:hover {
-    background-color: #95CFBC;
-    color: #000;
+    background-color: #30336B;
+    color: #fff;
     transition: all 0.3s;
 }
 
@@ -123,7 +115,8 @@ body:has(.general-best-sell-container) {
 }
 
 .article-hover-actions-add-cart:hover {
-    background-color: #95CFBC;
+    background-color: #30336B;
+    color: #fff;
     transition: all 0.3s;
 }
 

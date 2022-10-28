@@ -1,9 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
 import StorageCrypter from 'storage-crypter';
 import { ActivatedRoute } from '@angular/router';
-import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
   selector: 'app-header',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { Author } from 'src/app/interfaces/author';
@@ -10,12 +10,10 @@ import { Type } from 'src/app/interfaces/type';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { AuthorService } from 'src/app/services/author.service';
-import { BasketService } from 'src/app/services/basket.service';
 import { BookService } from 'src/app/services/book.service';
 import { EditorService } from 'src/app/services/editor.service';
 import { FormatService } from 'src/app/services/format.service';
 import { TypeService } from 'src/app/services/type.service';
-import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -38,10 +36,8 @@ export class NewBookComponent implements OnInit {
   isLoggedin?: boolean;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private us: UserService,
     private as: AuthService,
     private authService: SocialAuthService,
     private fs: FormatService,
@@ -49,7 +45,6 @@ export class NewBookComponent implements OnInit {
     private authorService: AuthorService,
     private ts: TypeService,
     private bs: BookService,
-    private basketService: BasketService
   ) {}
 
   ngOnInit(): void {

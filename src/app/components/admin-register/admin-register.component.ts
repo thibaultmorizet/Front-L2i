@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { BasketService } from 'src/app/services/basket.service';
 import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
@@ -26,13 +25,11 @@ export class AdminRegisterComponent implements OnInit {
   isLoggedin?: boolean;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
     private us: UserService,
     private as: AuthService,
-    private authService: SocialAuthService,
-    private basketService: BasketService
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import StorageCrypter from 'storage-crypter';
 import { User } from 'src/app/interfaces/user';
@@ -13,7 +13,6 @@ import {
   GoogleLoginProvider,
   SocialAuthService,
 } from 'angularx-social-login';
-import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
   selector: 'app-my-account',
@@ -31,16 +30,16 @@ export class MyAccountComponent implements OnInit {
   errorEmail: string | null = null;
   userLogin: User = {};
   errorConnexion: string | null = null;
+  isLoginPage: boolean = true;
+  userInscription: User = {};
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
     private us: UserService,
     private addressService: AddressService,
     private as: AuthService,
-    private authService: SocialAuthService,
-    private basketService: BasketService
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {
@@ -246,6 +245,30 @@ export class MyAccountComponent implements OnInit {
       },
     });
   }
+  register() {
+    if (this.userInscription.password == this.userInscription.passwordConfirm) {
+      this.errorPassword = '';
+
+      //delete this.userInscription.passwordConfirm;
+      this.us.getTheUser(this.userInscription.email).subscribe((res) => {
+        if (res[0] == undefined) {
+          this.errorEmail = '';
+
+          this.us.register(this.userInscription).subscribe((resRegister) => {
+            this.userInscription = {};
+            this.iziToast.success({
+              message: 'Inscription réussie',
+              position: 'topRight',
+            });
+          });
+        } else {
+          this.errorEmail = 'Cet email est déjà utilisé';
+        }
+      });
+    } else {
+      this.errorPassword = 'Les mots de passes ne sont pas identiques';
+    }
+  }
   refreshTokenAuth(): void {
     this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
   }
@@ -255,5 +278,10 @@ export class MyAccountComponent implements OnInit {
 
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+  toggleIsLoginPage() {
+    this.isLoginPage = !this.isLoginPage;
+    this.userInscription = {};
+    this.userLogin = {};
   }
 }

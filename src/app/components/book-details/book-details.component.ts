@@ -3,18 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { Book } from 'src/app/interfaces/book';
 import { BookService } from 'src/app/services/book.service';
-import { FormatService } from 'src/app/services/format.service';
 import StorageCrypter from 'storage-crypter';
-import {
-  NgbActiveModal,
-  NgbModal,
-  ModalDismissReasons,
-} from '@ng-bootstrap/ng-bootstrap';
 import { User } from 'src/app/interfaces/user';
-import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
   selector: 'app-book-details',
@@ -28,7 +20,6 @@ export class BookDetailsComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   bookExistinBasket: Boolean = false;
   numberToOrder: string = '1';
-  userInscription: User = {};
   closeResult = '';
   errorPassword: string | null = null;
   errorEmail: string | null = null;
@@ -39,15 +30,11 @@ export class BookDetailsComponent implements OnInit {
 
   constructor(
     private bs: BookService,
-    private fs: FormatService,
-    private us: UserService,
     private as: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private modalService: NgbModal,
     private authService: SocialAuthService,
-    private basketService: BasketService
   ) {}
 
   ngOnInit(): void {
@@ -176,56 +163,6 @@ export class BookDetailsComponent implements OnInit {
           }
         }
       });
-    }
-  }
-  registerModal(content: any) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          if (reason == 0 || reason == 'Cross click') {
-            this.userInscription = {};
-          }
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-  register() {
-    if (this.userInscription.password == this.userInscription.passwordConfirm) {
-      this.errorPassword = '';
-
-      //delete this.userInscription.passwordConfirm;
-      this.us.getTheUser(this.userInscription.email).subscribe((res) => {
-        if (res[0] == undefined) {
-          this.errorEmail = '';
-
-          this.us.register(this.userInscription).subscribe((resRegister) => {
-            this.modalService.dismissAll();
-            this.userInscription = {};
-            this.iziToast.success({
-              message: 'Inscription réussie',
-              position: 'topRight',
-            });
-          });
-        } else {
-          this.errorEmail = 'Cet email est déjà utilisé';
-        }
-      });
-    } else {
-      this.errorPassword = 'Les mots de passes ne sont pas identiques';
     }
   }
 
