@@ -28,12 +28,15 @@
                     [routerLink]="['/books/', oneBook.id]"
                   />
                   <div class="article-hover-actions">
-                    <div
-                      class="article-hover-actions-add-cart"
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      class="p-button-raised p-button-primary-color article-hover-actions-add-cart"
                       (click)="addBookToBasket(oneBook.id)"
                     >
                       <i class="fa fa-shopping-cart"></i>
-                    </div>
+                    </button>
                   </div>
                 </div>
                 <div class="best-sell-description">
@@ -54,18 +57,25 @@
         </div>
         <div class="best-sell-pagination">
           <!-- p-ripple p-element p-carousel-prev p-link -->
-          <div
-            class="best-sell-button best-sell-button-prev"
+
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-raised p-button-primary-color best-sell-button best-sell-button-prev"
             (click)="prevBestBook()"
           >
             <i class="far fa-arrow-left"></i> Prev
-          </div>
-          <div
-            class="best-sell-button best-sell-button-next"
+          </button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-raised p-button-primary-color best-sell-button best-sell-button-next"
             (click)="nextBestBook()"
           >
             Next <i class="far fa-arrow-right"></i>
-          </div>
+          </button>
         </div>
       </div>
     </div>

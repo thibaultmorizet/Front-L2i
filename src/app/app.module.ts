@@ -30,8 +30,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
-import {CarouselModule} from 'primeng/carousel';  
-import {ButtonModule} from 'primeng/button';
+import { CarouselModule } from 'primeng/carousel';  
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
 import { HeaderComponent } from './components/partial/header/header.component';
 import { FooterComponent } from './components/partial/footer/footer.component';
 
@@ -62,7 +63,8 @@ import { FooterComponent } from './components/partial/footer/footer.component';
     ReactiveFormsModule,
     NgbCarouselModule,
     CarouselModule,
-    ButtonModule
+    ButtonModule,
+    RippleModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

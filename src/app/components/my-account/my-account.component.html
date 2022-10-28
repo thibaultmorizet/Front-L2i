@@ -176,6 +176,11 @@
       </div>
     </div>
     <div class="container" *ngIf="connectedUser.id">
+      <img
+        id="personnalDateImg"
+        src="./../../../assets/personalData.png"
+        alt="personnalDataImg"
+      />
       <div id="personnalData" class="my-3">
         <button type="button" (click)="logout()" class="btn btn-outline-danger">
           Logout

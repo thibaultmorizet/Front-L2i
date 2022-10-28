@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
+import { PrimeNGConfig } from 'primeng/api';
 import { CarouselModule } from 'primeng/carousel';
 import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
@@ -32,10 +33,12 @@ export class HomeComponent implements OnInit {
     private bs: BookService,
     private authService: SocialAuthService,
     private router: Router,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private primengConfig: PrimeNGConfig
   ) {}
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
     this.responsiveOptions = [
       {
         breakpoint: '3000px',

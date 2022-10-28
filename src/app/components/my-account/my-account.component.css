@@ -19,9 +19,13 @@
 
 }
 
-.container:has(.login-container), .container:has(.register-container) {
+.container:has(.login-container), .container:has(.register-container), .container:has(#personnalData) {
     display: flex;
     justify-content: center;
+}
+
+#personnalDateImg{
+    max-width: 300px;
 }
 
 .btn-facebook {
