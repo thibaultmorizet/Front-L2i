@@ -24,7 +24,7 @@
     justify-content: center;
 }
 
-#personnalDateImg{
+#personnalDateImg {
     max-width: 300px;
 }
 
@@ -54,6 +54,31 @@
 .btn-google:hover {
     box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75);
     background-color: #f0f0f0;
+}
+
+
+.p-inputtext {
+    padding: .375rem .75rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.field input#password {
+    width: 100%;
+    padding-right: 30px;
+    position: relative;
+}
+
+.toogle-password-clear {
+    position: absolute;
+    right: 8px;
+    top: 11px;
+    cursor: pointer;
+    font-size: .8rem;
 }
 
 @media (min-width: 650px) {

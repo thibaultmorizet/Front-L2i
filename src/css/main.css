@@ -66,6 +66,31 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
     box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75);
 }
 
+.p-button-primary-color {
+    font-family: "Quicksand", Arial, sans-serif;
+    border: none;
+}
+
+.p-button-primary-color:hover {
+    color: #ffffff;
+    background-color: #30336B !important;
+    transition: all 0.3s;
+}
+
+.btn-primary-color {
+    color: #ffffff;
+    background-color: #30336B !important;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    font-weight: 400;
+    box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+}
+
+.btn-primary-color:hover {
+    opacity: .9;
+}
+
 @media (min-width: 1000px) {
     .title {
         font-size: 1.8rem;

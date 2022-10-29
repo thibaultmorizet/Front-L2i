@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import StorageCrypter from 'storage-crypter';
@@ -13,11 +13,13 @@ import {
   GoogleLoginProvider,
   SocialAuthService,
 } from 'angularx-social-login';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-my-account',
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.css', './../../../css/main.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MyAccountComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
@@ -32,6 +34,8 @@ export class MyAccountComponent implements OnInit {
   errorConnexion: string | null = null;
   isLoginPage: boolean = true;
   userInscription: User = {};
+  passwordIsClear: boolean = false;
+  passwordType: string = 'password';
 
   constructor(
     private router: Router,
@@ -39,10 +43,12 @@ export class MyAccountComponent implements OnInit {
     private us: UserService,
     private addressService: AddressService,
     private as: AuthService,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private primengConfig: PrimeNGConfig
   ) {}
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
     try {
       this.connectedUser = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
@@ -218,31 +224,38 @@ export class MyAccountComponent implements OnInit {
   }
 
   login() {
-    this.as.login(this.userLogin).subscribe({
-      next: (res) => {
-        if (res.token != null) {
-          this.storageCrypter.setItem('jeton', res.token, 'local');
+    this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
+      if (theUser[0] == undefined) {
+        this.errorEmail = 'We did not find an account with this email address';
+      } else {
+        this.errorEmail = null;
+        this.as.login(this.userLogin).subscribe({
+          next: (res) => {
+            if (res.token != null) {
+              this.storageCrypter.setItem('jeton', res.token, 'local');
 
-          this.as.getTheUser(this.userLogin.email).subscribe((res) => {
-            this.storageCrypter.setItem(
-              'user',
-              JSON.stringify(res[0]),
-              'session'
-            );
+              this.storageCrypter.setItem(
+                'user',
+                JSON.stringify(theUser[0]),
+                'session'
+              );
 
-            this.connectedUser = res[0];
-            this.userLogin = {};
-            this.iziToast.success({
-              message: 'Connexion réussie',
-              position: 'topRight',
-            });
-            this.router.navigateByUrl('/home');
-          });
-        }
-      },
-      error: (res) => {
-        this.errorConnexion = res.message;
-      },
+              this.connectedUser = theUser[0];
+              this.errorPassword = null;
+
+              this.userLogin = {};
+              this.iziToast.success({
+                message: 'Connexion réussie',
+                position: 'topRight',
+              });
+              this.router.navigateByUrl('/home');
+            }
+          },
+          error: (res) => {
+            this.errorPassword = 'Incorrect password';
+          },
+        });
+      }
     });
   }
   register() {
@@ -283,5 +296,13 @@ export class MyAccountComponent implements OnInit {
     this.isLoginPage = !this.isLoginPage;
     this.userInscription = {};
     this.userLogin = {};
+  }
+  tooglePasswordClear() {
+    this.passwordIsClear = !this.passwordIsClear;
+    if (this.passwordIsClear) {
+      this.passwordType = 'text';
+    } else {
+      this.passwordType = 'password';
+    }
   }
 }

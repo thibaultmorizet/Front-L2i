@@ -30,12 +30,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { CarouselModule } from 'primeng/carousel';  
+import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { HeaderComponent } from './components/partial/header/header.component';
 import { FooterComponent } from './components/partial/footer/footer.component';
-
+import { InputTextModule } from 'primeng/inputtext';
+import { DividerModule } from 'primeng/divider';
+import { PasswordModule } from 'primeng/password';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,9 @@ import { FooterComponent } from './components/partial/footer/footer.component';
     CarouselModule,
     ButtonModule,
     RippleModule,
+    InputTextModule,
+    DividerModule,
+    PasswordModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
