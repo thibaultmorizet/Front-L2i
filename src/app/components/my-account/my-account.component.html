@@ -8,21 +8,6 @@
 
         <form #loginForm="ngForm" (ngSubmit)="login()">
           <div class="mb-3">
-            <!--             <div class="input-group">
-              <span class="p-float-label mb-4">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  pInputText
-                  [(ngModel)]="userLogin.email"
-                  [ngClass]="{ 'ng-invalid': errorConnexion }"
-                  required
-                />
-                <label for="email">Email</label>
-              </span>
-            </div> -->
-
             <div class="input-group">
               <div class="field mb-3">
                 <input
@@ -54,7 +39,9 @@
                     [ngClass]="{ 'ng-invalid': errorPassword }"
                     required
                   />
-                  <span class="toogle-password-clear" (click)="tooglePasswordClear()"
+                  <span
+                    class="toogle-password-clear"
+                    (click)="tooglePasswordClear()"
                     ><i
                       class="fa-regular"
                       [ngClass]="{
@@ -117,71 +104,148 @@
         <form #registerForm="ngForm" (ngSubmit)="register()">
           <div class="mb-3">
             <div class="input-group">
-              <input
-                id="lastname"
-                class="form-control mb-3"
-                placeholder="Lastname"
-                name="lastname"
-                [(ngModel)]="userInscription.lastname"
-                required
-              />
-            </div>
-            <div class="input-group">
-              <input
-                id="firstname"
-                class="form-control mb-3"
-                placeholder="Firstname"
-                name="firstname"
-                [(ngModel)]="userInscription.firstname"
-                required
-              />
-            </div>
-            <div class="input-group">
-              <input
-                id="email"
-                class="form-control mb-3"
-                placeholder="Email"
-                name="email"
-                type="email"
-                [(ngModel)]="userInscription.email"
-                required
-              />
-            </div>
-            <div *ngIf="errorEmail" class="mb-2 text-danger">
-              {{ errorEmail }}
+              <div class="field mb-3">
+                <input
+                  id="lastname"
+                  name="lastname"
+                  type="text"
+                  placeholder="Lastname"
+                  pInputText
+                  [(ngModel)]="userInscription.lastname"
+                  [ngClass]="{ 'ng-invalid': errorLastname }"
+                  required
+                  (keyup)="checkLastnamePattern()"
+                />
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorLastname }"
+                  >{{ errorLastname }}</small
+                >
+              </div>
             </div>
 
             <div class="input-group">
-              <input
-                id="password"
-                class="form-control mb-3"
-                placeholder="Password"
-                name="password"
-                type="password"
-                [(ngModel)]="userInscription.password"
-                required
-              />
-            </div>
-            <div *ngIf="errorPassword" class="mb-2 text-danger">
-              {{ errorPassword }}
+              <div class="field mb-3">
+                <input
+                  id="firstname"
+                  name="firstname"
+                  type="text"
+                  placeholder="Firstname"
+                  pInputText
+                  [(ngModel)]="userInscription.firstname"
+                  [ngClass]="{ 'ng-invalid': errorFirstname }"
+                  required
+                  (keyup)="checkFirstnamePattern()"
+                />
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorFirstname }"
+                  >{{ errorFirstname }}</small
+                >
+              </div>
             </div>
 
             <div class="input-group">
-              <input
-                id="passwordConfirm"
-                class="form-control mb-3"
-                placeholder="Confirm password"
-                name="passwordConfirm"
-                type="password"
-                [(ngModel)]="userInscription.passwordConfirm"
-                required
-              />
+              <div class="field mb-3">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  pInputText
+                  [(ngModel)]="userInscription.email"
+                  [ngClass]="{ 'ng-invalid': errorEmail }"
+                  required
+                  (keyup)="checkEmailPattern()"
+                />
+                <small class="p-error" [ngClass]="{ 'd-none': !errorEmail }">{{
+                  errorEmail
+                }}</small>
+              </div>
             </div>
+
+            <div class="input-group">
+              <div class="field mb-3">
+                <div>
+                  <input
+                    id="password"
+                    name="password"
+                    [type]="passwordType"
+                    placeholder="Password"
+                    pInputText
+                    [(ngModel)]="userInscription.password"
+                    [ngClass]="{ 'ng-invalid': errorPassword }"
+                    required
+                    (keyup)="checkPasswordPattern()"
+                  />
+                  <span
+                    class="toogle-password-clear"
+                    (click)="tooglePasswordClear()"
+                    ><i
+                      class="fa-regular"
+                      [ngClass]="{
+                        'fa-eye-slash': !passwordIsClear,
+                        'fa-eye': passwordIsClear
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorPassword }"
+                  >{{ errorPassword }}</small
+                >
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="field mb-3">
+                <div>
+                  <input
+                    id="passwordConfirm"
+                    name="passwordConfirm"
+                    [type]="passwordType"
+                    placeholder="Password"
+                    pInputText
+                    [(ngModel)]="userInscription.passwordConfirm"
+                    [ngClass]="{ 'ng-invalid': errorPasswordConfirm }"
+                    required
+                    (keyup)="checkPasswordConfirmPattern()"
+                  />
+                  <span
+                    class="toogle-password-clear"
+                    (click)="tooglePasswordClear()"
+                    ><i
+                      class="fa-regular"
+                      [ngClass]="{
+                        'fa-eye-slash': !passwordIsClear,
+                        'fa-eye': passwordIsClear
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorPasswordConfirm }"
+                  >{{ errorPasswordConfirm }}</small
+                >
+              </div>
+            </div>
+
             <div class="d-flex justify-content-end mt-2">
               <button
+                pButton
+                pRipple
                 type="submit"
-                class="btn btn-default btn-sm btn-primary"
-                [disabled]="!registerForm.valid"
+                class="p-button-raised p-button-primary-color btn-primary-color"
+                [disabled]="
+                  !registerForm.valid ||
+                  errorEmail ||
+                  errorFirstname ||
+                  errorLastname ||
+                  errorPassword ||
+                  errorPasswordConfirm
+                "
               >
                 Register
               </button>

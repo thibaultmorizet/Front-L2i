@@ -91,6 +91,10 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
     opacity: .9;
 }
 
+.btn-primary-color:disabled {
+    opacity: .6;
+}
+
 @media (min-width: 1000px) {
     .title {
         font-size: 1.8rem;

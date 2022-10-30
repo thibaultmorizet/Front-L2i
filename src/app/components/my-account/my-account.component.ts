@@ -14,6 +14,7 @@ import {
   SocialAuthService,
 } from 'angularx-social-login';
 import { PrimeNGConfig } from 'primeng/api';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-my-account',
@@ -30,8 +31,11 @@ export class MyAccountComponent implements OnInit {
   newAddressDelivery: Address = {};
   errorPassword: string | null = null;
   errorEmail: string | null = null;
+  errorLastname: string | null = null;
+  errorFirstname: string | null = null;
+  errorPasswordConfirm: string | null = null;
+
   userLogin: User = {};
-  errorConnexion: string | null = null;
   isLoginPage: boolean = true;
   userInscription: User = {};
   passwordIsClear: boolean = false;
@@ -259,28 +263,21 @@ export class MyAccountComponent implements OnInit {
     });
   }
   register() {
-    if (this.userInscription.password == this.userInscription.passwordConfirm) {
-      this.errorPassword = '';
+    this.as.getTheUser(this.userInscription.email).subscribe((res) => {
+      if (res[0] == undefined) {
+        this.errorEmail = '';
 
-      //delete this.userInscription.passwordConfirm;
-      this.us.getTheUser(this.userInscription.email).subscribe((res) => {
-        if (res[0] == undefined) {
-          this.errorEmail = '';
-
-          this.us.register(this.userInscription).subscribe((resRegister) => {
-            this.userInscription = {};
-            this.iziToast.success({
-              message: 'Inscription réussie',
-              position: 'topRight',
-            });
+        this.us.register(this.userInscription).subscribe((resRegister) => {
+          this.userInscription = {};
+          this.iziToast.success({
+            message: 'Inscription réussie',
+            position: 'topRight',
           });
-        } else {
-          this.errorEmail = 'Cet email est déjà utilisé';
-        }
-      });
-    } else {
-      this.errorPassword = 'Les mots de passes ne sont pas identiques';
-    }
+        });
+      } else {
+        this.errorEmail = 'This email has already been registered';
+      }
+    });
   }
   refreshTokenAuth(): void {
     this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
@@ -296,6 +293,11 @@ export class MyAccountComponent implements OnInit {
     this.isLoginPage = !this.isLoginPage;
     this.userInscription = {};
     this.userLogin = {};
+    this.errorEmail = null;
+    this.errorFirstname = null;
+    this.errorLastname = null;
+    this.errorPassword = null;
+    this.errorPasswordConfirm = null;
   }
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
@@ -303,6 +305,67 @@ export class MyAccountComponent implements OnInit {
       this.passwordType = 'text';
     } else {
       this.passwordType = 'password';
+    }
+  }
+  checkLastnamePattern() {
+    let lastnamePattern = new FormControl(
+      this.userInscription.lastname,
+      Validators.pattern('[a-zA-Z- ]{3,255}')
+    );
+    if (lastnamePattern.status == 'INVALID') {
+      this.errorLastname =
+        'The lastname must contain at least three characters';
+    } else {
+      this.errorLastname = null;
+    }
+  }
+
+  checkFirstnamePattern() {
+    let firstnamePattern = new FormControl(
+      this.userInscription.firstname,
+      Validators.pattern('[a-zA-Z- ]{3,255}')
+    );
+    if (firstnamePattern.status == 'INVALID') {
+      this.errorFirstname =
+        'The firstname must contain at least three characters';
+    } else {
+      this.errorFirstname = null;
+    }
+  }
+
+  checkEmailPattern() {
+    let emailPattern = new FormControl(
+      this.userInscription.email,
+      Validators.pattern('[a-zA-Z-]+@[a-zA-Z-]+.[a-zA-Z]{2,6}')
+    );
+    if (emailPattern.status == 'INVALID') {
+      this.errorEmail = "The Email isn't valid";
+    } else {
+      this.errorEmail = null;
+    }
+  }
+  checkPasswordPattern() {
+    let passwordPattern = new FormControl(
+      this.userInscription.password,
+      Validators.pattern(
+        '(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,255})'
+      )
+    );
+    if (passwordPattern.status == 'INVALID') {
+      this.errorPassword =
+        'The password must contain at least 8 characters, one capital letter, one lowercase letter, one special character and one numeric character';
+    } else {
+      this.errorPassword = null;
+    }
+  }
+
+  checkPasswordConfirmPattern() {
+    if (this.userInscription.password != this.userInscription.passwordConfirm) {
+      this.errorPassword = 'The passwords must be identical';
+      this.errorPasswordConfirm = 'The passwords must be identical';
+    } else {
+      this.errorPasswordConfirm = null;
+      this.checkPasswordPattern();
     }
   }
 }
