@@ -138,7 +138,7 @@ export class HomeComponent implements OnInit {
     this.connectedUser = null;
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: 'Vous êtes déconnecté',
+      message: 'you\'re logout',
       position: 'topRight',
     });
   }
@@ -168,7 +168,7 @@ export class HomeComponent implements OnInit {
               el.number_ordered + 1 > el.stock
             ) {
               this.iziToast.error({
-                title: 'Manque de stock',
+                title: 'Lack of stock',
                 message:
                   'Il reste ' +
                   res.stock +
@@ -185,7 +185,7 @@ export class HomeComponent implements OnInit {
                   );
                 }
                 this.iziToast.success({
-                  message: 'Article ajouté au panier',
+                  message: 'Book add to basket',
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -201,7 +201,7 @@ export class HomeComponent implements OnInit {
         if (!this.bookExistinBasket) {
           if (res.stock && 1 > res.stock) {
             this.iziToast.error({
-              title: 'Manque de stock',
+              title: 'Lack of stock',
               message:
                 'Il reste ' +
                 res.stock +
@@ -219,7 +219,7 @@ export class HomeComponent implements OnInit {
 
             this.basket.push(res);
             this.iziToast.success({
-              message: 'Article ajouté au panier',
+              message: 'Book add to basket',
               position: 'topRight',
             });
             this.storageCrypter.setItem(

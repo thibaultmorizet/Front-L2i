@@ -85,8 +85,8 @@ export class MyAccountComponent implements OnInit {
         }
       } catch (error) {
         this.iziToast.warning({
-          title: "Erreur de chargement de l'addresse de facturation",
-          message: 'Veuillez recharger la page',
+          title: 'Error in load of billing address',
+          message: 'Reload the page',
           position: 'topRight',
         });
       }
@@ -106,8 +106,8 @@ export class MyAccountComponent implements OnInit {
         }
       } catch (error) {
         this.iziToast.warning({
-          title: "Erreur de chargement de l'addresse de livraison",
-          message: 'Veuillez recharger la page',
+          title: 'Error in load of billing address',
+          message: 'Reload the page',
           position: 'topRight',
         });
       }
@@ -139,7 +139,7 @@ export class MyAccountComponent implements OnInit {
         .updateUser(this.newUserData.id, this.newUserData)
         .subscribe((res) => {
           this.iziToast.success({
-            message: 'Modification réussie',
+            message: 'Modification confirm',
             position: 'topRight',
           });
           delete this.newUserData.password;
@@ -152,7 +152,7 @@ export class MyAccountComponent implements OnInit {
           );
         });
     } else {
-      this.errorPassword = 'Les mots de passes ne sont pas identiques';
+      this.errorPassword = "The password isn't identical";
     }
   }
 
@@ -161,8 +161,16 @@ export class MyAccountComponent implements OnInit {
       this.addressService
         .updateAddress(this.newAddressBilling.id, this.newAddressBilling)
         .subscribe((res) => {
+          this.connectedUser.billingAddress = this.newAddressBilling;
+
+          this.storageCrypter.setItem(
+            'user',
+            JSON.stringify(this.connectedUser),
+            'session'
+          );
+
           this.iziToast.success({
-            message: 'Modification réussie',
+            message: 'Modification confirm',
             position: 'topRight',
           });
         });
@@ -172,11 +180,16 @@ export class MyAccountComponent implements OnInit {
         .subscribe((res) => {
           this.connectedUser.billingAddress = res;
 
+          this.storageCrypter.setItem(
+            'user',
+            JSON.stringify(this.connectedUser),
+            'session'
+          );
           this.us
             .updateUser(this.connectedUser?.id, this.connectedUser)
             .subscribe((res) => {
               this.iziToast.success({
-                message: 'Modification réussie',
+                message: 'Modification confirm',
                 position: 'topRight',
               });
             });
@@ -187,24 +200,37 @@ export class MyAccountComponent implements OnInit {
   setNewAddressDelivery() {
     if (this.newAddressDelivery.id != undefined) {
       this.addressService
-        .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
-        .subscribe((res) => {
-          this.iziToast.success({
-            message: 'Modification réussie',
-            position: 'topRight',
-          });
+      .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
+      .subscribe((res) => {
+        this.connectedUser.deliveryAddress = this.newAddressDelivery;
+
+        this.storageCrypter.setItem(
+          'user',
+          JSON.stringify(this.connectedUser),
+          'session'
+        );
+
+        this.iziToast.success({
+          message: 'Modification confirm',
+          position: 'topRight',
         });
+      });
     } else {
       this.addressService
         .createAddress(this.newAddressDelivery)
         .subscribe((res) => {
           this.connectedUser.deliveryAddress = res;
 
+          this.storageCrypter.setItem(
+            'user',
+            JSON.stringify(this.connectedUser),
+            'session'
+          );
           this.us
             .updateUser(this.connectedUser?.id, this.connectedUser)
             .subscribe((res) => {
               this.iziToast.success({
-                message: 'Modification réussie',
+                message: 'Modification confirm',
                 position: 'topRight',
               });
             });
@@ -219,7 +245,7 @@ export class MyAccountComponent implements OnInit {
     this.connectedUser = {};
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: 'Vous êtes déconnecté',
+      message: "You're logout",
       position: 'topRight',
     });
   }
@@ -265,7 +291,7 @@ export class MyAccountComponent implements OnInit {
 
               this.userLogin = {};
               this.iziToast.success({
-                message: 'Connexion réussie',
+                message: 'successful login',
                 position: 'topRight',
               });
               this.router.navigateByUrl('/home');
@@ -286,7 +312,7 @@ export class MyAccountComponent implements OnInit {
         this.us.register(this.userInscription).subscribe((resRegister) => {
           this.userInscription = {};
           this.iziToast.success({
-            message: 'Inscription réussie',
+            message: 'successful registration',
             position: 'topRight',
           });
           window.location.reload();

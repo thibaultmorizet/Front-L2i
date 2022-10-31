@@ -38,6 +38,7 @@ import { FooterComponent } from './components/partial/footer/footer.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
 import { PasswordModule } from 'primeng/password';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { PasswordModule } from 'primeng/password';
     InputTextModule,
     DividerModule,
     PasswordModule,
+    AccordionModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
