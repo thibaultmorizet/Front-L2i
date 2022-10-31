@@ -23,4 +23,8 @@ export class UserService {
   updateUser(id: number | undefined, user: User) {
     return this.http.put<{ token: string }>(this.url + '/' + id, user);
   }
+  
+  deleteTheUser(id: number | undefined) {
+    return this.http.delete<{ token: string }>(this.url + '/' + id);
+  }
 }

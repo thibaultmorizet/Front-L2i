@@ -19,13 +19,24 @@
 
 }
 
-.container:has(.login-container), .container:has(.register-container), .container:has(#personnalData) {
+.container:has(.login-container), .container:has(.register-container) {
     display: flex;
     justify-content: center;
 }
 
+.container:has(#personnalData) {
+    display: flex;
+    justify-content: space-around;
+}
+
+#personnalData {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 #personnalDateImg {
-    max-width: 300px;
+    display: none;
 }
 
 .btn-facebook {
@@ -89,8 +100,35 @@
     font-size: .8rem;
 }
 
-.form-control:disabled{
-    opacity: 1!important;
+.form-control:disabled {
+    opacity: 1 !important;
+}
+
+.p-button-outline-danger {
+    font-family: "Quicksand", Arial, sans-serif;
+
+    border: 1px solid #dc3545;
+    background-color: #fff;
+    color: #dc3545;
+}
+
+.p-button-outline-danger:hover {
+    border: 1px solid #dc3545 !important;
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+.p-button-valid {
+    font-family: "Quicksand", Arial, sans-serif;
+    background-color: #30336B;
+    border: #252860;
+}
+
+.p-button-valid:hover {
+    background-color: #30336B !important;
+    border: #252860 !important;
+    opacity: 0.9 !important;
+    box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75) !important;
 }
 
 @media (min-width: 650px) {
@@ -106,6 +144,14 @@
 
 }
 
+@media (min-width: 1000px) {
+    #personnalDateImg {
+        display: block;
+        max-width: 500px;
+    }
+
+}
+
 @media (min-width: 1800px) {
     .login-container {
         padding: 2.5em 2.5em;
@@ -115,5 +161,8 @@
     .register-container {
         padding: 2.5em 2.5em;
         min-width: 400px;
+    }    #personnalDateImg {
+        max-width: 700px;
     }
+
 }

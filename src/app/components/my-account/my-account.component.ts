@@ -13,7 +13,12 @@ import {
   GoogleLoginProvider,
   SocialAuthService,
 } from 'angularx-social-login';
-import { PrimeNGConfig } from 'primeng/api';
+import {
+  PrimeNGConfig,
+  ConfirmationService,
+  ConfirmEventType,
+  MessageService,
+} from 'primeng/api';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -21,6 +26,7 @@ import { FormControl, Validators } from '@angular/forms';
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.css', './../../../css/main.css'],
   encapsulation: ViewEncapsulation.None,
+  providers: [ConfirmationService, MessageService],
 })
 export class MyAccountComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
@@ -48,7 +54,9 @@ export class MyAccountComponent implements OnInit {
     private addressService: AddressService,
     private as: AuthService,
     private authService: SocialAuthService,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -200,21 +208,21 @@ export class MyAccountComponent implements OnInit {
   setNewAddressDelivery() {
     if (this.newAddressDelivery.id != undefined) {
       this.addressService
-      .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
-      .subscribe((res) => {
-        this.connectedUser.deliveryAddress = this.newAddressDelivery;
+        .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
+        .subscribe((res) => {
+          this.connectedUser.deliveryAddress = this.newAddressDelivery;
 
-        this.storageCrypter.setItem(
-          'user',
-          JSON.stringify(this.connectedUser),
-          'session'
-        );
+          this.storageCrypter.setItem(
+            'user',
+            JSON.stringify(this.connectedUser),
+            'session'
+          );
 
-        this.iziToast.success({
-          message: 'Modification confirm',
-          position: 'topRight',
+          this.iziToast.success({
+            message: 'Modification confirm',
+            position: 'topRight',
+          });
         });
-      });
     } else {
       this.addressService
         .createAddress(this.newAddressDelivery)
@@ -436,5 +444,30 @@ export class MyAccountComponent implements OnInit {
       this.errorPasswordConfirm = null;
       this.checkPasswordPattern();
     }
+  }
+  confirmDeleteAccount() {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want delete your account?',
+      header: 'Delete my account',
+      dismissableMask: true,
+      accept: () => {
+        this.deleteMyAccount();
+      },
+    });
+  }
+  deleteMyAccount() {
+    try {
+      this.connectedUser = JSON.parse(
+        this.storageCrypter.getItem('user', 'session')
+      );
+      this.addressService
+        .deleteTheAddress(this.connectedUser.billingAddress?.id)
+        .subscribe((el) => {});
+      this.addressService
+        .deleteTheAddress(this.connectedUser.deliveryAddress?.id)
+        .subscribe((el) => {});
+      this.us.deleteTheUser(this.connectedUser.id).subscribe((el) => {});
+      this.logout();
+    } catch {}
   }
 }

@@ -21,4 +21,8 @@ export class AddressService {
   createAddress( address: Address) {
     return this.http.post< Address >(this.url, address);
   }
+  deleteTheAddress(id: number | undefined) {
+    return this.http.delete<{ token: string }>(this.url + '/' + id);
+  }
+
 }

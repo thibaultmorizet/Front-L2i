@@ -39,6 +39,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
 import { PasswordModule } from 'primeng/password';
 import { AccordionModule } from 'primeng/accordion';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { AccordionModule } from 'primeng/accordion';
     DividerModule,
     PasswordModule,
     AccordionModule,
+    ConfirmDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

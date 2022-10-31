@@ -279,15 +279,22 @@
       </div>
     </div>
     <div class="container" *ngIf="connectedUser.id">
-      <!--       <img
+            <img
         id="personnalDateImg"
         src="./../../../assets/personalData.png"
         alt="personnalDataImg"
-      />       <button type="button" (click)="logout()" class="btn btn-outline-danger">
-          Logout
-        </button> -->
-      <div id="personnalData" class="my-3">
-        <div class="container d-flex justify-content-end">
+      />      
+      <div>
+        <p-confirmDialog
+          [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+          [style]="{ width: '50vw' }"
+          [baseZIndex]="10000"
+          rejectButtonStyleClass="p-button-outline-danger"
+          acceptButtonStyleClass="p-button-valid"
+        >
+        </p-confirmDialog>
+
+        <div id="personnalData" class="my-3">
           <p-accordion>
             <p-accordionTab header="User personnal data" [selected]="true">
               <form
@@ -587,72 +594,23 @@
               </form>
             </p-accordionTab>
           </p-accordion>
-
-          <!--      <form
-            #AddressDeliveryForm="ngForm"
-            role="AddressDelivery"
-            (ngSubmit)="setNewAddressDelivery()"
-          >
-            <label for="Street">Rue</label>
-            <div class="input-group">
-              <input
-                type="text"
-                placeholder="{{ connectedUser.deliveryAddress?.street }}"
-                class="form-control"
-                value="{{ connectedUser.deliveryAddress?.street }}"
-                [(ngModel)]="newAddressDelivery.street"
-                name="Street"
-                required
-              />
-            </div>
-
-            <label for="Postalcode">Code postal</label>
-            <div class="input-group">
-              <input
-                type="text"
-                placeholder="{{ connectedUser.deliveryAddress?.postalcode }}"
-                class="form-control"
-                value="{{ connectedUser.deliveryAddress?.postalcode }}"
-                [(ngModel)]="newAddressDelivery.postalcode"
-                name="Postalcode"
-                required
-              />
-            </div>
-
-            <label for="City">Ville</label>
-            <div class="input-group">
-              <input
-                type="text"
-                placeholder="{{ connectedUser.deliveryAddress?.city }}"
-                class="form-control"
-                value="{{ connectedUser.deliveryAddress?.city }}"
-                [(ngModel)]="newAddressDelivery.city"
-                name="City"
-                required
-              />
-            </div>
-
-            <label for="Country">Pays</label>
-            <div class="input-group">
-              <input
-                type="text"
-                placeholder="{{ connectedUser.deliveryAddress?.country }}"
-                class="form-control"
-                value="{{ connectedUser.deliveryAddress?.country }}"
-                [(ngModel)]="newAddressDelivery.country"
-                name="Country"
-                required
-              />
-            </div>
+          <div class="w-100 d-flex justify-content-around">
+            <button
+              type="button"
+              (click)="confirmDeleteAccount()"
+              class="btn btn-danger mt-3"
+            >
+              Delete my account
+            </button>
 
             <button
-              type="submit"
-              class="btn btn-primary button-update-delivery-address h-100"
-              [disabled]="!AddressDeliveryForm.valid"
+              type="button"
+              (click)="logout()"
+              class="btn btn-outline-danger mt-3"
             >
-              Modifier
+              Logout
             </button>
-          </form> -->
+          </div>
         </div>
       </div>
     </div>
