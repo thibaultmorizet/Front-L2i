@@ -89,6 +89,10 @@
     font-size: .8rem;
 }
 
+.form-control:disabled{
+    opacity: 1!important;
+}
+
 @media (min-width: 650px) {
     .login-container {
         padding: 2em 2em;

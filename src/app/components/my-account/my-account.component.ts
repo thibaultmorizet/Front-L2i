@@ -57,9 +57,13 @@ export class MyAccountComponent implements OnInit {
       this.connectedUser = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
       );
-      this.newUserData.id = JSON.parse(
+      this.newUserData = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
-      ).id;
+      );
+      delete this.newUserData.password;
+      delete this.newUserData.passwordConfirm;
+      delete this.newUserData.roles;
+      delete this.newUserData.orders;
     } catch (error) {
       this.connectedUser = {};
     }
@@ -125,8 +129,12 @@ export class MyAccountComponent implements OnInit {
   }
 
   setNewPersonnalData() {
+    if (this.newUserData.password == '') {
+      delete this.newUserData.password;
+      delete this.newUserData.passwordConfirm;
+    }
     if (this.newUserData.password == this.newUserData.passwordConfirm) {
-      this.errorPassword = '';
+      this.errorPassword = null;
       this.us
         .updateUser(this.newUserData.id, this.newUserData)
         .subscribe((res) => {
@@ -134,6 +142,14 @@ export class MyAccountComponent implements OnInit {
             message: 'Modification réussie',
             position: 'topRight',
           });
+          delete this.newUserData.password;
+          delete this.newUserData.passwordConfirm;
+          this.connectedUser = this.newUserData;
+          this.storageCrypter.setItem(
+            'user',
+            JSON.stringify(this.connectedUser),
+            'session'
+          );
         });
     } else {
       this.errorPassword = 'Les mots de passes ne sont pas identiques';
@@ -273,6 +289,7 @@ export class MyAccountComponent implements OnInit {
             message: 'Inscription réussie',
             position: 'topRight',
           });
+          window.location.reload();
         });
       } else {
         this.errorEmail = 'This email has already been registered';
@@ -336,7 +353,7 @@ export class MyAccountComponent implements OnInit {
   checkEmailPattern() {
     let emailPattern = new FormControl(
       this.userInscription.email,
-      Validators.pattern('[a-zA-Z-]+@[a-zA-Z-]+.[a-zA-Z]{2,6}')
+      Validators.pattern('[a-zA-Z-0-9]+@[a-zA-Z-]+.[a-zA-Z]{2,6}')
     );
     if (emailPattern.status == 'INVALID') {
       this.errorEmail = "The Email isn't valid";
@@ -344,6 +361,7 @@ export class MyAccountComponent implements OnInit {
       this.errorEmail = null;
     }
   }
+
   checkPasswordPattern() {
     let passwordPattern = new FormControl(
       this.userInscription.password,
@@ -361,6 +379,31 @@ export class MyAccountComponent implements OnInit {
 
   checkPasswordConfirmPattern() {
     if (this.userInscription.password != this.userInscription.passwordConfirm) {
+      this.errorPassword = 'The passwords must be identical';
+      this.errorPasswordConfirm = 'The passwords must be identical';
+    } else {
+      this.errorPasswordConfirm = null;
+      this.checkPasswordPattern();
+    }
+  }
+
+  checkUpdatePasswordPattern() {
+    let passwordPattern = new FormControl(
+      this.newUserData.password,
+      Validators.pattern(
+        '(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,255})'
+      )
+    );
+    if (passwordPattern.status == 'INVALID') {
+      this.errorPassword =
+        'The password must contain at least 8 characters, one capital letter, one lowercase letter, one special character and one numeric character';
+    } else {
+      this.errorPassword = null;
+    }
+  }
+
+  checkUpdatePasswordConfirmPattern() {
+    if (this.newUserData.password != this.newUserData.passwordConfirm) {
       this.errorPassword = 'The passwords must be identical';
       this.errorPasswordConfirm = 'The passwords must be identical';
     } else {

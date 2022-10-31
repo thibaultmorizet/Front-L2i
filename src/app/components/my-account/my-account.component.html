@@ -205,7 +205,7 @@
                     id="passwordConfirm"
                     name="passwordConfirm"
                     [type]="passwordType"
-                    placeholder="Password"
+                    placeholder="Confirm your password"
                     pInputText
                     [(ngModel)]="userInscription.passwordConfirm"
                     [ngClass]="{ 'ng-invalid': errorPasswordConfirm }"
@@ -279,15 +279,14 @@
       </div>
     </div>
     <div class="container" *ngIf="connectedUser.id">
-      <img
+      <!--       <img
         id="personnalDateImg"
         src="./../../../assets/personalData.png"
         alt="personnalDataImg"
-      />
-      <div id="personnalData" class="my-3">
-        <button type="button" (click)="logout()" class="btn btn-outline-danger">
+      />       <button type="button" (click)="logout()" class="btn btn-outline-danger">
           Logout
-        </button>
+        </button> -->
+      <div id="personnalData" class="my-3">
         <div class="container d-flex justify-content-end">
           <form
             #personnalDataForm="ngForm"
@@ -295,66 +294,148 @@
             (ngSubmit)="setNewPersonnalData()"
           >
             <div class="input-group">
-              <input
-                type="text"
-                placeholder="{{ connectedUser.firstname }}"
-                class="form-control"
-                value="{{ connectedUser.firstname }}"
-                [(ngModel)]="newUserData.firstname"
-                name="Firstname"
-              />
+              <div class="field mb-3">
+                <input
+                  id="firstname"
+                  name="firstname"
+                  placeholder="{{ connectedUser.firstname }}"
+                  type="text"
+                  pInputText
+                  value="{{ connectedUser.firstname }}"
+                  [(ngModel)]="newUserData.firstname"
+                  required
+                />
+              </div>
             </div>
+
             <div class="input-group">
-              <input
-                type="text"
-                placeholder="{{ connectedUser.lastname }}"
-                class="form-control"
-                value="{{ connectedUser.lastname }}"
-                [(ngModel)]="newUserData.lastname"
-                name="Lastname"
-              />
+              <div class="field mb-3">
+                <input
+                  id="lastname"
+                  name="lastname"
+                  placeholder="{{ connectedUser.lastname }}"
+                  type="text"
+                  pInputText
+                  value="{{ connectedUser.lastname }}"
+                  [(ngModel)]="newUserData.lastname"
+                  required
+                />
+              </div>
             </div>
+
             <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                value="{{ connectedUser.email }}"
-                name="Email"
-                disabled
-              />
+              <div class="field mb-3">
+                <input
+                  id="email"
+                  name="email"
+                  placeholder="{{ connectedUser.email }}"
+                  type="email"
+                  pInputText
+                  value="{{ connectedUser.email }}"
+                  [(ngModel)]="newUserData.email"
+                  class="form-control"
+                  disabled
+                />
+              </div>
             </div>
+
+
+
             <div class="input-group">
-              <input
-                type="password"
-                placeholder="Insérez votre nouveau mot de passe"
-                class="form-control"
-                value=""
-                [(ngModel)]="newUserData.password"
-                name="Password"
-              />
+              <div class="field mb-3">
+                <div>
+                  <input
+                    id="password"
+                    name="password"
+                    [type]="passwordType"
+                    placeholder="Insert your new password"
+                    pInputText
+                    [(ngModel)]="newUserData.password"
+                    class="form-control"
+                    [ngClass]="{ 'ng-invalid': errorPassword }"
+                    (keyup)="checkUpdatePasswordPattern()"
+                  />
+                  <span
+                    class="toogle-password-clear"
+                    (click)="tooglePasswordClear()"
+                    ><i
+                      class="fa-regular"
+                      [ngClass]="{
+                        'fa-eye-slash': !passwordIsClear,
+                        'fa-eye': passwordIsClear
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorPassword }"
+                  >{{ errorPassword }}</small
+                >
+              </div>
             </div>
-            <div *ngIf="errorPassword" class="mb-2 text-danger">
-              {{ errorPassword }}
-            </div>
+
+
+
             <div class="input-group">
-              <input
-                type="password"
-                placeholder="Confirmez votre nouveau mot de passe"
-                class="form-control"
-                value=""
-                [(ngModel)]="newUserData.passwordConfirm"
-                name="PasswordConfirm"
-              />
+              <div class="field mb-3">
+                <div>
+                  <input
+                    id="passwordConfirm"
+                    name="passwordConfirm"
+                    [type]="passwordType"
+                    placeholder="Confirm your new password"
+                    pInputText
+                    [(ngModel)]="newUserData.passwordConfirm"
+                    [ngClass]="{ 'ng-invalid': errorPasswordConfirm }"
+                    (keyup)="checkUpdatePasswordConfirmPattern()"
+                  />
+                  <span
+                    class="toogle-password-clear"
+                    (click)="tooglePasswordClear()"
+                    ><i
+                      class="fa-regular"
+                      [ngClass]="{
+                        'fa-eye-slash': !passwordIsClear,
+                        'fa-eye': passwordIsClear
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorPasswordConfirm }"
+                  >{{ errorPasswordConfirm }}</small
+                >
+              </div>
             </div>
-            <button
-              type="submit"
-              class="btn btn-primary button-update-personnal-data h-100"
-            >
-              Modifier
-            </button>
+
+
+
+            <div class="d-flex justify-content-end mt-2">
+              <button
+                pButton
+                pRipple
+                type="submit"
+                class="p-button-raised p-button-primary-color btn-primary-color"
+                [disabled]="
+                  !personnalDataForm.valid ||
+                  errorEmail ||
+                  errorFirstname ||
+                  errorLastname ||
+                  errorPassword ||
+                  errorPasswordConfirm
+                "
+              >
+                Save the changes
+              </button>
+            </div>
+
+            
+            
           </form>
 
-          <form
+<!--           <form
             #AddressBillingForm="ngForm"
             role="AddressBilling"
             (ngSubmit)="setNewAddressBilling()"
@@ -417,9 +498,9 @@
             >
               Modifier
             </button>
-          </form>
+          </form> -->
 
-          <form
+     <!--      <form
             #AddressDeliveryForm="ngForm"
             role="AddressDelivery"
             (ngSubmit)="setNewAddressDelivery()"
@@ -483,7 +564,7 @@
             >
               Modifier
             </button>
-          </form>
+          </form> -->
         </div>
       </div>
     </div>
