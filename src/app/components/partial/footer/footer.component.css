@@ -39,6 +39,11 @@ footer li:hover {
 
 }
 
+footer .active {
+    color: #30336B;
+    font-weight: 700;
+}
+
 @media (min-width: 650px) {
     footer ul {
         font-size: 1rem;

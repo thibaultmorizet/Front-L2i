@@ -1,0 +1,80 @@
+<div class="general-content">
+  <app-header [basketLength]="basket.length"></app-header>
+
+  <main id="content">
+    <div class="container">
+      <img
+        id="contactImg"
+        src="https://www.thibaultmorizet.fr/assets/contact.png"
+        alt="contactImg"
+      />
+      <img
+        id="contact2Img"
+        src="https://www.thibaultmorizet.fr/assets/contact2.png"
+        alt="contact2Img"
+      />
+      <div class="contact-container">
+        <div>
+          <p class="title text-center">Contact</p>
+          <form
+            #contactForm="ngForm"
+            role="contact"
+            (ngSubmit)="sendContactMail()"
+          >
+            <div class="input-group mb-3">
+              <input
+                id="email"
+                name="email"
+                placeholder="Email"
+                type="email"
+                pInputText
+                [(ngModel)]="contactInfo.email"
+                class="w-100"
+                required
+              />
+            </div>
+
+            <div class="input-group mb-3">
+              <input
+                id="subject"
+                name="subject"
+                placeholder="Subject"
+                type="text"
+                pInputText
+                [(ngModel)]="contactInfo.subject"
+                class="w-100"
+                required
+              />
+            </div>
+            <div class="input-group mb-3">
+              <textarea
+                [(ngModel)]="contactInfo.message"
+                placeholder="Message"
+                id="message"
+                name="message"
+                type="text"
+                cols="30"
+                rows="10"
+                class="form-control mb-3"
+                required
+              ></textarea>
+            </div>
+
+            <div class="d-flex justify-content-end mt-2">
+              <button
+                pButton
+                pRipple
+                type="submit"
+                class="p-button-raised p-button-primary-color btn-primary-color"
+                [disabled]="!contactForm.valid"
+              >
+                Send mail
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <app-footer></app-footer>
+</div>

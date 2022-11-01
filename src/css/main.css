@@ -63,12 +63,12 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
 
 .btn-primary:hover {
     opacity: 0.9;
-    box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px 2px 15px -6px rgba(0,0,0,0.75);
 }
 
 .p-button-primary-color {
     font-family: "Quicksand", Arial, sans-serif;
-    border: none;
+    border: none!important;
 }
 
 .p-button-primary-color:hover {
@@ -83,8 +83,8 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
     padding: .5rem 1rem;
     cursor: pointer;
     font-weight: 400;
-    box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75);
     border-radius: 10px;
+    box-shadow: -1px 2px 15px -6px rgba(0,0,0,0.75);
 }
 
 .btn-primary-color:hover {

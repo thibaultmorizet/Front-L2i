@@ -40,6 +40,8 @@ import { DividerModule } from 'primeng/divider';
 import { PasswordModule } from 'primeng/password';
 import { AccordionModule } from 'primeng/accordion';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
+    LegalNoticesComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

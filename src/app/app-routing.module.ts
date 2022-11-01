@@ -8,6 +8,8 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
 import { NewBookComponent } from './components/new-book/new-book.component';
 import { HomeComponent } from './components/home/home.component';
+import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'admin-register', component: AdminRegisterComponent },
   { path: 'new-book', component: NewBookComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'legal-notices', component: LegalNoticesComponent },
+  { path: 'contact', component: ContactComponent },
 ];
 
 @NgModule({

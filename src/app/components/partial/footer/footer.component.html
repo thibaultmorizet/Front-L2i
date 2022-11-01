@@ -1,8 +1,18 @@
 <footer>
-    <nav class="navbar">
-      <ul>
-        <li>Contact</li>
-        <li> Legal notices</li>
-      </ul>
-    </nav>
-  </footer>
+  <nav class="navbar">
+    <ul>
+      <li
+        [routerLink]="['/contact']"
+        [ngClass]="{ active: path === 'contact' }"
+      >
+        Contact
+      </li>
+      <li
+        [routerLink]="['/legal-notices']"
+        [ngClass]="{ active: path === 'legal-notices' }"
+      >
+        Legal notices
+      </li>
+    </ul>
+  </nav>
+</footer>

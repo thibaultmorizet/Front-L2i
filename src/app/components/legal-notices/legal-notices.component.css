@@ -1,0 +1,47 @@
+.legal-notices-container {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 2em 1em;
+    backdrop-filter: blur(2px);
+    box-shadow: -1px 2px 15px -6px rgba(0, 0, 0, 0.75);
+    font-weight: 400;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.legal-notices-container a {
+    color: #30336B;
+    text-decoration: none;
+}
+
+.container:has(.legal-notices-container) {
+    display: flex;
+    justify-content: center;
+}
+
+#legalNoticesImg {
+    display: none;
+}
+
+@media (min-width: 1000px) {
+    .legal-notices-container {
+        max-width: 700px;
+    }
+
+    #legalNoticesImg {
+        display: block;
+        max-width: 550px;
+    }
+}
+
+@media (min-width: 1800px) {
+    .legal-notices-container {
+        font-size: .8rem;
+    }
+
+    #legalNoticesImg {
+        max-width: 800px;
+    }
+}
