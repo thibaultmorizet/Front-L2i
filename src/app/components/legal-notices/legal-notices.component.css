@@ -28,6 +28,8 @@
 @media (min-width: 1000px) {
     .legal-notices-container {
         max-width: 700px;
+        font-size: .8rem;
+
     }
 
     #legalNoticesImg {
@@ -38,10 +40,27 @@
 
 @media (min-width: 1800px) {
     .legal-notices-container {
-        font-size: .8rem;
+        font-size: 1rem;
+    }
+
+    .container {
+        max-width: 1600px;
     }
 
     #legalNoticesImg {
         max-width: 800px;
     }
+}
+
+@media (min-width: 1800px) {
+    .legal-notices-container {
+        font-size: 1.3rem;
+        max-width: 900px;
+
+    }
+
+    .container {
+        max-width: 1900px;
+    }
+
 }
