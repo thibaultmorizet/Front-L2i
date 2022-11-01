@@ -30,16 +30,16 @@
           ></textarea>
         </div>
 
-        <label class="mb-2" for="unitPrice">Prix unitaire</label>
+        <label class="mb-2" for="unitPriceTtc">Prix unitaire TTC</label>
         <div class="input-group">
           <input
             type="number"
             step="0.01"
             min="0"
-            placeholder="Prix unitaire"
+            placeholder="Prix unitaire TTC"
             class="form-control mb-3"
-            [(ngModel)]="newBook.unitprice"
-            name="unitPrice"
+            [(ngModel)]="newBook.unitpricettc"
+            name="unitPriceTtc"
             required
           />
         </div>

@@ -170,17 +170,17 @@
                         ></textarea>
                       </div>
 
-                      <label class="mb-2" for="unitPrice">Prix unitaire</label>
+                      <label class="mb-2" for="unitPriceTtc">Prix unitaire</label>
                       <div class="input-group">
                         <input
                           type="number"
                           step="0.01"
                           min="0"
-                          placeholder="{{ elt.unitprice }}"
+                          placeholder="{{ elt.unitpricettc }}"
                           class="form-control mb-3"
-                          value="{{ elt.unitprice }}"
-                          [(ngModel)]="actualUpdatebook.unitprice"
-                          name="unitPrice"
+                          value="{{ elt.unitpricettc }}"
+                          [(ngModel)]="actualUpdatebook.unitpricettc"
+                          name="unitPriceTtc"
                           required
                         />
                       </div>
@@ -354,7 +354,7 @@
                       {{ elt.title }}
                     </a>
                   </h3>
-                  <p class="price"><del></del>{{ elt.unitprice }} €</p>
+                  <p class="price"><del></del>{{ elt.unitpricettc }} €</p>
                   <div class="d-flex justify-content-between px-1">
                     <button
                       [routerLink]="['/books/', elt.id]"

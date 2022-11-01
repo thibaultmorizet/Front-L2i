@@ -7,7 +7,8 @@ export interface Book {
     id?: number;
     title?: string;
     summary?: string;
-    unitprice?: number;
+    unitpricettc?: number;
+    unitpriceht?: number;
     stock?: number;
     isbn?: string;
     image?: string;

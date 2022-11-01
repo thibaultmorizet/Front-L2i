@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { Book } from 'src/app/interfaces/book';
@@ -12,6 +12,7 @@ import { SocialAuthService, SocialUser } from 'angularx-social-login';
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.css', './../../../css/main.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BookDetailsComponent implements OnInit {
   book: Book = {};
@@ -19,7 +20,6 @@ export class BookDetailsComponent implements OnInit {
   basket: Array<Book> = [];
   storageCrypter = new StorageCrypter('Secret');
   bookExistinBasket: Boolean = false;
-  numberToOrder: string = '1';
   closeResult = '';
   errorPassword: string | null = null;
   errorEmail: string | null = null;
@@ -34,7 +34,7 @@ export class BookDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private authService: SocialAuthService,
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class BookDetailsComponent implements OnInit {
       this.idBook = +(res.get('id') ?? '0');
       this.bs.getOneBook(this.idBook).subscribe((b) => {
         this.book = b;
-
+        this.book.number_ordered = 1;
         if (this.book.visitnumber) {
           this.book.visitnumber += 1;
         } else {
@@ -80,16 +80,10 @@ export class BookDetailsComponent implements OnInit {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 
-  scroll(el: HTMLElement) {
-    el.scrollIntoView();
-  }
-
-  addBookToBasket(event: any, bookId: number | undefined) {
-    this.numberToOrder = event.target.querySelector('select').value;
-
+  addBookToBasket(bookToOrder: Book) {
     this.bookExistinBasket = false;
-    if (bookId != undefined) {
-      this.bs.getOneBook(bookId).subscribe((res) => {
+    if (bookToOrder.id != undefined) {
+      this.bs.getOneBook(bookToOrder.id).subscribe((res) => {
         this.basket.forEach((el) => {
           if (res.id == el.id) {
             this.bookExistinBasket = true;
@@ -97,7 +91,8 @@ export class BookDetailsComponent implements OnInit {
             if (
               el.stock &&
               el.number_ordered &&
-              el.number_ordered + parseInt(this.numberToOrder) > el.stock
+              bookToOrder.number_ordered &&
+              el.number_ordered + bookToOrder.number_ordered > el.stock
             ) {
               this.iziToast.error({
                 title: 'Manque de stock',
@@ -105,16 +100,19 @@ export class BookDetailsComponent implements OnInit {
                   'Il reste ' +
                   res.stock +
                   ' exemplaires de ce livre et vous en demandez ' +
-                  (el.number_ordered + parseInt(this.numberToOrder)),
+                  (el.number_ordered + bookToOrder.number_ordered),
                 position: 'topRight',
               });
             } else {
-              if (el.number_ordered != undefined) {
+              if (
+                el.number_ordered != undefined &&
+                bookToOrder.number_ordered != undefined
+              ) {
                 el.number_ordered =
-                  el.number_ordered + parseInt(this.numberToOrder);
-                if (el.unitprice) {
+                  el.number_ordered + bookToOrder.number_ordered;
+                if (el.unitpricettc) {
                   el.totalprice = parseFloat(
-                    (el.number_ordered * el.unitprice).toFixed(2)
+                    (el.number_ordered * el.unitpricettc).toFixed(2)
                   );
                 }
                 this.iziToast.success({
@@ -132,21 +130,25 @@ export class BookDetailsComponent implements OnInit {
         });
 
         if (!this.bookExistinBasket) {
-          if (res.stock && parseInt(this.numberToOrder) > res.stock) {
+          if (
+            res.stock &&
+            bookToOrder.number_ordered &&
+            bookToOrder.number_ordered > res.stock
+          ) {
             this.iziToast.error({
               title: 'Manque de stock',
               message:
                 'Il reste ' +
                 res.stock +
                 ' exemplaires de ce livre et vous en demandez ' +
-                parseInt(this.numberToOrder),
+                bookToOrder.number_ordered,
               position: 'topRight',
             });
           } else {
-            res.number_ordered = parseInt(this.numberToOrder);
-            if (res.unitprice) {
+            res.number_ordered = bookToOrder.number_ordered;
+            if (res.unitpricettc && res.number_ordered) {
               res.totalprice = parseFloat(
-                (res.number_ordered * res.unitprice).toFixed(2)
+                (res.number_ordered * res.unitpricettc).toFixed(2)
               );
             }
 

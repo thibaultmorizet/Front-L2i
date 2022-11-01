@@ -179,9 +179,9 @@ export class HomeComponent implements OnInit {
             } else {
               if (el.number_ordered != undefined) {
                 el.number_ordered = el.number_ordered + 1;
-                if (el.unitprice) {
+                if (el.unitpricettc) {
                   el.totalprice = parseFloat(
-                    (el.number_ordered * el.unitprice).toFixed(2)
+                    (el.number_ordered * el.unitpricettc).toFixed(2)
                   );
                 }
                 this.iziToast.success({
@@ -211,9 +211,9 @@ export class HomeComponent implements OnInit {
             });
           } else {
             res.number_ordered = 1;
-            if (res.unitprice) {
+            if (res.unitpricettc) {
               res.totalprice = parseFloat(
-                (res.number_ordered * res.unitprice).toFixed(2)
+                (res.number_ordered * res.unitpricettc).toFixed(2)
               );
             }
 

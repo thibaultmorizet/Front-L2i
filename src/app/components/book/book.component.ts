@@ -274,9 +274,9 @@ export class BookComponent implements OnInit {
               if (el.number_ordered != undefined) {
                 el.number_ordered =
                   el.number_ordered + parseInt(this.numberToOrder);
-                if (el.unitprice) {
+                if (el.unitpricettc) {
                   el.totalprice = parseFloat(
-                    (el.number_ordered * el.unitprice).toFixed(2)
+                    (el.number_ordered * el.unitpricettc).toFixed(2)
                   );
                 }
                 this.iziToast.success({
@@ -306,9 +306,9 @@ export class BookComponent implements OnInit {
             });
           } else {
             res.number_ordered = parseInt(this.numberToOrder);
-            if (res.unitprice) {
+            if (res.unitpricettc) {
               res.totalprice = parseFloat(
-                (res.number_ordered * res.unitprice).toFixed(2)
+                (res.number_ordered * res.unitpricettc).toFixed(2)
               );
             }
 

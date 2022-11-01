@@ -72,10 +72,10 @@ export class BasketDetailsComponent implements OnInit {
           this.deleteBookOfBasket(el.id);
         }
         if (el.number_ordered != undefined && el.number_ordered > 0) {
-          if (el.totalprice != undefined && el.unitprice) {
+          if (el.totalprice != undefined && el.unitpricettc) {
             el.number_ordered--;
-            el.totalprice -= el.unitprice;
-            this.basketTotalPrice -= el.unitprice;
+            el.totalprice -= el.unitpricettc;
+            this.basketTotalPrice -= el.unitpricettc;
             this.basketTotalPrice = parseFloat(
               this.basketTotalPrice.toFixed(2)
             );
@@ -104,10 +104,10 @@ export class BasketDetailsComponent implements OnInit {
           el.stock != undefined &&
           el.number_ordered < el.stock
         ) {
-          if (el.totalprice != undefined && el.unitprice) {
+          if (el.totalprice != undefined && el.unitpricettc) {
             el.number_ordered++;
-            el.totalprice += el.unitprice;
-            this.basketTotalPrice += el.unitprice;
+            el.totalprice += el.unitpricettc;
+            this.basketTotalPrice += el.unitpricettc;
             this.basketTotalPrice = parseFloat(
               this.basketTotalPrice.toFixed(2)
             );

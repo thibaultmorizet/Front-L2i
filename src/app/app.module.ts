@@ -40,6 +40,9 @@ import { DividerModule } from 'primeng/divider';
 import { PasswordModule } from 'primeng/password';
 import { AccordionModule } from 'primeng/accordion';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { TabViewModule } from 'primeng/tabview';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
 
@@ -78,6 +81,9 @@ import { ContactComponent } from './components/contact/contact.component';
     PasswordModule,
     AccordionModule,
     ConfirmDialogModule,
+    InputNumberModule,
+    TabViewModule,
+    InputTextareaModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
