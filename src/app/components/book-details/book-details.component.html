@@ -13,13 +13,23 @@
         src="https://www.thibaultmorizet.fr/assets/bookDetails2.png"
         alt="bookDetails2Img"
       />
+
       <div class="book-details-container">
         <div class="book-general-details">
           <div class="book-details-image-and-title">
+            <p-skeleton
+              class="bookDetailsImgCoverSkeleton"
+              width="100%"
+              height="100%"
+              *ngIf="!bookDetailsImgCoverIsLoaded"
+            ></p-skeleton>
+
             <img
               id="bookDetailsImgCover"
               src="{{ book.image }}"
               alt="bookDetailsImg"
+              (load)="bookDetailsImgCoverIsLoaded = true"
+              [ngClass]="{ 'd-none': !bookDetailsImgCoverIsLoaded }"
             />
           </div>
 

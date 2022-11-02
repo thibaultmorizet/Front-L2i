@@ -24,7 +24,8 @@ export class BookDetailsComponent implements OnInit {
   errorPassword: string | null = null;
   errorEmail: string | null = null;
   connectedUser: User | null = {};
-
+  bookDetailsImgCoverIsLoaded: boolean = false;
+  
   socialUser!: SocialUser;
   isLoggedin?: boolean;
 

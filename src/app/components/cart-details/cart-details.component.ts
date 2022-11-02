@@ -158,7 +158,7 @@ export class CartDetailsComponent implements OnInit {
     this.storageCrypter.setItem('cart', JSON.stringify(this.cart), 'local');
   }
   getDeliveryDate() {
-    let deliveryDelai = Math.floor(Math.random() * (7 - 2 + 1) + 2);
+    let deliveryDelai = 6;
     let deliveryDate = new Date();
     const monthNames = [
       'Jan.',
