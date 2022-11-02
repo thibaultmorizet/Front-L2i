@@ -13,7 +13,7 @@ import StorageCrypter from 'storage-crypter';
   styleUrls: ['./legal-notices.component.css'],
 })
 export class LegalNoticesComponent implements OnInit {
-  basket: Array<Book> = [];
+  cart: Array<Book> = [];
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
 
@@ -35,8 +35,8 @@ export class LegalNoticesComponent implements OnInit {
     } catch (error) {
       this.connectedUser = null;
     }
-    if (this.storageCrypter.getItem('basket', 'local') != '') {
-      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
+    if (this.storageCrypter.getItem('cart', 'local') != '') {
+      this.cart = JSON.parse(this.storageCrypter.getItem('cart', 'local'));
     }
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
@@ -73,7 +73,7 @@ export class LegalNoticesComponent implements OnInit {
   }
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
-    this.storageCrypter.removeItem('basket', 'local');
+    this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.authService.signOut();
     this.connectedUser = null;

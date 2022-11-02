@@ -17,9 +17,9 @@ import { SocialAuthService, SocialUser } from 'angularx-social-login';
 export class BookDetailsComponent implements OnInit {
   book: Book = {};
   idBook: number = 0;
-  basket: Array<Book> = [];
+  cart: Array<Book> = [];
   storageCrypter = new StorageCrypter('Secret');
-  bookExistinBasket: Boolean = false;
+  bookExistinCart: Boolean = false;
   closeResult = '';
   errorPassword: string | null = null;
   errorEmail: string | null = null;
@@ -58,10 +58,8 @@ export class BookDetailsComponent implements OnInit {
       } catch (error) {
         this.connectedUser = null;
       }
-      if (this.storageCrypter.getItem('basket', 'local') != '') {
-        this.basket = JSON.parse(
-          this.storageCrypter.getItem('basket', 'local')
-        );
+      if (this.storageCrypter.getItem('cart', 'local') != '') {
+        this.cart = JSON.parse(this.storageCrypter.getItem('cart', 'local'));
       }
       this.authService.authState.subscribe((user) => {
         this.socialUser = user;
@@ -80,13 +78,13 @@ export class BookDetailsComponent implements OnInit {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 
-  addBookToBasket(bookToOrder: Book) {
-    this.bookExistinBasket = false;
+  addBookToCart(bookToOrder: Book) {
+    this.bookExistinCart = false;
     if (bookToOrder.id != undefined) {
       this.bs.getOneBook(bookToOrder.id).subscribe((res) => {
-        this.basket.forEach((el) => {
+        this.cart.forEach((el) => {
           if (res.id == el.id) {
-            this.bookExistinBasket = true;
+            this.bookExistinCart = true;
 
             if (
               el.stock &&
@@ -111,8 +109,13 @@ export class BookDetailsComponent implements OnInit {
                 el.number_ordered =
                   el.number_ordered + bookToOrder.number_ordered;
                 if (el.unitpricettc) {
-                  el.totalprice = parseFloat(
+                  el.totalpricettc = parseFloat(
                     (el.number_ordered * el.unitpricettc).toFixed(2)
+                  );
+                }
+                if (el.unitpriceht) {
+                  el.totalpriceht = parseFloat(
+                    (el.number_ordered * el.unitpriceht).toFixed(2)
                   );
                 }
                 this.iziToast.success({
@@ -120,8 +123,8 @@ export class BookDetailsComponent implements OnInit {
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
-                  'basket',
-                  JSON.stringify(this.basket),
+                  'cart',
+                  JSON.stringify(this.cart),
                   'local'
                 );
               }
@@ -129,7 +132,7 @@ export class BookDetailsComponent implements OnInit {
           }
         });
 
-        if (!this.bookExistinBasket) {
+        if (!this.bookExistinCart) {
           if (
             res.stock &&
             bookToOrder.number_ordered &&
@@ -147,19 +150,24 @@ export class BookDetailsComponent implements OnInit {
           } else {
             res.number_ordered = bookToOrder.number_ordered;
             if (res.unitpricettc && res.number_ordered) {
-              res.totalprice = parseFloat(
+              res.totalpricettc = parseFloat(
                 (res.number_ordered * res.unitpricettc).toFixed(2)
               );
             }
+            if (res.unitpriceht && res.number_ordered) {
+              res.totalpriceht = parseFloat(
+                (res.number_ordered * res.unitpriceht).toFixed(2)
+              );
+            }
 
-            this.basket.push(res);
+            this.cart.push(res);
             this.iziToast.success({
               message: 'Article ajouté au panier',
               position: 'topRight',
             });
             this.storageCrypter.setItem(
-              'basket',
-              JSON.stringify(this.basket),
+              'cart',
+              JSON.stringify(this.cart),
               'local'
             );
           }
@@ -170,7 +178,7 @@ export class BookDetailsComponent implements OnInit {
 
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
-    this.storageCrypter.removeItem('basket', 'local');
+    this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.authService.signOut();
     this.connectedUser = null;

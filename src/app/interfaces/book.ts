@@ -18,7 +18,8 @@ export interface Book {
     type?: Array<Type>;
     year?: string;
     number_ordered?: number;
-    totalprice?: number;
+    totalpricettc?: number;
+    totalpriceht?: number;
     visitnumber?:number;
     soldnumber?:number;
 }

@@ -1,5 +1,5 @@
 <div class="general-content">
-  <app-header [basketLength]="basket.length"></app-header>
+  <app-header [cartLength]="cart.length"></app-header>
 
   <main id="content">
     <div class="container">
@@ -33,7 +33,7 @@
                       pRipple
                       type="button"
                       class="p-button-raised p-button-primary-color article-hover-actions-add-cart"
-                      (click)="addBookToBasket(oneBook.id)"
+                      (click)="addBookToCart(oneBook.id)"
                     >
                       <i class="fa fa-shopping-cart"></i>
                     </button>

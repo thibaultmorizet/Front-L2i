@@ -1,5 +1,5 @@
 <div class="general-content">
-  <app-header [basketLength]="basket.length"></app-header>
+  <app-header [cartLength]="cart.length"></app-header>
 
   <main id="content">
     <div class="container">
@@ -23,7 +23,8 @@
             />
           </div>
 
-          <div class="book-details-quantity-and-price-and-submit">          <p class="subtitle text-center">{{ book.title }}</p>
+          <div class="book-details-quantity-and-price-and-submit">
+            <p class="subtitle text-center">{{ book.title }}</p>
 
             <div class="book-details-price">
               <p class="price">{{ book.unitpricettc }} € (TTC)</p>
@@ -53,9 +54,9 @@
                   pRipple
                   type="submit"
                   class="p-button-raised p-button-primary-color btn-primary-color"
-                  (click)="addBookToBasket(book)"
+                  (click)="addBookToCart(book)"
                 >
-                  Add to basket
+                  Add to cart
                 </button>
               </div>
             </div>

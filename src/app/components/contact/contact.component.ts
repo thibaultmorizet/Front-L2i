@@ -15,7 +15,7 @@ import StorageCrypter from 'storage-crypter';
   styleUrls: ['./contact.component.css'],
 })
 export class ContactComponent implements OnInit {
-  basket: Array<Book> = [];
+  cart: Array<Book> = [];
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
   contactInfo: Contact = {};
@@ -40,8 +40,8 @@ export class ContactComponent implements OnInit {
       this.connectedUser = null;
     }
     this.contactInfo.email = this.connectedUser?.email;    
-    if (this.storageCrypter.getItem('basket', 'local') != '') {
-      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
+    if (this.storageCrypter.getItem('cart', 'local') != '') {
+      this.cart = JSON.parse(this.storageCrypter.getItem('cart', 'local'));
     }
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
@@ -78,7 +78,7 @@ export class ContactComponent implements OnInit {
   }
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
-    this.storageCrypter.removeItem('basket', 'local');
+    this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.authService.signOut();
     this.connectedUser = null;

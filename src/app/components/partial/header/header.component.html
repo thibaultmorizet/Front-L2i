@@ -39,14 +39,14 @@
 
         <div id="bag-shopping-count-container">
           <a
-            [routerLink]="['/basket']"
+            [routerLink]="['/cart']"
             class="home-link text-uppercase"
-            [ngClass]="{ active: path === 'basket' }"
+            [ngClass]="{ active: path === 'cart' }"
           >
             <span id="bag-shopping-count" aria-hidden="true">{{
-              basketLength
+              cartLength
             }}</span>
-            My Basket</a
+            My Cart</a
           >
         </div>
       </div>

@@ -5,7 +5,7 @@ import { Book } from '../interfaces/book';
 @Injectable({
   providedIn: 'root'
 })
-export class BasketService {
+export class CartService {
 
   constructor(private http: HttpClient) {}
 }

@@ -15,7 +15,7 @@ import StorageCrypter from 'storage-crypter';
 export class AdminHomeComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
-  basket: Array<Book> = [];
+  cart: Array<Book> = [];
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -35,8 +35,8 @@ export class AdminHomeComponent implements OnInit {
     } catch (error) {
       this.connectedUser = null;
     }
-    if (this.storageCrypter.getItem('basket', 'local') != '') {
-      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
+    if (this.storageCrypter.getItem('cart', 'local') != '') {
+      this.cart = JSON.parse(this.storageCrypter.getItem('cart', 'local'));
     }
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
@@ -56,7 +56,7 @@ export class AdminHomeComponent implements OnInit {
 
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
-    this.storageCrypter.removeItem('basket', 'local');
+    this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.connectedUser = null;
     this.router.navigateByUrl('/home');

@@ -65,31 +65,6 @@
     width: 100%;
 }
 
-.p-inputnumber-input {
-    width: 50px;
-    display: flex;
-    justify-content: center;
-}
-
-.p-inputnumber-input {
-    text-align: center;
-    font-family: "Quicksand", Arial, sans-serif;
-}
-
-.p-button-outline-primary {
-    font-family: "Quicksand", Arial, sans-serif;
-    border: none;
-    background: none;
-    color: #30336B;
-}
-
-.p-button-outline-primary:hover {
-    border: none;
-    background-color: #DADAE4 !important;
-    color: #30336B !important;
-
-}
-
 .book-details-divider {
     width: 250px;
 }

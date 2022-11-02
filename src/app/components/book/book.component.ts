@@ -27,7 +27,7 @@ import { Author } from 'src/app/interfaces/author';
   styleUrls: ['./book.component.css', './../../../css/main.css'],
 })
 export class BookComponent implements OnInit {
-  basket: Array<Book> = [];
+  cart: Array<Book> = [];
   books: Array<Book> = [];
   allBooks: Array<Book> = [];
   formats: Array<Format> = [];
@@ -42,7 +42,7 @@ export class BookComponent implements OnInit {
   formatFilter: Array<string> = [];
   typeFilter: Array<string> = [];
   searchText: string = '';
-  bookExistinBasket: Boolean = false;
+  bookExistinCart: Boolean = false;
   numberToOrder: string = '1';
   storageCrypter = new StorageCrypter('Secret');
   userInscription: User = {};
@@ -84,8 +84,8 @@ export class BookComponent implements OnInit {
     } catch (error) {
       this.connectedUser = null;
     }
-    if (this.storageCrypter.getItem('basket', 'local') != '') {
-      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
+    if (this.storageCrypter.getItem('cart', 'local') != '') {
+      this.cart = JSON.parse(this.storageCrypter.getItem('cart', 'local'));
     }
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
@@ -246,15 +246,15 @@ export class BookComponent implements OnInit {
         );
       });
   }
-  addBookToBasket(event: any, bookId: number | undefined) {
+  addBookToCart(event: any, bookId: number | undefined) {
     this.numberToOrder = event.target.querySelector('select').value;
 
-    this.bookExistinBasket = false;
+    this.bookExistinCart = false;
     if (bookId != undefined) {
       this.bs.getOneBook(bookId).subscribe((res) => {
-        this.basket.forEach((el) => {
+        this.cart.forEach((el) => {
           if (res.id == el.id) {
-            this.bookExistinBasket = true;
+            this.bookExistinCart = true;
 
             if (
               el.stock &&
@@ -275,7 +275,7 @@ export class BookComponent implements OnInit {
                 el.number_ordered =
                   el.number_ordered + parseInt(this.numberToOrder);
                 if (el.unitpricettc) {
-                  el.totalprice = parseFloat(
+                  el.totalpricettc = parseFloat(
                     (el.number_ordered * el.unitpricettc).toFixed(2)
                   );
                 }
@@ -284,8 +284,8 @@ export class BookComponent implements OnInit {
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
-                  'basket',
-                  JSON.stringify(this.basket),
+                  'cart',
+                  JSON.stringify(this.cart),
                   'local'
                 );
               }
@@ -293,7 +293,7 @@ export class BookComponent implements OnInit {
           }
         });
 
-        if (!this.bookExistinBasket) {
+        if (!this.bookExistinCart) {
           if (res.stock && parseInt(this.numberToOrder) > res.stock) {
             this.iziToast.error({
               title: 'Manque de stock',
@@ -307,19 +307,19 @@ export class BookComponent implements OnInit {
           } else {
             res.number_ordered = parseInt(this.numberToOrder);
             if (res.unitpricettc) {
-              res.totalprice = parseFloat(
+              res.totalpricettc = parseFloat(
                 (res.number_ordered * res.unitpricettc).toFixed(2)
               );
             }
 
-            this.basket.push(res);
+            this.cart.push(res);
             this.iziToast.success({
               message: 'Article ajouté au panier',
               position: 'topRight',
             });
             this.storageCrypter.setItem(
-              'basket',
-              JSON.stringify(this.basket),
+              'cart',
+              JSON.stringify(this.cart),
               'local'
             );
           }
@@ -445,7 +445,7 @@ export class BookComponent implements OnInit {
 
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
-    this.storageCrypter.removeItem('basket', 'local');
+    this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.authService.signOut();
     this.connectedUser = null;

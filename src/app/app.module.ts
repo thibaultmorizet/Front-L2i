@@ -11,7 +11,7 @@ import { NgxIziToastModule } from 'ngx-izitoast';
 import { AuthInterceptor } from './services/auth.interceptor';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { BasketDetailsComponent } from './components/basket-details/basket-details.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
 import {
   SocialLoginModule,
@@ -43,6 +43,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TabViewModule } from 'primeng/tabview';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
 
@@ -51,7 +52,7 @@ import { ContactComponent } from './components/contact/contact.component';
     AppComponent,
     BookComponent,
     BookDetailsComponent,
-    BasketDetailsComponent,
+    CartDetailsComponent,
     MyAccountComponent,
     AdminHomeComponent,
     AdminRegisterComponent,
@@ -84,6 +85,7 @@ import { ContactComponent } from './components/contact/contact.component';
     InputNumberModule,
     TabViewModule,
     InputTextareaModule,
+    DropdownModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

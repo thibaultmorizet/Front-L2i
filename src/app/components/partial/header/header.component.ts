@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  @Input() basketLength: number = 0;
+  @Input() cartLength: number = 0;
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
   path: string = '';

@@ -17,12 +17,12 @@ import StorageCrypter from 'storage-crypter';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
-  basket: Array<Book> = [];
+  cart: Array<Book> = [];
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
   bookBestSell: Array<Book> = [];
   responsiveOptions: any;
-  bookExistinBasket: Boolean = false;
+  bookExistinCart: Boolean = false;
   @ViewChild('bestSellCarousel') bestSellCarousel?: CarouselModule;
 
   socialUser!: SocialUser;
@@ -80,8 +80,8 @@ export class HomeComponent implements OnInit {
     } catch (error) {
       this.connectedUser = null;
     }
-    if (this.storageCrypter.getItem('basket', 'local') != '') {
-      this.basket = JSON.parse(this.storageCrypter.getItem('basket', 'local'));
+    if (this.storageCrypter.getItem('cart', 'local') != '') {
+      this.cart = JSON.parse(this.storageCrypter.getItem('cart', 'local'));
     }
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
@@ -132,13 +132,13 @@ export class HomeComponent implements OnInit {
 
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');
-    this.storageCrypter.removeItem('basket', 'local');
+    this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.authService.signOut();
     this.connectedUser = null;
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: 'you\'re logout',
+      message: "you're logout",
       position: 'topRight',
     });
   }
@@ -154,13 +154,13 @@ export class HomeComponent implements OnInit {
       document.getElementsByClassName('p-carousel-prev')[0] as HTMLElement
     ).click();
   }
-  addBookToBasket(bookId: number | undefined) {
-    this.bookExistinBasket = false;
+  addBookToCart(bookId: number | undefined) {
+    this.bookExistinCart = false;
     if (bookId != undefined) {
       this.bs.getOneBook(bookId).subscribe((res) => {
-        this.basket.forEach((el) => {
+        this.cart.forEach((el) => {
           if (res.id == el.id) {
-            this.bookExistinBasket = true;
+            this.bookExistinCart = true;
 
             if (
               el.stock &&
@@ -180,17 +180,22 @@ export class HomeComponent implements OnInit {
               if (el.number_ordered != undefined) {
                 el.number_ordered = el.number_ordered + 1;
                 if (el.unitpricettc) {
-                  el.totalprice = parseFloat(
+                  el.totalpricettc = parseFloat(
                     (el.number_ordered * el.unitpricettc).toFixed(2)
                   );
                 }
+                if (el.unitpriceht) {
+                  el.totalpriceht = parseFloat(
+                    (el.number_ordered * el.unitpriceht).toFixed(2)
+                  );
+                }
                 this.iziToast.success({
-                  message: 'Book add to basket',
+                  message: 'Book add to cart',
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
-                  'basket',
-                  JSON.stringify(this.basket),
+                  'cart',
+                  JSON.stringify(this.cart),
                   'local'
                 );
               }
@@ -198,7 +203,7 @@ export class HomeComponent implements OnInit {
           }
         });
 
-        if (!this.bookExistinBasket) {
+        if (!this.bookExistinCart) {
           if (res.stock && 1 > res.stock) {
             this.iziToast.error({
               title: 'Lack of stock',
@@ -212,19 +217,24 @@ export class HomeComponent implements OnInit {
           } else {
             res.number_ordered = 1;
             if (res.unitpricettc) {
-              res.totalprice = parseFloat(
+              res.totalpricettc = parseFloat(
                 (res.number_ordered * res.unitpricettc).toFixed(2)
               );
             }
+            if (res.unitpriceht) {
+              res.totalpriceht = parseFloat(
+                (res.number_ordered * res.unitpriceht).toFixed(2)
+              );
+            }
 
-            this.basket.push(res);
+            this.cart.push(res);
             this.iziToast.success({
-              message: 'Book add to basket',
+              message: 'Book add to cart',
               position: 'topRight',
             });
             this.storageCrypter.setItem(
-              'basket',
-              JSON.stringify(this.basket),
+              'cart',
+              JSON.stringify(this.cart),
               'local'
             );
           }
