@@ -16,6 +16,8 @@ import { UserService } from 'src/app/services/user.service';
 import { Address } from 'src/app/interfaces/address';
 import { DialogModule } from 'primeng/dialog';
 import { BookService } from 'src/app/services/book.service';
+import { Order } from 'src/app/interfaces/order';
+import { OrderService } from 'src/app/services/order.service';
 @Component({
   selector: 'app-cart-details',
   templateUrl: './cart-details.component.html',
@@ -41,6 +43,7 @@ export class CartDetailsComponent implements OnInit {
   newAddressBilling: Address = {};
   newAddressDelivery: Address = {};
   errorStock: boolean = false;
+  order: Order = {};
 
   constructor(
     private router: Router,
@@ -52,7 +55,8 @@ export class CartDetailsComponent implements OnInit {
     private messageService: MessageService,
     private addressService: AddressService,
     private us: UserService,
-    private bs: BookService
+    private bs: BookService,
+    private os: OrderService
   ) {}
 
   ngOnInit(): void {
@@ -400,6 +404,29 @@ export class CartDetailsComponent implements OnInit {
             }
           }
         });
+        this.order.user = this.connectedUser;
+
+        this.order.booklist = this.cart;
+        this.order.totalprice = this.cartTotalPriceTtc;
+        this.order.date = new Date();
+        this.order.deliveryaddress =
+          this.newAddressDelivery.street +
+          ', ' +
+          this.newAddressDelivery.postalcode +
+          ' ' +
+          this.newAddressDelivery.city +
+          ', ' +
+          this.newAddressDelivery.country;
+        this.order.billingaddress =
+          this.newAddressBilling.street +
+          ', ' +
+          this.newAddressBilling.postalcode +
+          ' ' +
+          this.newAddressBilling.city +
+          ', ' +
+          this.newAddressBilling.country;
+
+        this.os.setOrder(this.order).subscribe((el) => {});
         this.cart = [];
         this.storageCrypter.removeItem('cart', 'local');
         this.iziToast.success({

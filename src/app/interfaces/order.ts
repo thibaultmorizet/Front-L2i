@@ -1,13 +1,12 @@
-import { Address } from './address';
 import { Book } from './book';
 import { User } from './user';
 
 export interface Order {
   id?: number;
   user?: User;
-  books?: Array<Book>;
-  totalpricettc?: number;
-  deliveryAddress?: Address;
-  billingAddress?: Address;
+  booklist?: Array<Book>;
+  totalprice?: number;
+  deliveryaddress?: string;
+  billingaddress?: string;
   date?: Date;
 }
