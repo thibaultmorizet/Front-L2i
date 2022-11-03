@@ -360,23 +360,23 @@
             type="submit"
             class="p-button-raised p-button-primary-color btn-primary-color"
             [disabled]="
-              !connectedUser.deliveryAddress ||
-              !connectedUser.billingAddress ||
+              (connectedUser.id != undefined &&
+                (!connectedUser.deliveryAddress ||
+                  !connectedUser.billingAddress)) ||
               !cart ||
               cart.length == 0
             "
+            (click)="checkOut()"
           >
             <span
               pTooltip="Create valid addresses to check out"
               [tooltipDisabled]="
-                connectedUser.deliveryAddress != undefined &&
-                connectedUser.billingAddress != undefined
+                (connectedUser.deliveryAddress != undefined &&
+                  connectedUser.billingAddress != undefined) ||
+                connectedUser.id == undefined
               "
-              ><span
-                pTooltip="Add at least a book in cart for check out"
-                [tooltipDisabled]="cart.length > 1"
-                >Check out</span
-              ></span
+            >
+              Check out</span
             >
           </button>
         </div>

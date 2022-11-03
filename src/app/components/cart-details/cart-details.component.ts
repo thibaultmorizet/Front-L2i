@@ -15,6 +15,7 @@ import { AddressService } from 'src/app/services/address.service';
 import { UserService } from 'src/app/services/user.service';
 import { Address } from 'src/app/interfaces/address';
 import { DialogModule } from 'primeng/dialog';
+import { BookService } from 'src/app/services/book.service';
 @Component({
   selector: 'app-cart-details',
   templateUrl: './cart-details.component.html',
@@ -39,6 +40,7 @@ export class CartDetailsComponent implements OnInit {
   displayModalBillingAddress: boolean = false;
   newAddressBilling: Address = {};
   newAddressDelivery: Address = {};
+  errorStock: boolean = false;
 
   constructor(
     private router: Router,
@@ -49,7 +51,8 @@ export class CartDetailsComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private addressService: AddressService,
-    private us: UserService
+    private us: UserService,
+    private bs: BookService
   ) {}
 
   ngOnInit(): void {
@@ -358,6 +361,59 @@ export class CartDetailsComponent implements OnInit {
               ).click();
             });
         });
+    }
+  }
+
+  checkOut() {
+    if (this.connectedUser.id) {
+      this.errorStock = false;
+      this.cart.forEach((aBook) => {
+        if (aBook.id && !this.errorStock) {
+          this.bs.getOneBook(aBook.id).subscribe((el) => {
+            if (aBook.number_ordered && el.stock) {
+              if (aBook.number_ordered > el.stock) {
+                this.errorStock = true;
+                aBook.stock = el.stock;
+                this.iziToast.error({
+                  title: 'Lack of stock',
+                  message:
+                    'There are ' +
+                    el.stock +
+                    ' copies of the book ' +
+                    aBook.title +
+                    ' left and you are requesting ' +
+                    aBook.number_ordered,
+                  position: 'topRight',
+                });
+              }
+            }
+          });
+        }
+      });
+      if (!this.errorStock) {
+        this.cart.forEach((aBook) => {
+          if (aBook.id) {
+            if (aBook.stock && aBook.number_ordered) {
+              aBook.stock -= aBook.number_ordered;
+
+              this.bs.updateBook(aBook.id, aBook).subscribe((el) => {});
+            }
+          }
+        });
+        this.cart = [];
+        this.storageCrypter.removeItem('cart', 'local');
+        this.iziToast.success({
+          message: 'Your order is validate',
+          position: 'topRight',
+        });
+        this.router.navigateByUrl('/home');
+      }
+    } else {
+      this.iziToast.warning({
+        message: 'Login before confirm check out',
+        position: 'topRight',
+      });
+      this.router.navigateByUrl('/my-account');
     }
   }
 }

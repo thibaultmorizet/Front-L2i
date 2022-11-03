@@ -140,6 +140,14 @@ export class BookService {
   }
 
   getBooksBestSell() {
-    return this.http.get<Array<Book>>(this.url + '?itemsPerPage=10');
+    return this.http.get<Array<Book>>(this.url + '?itemsPerPage=10&stock%5Bgt%5D=0');
+  }
+
+  updateBookStock(id: number | undefined, book: Book) {
+    if (book.stock && book.stock >= 0) {
+      return this.http.put<{ token: string }>(this.url + '/' + id, book);
+    } else {
+      return false;
+    }
   }
 }
