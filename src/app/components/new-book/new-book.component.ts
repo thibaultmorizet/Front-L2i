@@ -65,7 +65,7 @@ export class NewBookComponent implements OnInit {
     }
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-        this.refreshToken();
+        this.logout();
       }
     }
     this.authService.authState.subscribe((user) => {

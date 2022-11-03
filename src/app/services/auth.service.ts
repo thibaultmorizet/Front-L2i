@@ -3,16 +3,19 @@ import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private url: string = "https://thibaultmorizet.fr/authentication_token";
-  constructor(private http: HttpClient) { }
+  private url: string = 'https://thibaultmorizet.fr/authentication_token';
+  constructor(private http: HttpClient) {}
 
-  login(user: User) {    
+  login(user: User) {
     return this.http.post<{ token: string }>(this.url, user);
   }
-  getTheUser(email: String|undefined){    
-    return this.http.get<Array<User>>("https://thibaultmorizet.fr/ws/users?email="+email);
+
+  getTheUser(email: String | undefined) {
+    return this.http.get<Array<User>>(
+      'https://thibaultmorizet.fr/ws/users?email=' + email
+    );
   }
 }

@@ -62,6 +62,7 @@ export class CartDetailsComponent implements OnInit {
     } catch (error) {
       this.connectedUser = {};
     }
+
     if (this.connectedUser.id) {
       try {
         if (
@@ -106,26 +107,31 @@ export class CartDetailsComponent implements OnInit {
         });
       }
     }
+
     if (this.storageCrypter.getItem('cart', 'local') != '') {
       this.cart = JSON.parse(this.storageCrypter.getItem('cart', 'local'));
+      this.cart.forEach((el) => {
+        if (el.totalpricettc) {
+          this.cartTotalPriceTtc += el.totalpricettc;
+          this.cartTotalPriceTtc = parseFloat(
+            this.cartTotalPriceTtc.toFixed(2)
+          );
+        }
+        if (el.totalpriceht) {
+          this.cartTotalPriceHt += el.totalpriceht;
+          this.cartTotalPriceHt = parseFloat(this.cartTotalPriceHt.toFixed(2));
+        }
+      });
     }
-    this.cart.forEach((el) => {
-      if (el.totalpricettc) {
-        this.cartTotalPriceTtc += el.totalpricettc;
-        this.cartTotalPriceTtc = parseFloat(this.cartTotalPriceTtc.toFixed(2));
-      }
-      if (el.totalpriceht) {
-        this.cartTotalPriceHt += el.totalpriceht;
-        this.cartTotalPriceHt = parseFloat(this.cartTotalPriceHt.toFixed(2));
-      }
-    });
+
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
       this.isLoggedin = user != null;
     });
+
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-        this.refreshToken();
+        this.logout();
       }
     }
     this.getDeliveryDate();
@@ -220,6 +226,7 @@ export class CartDetailsComponent implements OnInit {
     this.cartTotalPriceHt = parseFloat(this.cartTotalPriceHt.toFixed(2));
     this.storageCrypter.setItem('cart', JSON.stringify(this.cart), 'local');
   }
+
   getDeliveryDate() {
     let deliveryDelai = 6;
     let deliveryDate = new Date();
@@ -243,9 +250,11 @@ export class CartDetailsComponent implements OnInit {
     this.deliveryDate =
       ' ' + monthNames[deliveryDate.getMonth()] + ' ' + deliveryDate.getDate();
   }
+
   showModalDeliveryAddress() {
     this.displayModalDeliveryAddress = true;
   }
+
   showModalBillingAddress() {
     this.displayModalBillingAddress = true;
   }
@@ -268,7 +277,9 @@ export class CartDetailsComponent implements OnInit {
             position: 'topRight',
           });
           (
-            document.getElementsByClassName('billing-modal-close')[0] as HTMLElement
+            document.getElementsByClassName(
+              'billing-modal-close'
+            )[0] as HTMLElement
           ).click();
         });
     } else {
@@ -290,7 +301,9 @@ export class CartDetailsComponent implements OnInit {
                 position: 'topRight',
               });
               (
-                document.getElementsByClassName('billing-modal-close')[0] as HTMLElement
+                document.getElementsByClassName(
+                  'billing-modal-close'
+                )[0] as HTMLElement
               ).click();
             });
         });
@@ -315,7 +328,9 @@ export class CartDetailsComponent implements OnInit {
             position: 'topRight',
           });
           (
-            document.getElementsByClassName('delivery-modal-close')[0] as HTMLElement
+            document.getElementsByClassName(
+              'delivery-modal-close'
+            )[0] as HTMLElement
           ).click();
         });
     } else {
@@ -337,7 +352,9 @@ export class CartDetailsComponent implements OnInit {
                 position: 'topRight',
               });
               (
-                document.getElementsByClassName('delivery-modal-close')[0] as HTMLElement
+                document.getElementsByClassName(
+                  'delivery-modal-close'
+                )[0] as HTMLElement
               ).click();
             });
         });

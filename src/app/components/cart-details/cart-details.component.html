@@ -360,7 +360,10 @@
             type="submit"
             class="p-button-raised p-button-primary-color btn-primary-color"
             [disabled]="
-              !connectedUser.deliveryAddress || !connectedUser.billingAddress
+              !connectedUser.deliveryAddress ||
+              !connectedUser.billingAddress ||
+              !cart ||
+              cart.length == 0
             "
           >
             <span
@@ -369,7 +372,11 @@
                 connectedUser.deliveryAddress != undefined &&
                 connectedUser.billingAddress != undefined
               "
-              >Check out</span
+              ><span
+                pTooltip="Add at least a book in cart for check out"
+                [tooltipDisabled]="cart.length > 1"
+                >Check out</span
+              ></span
             >
           </button>
         </div>
