@@ -16,7 +16,6 @@ import {
 import {
   PrimeNGConfig,
   ConfirmationService,
-  ConfirmEventType,
   MessageService,
 } from 'primeng/api';
 import { FormControl, Validators } from '@angular/forms';
@@ -114,7 +113,7 @@ export class MyAccountComponent implements OnInit {
         }
       } catch (error) {
         this.iziToast.warning({
-          title: 'Error in load of billing address',
+          title: 'Error in load of delivery address',
           message: 'Reload the page',
           position: 'topRight',
         });
