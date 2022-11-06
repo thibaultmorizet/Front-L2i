@@ -278,12 +278,26 @@
         </p>
       </div>
     </div>
-    <div class="container" *ngIf="connectedUser.id">
+    <div class="d-flex justify-content-end mt-2 px-5">
+      <button
+        pButton
+        pRipple
+        type="submit"
+        class="p-button-raised p-button-primary-color btn-primary-color"
+        *ngIf="connectedUser.id"
+        (click)="isOrderPage = !isOrderPage"
+      >
+        <span *ngIf="!isOrderPage">View previous orders</span>
+        <span *ngIf="isOrderPage">View personnal data</span>
+      </button>
+    </div>
+    <div class="container" *ngIf="connectedUser.id && !isOrderPage">
       <img
         id="personnalDateImg"
         src="https://www.thibaultmorizet.fr/assets/personalData.png"
         alt="personnalDataImg"
       />
+
       <div>
         <p-confirmDialog
           [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
@@ -610,6 +624,76 @@
             >
               Logout
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" *ngIf="connectedUser.id && isOrderPage">
+      <div class="order-list-container">
+        <div class="order-container" *ngFor="let anOrder of orders">
+          <div class="order-info">
+            <div class="order-info-date">
+              <div>Order date</div>
+              <div class="order-date">{{ getOrderDate(anOrder.date) }}</div>
+            </div>
+            <div class="order-info-id">
+              <div>Order number</div>
+              <div class="order-id">{{ anOrder.id }}</div>
+            </div>
+          </div>
+          <div class="order-general-product">
+            <div
+              class="order-product-container"
+              *ngFor="let aBook of anOrder.booklist"
+            >
+              <div>
+                <img src="{{ aBook.image }}" alt="" class="order-img-icon" />
+              </div>
+              <div class="order-product-middle-info">
+                <div class="order-product-title">{{ aBook.title }}</div>
+                <div class="order-product-quantity">quantity : {{ aBook.number_ordered }}</div>
+              </div>
+              <div class="order-product-price">{{ aBook.unitpricettc }} €</div>
+            </div>
+          </div>
+          <div class="order-addresses-total">
+            <div class="order-addresses">
+              <div class="order-delivery-address">
+                <div class="order-delivery-address-title">Delivery address</div>
+                <div
+                  [innerHTML]="replaceInAddress(anOrder.deliveryaddress)"
+                ></div>
+              </div>
+
+              <div class="order-billing-address">
+                <div class="order-billing-address-title">Billing address</div>
+                <div
+                  [innerHTML]="replaceInAddress(anOrder.billingaddress)"
+                ></div>
+              </div>
+            </div>
+
+            <div class="order-total-subtotal">
+              <div class="order-subtotal">
+                <div>
+                  <p>Subtotal (TTC)</p>
+                  <p>{{ anOrder.totalprice }} €</p>
+                </div>
+
+                <div>
+                  <p>Delivery taxes</p>
+                  <p>Free</p>
+                </div>
+                <p-divider class="order-divider"></p-divider>
+              </div>
+
+              <div class="order-total">
+                <div>
+                  <p>Total</p>
+                  <p>{{ anOrder.totalprice }} €</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

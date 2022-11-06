@@ -19,6 +19,8 @@ import {
   MessageService,
 } from 'primeng/api';
 import { FormControl, Validators } from '@angular/forms';
+import { OrderService } from 'src/app/services/order.service';
+import { Order } from 'src/app/interfaces/order';
 
 @Component({
   selector: 'app-my-account',
@@ -39,9 +41,11 @@ export class MyAccountComponent implements OnInit {
   errorLastname: string | null = null;
   errorFirstname: string | null = null;
   errorPasswordConfirm: string | null = null;
+  orders: Array<Order> = [];
 
   userLogin: User = {};
   isLoginPage: boolean = true;
+  isOrderPage: boolean = false;
   userInscription: User = {};
   passwordIsClear: boolean = false;
   passwordType: string = 'password';
@@ -55,7 +59,8 @@ export class MyAccountComponent implements OnInit {
     private authService: SocialAuthService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private os: OrderService
   ) {}
 
   ngOnInit(): void {
@@ -118,11 +123,17 @@ export class MyAccountComponent implements OnInit {
           position: 'topRight',
         });
       }
+      try {
+        this.os.getUserOrders(this.connectedUser.id).subscribe((el) => {
+          this.orders = el;
+        });
+      } catch (error) {}
     }
 
     if (this.storageCrypter.getItem('cart', 'local') != '') {
       this.cart = JSON.parse(this.storageCrypter.getItem('cart', 'local'));
     }
+
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
         this.logout();
@@ -468,5 +479,42 @@ export class MyAccountComponent implements OnInit {
       this.us.deleteTheUser(this.connectedUser.id).subscribe((el) => {});
       this.logout();
     } catch {}
+  }
+  replaceInAddress(address: string | undefined) {
+    if (address) {
+      address = address.replace(', ', '<br>');
+      return address.replace(', ', '<br>');
+    } else {
+      return false;
+    }
+  }
+  getOrderDate(orderDate: Date | undefined) {
+    const monthNames = [
+      'Jan.',
+      'Feb.',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'Aug.',
+      'Sept.',
+      'Oct.',
+      'Nov.',
+      'Dec.',
+    ];
+
+    if (orderDate) {
+      orderDate = new Date(orderDate);
+      return (
+        orderDate.getDate() +
+        ' ' +
+        monthNames[orderDate.getMonth()] +
+        ' ' +
+        orderDate.getFullYear()
+      );
+    } else {
+      return false;
+    }
   }
 }
