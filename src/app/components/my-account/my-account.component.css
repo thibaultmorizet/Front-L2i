@@ -232,6 +232,38 @@
     text-align: center;
 }
 
+.p-accordion-header-text, .p-inputtext {
+    font-family: "Quicksand", Arial, sans-serif;
+
+}
+
+#content:has(.order-empty-message), .container:has(.order-empty-message) {
+    height: 400px;
+}
+
+.order-empty-message {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    height: 100%;
+}
+
+.empty-order-text-block {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 2em 1em;
+    backdrop-filter: blur(2px);
+    box-shadow: -1px 2px 15px -6px rgba(0, 0, 0, 0.75);
+    font-weight: 400;
+}
+
+#emptyOrderImg, #emptyOrder2Img {
+    display: none;
+}
+
 @media (min-width: 650px) {
     .login-container {
         padding: 2em 2em;
@@ -249,6 +281,31 @@
     #personnalDateImg {
         display: block;
         max-width: 500px;
+    }
+
+
+    #emptyOrderImg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        max-width: 400px;
+    }
+
+    #emptyOrder2Img {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: block;
+        max-width: 400px;
+    }
+
+    .empty-order-text-block {
+        padding: 2em 3em;
+    }
+
+    #content:has(.order-empty-message), .container:has(.order-empty-message) {
+        height: 500px;
     }
 }
 
@@ -269,6 +326,18 @@
 
     .p-accordion-tab {
         width: 450px;
+    }
+
+    #content:has(.order-empty-message), .container:has(.order-empty-message) {
+        height: 650px;
+    }
+
+    #emptyOrderImg {
+        max-width: 500px;
+    }
+
+    #emptyOrder2Img {
+        max-width: 500px;
     }
 
 }

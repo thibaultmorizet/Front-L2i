@@ -629,7 +629,7 @@
       </div>
     </div>
     <div class="container" *ngIf="connectedUser.id && isOrderPage">
-      <div class="order-list-container">
+      <div class="order-list-container" *ngIf="orders.length > 0">
         <div class="order-container" *ngFor="let anOrder of orders">
           <div class="order-info">
             <div class="order-info-date">
@@ -697,6 +697,34 @@
           </div>
         </div>
       </div>
+      <p>{{orders.length}}</p>
+      <div class="order-empty-message" *ngIf="orders.length == 0">
+        <img
+          id="emptyOrderImg"
+          src="https://www.thibaultmorizet.fr/assets/emptyOrder.png"
+          alt="emptyOrderImg"
+        />
+        <img
+          id="emptyOrder2Img"
+          src="https://www.thibaultmorizet.fr/assets/emptyOrder2.png"
+          alt="emptyOrder2Img"
+        />
+        <div class="empty-order-text-block">
+          <p>Your havn't any orders</p>
+          <div class="d-flex justify-content-center mt-2">
+            <button
+              pButton
+              pRipple
+              type="submit"
+              class="p-button-raised p-button-primary-color btn-primary-color"
+              [routerLink]="['/books']"
+            >
+              make a purchase
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
   <app-footer></app-footer>

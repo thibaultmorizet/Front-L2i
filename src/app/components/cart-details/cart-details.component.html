@@ -4,6 +4,7 @@
   <main id="content">
     <div class="container">
       <p-dialog
+        *ngIf="cart.length > 0"
         header="Delivery address"
         [(visible)]="displayModalDeliveryAddress"
         [draggable]="false"
@@ -95,6 +96,7 @@
         </div>
       </p-dialog>
       <p-dialog
+        *ngIf="cart.length > 0"
         header="Billing address"
         [(visible)]="displayModalBillingAddress"
         [draggable]="false"
@@ -185,7 +187,7 @@
           </form>
         </div>
       </p-dialog>
-      <div class="cart-details-general">
+      <div class="cart-details-general" *ngIf="cart.length > 0">
         <p class="cart-title">Your cart total is {{ cartTotalPriceTtc }} €</p>
         <p-divider></p-divider>
         <div *ngFor="let elt of cart">
@@ -379,6 +381,32 @@
               Check out</span
             >
           </button>
+        </div>
+      </div>
+      <div class="cart-empty-message" *ngIf="cart.length == 0">
+        <img
+          id="emptyCartImg"
+          src="https://www.thibaultmorizet.fr/assets/emptyCart.png"
+          alt="emptyCartImg"
+        />
+        <img
+          id="emptyCart2Img"
+          src="https://www.thibaultmorizet.fr/assets/emptyCart2.png"
+          alt="emptyCart2Img"
+        />
+        <div class="empty-cart-text-block">
+          <p>Your cart is empty</p>
+          <div class="d-flex justify-content-center mt-2">
+            <button
+              pButton
+              pRipple
+              type="submit"
+              class="p-button-raised p-button-primary-color btn-primary-color"
+              [routerLink]="['/books']"
+            >
+              make a purchase
+            </button>
+          </div>
         </div>
       </div>
     </div>
