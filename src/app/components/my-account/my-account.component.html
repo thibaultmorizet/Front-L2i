@@ -278,20 +278,9 @@
         </p>
       </div>
     </div>
-    <div class="d-flex justify-content-end mt-2 px-5">
-      <button
-        pButton
-        pRipple
-        type="submit"
-        class="p-button-raised p-button-primary-color btn-primary-color"
-        *ngIf="connectedUser.id"
-        (click)="isOrderPage = !isOrderPage"
-      >
-        <span *ngIf="!isOrderPage">View previous orders</span>
-        <span *ngIf="isOrderPage">View personnal data</span>
-      </button>
-    </div>
+
     <div class="container" *ngIf="connectedUser.id && !isOrderPage">
+     
       <img
         id="personnalDateImg"
         src="https://www.thibaultmorizet.fr/assets/personalData.png"
@@ -307,7 +296,18 @@
           acceptButtonStyleClass="p-button-valid"
         >
         </p-confirmDialog>
-
+ <div class="d-flex justify-content-end mt-2 px-5">
+        <button
+          pButton
+          pRipple
+          type="submit"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          *ngIf="connectedUser.id"
+          (click)="isOrderPage = !isOrderPage"
+        >
+          <span>View previous orders</span>
+        </button>
+      </div>
         <div id="personnalData" class="my-3">
           <p-accordion>
             <p-accordionTab header="User personnal data" [selected]="true">
@@ -629,6 +629,18 @@
       </div>
     </div>
     <div class="container" *ngIf="connectedUser.id && isOrderPage">
+      <div class="d-flex justify-content-end mt-2 px-5">
+        <button
+          pButton
+          pRipple
+          type="submit"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          *ngIf="connectedUser.id"
+          (click)="isOrderPage = !isOrderPage"
+        >
+          <span>View personnal data</span>
+        </button>
+      </div>
       <div class="order-list-container" *ngIf="orders.length > 0">
         <div class="order-container" *ngFor="let anOrder of orders">
           <div class="order-info">
@@ -651,7 +663,9 @@
               </div>
               <div class="order-product-middle-info">
                 <div class="order-product-title">{{ aBook.title }}</div>
-                <div class="order-product-quantity">quantity : {{ aBook.number_ordered }}</div>
+                <div class="order-product-quantity">
+                  quantity : {{ aBook.number_ordered }}
+                </div>
               </div>
               <div class="order-product-price">{{ aBook.unitpricettc }} €</div>
             </div>
@@ -697,7 +711,6 @@
           </div>
         </div>
       </div>
-      <p>{{orders.length}}</p>
       <div class="order-empty-message" *ngIf="orders.length == 0">
         <img
           id="emptyOrderImg"
@@ -724,7 +737,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </main>
   <app-footer></app-footer>
