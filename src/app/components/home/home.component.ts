@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   responsiveOptions: any;
   bookExistinCart: Boolean = false;
   @ViewChild('bestSellCarousel') bestSellCarousel?: CarouselModule;
+  carouselIsLoaded: boolean = false;
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;

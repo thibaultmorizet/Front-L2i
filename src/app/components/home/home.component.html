@@ -17,8 +17,19 @@
           >
             <ng-template pTemplate="header">
               <p class="title text-center">Our best sell</p>
+              <p-skeleton
+                class="carouselSkeleton"
+                width="100%"
+                height="508px"
+                *ngIf="!carouselIsLoaded"
+              ></p-skeleton>
             </ng-template>
-            <ng-template let-oneBook pTemplate="item">
+
+            <ng-template
+              let-oneBook
+              pTemplate="item"
+              [ngClass]="{ 'd-none': !carouselIsLoaded }"
+            >
               <div class="best-sell-container">
                 <div class="best-sell-img">
                   <img
@@ -26,6 +37,7 @@
                     [alt]="oneBook.title"
                     class="img-best-sell pointer"
                     [routerLink]="['/books/', oneBook.id]"
+                    (load)="carouselIsLoaded = true"
                   />
                   <div class="article-hover-actions">
                     <button
