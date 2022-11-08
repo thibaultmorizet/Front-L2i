@@ -1,28 +1,6 @@
-.update-book-admin-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.update-book-admin {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: #4fbfa8;
-  border-radius: 50px;
-  width: 30px;
-  height: 30px;
-}
-
-#search {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-#content {
-  background-color: #4fbfa8;
+.p-button-just-text,.p-button-just-text:hover {
+  background-color: #fff;
+  border: none;
+  color: #30336B;
+  box-shadow: none;
 }

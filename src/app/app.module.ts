@@ -47,6 +47,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TooltipModule } from 'primeng/tooltip';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SliderModule } from 'primeng/slider';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
 
@@ -92,6 +95,9 @@ import { ContactComponent } from './components/contact/contact.component';
     SkeletonModule,
     TooltipModule,
     DialogModule,
+    MultiSelectModule,
+    SliderModule,
+    AutoCompleteModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

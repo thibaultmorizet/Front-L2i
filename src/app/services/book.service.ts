@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '../interfaces/book';
+import { Format } from '../interfaces/format';
+import { Type } from '../interfaces/type';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,7 @@ export class BookService {
   private formatsString: string = '';
   private typesString: string = '';
   private searchString: string = '';
+  private pricesString: string = '';
 
   constructor(private http: HttpClient) {}
 
@@ -23,13 +26,15 @@ export class BookService {
     return this.http.get<Book>('https://thibaultmorizet.fr/ws/books/' + id);
   }
   getAllBooksWithoutLimit(
-    formats: Array<string>,
-    types: Array<string>,
-    search: string
+    formats: Array<Format>,
+    types: Array<Type>,
+    search: string,
+    prices: Array<number>
   ) {
     this.formatsString = '';
     this.typesString = '';
     this.searchString = '';
+    this.pricesString = '';
 
     if (search.length > 0) {
       this.searchString =
@@ -41,23 +46,29 @@ export class BookService {
         search;
     }
     formats.forEach((el) => {
-      this.formatsString += '&format.name[]=' + el;
+      this.formatsString += '&format.name[]=' + el.name;
     });
     types.forEach((el) => {
-      this.typesString += '&type.name[]=' + el;
+      this.typesString += '&type.name[]=' + el.name;
     });
+    if (prices[0] && prices[1]) {
+      this.pricesString +=
+        '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
+    }
     return this.http.get<Array<Book>>(
       this.urlWithoutLimit +
         this.formatsString +
         this.typesString +
+        this.pricesString +
         this.searchString
     );
   }
   getAllBooksForPage(
     page: number,
-    formats: Array<string>,
-    types: Array<string>,
-    search: string
+    formats: Array<Format>,
+    types: Array<Type>,
+    search: string,
+    prices: Array<number>
   ) {
     this.formatsString = '';
     this.typesString = '';
@@ -73,28 +84,35 @@ export class BookService {
         search;
     }
     formats.forEach((el) => {
-      this.formatsString += '&format.name[]=' + el;
+      this.formatsString += '&format.name[]=' + el.name;
     });
     types.forEach((el) => {
-      this.typesString += '&type.name[]=' + el;
+      this.typesString += '&type.name[]=' + el.name;
     });
+    if (prices[0] && prices[1]) {
+      this.pricesString +=
+        '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
+    }
     return this.http.get<Array<Book>>(
       'https://thibaultmorizet.fr/ws/books?page=' +
         page +
         this.formatsString +
         this.typesString +
+        this.pricesString +
         this.searchString
     );
   }
 
   getAllBooksByFormatAndTypeAndSearch(
-    formats: Array<string>,
-    types: Array<string>,
-    search: string
+    formats: Array<Format>,
+    types: Array<Type>,
+    search: string,
+    prices: Array<number>
   ) {
     this.formatsString = '';
     this.typesString = '';
     this.searchString = '';
+    this.pricesString = '';
 
     if (search.length > 0) {
       this.searchString =
@@ -106,16 +124,21 @@ export class BookService {
         search;
     }
     formats.forEach((el) => {
-      this.formatsString += '&format.name[]=' + el;
+      this.formatsString += '&format.name[]=' + el.name;
     });
     types.forEach((el) => {
-      this.typesString += '&type.name[]=' + el;
+      this.typesString += '&type.name[]=' + el.name;
     });
+    if (prices[0] && prices[1]) {
+      this.pricesString +=
+        '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
+    }
 
     return this.http.get<Array<Book>>(
       'https://thibaultmorizet.fr/ws/books?' +
         this.formatsString +
         this.typesString +
+        this.pricesString +
         this.searchString
     );
   }
@@ -140,7 +163,9 @@ export class BookService {
   }
 
   getBooksBestSell() {
-    return this.http.get<Array<Book>>(this.url + '?itemsPerPage=10&stock%5Bgt%5D=0');
+    return this.http.get<Array<Book>>(
+      this.url + '?itemsPerPage=10&stock%5Bgt%5D=0'
+    );
   }
 
   updateBookStock(id: number | undefined, book: Book) {

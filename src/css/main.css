@@ -95,6 +95,38 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
     opacity: .6;
 }
 
+.p-button-outline-primary-color {
+    font-family: "Quicksand", Arial, sans-serif;
+    border: #30336B 1px solid !important;
+    background-color: #fff;
+}
+
+.p-button-outline-primary-color:hover {
+    color: #30336B;
+    background-color: #fff;
+    border: #30336B 1px solid !important;
+    transition: all 0.3s;
+}
+
+.btn-outline-primary-color {
+    color: #30336B;
+    background-color: #fff;
+    border: #30336B 1px solid !important;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 10px;
+    box-shadow: -1px 2px 15px -6px rgba(0, 0, 0, 0.75);
+}
+
+.btn-outline-primary-color:hover {
+    opacity: .9;
+}
+
+.btn-outline-primary-color:disabled {
+    opacity: .6;
+}
+
 .bold {
     font-weight: 700;
 }
@@ -122,6 +154,7 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
     font-family: "Quicksand", Arial, sans-serif;
 
 }
+
 .p-button-outline-danger {
     font-family: "Quicksand", Arial, sans-serif;
 
@@ -148,6 +181,7 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
     opacity: 0.9 !important;
     box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75) !important;
 }
+
 @media (min-width: 1000px) {
     .title {
         font-size: 1.8rem;

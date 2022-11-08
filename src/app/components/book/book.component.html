@@ -3,25 +3,110 @@
 
   <main id="content">
     <div class="container">
-      <div class="row">
+      <div class="filter-list-search-bar">
+        <div>
+          <p-multiSelect
+            [options]="formats"
+            [(ngModel)]="selectedFormat"
+            defaultLabel="Format"
+            optionLabel="name"
+            display="chip"
+            (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+          ></p-multiSelect>
+        </div>
+        <div>
+          <p-multiSelect
+            [options]="types"
+            [(ngModel)]="selectedType"
+            defaultLabel="Type"
+            optionLabel="name"
+            display="chip"
+            (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+          ></p-multiSelect>
+        </div>
+        <div class="my-5">
+          <h5>
+            Range:
+            {{ selectedPriceRange[0] + " € - " + selectedPriceRange[1] + " €" }}
+          </h5>
+          <p-slider
+            [(ngModel)]="selectedPriceRange"
+            [range]="true"
+            (onSlideEnd)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+            [min]="0"
+            [max]="maxPrice"
+          ></p-slider>
+        </div>
+        <div>
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-raised"
+            [ngClass]="{
+              'p-button-primary-color': showBooksInStock,
+              'btn-primary-color': showBooksInStock,
+              'p-button-outline-primary-color': !showBooksInStock,
+              'btn-outline-primary-color': !showBooksInStock
+            }"
+            (click)="showBooksInStock = !showBooksInStock"
+          >
+            <span *ngIf="showBooksInStock">Only books in stock</span>
+            <span *ngIf="!showBooksInStock">Only books out of stock</span>
+          </button>
+        </div>
+        <div>
+          <p-autoComplete
+            placeholder="Search"
+            [(ngModel)]="searchBook"
+            [showEmptyMessage]="true"
+            [suggestions]="filteredBooks"
+            (completeMethod)="filterBook($event)"
+            field="title"
+            [minLength]="1"
+            (onSelect)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+            (onBlur)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+          ></p-autoComplete>
+          <button
+            type="button"
+            class="btn btn-primary button-search h-100"
+            (click)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <div>
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-raised p-button-just-text"
+          >
+            Clear All
+          </button>
+        </div>
+      </div>
+      <div></div>
+
+      <!--       <div class="row">
         <div id="search" class="">
           <div class="container d-flex justify-content-end">
             <form
               #searchForm="ngForm"
               role="search"
-              (ngSubmit)="getBooksWithFormatAndTypeAndSearch()"
+              (ngSubmit)="getBooksWithFormatAndTypeAndPriceAndSearch()"
             >
               <div class="input-group">
                 <input
                   type="text"
                   placeholder="Recherche"
                   class="form-control"
-                  value="{{ searchText }}"
-                  [(ngModel)]="searchText"
+                  value="{{ searchBook }}"
+                  [(ngModel)]="searchBook"
                   name="searchbar"
                   list="searchList"
                 />
-                <datalist *ngIf="searchText.length > 0" id="searchList">
+                <datalist *ngIf="searchBook.length > 0" id="searchList">
                   <option *ngFor="let elt of allBooks" [value]="elt.title">
                     {{ elt.title }}
                   </option>
@@ -57,7 +142,7 @@
               <form
                 #monForm="ngForm"
                 class="container"
-                (ngSubmit)="getBooksWithFormatAndTypeAndSearch()"
+                (ngSubmit)="getBooksWithFormatAndTypeAndPriceAndSearch()"
               >
                 <div class="form-group" *ngFor="let elt of formats">
                   <div class="checkbox">
@@ -98,7 +183,7 @@
               <form
                 #monForm="ngForm"
                 class="container"
-                (ngSubmit)="getBooksWithFormatAndTypeAndSearch()"
+                (ngSubmit)="getBooksWithFormatAndTypeAndPriceAndSearch()"
               >
                 <div class="form-group" *ngFor="let elt of types">
                   <div class="checkbox">
@@ -449,6 +534,7 @@
           </div>
         </div>
       </div>
+ -->
     </div>
   </main>
   <app-footer></app-footer>

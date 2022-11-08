@@ -17,6 +17,7 @@ import { Editor } from 'src/app/interfaces/editor';
 import { EditorService } from 'src/app/services/editor.service';
 import { AuthorService } from 'src/app/services/author.service';
 import { Author } from 'src/app/interfaces/author';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-book',
@@ -36,9 +37,7 @@ export class BookComponent implements OnInit {
   user: User = {};
   paginationArray: Array<number> = [];
   actualPage: number = 1;
-  formatFilter: Array<string> = [];
-  typeFilter: Array<string> = [];
-  searchText: string = '';
+  searchBook: any = {};
   bookExistinCart: Boolean = false;
   numberToOrder: string = '1';
   storageCrypter = new StorageCrypter('Secret');
@@ -49,6 +48,13 @@ export class BookComponent implements OnInit {
   connectedUser: User | null = {};
   actualUpdatebook: Book = {};
   fileToUpload: any = {};
+
+  selectedFormat: Array<Format> = [];
+  selectedType: Array<Type> = [];
+  selectedPriceRange: Array<number> = [];
+  showBooksInStock: boolean = true;
+  filteredBooks: Array<Book> = [];
+  maxPrice: number = 0;
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -63,10 +69,24 @@ export class BookComponent implements OnInit {
     private router: Router,
     private iziToast: NgxIzitoastService,
     private modalService: NgbModal,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private primengConfig: PrimeNGConfig
   ) {}
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
+    this.bs.getAllBooksWithoutLimit([], [], '', []).subscribe((res) => {
+      res.forEach((aBook) => {
+        if (
+          aBook.unitpricettc &&
+          (aBook.unitpricettc > this.selectedPriceRange[1] ||
+            this.selectedPriceRange[1] == undefined)
+        ) {
+          this.maxPrice = aBook.unitpricettc;
+          this.selectedPriceRange = [0, aBook.unitpricettc];
+        }
+      });
+    });
     this.getBooks();
     this.getAllBooks();
     this.getAllFormatsfunc();
@@ -93,6 +113,7 @@ export class BookComponent implements OnInit {
         this.logout();
       }
     }
+
     this.fileToUpload = {};
   }
 
@@ -100,32 +121,33 @@ export class BookComponent implements OnInit {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
-
   getBooks() {
     this.bs.getAllBooks().subscribe((res) => {
       this.books = res;
     });
   }
   getAllBooks(
-    formatFilter: Array<string> = [],
-    typeFilter: Array<string> = [],
-    searchText: string = ''
+    formatFilter: Array<Format> = [],
+    typeFilter: Array<Type> = [],
+    searchBook: string = '',
+    prices: Array<number> = []
   ) {
     this.bs
-      .getAllBooksWithoutLimit(formatFilter, typeFilter, searchText)
+      .getAllBooksWithoutLimit(formatFilter, typeFilter, searchBook, prices)
       .subscribe((res) => {
         this.allBooks = res;
       });
   }
   setPaginationArray(
-    formatFilter: Array<string> = [],
-    typeFilter: Array<string> = [],
-    searchText: string = ''
+    formatFilter: Array<Format> = [],
+    typeFilter: Array<Type> = [],
+    searchBook: string = '',
+    prices: Array<number> = []
   ) {
     this.bs
-      .getAllBooksWithoutLimit(formatFilter, typeFilter, searchText)
+      .getAllBooksWithoutLimit(formatFilter, typeFilter, searchBook, prices)
       .subscribe((res) => {
-        this.pageCount = Math.ceil(res.length / 9);
+        this.pageCount = Math.ceil(res.length / 12);
         this.totalBooksCount = res.length;
         this.paginationArray = [];
 
@@ -191,55 +213,35 @@ export class BookComponent implements OnInit {
       this.getAllBooksByPage(this.actualPage + 1);
     }
   }
-  removeFormatFilter() {
-    this.getAllFormatsfunc();
-    this.formatFilter = [];
-    this.getAllBooksByPage(1);
-  }
-  removeTypeFilter() {
-    this.getAllTypesfunc();
-    this.typeFilter = [];
-    this.getAllBooksByPage(1);
-  }
   getAllBooksByPage(page: number) {
     this.bs
       .getAllBooksForPage(
         page,
-        this.formatFilter,
-        this.typeFilter,
-        this.searchText
+        this.selectedFormat,
+        this.selectedType,
+        this.searchBook.title ?? this.searchBook,
+        this.selectedPriceRange
       )
       .subscribe((res) => {
         this.books = res;
         this.actualPage = page;
       });
   }
-  getBooksWithFormatAndTypeAndSearch() {
-    this.formatFilter = [];
-    this.typeFilter = [];
-
-    this.formats.forEach((el) => {
-      if (el.filter_is_selected && el.name != undefined) {
-        this.formatFilter.push(el.name);
-      }
-    });
-    this.types.forEach((el) => {
-      if (el.filter_is_selected && el.name != undefined) {
-        this.typeFilter.push(el.name);
-      }
-    });
+  getBooksWithFormatAndTypeAndPriceAndSearch() {
     this.bs
       .getAllBooksByFormatAndTypeAndSearch(
-        this.formatFilter,
-        this.typeFilter,
-        this.searchText
+        this.selectedFormat,
+        this.selectedType,
+        this.searchBook.title ?? this.searchBook,
+        this.selectedPriceRange
       )
       .subscribe((res) => {
         this.books = res;
         this.setPaginationArray(
-          this.formatFilter,
-          this.typeFilter,
-          this.searchText
+          this.selectedFormat,
+          this.selectedType,
+          this.searchBook.title,
+          this.selectedPriceRange
         );
       });
   }
@@ -484,5 +486,34 @@ export class BookComponent implements OnInit {
     } else {
       alert("Please select a file first")
     } */
+  }
+
+  filterBook(event: any) {
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    let filtered: any[] = [];
+    let query = event.query;
+    for (let i = 0; i < this.allBooks.length; i++) {
+      let book = this.allBooks[i];
+      if (
+        book.title &&
+        book.title.toLowerCase().indexOf(query.toLowerCase()) == 0
+      ) {
+        filtered.push(book);
+      } else if (book.author) {
+        book.author.forEach((anAuthor) => {
+          if (
+            (anAuthor.firstname &&
+              anAuthor.firstname.toLowerCase().indexOf(query.toLowerCase()) ==
+                0) ||
+            (anAuthor.lastname &&
+              anAuthor.lastname.toLowerCase().indexOf(query.toLowerCase()) == 0)
+          ) {
+            filtered.push(book);
+          }
+        });
+      }
+    }
+
+    this.filteredBooks = filtered;
   }
 }
