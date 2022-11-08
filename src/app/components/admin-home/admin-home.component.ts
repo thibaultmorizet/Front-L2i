@@ -61,7 +61,7 @@ export class AdminHomeComponent implements OnInit {
     this.connectedUser = null;
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: 'Vous êtes déconnecté',
+      message: 'You\'re logout',
       position: 'topRight',
     });
   }

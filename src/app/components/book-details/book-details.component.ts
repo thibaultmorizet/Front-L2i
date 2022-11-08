@@ -25,7 +25,7 @@ export class BookDetailsComponent implements OnInit {
   errorEmail: string | null = null;
   connectedUser: User | null = {};
   bookDetailsImgCoverIsLoaded: boolean = false;
-  
+
   socialUser!: SocialUser;
   isLoggedin?: boolean;
 
@@ -94,11 +94,13 @@ export class BookDetailsComponent implements OnInit {
               el.number_ordered + bookToOrder.number_ordered > el.stock
             ) {
               this.iziToast.error({
-                title: 'Manque de stock',
+                title: 'Lack of stock',
                 message:
-                  'Il reste ' +
+                  'There are ' +
                   res.stock +
-                  ' exemplaires de ce livre et vous en demandez ' +
+                  ' copies of the book ' +
+                  el.title +
+                  ' left and you are requesting ' +
                   (el.number_ordered + bookToOrder.number_ordered),
                 position: 'topRight',
               });
@@ -120,7 +122,7 @@ export class BookDetailsComponent implements OnInit {
                   );
                 }
                 this.iziToast.success({
-                  message: 'Article ajouté au panier',
+                  message: 'Book add to cart',
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -140,11 +142,13 @@ export class BookDetailsComponent implements OnInit {
             bookToOrder.number_ordered > res.stock
           ) {
             this.iziToast.error({
-              title: 'Manque de stock',
+              title: 'Lack of stock',
               message:
-                'Il reste ' +
+                'There are ' +
                 res.stock +
-                ' exemplaires de ce livre et vous en demandez ' +
+                ' copies of the book ' +
+                res.title +
+                ' left and you are requesting ' +
                 bookToOrder.number_ordered,
               position: 'topRight',
             });
@@ -163,7 +167,7 @@ export class BookDetailsComponent implements OnInit {
 
             this.cart.push(res);
             this.iziToast.success({
-              message: 'Article ajouté au panier',
+              message: 'Book add to cart',
               position: 'topRight',
             });
             this.storageCrypter.setItem(
@@ -185,7 +189,7 @@ export class BookDetailsComponent implements OnInit {
     this.connectedUser = null;
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: 'Vous êtes déconnecté',
+      message: "You're logout",
       position: 'topRight',
     });
   }

@@ -181,7 +181,7 @@ export class CartDetailsComponent implements OnInit {
     this.connectedUser = {};
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: 'Vous êtes déconnecté',
+      message: 'You\'re logout',
       position: 'topRight',
     });
   }

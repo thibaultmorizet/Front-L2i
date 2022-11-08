@@ -10,10 +10,7 @@ import { Type } from 'src/app/interfaces/type';
 import { TypeService } from 'src/app/services/type.service';
 import StorageCrypter from 'storage-crypter';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import {
-  NgbModal,
-  ModalDismissReasons,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 
 import { Editor } from 'src/app/interfaces/editor';
@@ -66,7 +63,7 @@ export class BookComponent implements OnInit {
     private router: Router,
     private iziToast: NgxIzitoastService,
     private modalService: NgbModal,
-    private authService: SocialAuthService,
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {
@@ -262,11 +259,13 @@ export class BookComponent implements OnInit {
               el.number_ordered + parseInt(this.numberToOrder) > el.stock
             ) {
               this.iziToast.error({
-                title: 'Manque de stock',
+                title: 'Lack of stock',
                 message:
-                  'Il reste ' +
+                  'There are ' +
                   res.stock +
-                  ' exemplaires de ce livre et vous en demandez ' +
+                  ' copies of the book ' +
+                  el.title +
+                  ' left and you are requesting ' +
                   (el.number_ordered + parseInt(this.numberToOrder)),
                 position: 'topRight',
               });
@@ -280,7 +279,7 @@ export class BookComponent implements OnInit {
                   );
                 }
                 this.iziToast.success({
-                  message: 'Article ajouté au panier',
+                  message: 'Book add to cart',
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -296,11 +295,13 @@ export class BookComponent implements OnInit {
         if (!this.bookExistinCart) {
           if (res.stock && parseInt(this.numberToOrder) > res.stock) {
             this.iziToast.error({
-              title: 'Manque de stock',
+              title: 'Lack of stock',
               message:
-                'Il reste ' +
+                'There are ' +
                 res.stock +
-                ' exemplaires de ce livre et vous en demandez ' +
+                ' copies of the book ' +
+                res.title +
+                ' left and you are requesting ' +
                 parseInt(this.numberToOrder),
               position: 'topRight',
             });
@@ -314,7 +315,7 @@ export class BookComponent implements OnInit {
 
             this.cart.push(res);
             this.iziToast.success({
-              message: 'Article ajouté au panier',
+              message: 'Book add to cart',
               position: 'topRight',
             });
             this.storageCrypter.setItem(
@@ -431,7 +432,7 @@ export class BookComponent implements OnInit {
           this.modalService.dismissAll();
           this.ngOnInit();
           this.iziToast.success({
-            message: 'Modification réussie',
+            message: 'Modification confirm',
             position: 'topRight',
           });
         });
@@ -451,7 +452,7 @@ export class BookComponent implements OnInit {
     this.connectedUser = null;
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: 'Vous êtes déconnecté',
+      message: "you're logout",
       position: 'topRight',
     });
   }

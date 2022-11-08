@@ -171,9 +171,11 @@ export class HomeComponent implements OnInit {
               this.iziToast.error({
                 title: 'Lack of stock',
                 message:
-                  'Il reste ' +
+                  'There are ' +
                   res.stock +
-                  ' exemplaires de ce livre et vous en demandez ' +
+                  ' copies of the book ' +
+                  res.title +
+                  ' left and you are requesting ' +
                   (el.number_ordered + 1),
                 position: 'topRight',
               });
@@ -209,9 +211,11 @@ export class HomeComponent implements OnInit {
             this.iziToast.error({
               title: 'Lack of stock',
               message:
-                'Il reste ' +
+                'There are ' +
                 res.stock +
-                ' exemplaires de ce livre et vous en demandez ' +
+                ' copies of the book ' +
+                res.title +
+                ' left and you are requesting ' +
                 1,
               position: 'topRight',
             });
