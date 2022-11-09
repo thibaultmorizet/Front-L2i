@@ -1,6 +1,49 @@
-.p-button-just-text,.p-button-just-text:hover {
-  background-color: #fff;
+.p-button-just-text, .p-button-just-text:hover {
+  background-color: #fff !important;
+  border: none !important;
+  color: #30336B !important;
+  box-shadow: none !important;
+}
+
+.filter-list-search-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.filter-list-search-bar>div {
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.p-multiselect .p-multiselect-label {
+  width: 100%;
+}
+
+.p-multiselect {
+  width: 100%;
+}
+
+.filter-search {
+  display: flex;
+}
+
+.filter-search .p-autocomplete-input {
+  width: 100%;
+  border-radius: 6px 0 0 6px;
+}
+
+.button-search {
+  border-radius: 0 6px 6px 0 !important;
   border: none;
-  color: #30336B;
-  box-shadow: none;
+}
+
+.filter-in-stock>button, .filter-in-stock>button>span:nth-child(1) {
+  width: 100%;
+  text-align: center;
+}
+
+.filter-in-stock>button>.p-button-label {
+  flex: none;
 }

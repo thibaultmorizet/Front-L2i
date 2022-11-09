@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Book } from 'src/app/interfaces/book';
 import { BookService } from 'src/app/services/book.service';
@@ -23,6 +23,7 @@ import { PrimeNGConfig } from 'primeng/api';
   selector: 'app-book',
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.css', './../../../css/main.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BookComponent implements OnInit {
   cart: Array<Book> = [];
@@ -487,7 +488,6 @@ export class BookComponent implements OnInit {
       alert("Please select a file first")
     } */
   }
-
   filterBook(event: any) {
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     let filtered: any[] = [];
@@ -515,5 +515,13 @@ export class BookComponent implements OnInit {
     }
 
     this.filteredBooks = filtered;
+  }
+  clearAllFilter() {
+    this.selectedFormat = [];
+    this.selectedType = [];
+    this.selectedPriceRange = [0, this.maxPrice];
+    this.showBooksInStock = true;
+    this.searchBook = null;
+    this.getBooksWithFormatAndTypeAndPriceAndSearch();
   }
 }

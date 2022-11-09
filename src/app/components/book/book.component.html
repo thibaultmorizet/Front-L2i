@@ -24,7 +24,7 @@
             (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
           ></p-multiSelect>
         </div>
-        <div class="my-5">
+        <div>
           <h5>
             Range:
             {{ selectedPriceRange[0] + " € - " + selectedPriceRange[1] + " €" }}
@@ -37,12 +37,11 @@
             [max]="maxPrice"
           ></p-slider>
         </div>
-        <div>
+        <div class="filter-in-stock">
           <button
             pButton
             pRipple
             type="button"
-            class="p-button-raised"
             [ngClass]="{
               'p-button-primary-color': showBooksInStock,
               'btn-primary-color': showBooksInStock,
@@ -55,7 +54,7 @@
             <span *ngIf="!showBooksInStock">Only books out of stock</span>
           </button>
         </div>
-        <div>
+        <div class="filter-search">
           <p-autoComplete
             placeholder="Search"
             [(ngModel)]="searchBook"
@@ -68,8 +67,10 @@
             (onBlur)="getBooksWithFormatAndTypeAndPriceAndSearch()"
           ></p-autoComplete>
           <button
+            pButton
+            pRipple
             type="button"
-            class="btn btn-primary button-search h-100"
+            class="btn btn-primary-color button-search"
             (click)="getBooksWithFormatAndTypeAndPriceAndSearch()"
           >
             <i class="fa fa-search"></i>
@@ -81,6 +82,7 @@
             pRipple
             type="button"
             class="p-button-raised p-button-just-text"
+            (click)="clearAllFilter()"
           >
             Clear All
           </button>
