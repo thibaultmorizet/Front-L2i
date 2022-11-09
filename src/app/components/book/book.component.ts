@@ -52,7 +52,7 @@ export class BookComponent implements OnInit {
 
   selectedFormat: Array<Format> = [];
   selectedType: Array<Type> = [];
-  selectedPriceRange: Array<number> = [];
+  selectedPriceRange: Array<number> = [0,0];
   showBooksInStock: boolean = true;
   filteredBooks: Array<Book> = [];
   maxPrice: number = 0;

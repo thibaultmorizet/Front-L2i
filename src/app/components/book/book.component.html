@@ -3,6 +3,28 @@
 
   <main id="content">
     <div class="container">
+      <div class="filter-search">
+        <p-autoComplete
+          placeholder="Search"
+          [(ngModel)]="searchBook"
+          [showEmptyMessage]="true"
+          [suggestions]="filteredBooks"
+          (completeMethod)="filterBook($event)"
+          field="title"
+          [minLength]="1"
+          (onSelect)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+          (onBlur)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+        ></p-autoComplete>
+        <button
+          pButton
+          pRipple
+          type="button"
+          class="btn btn-primary-color button-search"
+          (click)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+        >
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
       <div class="filter-list-search-bar">
         <div>
           <p-multiSelect
@@ -25,10 +47,10 @@
           ></p-multiSelect>
         </div>
         <div>
-          <h5>
-            Range:
+          <p class="price-range-title">
+            Price range :
             {{ selectedPriceRange[0] + " € - " + selectedPriceRange[1] + " €" }}
-          </h5>
+          </p>
           <p-slider
             [(ngModel)]="selectedPriceRange"
             [range]="true"
@@ -54,28 +76,7 @@
             <span *ngIf="!showBooksInStock">Only books out of stock</span>
           </button>
         </div>
-        <div class="filter-search">
-          <p-autoComplete
-            placeholder="Search"
-            [(ngModel)]="searchBook"
-            [showEmptyMessage]="true"
-            [suggestions]="filteredBooks"
-            (completeMethod)="filterBook($event)"
-            field="title"
-            [minLength]="1"
-            (onSelect)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-            (onBlur)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-          ></p-autoComplete>
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="btn btn-primary-color button-search"
-            (click)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-          >
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
+
         <div>
           <button
             pButton

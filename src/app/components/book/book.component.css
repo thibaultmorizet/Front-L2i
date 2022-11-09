@@ -3,6 +3,7 @@
   border: none !important;
   color: #30336B !important;
   box-shadow: none !important;
+  padding: 0;
 }
 
 .filter-list-search-bar {
@@ -27,6 +28,9 @@
 
 .filter-search {
   display: flex;
+  justify-content: end;
+  padding: 0 2rem;
+  margin-bottom: 2rem;
 }
 
 .filter-search .p-autocomplete-input {
@@ -46,4 +50,42 @@
 
 .filter-in-stock>button>.p-button-label {
   flex: none;
+}
+
+.price-range-title {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+@media (min-width: 650px) {
+  .filter-list-search-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 2rem;
+    grid-auto-rows: minmax(100px, auto);
+
+  }
+
+  .p-button-outline-primary-color {
+    padding: .5rem !important;
+  }
+}
+
+
+@media (min-width: 1300px) {
+  .filter-list-search-bar {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .filter-search {
+    justify-content: center;
+  }
+
+  .p-inputwrapper {
+    width: 40%;
+  }
+
+  .p-inputwrapper .p-autocomplete {
+    width: 100%;
+  }
 }
