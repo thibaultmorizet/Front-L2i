@@ -33,11 +33,7 @@ export class BookComponent implements OnInit {
   editors: Array<Editor> = [];
   authors: Array<Author> = [];
   types: Array<Type> = [];
-  totalBooksCount: number = 0;
-  pageCount: number = 0;
   user: User = {};
-  paginationArray: Array<number> = [];
-  actualPage: number = 1;
   searchBook: any = {};
   bookExistinCart: Boolean = false;
   numberToOrder: string = '1';
@@ -49,10 +45,11 @@ export class BookComponent implements OnInit {
   connectedUser: User | null = {};
   actualUpdatebook: Book = {};
   fileToUpload: any = {};
+  pageRows: number = 12;
 
   selectedFormat: Array<Format> = [];
   selectedType: Array<Type> = [];
-  selectedPriceRange: Array<number> = [0,0];
+  selectedPriceRange: Array<number> = [0, 0];
   showBooksInStock: boolean = true;
   filteredBooks: Array<Book> = [];
   maxPrice: number = 0;
@@ -76,7 +73,7 @@ export class BookComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.bs.getAllBooksWithoutLimit([], [], '', []).subscribe((res) => {
+    this.bs.getAllBooksWithoutLimit([], [], '', [], true).subscribe((res) => {
       res.forEach((aBook) => {
         if (
           aBook.unitpricettc &&
@@ -94,7 +91,6 @@ export class BookComponent implements OnInit {
     this.getAllEditorsfunc();
     this.getAllAuthorsfunc();
     this.getAllTypesfunc();
-    this.setPaginationArray();
     try {
       this.connectedUser = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
@@ -123,7 +119,7 @@ export class BookComponent implements OnInit {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
   getBooks() {
-    this.bs.getAllBooks().subscribe((res) => {
+    this.bs.getAllBooks(this.showBooksInStock).subscribe((res) => {
       this.books = res;
     });
   }
@@ -134,28 +130,16 @@ export class BookComponent implements OnInit {
     prices: Array<number> = []
   ) {
     this.bs
-      .getAllBooksWithoutLimit(formatFilter, typeFilter, searchBook, prices)
+      .getAllBooksWithoutLimit(
+        formatFilter,
+        typeFilter,
+        searchBook,
+        prices,
+        this.showBooksInStock
+      )
       .subscribe((res) => {
         this.allBooks = res;
-      });
-  }
-  setPaginationArray(
-    formatFilter: Array<Format> = [],
-    typeFilter: Array<Type> = [],
-    searchBook: string = '',
-    prices: Array<number> = []
-  ) {
-    this.bs
-      .getAllBooksWithoutLimit(formatFilter, typeFilter, searchBook, prices)
-      .subscribe((res) => {
-        this.pageCount = Math.ceil(res.length / 12);
-        this.totalBooksCount = res.length;
-        this.paginationArray = [];
-
-        for (let index = 0; index < this.pageCount; index++) {
-          this.paginationArray.push(index + 1);
-        }
-        this.actualPage = 1;
+        this.filteredBooks = res;
       });
   }
   getAllFormatsfunc() {
@@ -204,28 +188,20 @@ export class BookComponent implements OnInit {
       this.types = res;
     });
   }
-  getPreviousPage() {
-    if (this.actualPage - 1 >= 1) {
-      this.getAllBooksByPage(this.actualPage - 1);
-    }
-  }
-  getNextPage() {
-    if (this.actualPage + 1 <= this.pageCount) {
-      this.getAllBooksByPage(this.actualPage + 1);
-    }
-  }
-  getAllBooksByPage(page: number) {
+  getAllBooksByPage(event: any) {
     this.bs
       .getAllBooksForPage(
-        page,
+        event.page + 1,
+        event.rows,
         this.selectedFormat,
         this.selectedType,
-        this.searchBook.title ?? this.searchBook,
-        this.selectedPriceRange
+        this.searchBook?.title ?? this.searchBook,
+        this.selectedPriceRange,
+        this.showBooksInStock
       )
       .subscribe((res) => {
         this.books = res;
-        this.actualPage = page;
+        this.pageRows = event.rows;
       });
   }
   getBooksWithFormatAndTypeAndPriceAndSearch() {
@@ -233,22 +209,28 @@ export class BookComponent implements OnInit {
       .getAllBooksByFormatAndTypeAndSearch(
         this.selectedFormat,
         this.selectedType,
-        this.searchBook.title ?? this.searchBook,
-        this.selectedPriceRange
+        this.searchBook?.title ?? this.searchBook,
+        this.selectedPriceRange,
+        this.pageRows,
+        this.showBooksInStock
       )
       .subscribe((res) => {
         this.books = res;
-        this.setPaginationArray(
-          this.selectedFormat,
-          this.selectedType,
-          this.searchBook.title,
-          this.selectedPriceRange
-        );
+        this.bs
+          .getAllBooksByFormatAndTypeAndSearch(
+            this.selectedFormat,
+            this.selectedType,
+            this.searchBook?.title ?? this.searchBook,
+            this.selectedPriceRange,
+            10000,
+            this.showBooksInStock
+          )
+          .subscribe((el) => {
+            this.filteredBooks = el;
+          });
       });
   }
-  addBookToCart(event: any, bookId: number | undefined) {
-    this.numberToOrder = event.target.querySelector('select').value;
-
+  addBookToCart(bookId: number | undefined) {
     this.bookExistinCart = false;
     if (bookId != undefined) {
       this.bs.getOneBook(bookId).subscribe((res) => {
@@ -259,7 +241,7 @@ export class BookComponent implements OnInit {
             if (
               el.stock &&
               el.number_ordered &&
-              el.number_ordered + parseInt(this.numberToOrder) > el.stock
+              el.number_ordered + 1 > el.stock
             ) {
               this.iziToast.error({
                 title: 'Lack of stock',
@@ -267,18 +249,22 @@ export class BookComponent implements OnInit {
                   'There are ' +
                   res.stock +
                   ' copies of the book ' +
-                  el.title +
+                  res.title +
                   ' left and you are requesting ' +
-                  (el.number_ordered + parseInt(this.numberToOrder)),
+                  (el.number_ordered + 1),
                 position: 'topRight',
               });
             } else {
               if (el.number_ordered != undefined) {
-                el.number_ordered =
-                  el.number_ordered + parseInt(this.numberToOrder);
+                el.number_ordered = el.number_ordered + 1;
                 if (el.unitpricettc) {
                   el.totalpricettc = parseFloat(
                     (el.number_ordered * el.unitpricettc).toFixed(2)
+                  );
+                }
+                if (el.unitpriceht) {
+                  el.totalpriceht = parseFloat(
+                    (el.number_ordered * el.unitpriceht).toFixed(2)
                   );
                 }
                 this.iziToast.success({
@@ -296,7 +282,7 @@ export class BookComponent implements OnInit {
         });
 
         if (!this.bookExistinCart) {
-          if (res.stock && parseInt(this.numberToOrder) > res.stock) {
+          if (res.stock && 1 > res.stock) {
             this.iziToast.error({
               title: 'Lack of stock',
               message:
@@ -305,14 +291,19 @@ export class BookComponent implements OnInit {
                 ' copies of the book ' +
                 res.title +
                 ' left and you are requesting ' +
-                parseInt(this.numberToOrder),
+                1,
               position: 'topRight',
             });
           } else {
-            res.number_ordered = parseInt(this.numberToOrder);
+            res.number_ordered = 1;
             if (res.unitpricettc) {
               res.totalpricettc = parseFloat(
                 (res.number_ordered * res.unitpricettc).toFixed(2)
+              );
+            }
+            if (res.unitpriceht) {
+              res.totalpriceht = parseFloat(
+                (res.number_ordered * res.unitpriceht).toFixed(2)
               );
             }
 
@@ -516,6 +507,12 @@ export class BookComponent implements OnInit {
 
     this.filteredBooks = filtered;
   }
+
+  updateShowBooksInStock() {
+    this.showBooksInStock = !this.showBooksInStock;
+    this.getBooksWithFormatAndTypeAndPriceAndSearch();
+  }
+
   clearAllFilter() {
     this.selectedFormat = [];
     this.selectedType = [];

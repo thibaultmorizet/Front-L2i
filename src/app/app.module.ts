@@ -50,6 +50,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SliderModule } from 'primeng/slider';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { PaginatorModule } from 'primeng/paginator';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
 
@@ -98,6 +99,7 @@ import { ContactComponent } from './components/contact/contact.component';
     MultiSelectModule,
     SliderModule,
     AutoCompleteModule,
+    PaginatorModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

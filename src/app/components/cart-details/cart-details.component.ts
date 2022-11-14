@@ -181,7 +181,7 @@ export class CartDetailsComponent implements OnInit {
     this.connectedUser = {};
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: 'You\'re logout',
+      message: "You're logout",
       position: 'topRight',
     });
   }
@@ -397,8 +397,9 @@ export class CartDetailsComponent implements OnInit {
       if (!this.errorStock) {
         this.cart.forEach((aBook) => {
           if (aBook.id) {
-            if (aBook.stock && aBook.number_ordered) {
+            if (aBook.stock && aBook.number_ordered && aBook.soldnumber) {
               aBook.stock -= aBook.number_ordered;
+              aBook.soldnumber += aBook.number_ordered;
 
               this.bs.updateBook(aBook.id, aBook).subscribe((el) => {});
             }

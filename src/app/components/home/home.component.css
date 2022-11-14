@@ -27,13 +27,11 @@
 
 }
 
-.best-sell-img:hover .article-hover-actions {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-}
-
 .img-best-sell {
     width: 200px;
     height: 280px;
+    border-radius: 10px;
+
 }
 
 .best-sell-title {
@@ -81,38 +79,6 @@
     align-items: center;
 }
 
-.article-hover-actions {
-    display: none;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    border-radius: 15px;
-}
-
-.best-sell-img:hover .article-hover-actions {
-    display: block;
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-}
-
-.article-hover-actions-add-cart {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    width: 40px;
-    height: 40px;
-    color: #000;
-    border-radius: 15px;
-}
-
-.article-hover-actions-add-cart:hover {
-    background-color: #30336B;
-    color: #fff;
-    transition: all 0.3s;
-}
-
 .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
     background-color: #000;
 }
@@ -131,6 +97,38 @@
 
 .fa-arrow-right {
     margin-left: .7rem;
+}
+
+.best-sell-add-to-cart-message {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    width: calc(100% - 2rem);
+    cursor: pointer;
+    color: #fff;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: #fff 1px solid;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.best-sell-add-to-cart-message:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: all 0.3s;
+}
+
+.best-sell-add-to-cart-message i {
+    margin-right: 1rem;
+    font-weight: 700;
+}
+
+.best-sell-img:hover .best-sell-add-to-cart-message{
+    display: flex;
+    transition: all 0.3s;
 }
 
 @media (min-width: 650px) {

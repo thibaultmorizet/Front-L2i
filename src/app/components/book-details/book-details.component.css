@@ -134,6 +134,11 @@
     display: none;
 }
 
+.color-red {
+    color: #dc3545;
+    font-weight: 700;
+}
+
 @media (min-width: 650px) {
     .book-details-container {
         width: 500px;

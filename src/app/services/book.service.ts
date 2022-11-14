@@ -16,11 +16,17 @@ export class BookService {
   private typesString: string = '';
   private searchString: string = '';
   private pricesString: string = '';
+  private inStockString: string = '';
 
   constructor(private http: HttpClient) {}
 
-  getAllBooks() {
-    return this.http.get<Array<Book>>(this.url);
+  getAllBooks(inStock: boolean) {
+    if (inStock) {
+      this.inStockString = '?stock%5Bgt%5D=0';
+    } else {
+      this.inStockString = '?stock%5Blte%5D=0';
+    }
+    return this.http.get<Array<Book>>(this.url + this.inStockString);
   }
   getOneBook(id: number) {
     return this.http.get<Book>('https://thibaultmorizet.fr/ws/books/' + id);
@@ -29,12 +35,14 @@ export class BookService {
     formats: Array<Format>,
     types: Array<Type>,
     search: string,
-    prices: Array<number>
+    prices: Array<number>,
+    inStock: boolean
   ) {
     this.formatsString = '';
     this.typesString = '';
     this.searchString = '';
     this.pricesString = '';
+    this.inStockString = '';
 
     if (search.length > 0) {
       this.searchString =
@@ -54,25 +62,34 @@ export class BookService {
     if (prices[0] && prices[1]) {
       this.pricesString +=
         '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
+    }
+    if (inStock) {
+      this.inStockString = '&stock%5Bgt%5D=0';
+    } else {
+      this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Book>>(
       this.urlWithoutLimit +
         this.formatsString +
         this.typesString +
         this.pricesString +
-        this.searchString
+        this.searchString +
+        this.inStockString
     );
   }
   getAllBooksForPage(
     page: number,
+    booknumber: number,
     formats: Array<Format>,
     types: Array<Type>,
     search: string,
-    prices: Array<number>
+    prices: Array<number>,
+    inStock: boolean
   ) {
     this.formatsString = '';
     this.typesString = '';
     this.searchString = '';
+    this.inStockString = '';
 
     if (search.length > 0) {
       this.searchString =
@@ -93,13 +110,21 @@ export class BookService {
       this.pricesString +=
         '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
     }
+    if (inStock) {
+      this.inStockString = '&stock%5Bgt%5D=0';
+    } else {
+      this.inStockString = '&stock%5Blte%5D=0';
+    }
     return this.http.get<Array<Book>>(
       'https://thibaultmorizet.fr/ws/books?page=' +
         page +
+        '&itemsPerPage=' +
+        booknumber +
         this.formatsString +
         this.typesString +
         this.pricesString +
-        this.searchString
+        this.searchString +
+        this.inStockString
     );
   }
 
@@ -107,14 +132,17 @@ export class BookService {
     formats: Array<Format>,
     types: Array<Type>,
     search: string,
-    prices: Array<number>
+    prices: Array<number>,
+    booknumber: number,
+    inStock: boolean
   ) {
     this.formatsString = '';
     this.typesString = '';
     this.searchString = '';
     this.pricesString = '';
+    this.inStockString = '';
 
-    if (search.length > 0) {
+    if (search && search.length > 0) {
       this.searchString =
         '&title=' +
         search +
@@ -133,13 +161,20 @@ export class BookService {
       this.pricesString +=
         '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
     }
-
+    if (inStock) {
+      this.inStockString = '&stock%5Bgt%5D=0';
+    } else {
+      this.inStockString = '&stock%5Blte%5D=0';
+    }
     return this.http.get<Array<Book>>(
       'https://thibaultmorizet.fr/ws/books?' +
+        'itemsPerPage=' +
+        booknumber +
         this.formatsString +
         this.typesString +
         this.pricesString +
-        this.searchString
+        this.searchString +
+        this.inStockString
     );
   }
 

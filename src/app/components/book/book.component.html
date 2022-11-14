@@ -3,215 +3,138 @@
 
   <main id="content">
     <div class="container">
-      <div class="filter-search">
-        <p-autoComplete
-          placeholder="Search"
-          [(ngModel)]="searchBook"
-          [showEmptyMessage]="true"
-          [suggestions]="filteredBooks"
-          (completeMethod)="filterBook($event)"
-          field="title"
-          [minLength]="1"
-          (onSelect)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-          (onBlur)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-        ></p-autoComplete>
-        <button
-          pButton
-          pRipple
-          type="button"
-          class="btn btn-primary-color button-search"
-          (click)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-        >
-          <i class="fa fa-search"></i>
-        </button>
-      </div>
       <div class="filter-list-search-bar">
-        <div>
-          <p-multiSelect
-            [options]="formats"
-            [(ngModel)]="selectedFormat"
-            defaultLabel="Format"
-            optionLabel="name"
-            display="chip"
-            (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-          ></p-multiSelect>
-        </div>
-        <div>
-          <p-multiSelect
-            [options]="types"
-            [(ngModel)]="selectedType"
-            defaultLabel="Type"
-            optionLabel="name"
-            display="chip"
-            (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-          ></p-multiSelect>
-        </div>
-        <div>
-          <p class="price-range-title">
-            Price range :
-            {{ selectedPriceRange[0] + " € - " + selectedPriceRange[1] + " €" }}
-          </p>
-          <p-slider
-            [(ngModel)]="selectedPriceRange"
-            [range]="true"
-            (onSlideEnd)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-            [min]="0"
-            [max]="maxPrice"
-          ></p-slider>
-        </div>
-        <div class="filter-in-stock">
+        <div class="filter-search">
+          <p-autoComplete
+            placeholder="Search"
+            [(ngModel)]="searchBook"
+            [showEmptyMessage]="true"
+            [suggestions]="filteredBooks"
+            (completeMethod)="filterBook($event)"
+            field="title"
+            [minLength]="1"
+            (onSelect)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+            (onBlur)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+          ></p-autoComplete>
           <button
             pButton
             pRipple
             type="button"
-            [ngClass]="{
-              'p-button-primary-color': showBooksInStock,
-              'btn-primary-color': showBooksInStock,
-              'p-button-outline-primary-color': !showBooksInStock,
-              'btn-outline-primary-color': !showBooksInStock
-            }"
-            (click)="showBooksInStock = !showBooksInStock"
+            class="btn btn-primary-color button-search"
+            (click)="getBooksWithFormatAndTypeAndPriceAndSearch()"
           >
-            <span *ngIf="showBooksInStock">Only books in stock</span>
-            <span *ngIf="!showBooksInStock">Only books out of stock</span>
+            <i class="fa fa-search"></i>
           </button>
         </div>
+        <div class="filter-list">
+          <div>
+            <p-multiSelect
+              [options]="formats"
+              [(ngModel)]="selectedFormat"
+              defaultLabel="Format"
+              optionLabel="name"
+              display="chip"
+              (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+            ></p-multiSelect>
+          </div>
+          <div>
+            <p-multiSelect
+              [options]="types"
+              [(ngModel)]="selectedType"
+              defaultLabel="Type"
+              optionLabel="name"
+              display="chip"
+              (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+            ></p-multiSelect>
+          </div>
+          <div>
+            <p class="price-range-title">
+              Price range :
+              {{
+                selectedPriceRange[0] + " € - " + selectedPriceRange[1] + " €"
+              }}
+            </p>
+            <p-slider
+              [(ngModel)]="selectedPriceRange"
+              [range]="true"
+              (onSlideEnd)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+              [min]="0"
+              [max]="maxPrice"
+            ></p-slider>
+          </div>
+          <div class="filter-in-stock">
+            <button
+              pButton
+              pRipple
+              type="button"
+              [ngClass]="{
+                'p-button-primary-color': showBooksInStock,
+                'btn-primary-color': showBooksInStock,
+                'p-button-outline-primary-color': !showBooksInStock,
+                'btn-outline-primary-color': !showBooksInStock
+              }"
+              (click)="updateShowBooksInStock()"
+            >
+              <span *ngIf="showBooksInStock">Only books in stock</span>
+              <span *ngIf="!showBooksInStock">Only books out of stock</span>
+            </button>
+          </div>
 
-        <div>
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="p-button-raised p-button-just-text"
-            (click)="clearAllFilter()"
-          >
-            Clear All
-          </button>
+          <div>
+            <button
+              pButton
+              pRipple
+              type="button"
+              class="p-button-raised p-button-just-text"
+              (click)="clearAllFilter()"
+            >
+              Clear All
+            </button>
+          </div>
         </div>
       </div>
-      <div></div>
+      <div class="shop-article-list">
+        <div class="shop-article" *ngFor="let aBook of books">
+          <div class="shop-article-img">
+            <a [routerLink]="['/books/' + aBook.id]">
+              <img src="{{ aBook.image }}" alt="" class="img-icon"
+            /></a>
+            <div class="out-of-stock-message" *ngIf="aBook.stock == 0">
+              Out of Stock
+            </div>
+            <div
+              class="shop-article-add-to-cart-message"
+              (click)="addBookToCart(aBook.id)"
+              pRipple
+              *ngIf="aBook.stock && aBook.stock > 0"
+            >
+              <i class="pi pi-shopping-cart"></i> Add to Cart
+            </div>
+          </div>
+          <div class="shop-article-info">
+            <div
+              class="shop-article-info-title"
+              [routerLink]="['/books/' + aBook.id]"
+            >
+              {{ aBook.title }}
+            </div>
+            <div
+              class="shop-article-info-price"
+              [routerLink]="['/books/' + aBook.id]"
+            >
+              {{ aBook.unitpricettc }} €
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-paginator
+        [rows]="12"
+        [totalRecords]="filteredBooks.length"
+        [rowsPerPageOptions]="[12, 18, 24]"
+        (onPageChange)="getAllBooksByPage($event)"
+      ></p-paginator>
 
       <!--       <div class="row">
-        <div id="search" class="">
-          <div class="container d-flex justify-content-end">
-            <form
-              #searchForm="ngForm"
-              role="search"
-              (ngSubmit)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-            >
-              <div class="input-group">
-                <input
-                  type="text"
-                  placeholder="Recherche"
-                  class="form-control"
-                  value="{{ searchBook }}"
-                  [(ngModel)]="searchBook"
-                  name="searchbar"
-                  list="searchList"
-                />
-                <datalist *ngIf="searchBook.length > 0" id="searchList">
-                  <option *ngFor="let elt of allBooks" [value]="elt.title">
-                    {{ elt.title }}
-                  </option>
-                </datalist>
-
-                <div class="input-group-append">
-                  <button
-                    type="submit"
-                    class="btn btn-primary button-search h-100"
-                  >
-                    <i class="fa fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="col-lg-3">
-          <div class="card sidebar-menu mb-4">
-            <div class="card-header">
-              <h3 class="h4 card-title d-flex justify-content-between">
-                Format
-                <button
-                  (click)="removeFormatFilter()"
-                  class="btn btn-sm btn-danger pull-right"
-                >
-                  <i class="fa fa-times-circle"></i> Effacer
-                </button>
-              </h3>
-            </div>
-            <div class="card-body">
-              <form
-                #monForm="ngForm"
-                class="container"
-                (ngSubmit)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-              >
-                <div class="form-group" *ngFor="let elt of formats">
-                  <div class="checkbox">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="format"
-                        value="{{ elt.name }}"
-                        [(ngModel)]="elt.filter_is_selected"
-                        [checked]="elt.filter_is_selected"
-                      />
-                      {{ elt.name }} ({{ elt.count_books }})</label
-                    >
-                  </div>
-                </div>
-                <button
-                  type="submit"
-                  class="btn btn-default btn-sm btn-primary"
-                >
-                  <i class="fa fa-pencil"></i> Appliquer
-                </button>
-              </form>
-            </div>
-          </div>
-          <div class="card sidebar-menu mb-4">
-            <div class="card-header">
-              <h3 class="h4 card-title d-flex justify-content-between">
-                Type
-                <button
-                  (click)="removeTypeFilter()"
-                  class="btn btn-sm btn-danger pull-right"
-                >
-                  <i class="fa fa-times-circle"></i> Effacer
-                </button>
-              </h3>
-            </div>
-            <div class="card-body">
-              <form
-                #monForm="ngForm"
-                class="container"
-                (ngSubmit)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-              >
-                <div class="form-group" *ngFor="let elt of types">
-                  <div class="checkbox">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="type"
-                        value="{{ elt.name }}"
-                        [(ngModel)]="elt.filter_is_selected"
-                        [checked]="elt.filter_is_selected"
-                      />
-                      {{ elt.name }} ({{ elt.count_books }})</label
-                    >
-                  </div>
-                </div>
-                <button
-                  type="submit"
-                  class="btn btn-default btn-sm btn-primary"
-                >
-                  <i class="fa fa-pencil"></i> Appliquer
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
 
         <div class="col-lg-9">
           <div class="row">
