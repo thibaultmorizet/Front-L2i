@@ -53,6 +53,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PaginatorModule } from 'primeng/paginator';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { ContactComponent } from './components/contact/contact.component';
     FooterComponent,
     LegalNoticesComponent,
     ContactComponent,
+    PagenotfoundComponent,
   ],
   imports: [
     BrowserModule,

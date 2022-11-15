@@ -14,7 +14,6 @@ import {
 import { AddressService } from 'src/app/services/address.service';
 import { UserService } from 'src/app/services/user.service';
 import { Address } from 'src/app/interfaces/address';
-import { DialogModule } from 'primeng/dialog';
 import { BookService } from 'src/app/services/book.service';
 import { Order } from 'src/app/interfaces/order';
 import { OrderService } from 'src/app/services/order.service';
@@ -51,8 +50,6 @@ export class CartDetailsComponent implements OnInit {
     private as: AuthService,
     private authService: SocialAuthService,
     private primengConfig: PrimeNGConfig,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
     private addressService: AddressService,
     private us: UserService,
     private bs: BookService,

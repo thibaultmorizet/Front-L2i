@@ -10,6 +10,7 @@ import { NewBookComponent } from './components/new-book/new-book.component';
 import { HomeComponent } from './components/home/home.component';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,10 +24,11 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'legal-notices', component: LegalNoticesComponent },
   { path: 'contact', component: ContactComponent },
+  { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

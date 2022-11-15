@@ -1,0 +1,22 @@
+<div class="general-content">
+  <app-header [cartLength]="cart.length"></app-header>
+  <main id="content">
+    <img
+      id="pageNotFoundImg"
+      src="https://www.thibaultmorizet.fr/assets/pageNotFound.png"
+      alt="pageNotFoundImg"
+    />
+    <div class="d-flex justify-content-end mt-2">
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-raised p-button-primary-color btn-primary-color"
+        [routerLink]="['/home']"
+      >
+        Back to Homepage
+      </button>
+    </div>
+  </main>
+  <app-footer></app-footer>
+</div>
