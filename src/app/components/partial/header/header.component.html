@@ -12,13 +12,13 @@
           class="home-link text-uppercase"
           [routerLink]="['/home']"
           [ngClass]="{ active: path === 'home' }"
-          >Home</a
+          >{{'header.home' | translate}}</a
         >
         <a
           class="home-link text-uppercase"
           [routerLink]="['/books']"
           [ngClass]="{ active: path === 'books' }"
-          >Shop</a
+          >{{'header.shop' | translate}}</a
         >
 
         <a
@@ -26,7 +26,7 @@
           class="home-link text-uppercase"
           [routerLink]="['/my-account']"
           [ngClass]="{ active: path === 'my-account' }"
-          >My Account</a
+          >{{'header.my_account' | translate}}</a
         >
 
         <a
@@ -34,7 +34,7 @@
           class="home-link text-uppercase"
           [routerLink]="['/my-account']"
           [ngClass]="{ active: path === 'my-account' }"
-          >Login / Sign in</a
+          >{{'header.login_sign_in' | translate}}</a
         >
 
         <div id="bag-shopping-count-container">
@@ -46,7 +46,7 @@
             <span id="bag-shopping-count" aria-hidden="true">{{
               cartLength
             }}</span>
-            My Cart</a
+            {{'header.my_cart' | translate}}</a
           >
         </div>
       </div>

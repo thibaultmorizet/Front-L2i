@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { Book } from 'src/app/interfaces/book';
@@ -24,10 +25,12 @@ export class LegalNoticesComponent implements OnInit {
     private as: AuthService,
     private authService: SocialAuthService,
     private router: Router,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.translate.use(this.translate.getDefaultLang());
     try {
       this.connectedUser = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
@@ -79,7 +82,7 @@ export class LegalNoticesComponent implements OnInit {
     this.connectedUser = null;
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: "you're logout",
+      message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
     });
   }

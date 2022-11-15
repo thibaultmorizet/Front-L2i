@@ -5,13 +5,13 @@
         [routerLink]="['/contact']"
         [ngClass]="{ active: path === 'contact' }"
       >
-        Contact
+      {{'general.contact' | translate}}
       </li>
       <li
         [routerLink]="['/legal-notices']"
         [ngClass]="{ active: path === 'legal-notices' }"
       >
-        Legal notices
+      {{'general.legal_notices' | translate}}
       </li>
     </ul>
   </nav>

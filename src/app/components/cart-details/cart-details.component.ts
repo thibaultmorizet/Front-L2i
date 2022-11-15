@@ -17,6 +17,7 @@ import { Address } from 'src/app/interfaces/address';
 import { BookService } from 'src/app/services/book.service';
 import { Order } from 'src/app/interfaces/order';
 import { OrderService } from 'src/app/services/order.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-cart-details',
   templateUrl: './cart-details.component.html',
@@ -53,11 +54,13 @@ export class CartDetailsComponent implements OnInit {
     private addressService: AddressService,
     private us: UserService,
     private bs: BookService,
-    private os: OrderService
+    private os: OrderService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
 
     try {
       this.connectedUser = JSON.parse(
@@ -83,11 +86,7 @@ export class CartDetailsComponent implements OnInit {
             });
         }
       } catch (error) {
-        this.iziToast.warning({
-          title: 'Error in load of billing address',
-          message: 'Reload the page',
-          position: 'topRight',
-        });
+        this.newAddressBilling = {};
       }
       try {
         if (
@@ -104,11 +103,7 @@ export class CartDetailsComponent implements OnInit {
             });
         }
       } catch (error) {
-        this.iziToast.warning({
-          title: 'Error in load of delivery address',
-          message: 'Reload the page',
-          position: 'topRight',
-        });
+        this.newAddressDelivery = {};
       }
     }
 
@@ -176,11 +171,11 @@ export class CartDetailsComponent implements OnInit {
     this.storageCrypter.removeItem('user', 'session');
     this.authService.signOut();
     this.connectedUser = {};
-    this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: "You're logout",
+      message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
     });
+    this.router.navigateByUrl('/home');
   }
 
   refreshToken() {
@@ -234,7 +229,7 @@ export class CartDetailsComponent implements OnInit {
   getDeliveryDate() {
     let deliveryDelai = 6;
     let deliveryDate = new Date();
-    const monthNames = [
+    const englishMonthNames = [
       'Jan.',
       'Feb.',
       'March',
@@ -248,11 +243,35 @@ export class CartDetailsComponent implements OnInit {
       'Nov.',
       'Dec.',
     ];
+    const frenchMonthNames = [
+      'Jan.',
+      'Fev.',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juill.',
+      'Août',
+      'Sept.',
+      'Oct.',
+      'Nov.',
+      'Dec.',
+    ];
 
     deliveryDate.setDate(deliveryDate.getDate() + deliveryDelai);
-
-    this.deliveryDate =
-      ' ' + monthNames[deliveryDate.getMonth()] + ' ' + deliveryDate.getDate();
+    if (this.translate.getDefaultLang() == 'fr') {
+      this.deliveryDate =
+        ' ' +
+        frenchMonthNames[deliveryDate.getMonth()] +
+        ' ' +
+        deliveryDate.getDate();
+    } else {
+      this.deliveryDate =
+        ' ' +
+        englishMonthNames[deliveryDate.getMonth()] +
+        ' ' +
+        deliveryDate.getDate();
+    }
   }
 
   showModalDeliveryAddress() {
@@ -277,7 +296,7 @@ export class CartDetailsComponent implements OnInit {
           );
 
           this.iziToast.success({
-            message: 'Modification confirm',
+            message: this.translate.instant('izitoast.modification_confirm'),
             position: 'topRight',
           });
           (
@@ -301,7 +320,9 @@ export class CartDetailsComponent implements OnInit {
             .updateUser(this.connectedUser?.id, this.connectedUser)
             .subscribe((res) => {
               this.iziToast.success({
-                message: 'Modification confirm',
+                message: this.translate.instant(
+                  'izitoast.modification_confirm'
+                ),
                 position: 'topRight',
               });
               (
@@ -328,7 +349,7 @@ export class CartDetailsComponent implements OnInit {
           );
 
           this.iziToast.success({
-            message: 'Modification confirm',
+            message: this.translate.instant('izitoast.modification_confirm'),
             position: 'topRight',
           });
           (
@@ -352,7 +373,9 @@ export class CartDetailsComponent implements OnInit {
             .updateUser(this.connectedUser?.id, this.connectedUser)
             .subscribe((res) => {
               this.iziToast.success({
-                message: 'Modification confirm',
+                message: this.translate.instant(
+                  'izitoast.modification_confirm'
+                ),
                 position: 'topRight',
               });
               (
@@ -376,15 +399,15 @@ export class CartDetailsComponent implements OnInit {
                 this.errorStock = true;
                 aBook.stock = el.stock;
                 this.iziToast.error({
-                  title: 'Lack of stock',
-                  message:
-                    'There are ' +
-                    el.stock +
-                    ' copies of the book ' +
-                    aBook.title +
-                    ' left and you are requesting ' +
-                    aBook.number_ordered,
-                  position: 'topRight',
+                  title: this.translate.instant('izitoast.lack_of_stock'),
+                  message: this.translate.instant(
+                    'izitoast.lack_of_stock_message',
+                    {
+                      bookStock: el.stock,
+                      bookTitle: aBook.title,
+                      bookNumber: aBook.number_ordered,
+                    }
+                  ),
                 });
               }
             }
@@ -428,14 +451,16 @@ export class CartDetailsComponent implements OnInit {
         this.cart = [];
         this.storageCrypter.removeItem('cart', 'local');
         this.iziToast.success({
-          message: 'Your order is validate',
+          message: this.translate.instant('izitoast.your_order_is_validate'),
           position: 'topRight',
         });
         this.router.navigateByUrl('/home');
       }
     } else {
       this.iziToast.warning({
-        message: 'Login before confirm check out',
+        message: this.translate.instant(
+          'izitoast.login_before_confirm_check_out'
+        ),
         position: 'topRight',
       });
       this.router.navigateByUrl('/my-account');

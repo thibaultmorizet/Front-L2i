@@ -42,7 +42,7 @@
                 class="subtitle book-details-quantity"
                 *ngIf="book.stock && book.stock > 0"
               >
-                Quantity
+                {{ "general.quantity" | translate }}
               </p>
             </div>
             <div
@@ -74,25 +74,27 @@
                   class="p-button-raised p-button-primary-color btn-primary-color"
                   (click)="addBookToCart(book)"
                 >
-                  Add to cart
+                  {{ "general.add_to_cart" | translate }}
                 </button>
               </div>
             </div>
             <div class="out-of-stock-div" *ngIf="book.stock == 0">
-              <p class="subtitle color-red">Out of Stock</p>
+              <p class="subtitle color-red">
+                {{ "general.out_of_stock" | translate }}
+              </p>
             </div>
           </div>
         </div>
         <p-divider class="book-details-divider"></p-divider>
         <p-tabView>
-          <p-tabPanel header="Summary">
+          <p-tabPanel header="{{ 'book_details.summary' | translate }}">
             <p class="text-summary">{{ book.summary }}</p>
           </p-tabPanel>
-          <p-tabPanel header="Book details"
+          <p-tabPanel header="{{ 'book_details.book_details' | translate }}"
             ><ul>
               <li>
                 <span>
-                  <span class="bold">Price (HT) : </span>
+                  <span class="bold">{{ "general.price" | translate }} (HT) : </span>
                   <span>{{ book.unitpriceht }} €</span>
                 </span>
               </li>
@@ -104,19 +106,19 @@
               </li>
               <li *ngFor="let anAuthor of book.author">
                 <span>
-                  <span class="bold">Author : </span>
+                  <span class="bold">{{ "general.author" | translate }} : </span>
                   <span>{{ anAuthor.lastname }} {{ anAuthor.firstname }}</span>
                 </span>
               </li>
               <li>
                 <span>
-                  <span class="bold">Editor : </span>
+                  <span class="bold">{{ "general.editor" | translate }} : </span>
                   <span>{{ book.editor?.name }}</span>
                 </span>
               </li>
               <li>
                 <span>
-                  <span class="bold">Year of publication : </span>
+                  <span class="bold">{{ "general.year_of_publication" | translate }} : </span>
                   <span>{{ book.year }}</span>
                 </span>
               </li>
@@ -124,16 +126,6 @@
           </p-tabPanel>
         </p-tabView>
       </div>
-      <!--       <div class="row">
-        <div class="col-lg-9 order-1 order-lg-2 mt-5">
-
-          <div #details class="box">
-            <br />
-            
-          </div>
-        </div>
-      </div>
- -->
     </div>
   </main>
   <app-footer></app-footer>

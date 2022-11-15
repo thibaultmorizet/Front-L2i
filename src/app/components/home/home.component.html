@@ -16,7 +16,7 @@
             [responsiveOptions]="responsiveOptions"
           >
             <ng-template pTemplate="header">
-              <p class="title text-center">Our best sell</p>
+              <p class="title text-center">{{ "home.our_best_sell" | translate }}</p>
               <p-skeleton
                 class="carouselSkeleton"
                 width="100%"
@@ -45,7 +45,7 @@
                     pRipple
 
                   >
-                    <i class="pi pi-shopping-cart"></i> Add to Cart
+                    <i class="pi pi-shopping-cart"></i> {{ "general.add_to_cart" | translate }}
                   </div>
                 </div>
 
@@ -75,7 +75,7 @@
             class="p-button-raised p-button-primary-color best-sell-button best-sell-button-prev"
             (click)="prevBestBook()"
           >
-            <i class="far fa-arrow-left"></i> Prev
+            <i class="far fa-arrow-left"></i> {{ "home.prev" | translate }}
           </button>
           <button
             pButton
@@ -84,7 +84,7 @@
             class="p-button-raised p-button-primary-color best-sell-button best-sell-button-next"
             (click)="nextBestBook()"
           >
-            Next <i class="far fa-arrow-right"></i>
+          {{ "home.next" | translate }} <i class="far fa-arrow-right"></i>
           </button>
         </div>
       </div>

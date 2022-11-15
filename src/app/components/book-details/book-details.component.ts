@@ -7,6 +7,7 @@ import StorageCrypter from 'storage-crypter';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-book-details',
@@ -35,10 +36,13 @@ export class BookDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.translate.use(this.translate.getDefaultLang());
+
     this.route.paramMap.subscribe((res) => {
       this.idBook = +(res.get('id') ?? '0');
       this.bs.getOneBook(this.idBook).subscribe((b) => {
@@ -94,14 +98,15 @@ export class BookDetailsComponent implements OnInit {
               el.number_ordered + bookToOrder.number_ordered > el.stock
             ) {
               this.iziToast.error({
-                title: 'Lack of stock',
-                message:
-                  'There are ' +
-                  res.stock +
-                  ' copies of the book ' +
-                  el.title +
-                  ' left and you are requesting ' +
-                  (el.number_ordered + bookToOrder.number_ordered),
+                title: this.translate.instant('izitoast.lack_of_stock'),
+                message: this.translate.instant(
+                  'izitoast.lack_of_stock_message',
+                  {
+                    bookStock: res.stock,
+                    bookTitle: res.title,
+                    bookNumber: el.number_ordered + bookToOrder.number_ordered,
+                  }
+                ),
                 position: 'topRight',
               });
             } else {
@@ -122,7 +127,7 @@ export class BookDetailsComponent implements OnInit {
                   );
                 }
                 this.iziToast.success({
-                  message: 'Book add to cart',
+                  message: this.translate.instant('izitoast.book_add_to_cart'),
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -142,14 +147,15 @@ export class BookDetailsComponent implements OnInit {
             bookToOrder.number_ordered > res.stock
           ) {
             this.iziToast.error({
-              title: 'Lack of stock',
-              message:
-                'There are ' +
-                res.stock +
-                ' copies of the book ' +
-                res.title +
-                ' left and you are requesting ' +
-                bookToOrder.number_ordered,
+              title: this.translate.instant('izitoast.lack_of_stock'),
+              message: this.translate.instant(
+                'izitoast.lack_of_stock_message',
+                {
+                  bookStock: res.stock,
+                  bookTitle: res.title,
+                  bookNumber: bookToOrder.number_ordered,
+                }
+              ),
               position: 'topRight',
             });
           } else {
@@ -167,7 +173,7 @@ export class BookDetailsComponent implements OnInit {
 
             this.cart.push(res);
             this.iziToast.success({
-              message: 'Book add to cart',
+              message: this.translate.instant('izitoast.book_add_to_cart'),
               position: 'topRight',
             });
             this.storageCrypter.setItem(
@@ -189,7 +195,7 @@ export class BookDetailsComponent implements OnInit {
     this.connectedUser = null;
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: "You're logout",
+      message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
     });
   }

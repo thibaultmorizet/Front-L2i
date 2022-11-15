@@ -5,7 +5,7 @@
     <div class="container">
       <p-dialog
         *ngIf="cart.length > 0"
-        header="Delivery address"
+        header="{{ 'general.delivery_address' | translate }}"
         [(visible)]="displayModalDeliveryAddress"
         [draggable]="false"
         [resizable]="false"
@@ -26,7 +26,7 @@
                 <input
                   id="street"
                   name="street"
-                  placeholder="Street"
+                  placeholder="{{ 'general.street' | translate }}"
                   type="text"
                   pInputText
                   value="{{ connectedUser.deliveryAddress?.street }}"
@@ -41,7 +41,7 @@
                 <input
                   id="postalcode"
                   name="postalcode"
-                  placeholder="Postal code"
+                  placeholder="{{ 'general.postal_code' | translate }}"
                   type="text"
                   pInputText
                   value="{{ connectedUser.deliveryAddress?.postalcode }}"
@@ -56,7 +56,7 @@
                 <input
                   id="city"
                   name="city"
-                  placeholder="City"
+                  placeholder="{{ 'general.city' | translate }}"
                   type="text"
                   pInputText
                   value="{{ connectedUser.deliveryAddress?.city }}"
@@ -71,7 +71,7 @@
                 <input
                   id="country"
                   name="country"
-                  placeholder="Country"
+                  placeholder="{{ 'general.country' | translate }}"
                   type="text"
                   pInputText
                   value="{{ connectedUser.deliveryAddress?.country }}"
@@ -89,7 +89,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 [disabled]="!AddressDeliveryForm.valid"
               >
-                Save the changes
+              {{ 'general.save_the_changes' | translate }}
               </button>
             </div>
           </form>
@@ -97,7 +97,7 @@
       </p-dialog>
       <p-dialog
         *ngIf="cart.length > 0"
-        header="Billing address"
+        header="{{ 'general.billing_address' | translate }}"
         [(visible)]="displayModalBillingAddress"
         [draggable]="false"
         [resizable]="false"
@@ -118,7 +118,7 @@
                 <input
                   id="street"
                   name="street"
-                  placeholder="Street"
+                  placeholder="{{ 'general.street' | translate }}"
                   type="text"
                   pInputText
                   value="{{ connectedUser.billingAddress?.street }}"
@@ -133,7 +133,7 @@
                 <input
                   id="postalcode"
                   name="postalcode"
-                  placeholder="Postal code"
+                  placeholder="{{ 'general.postal_code' | translate }}"
                   type="text"
                   pInputText
                   value="{{ connectedUser.billingAddress?.postalcode }}"
@@ -148,7 +148,7 @@
                 <input
                   id="city"
                   name="city"
-                  placeholder="City"
+                  placeholder="{{ 'general.city' | translate }}"
                   type="text"
                   pInputText
                   value="{{ connectedUser.billingAddress?.city }}"
@@ -163,7 +163,7 @@
                 <input
                   id="country"
                   name="country"
-                  placeholder="Country"
+                  placeholder="{{ 'general.country' | translate }}"
                   type="text"
                   pInputText
                   value="{{ connectedUser.billingAddress?.country }}"
@@ -181,14 +181,14 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 [disabled]="!AddressBillingForm.valid"
               >
-                Save the changes
+              {{ 'general.save_the_changes' | translate }}
               </button>
             </div>
           </form>
         </div>
       </p-dialog>
       <div class="cart-details-general" *ngIf="cart.length > 0">
-        <p class="cart-title">Your cart total is {{ cartTotalPriceTtc }} €</p>
+        <p class="cart-title">{{ 'cart_details.your_cart_total_is' | translate }} {{ cartTotalPriceTtc }} €</p>
         <p-divider></p-divider>
         <div *ngFor="let elt of cart">
           <div class="cart-details">
@@ -226,7 +226,7 @@
                       class="cart-details-remove"
                       (click)="deleteBookOfCart(elt.id)"
                     >
-                      Remove
+                    {{ 'cart_details.remove' | translate }}
                     </p>
                   </div>
                 </div>
@@ -235,15 +235,15 @@
                 <p>
                   <i class="pi pi-send"></i
                   ><span
-                    >Delivery by
+                    >{{ 'cart_details.delivery_by' | translate }}
                     <span class="bold"> {{ deliveryDate }}.</span></span
                   >
                 </p>
                 <p *ngIf="elt.stock && elt.stock <= 10">
                   <i class="pi pi-exclamation-triangle"></i
                   ><span
-                    >Only
-                    <span class="bold">{{ elt.stock }}</span> Available.</span
+                    >{{ 'cart_details.only' | translate }}
+                    <span class="bold">{{ elt.stock }}</span> {{ 'cart_details.available' | translate }}.</span
                   >
                 </p>
               </div>
@@ -260,7 +260,7 @@
               class="cart-details-delivery-address-title"
               (click)="showModalDeliveryAddress()"
             >
-              Delivery address
+            {{ 'general.delivery_address' | translate }}
             </div>
             <div>
               {{ connectedUser.deliveryAddress?.street }}
@@ -286,7 +286,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 (click)="showModalDeliveryAddress()"
               >
-                Add delivery address
+              {{ 'cart_details.add_delivery_address' | translate }}
               </button>
             </div>
             <p-divider class="cart-details-divider"></p-divider>
@@ -299,7 +299,7 @@
               class="cart-details-billing-address-title"
               (click)="showModalBillingAddress()"
             >
-              Billing address
+            {{ 'general.billing_address' | translate }}
             </div>
             <div>
               {{ connectedUser.billingAddress?.street }}
@@ -325,7 +325,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 (click)="showModalBillingAddress()"
               >
-                Add billing address
+              {{ 'cart_details.add_billing_address' | translate }}
               </button>
             </div>
             <p-divider class="cart-details-divider"></p-divider>
@@ -334,23 +334,23 @@
         <div class="cart-details-total-subtotal">
           <div class="cart-details-subtotal">
             <div>
-              <p>Subtotal (TTC)</p>
+              <p>{{ 'general.subtotal' | translate }} (TTC)</p>
               <p>{{ cartTotalPriceTtc }} €</p>
             </div>
             <!-- <div>
-            <p>Subtotal (HT)</p>
+            <p>{{ 'general.subtotal' | translate }} (HT)</p>
             <p>{{ cartTotalPriceHt }} €</p>
           </div> -->
             <div>
-              <p>Delivery taxes</p>
-              <p>Free</p>
+              <p>{{ 'general.delivery_taxes' | translate }}</p>
+              <p>{{ 'general.free' | translate }}</p>
             </div>
             <p-divider class="cart-details-divider"></p-divider>
           </div>
 
           <div class="cart-details-total">
             <div>
-              <p>Total</p>
+              <p>{{ 'general.total' | translate }}</p>
               <p>{{ cartTotalPriceTtc }} €</p>
             </div>
           </div>
@@ -371,14 +371,14 @@
             (click)="checkOut()"
           >
             <span
-              pTooltip="Create valid addresses to check out"
+              pTooltip="{{ 'cart_details.create_valid_addresses_to_check_out' | translate }}"
               [tooltipDisabled]="
                 (connectedUser.deliveryAddress != undefined &&
                   connectedUser.billingAddress != undefined) ||
                 connectedUser.id == undefined
               "
             >
-              Check out</span
+            {{ "general.check_out" | translate }}</span
             >
           </button>
         </div>
@@ -395,7 +395,7 @@
           alt="emptyCart2Img"
         />
         <div class="empty-cart-text-block">
-          <p>Your cart is empty</p>
+          <p>{{ "cart_details.your_cart_is_empty" | translate }}</p>
           <div class="d-flex justify-content-center mt-2">
             <button
               pButton
@@ -404,7 +404,7 @@
               class="p-button-raised p-button-primary-color btn-primary-color"
               [routerLink]="['/books']"
             >
-              make a purchase
+              {{ "general.make_a_purchase" | translate }}
             </button>
           </div>
         </div>

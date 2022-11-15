@@ -6,7 +6,7 @@
       <div class="filter-list-search-bar">
         <div class="filter-search">
           <p-autoComplete
-            placeholder="Search"
+            placeholder="{{ 'book.search' | translate }}"
             [(ngModel)]="searchBook"
             [showEmptyMessage]="true"
             [suggestions]="filteredBooks"
@@ -31,7 +31,7 @@
             <p-multiSelect
               [options]="formats"
               [(ngModel)]="selectedFormat"
-              defaultLabel="Format"
+              defaultLabel="{{ 'book.format' | translate }}"
               optionLabel="name"
               display="chip"
               (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
@@ -41,7 +41,7 @@
             <p-multiSelect
               [options]="types"
               [(ngModel)]="selectedType"
-              defaultLabel="Type"
+              defaultLabel="{{ 'book.type' | translate }}"
               optionLabel="name"
               display="chip"
               (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
@@ -49,7 +49,7 @@
           </div>
           <div>
             <p class="price-range-title">
-              Price range :
+              {{ "book.price_range" | translate }} :
               {{
                 selectedPriceRange[0] + " € - " + selectedPriceRange[1] + " €"
               }}
@@ -75,8 +75,8 @@
               }"
               (click)="updateShowBooksInStock()"
             >
-              <span *ngIf="showBooksInStock">Only books in stock</span>
-              <span *ngIf="!showBooksInStock">Only books out of stock</span>
+              <span *ngIf="showBooksInStock">{{ 'book.only_books_in_stock' | translate }}</span>
+              <span *ngIf="!showBooksInStock">{{ 'book.only_books_out_of_stock' | translate }}</span>
             </button>
           </div>
 
@@ -88,7 +88,7 @@
               class="p-button-raised p-button-just-text"
               (click)="clearAllFilter()"
             >
-              Clear All
+            {{ 'book.clear_all' | translate }}
             </button>
           </div>
         </div>
@@ -100,7 +100,7 @@
               <img src="{{ aBook.image }}" alt="" class="img-icon"
             /></a>
             <div class="out-of-stock-message" *ngIf="aBook.stock == 0">
-              Out of Stock
+              {{ 'general.out_of_stock' | translate }}
             </div>
             <div
               class="shop-article-add-to-cart-message"
@@ -108,7 +108,7 @@
               pRipple
               *ngIf="aBook.stock && aBook.stock > 0"
             >
-              <i class="pi pi-shopping-cart"></i> Add to Cart
+              <i class="pi pi-shopping-cart"></i> {{ 'general.add_to_cart' | translate }}
             </div>
           </div>
           <div class="shop-article-info">

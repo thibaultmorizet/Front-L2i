@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { PrimeNGConfig } from 'primeng/api';
@@ -35,11 +36,14 @@ export class HomeComponent implements OnInit {
     private authService: SocialAuthService,
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
+
     this.responsiveOptions = [
       {
         breakpoint: '3000px',
@@ -139,7 +143,7 @@ export class HomeComponent implements OnInit {
     this.connectedUser = null;
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: "you're logout",
+      message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
     });
   }
@@ -169,14 +173,15 @@ export class HomeComponent implements OnInit {
               el.number_ordered + 1 > el.stock
             ) {
               this.iziToast.error({
-                title: 'Lack of stock',
-                message:
-                  'There are ' +
-                  res.stock +
-                  ' copies of the book ' +
-                  res.title +
-                  ' left and you are requesting ' +
-                  (el.number_ordered + 1),
+                title: this.translate.instant('izitoast.lack_of_stock'),
+                message: this.translate.instant(
+                  'izitoast.lack_of_stock_message',
+                  {
+                    bookStock: res.stock,
+                    bookTitle: res.title,
+                    bookNumber: el.number_ordered + 1,
+                  }
+                ),
                 position: 'topRight',
               });
             } else {
@@ -193,7 +198,7 @@ export class HomeComponent implements OnInit {
                   );
                 }
                 this.iziToast.success({
-                  message: 'Book add to cart',
+                  message: this.translate.instant('izitoast.book_add_to_cart'),
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -209,14 +214,15 @@ export class HomeComponent implements OnInit {
         if (!this.bookExistinCart) {
           if (res.stock && 1 > res.stock) {
             this.iziToast.error({
-              title: 'Lack of stock',
-              message:
-                'There are ' +
-                res.stock +
-                ' copies of the book ' +
-                res.title +
-                ' left and you are requesting ' +
-                1,
+              title: this.translate.instant('izitoast.lack_of_stock'),
+              message: this.translate.instant(
+                'izitoast.lack_of_stock_message',
+                {
+                  bookStock: res.stock,
+                  bookTitle: res.title,
+                  bookNumber: 1,
+                }
+              ),
               position: 'topRight',
             });
           } else {
@@ -234,7 +240,7 @@ export class HomeComponent implements OnInit {
 
             this.cart.push(res);
             this.iziToast.success({
-              message: 'Book add to cart',
+              message: this.translate.instant('izitoast.book_add_to_cart'),
               position: 'topRight',
             });
             this.storageCrypter.setItem(

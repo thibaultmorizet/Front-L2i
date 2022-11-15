@@ -1,4 +1,8 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -55,6 +59,9 @@ import { LegalNoticesComponent } from './components/legal-notices/legal-notices.
 import { ContactComponent } from './components/contact/contact.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +109,13 @@ import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.co
     SliderModule,
     AutoCompleteModule,
     PaginatorModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -130,3 +144,7 @@ import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.co
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}

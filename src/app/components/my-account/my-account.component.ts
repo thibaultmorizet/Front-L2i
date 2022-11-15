@@ -21,6 +21,7 @@ import {
 import { FormControl, Validators } from '@angular/forms';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/interfaces/order';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-my-account',
@@ -60,11 +61,14 @@ export class MyAccountComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private os: OrderService
+    private os: OrderService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
+
     try {
       this.connectedUser = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
@@ -96,11 +100,7 @@ export class MyAccountComponent implements OnInit {
             });
         }
       } catch (error) {
-        this.iziToast.warning({
-          title: 'Error in load of billing address',
-          message: 'Reload the page',
-          position: 'topRight',
-        });
+        this.newAddressBilling = {};
       }
       try {
         if (
@@ -117,11 +117,7 @@ export class MyAccountComponent implements OnInit {
             });
         }
       } catch (error) {
-        this.iziToast.warning({
-          title: 'Error in load of delivery address',
-          message: 'Reload the page',
-          position: 'topRight',
-        });
+        this.newAddressDelivery = {};
       }
       try {
         this.os.getUserOrders(this.connectedUser.id).subscribe((el) => {
@@ -157,7 +153,7 @@ export class MyAccountComponent implements OnInit {
         .updateUser(this.newUserData.id, this.newUserData)
         .subscribe((res) => {
           this.iziToast.success({
-            message: 'Modification confirm',
+            message: this.translate.instant('izitoast.modification_confirm'),
             position: 'topRight',
           });
           delete this.newUserData.password;
@@ -188,7 +184,7 @@ export class MyAccountComponent implements OnInit {
           );
 
           this.iziToast.success({
-            message: 'Modification confirm',
+            message: this.translate.instant('izitoast.modification_confirm'),
             position: 'topRight',
           });
         });
@@ -207,7 +203,9 @@ export class MyAccountComponent implements OnInit {
             .updateUser(this.connectedUser?.id, this.connectedUser)
             .subscribe((res) => {
               this.iziToast.success({
-                message: 'Modification confirm',
+                message: this.translate.instant(
+                  'izitoast.modification_confirm'
+                ),
                 position: 'topRight',
               });
             });
@@ -229,7 +227,7 @@ export class MyAccountComponent implements OnInit {
           );
 
           this.iziToast.success({
-            message: 'Modification confirm',
+            message: this.translate.instant('izitoast.modification_confirm'),
             position: 'topRight',
           });
         });
@@ -248,7 +246,9 @@ export class MyAccountComponent implements OnInit {
             .updateUser(this.connectedUser?.id, this.connectedUser)
             .subscribe((res) => {
               this.iziToast.success({
-                message: 'Modification confirm',
+                message: this.translate.instant(
+                  'izitoast.modification_confirm'
+                ),
                 position: 'topRight',
               });
             });
@@ -263,7 +263,7 @@ export class MyAccountComponent implements OnInit {
     this.connectedUser = {};
     this.router.navigateByUrl('/home');
     this.iziToast.success({
-      message: "You're logout",
+      message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
     });
   }
@@ -306,13 +306,23 @@ export class MyAccountComponent implements OnInit {
 
               this.connectedUser = theUser[0];
               this.errorPassword = null;
-
+              try {
+                this.translate.setDefaultLang(
+                  this.connectedUser.language != undefined
+                    ? this.connectedUser.language
+                    : ''
+                );
+              } catch (error) {
+                this.translate.setDefaultLang('en');
+              }
               this.userLogin = {};
               this.iziToast.success({
-                message: 'successful login',
+                message: this.translate.instant('izitoast.successful_login'),
                 position: 'topRight',
               });
-              this.router.navigateByUrl('/home');
+              setTimeout(() => {
+                this.router.navigateByUrl('/home');
+              }, 250);
             }
           },
           error: (res) => {
@@ -330,7 +340,7 @@ export class MyAccountComponent implements OnInit {
         this.us.register(this.userInscription).subscribe((resRegister) => {
           this.userInscription = {};
           this.iziToast.success({
-            message: 'successful registration',
+            message: this.translate.instant('izitoast.successful_registration'),
             position: 'topRight',
           });
           window.location.reload();
@@ -457,8 +467,10 @@ export class MyAccountComponent implements OnInit {
   }
   confirmDeleteAccount() {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want delete your account?',
-      header: 'Delete my account',
+      message: this.translate.instant(
+        'my_account.are_you_sure_that_you_want_delete_your_account'
+      ),
+      header: this.translate.instant('my_account.delete_my_account'),
       dismissableMask: true,
       accept: () => {
         this.deleteMyAccount();
@@ -489,7 +501,7 @@ export class MyAccountComponent implements OnInit {
     }
   }
   getOrderDate(orderDate: Date | undefined) {
-    const monthNames = [
+    const englishMonthNames = [
       'Jan.',
       'Feb.',
       'March',
@@ -503,16 +515,40 @@ export class MyAccountComponent implements OnInit {
       'Nov.',
       'Dec.',
     ];
+    const frenchMonthNames = [
+      'Jan.',
+      'Fev.',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juill.',
+      'Août',
+      'Sept.',
+      'Oct.',
+      'Nov.',
+      'Dec.',
+    ];
 
     if (orderDate) {
       orderDate = new Date(orderDate);
-      return (
-        orderDate.getDate() +
-        ' ' +
-        monthNames[orderDate.getMonth()] +
-        ' ' +
-        orderDate.getFullYear()
-      );
+      if (this.translate.getDefaultLang() == 'fr') {
+        return (
+          orderDate.getDate() +
+          ' ' +
+          frenchMonthNames[orderDate.getMonth()] +
+          ' ' +
+          orderDate.getFullYear()
+        );
+      } else {
+        return (
+          orderDate.getDate() +
+          ' ' +
+          englishMonthNames[orderDate.getMonth()] +
+          ' ' +
+          orderDate.getFullYear()
+        );
+      }
     } else {
       return false;
     }
