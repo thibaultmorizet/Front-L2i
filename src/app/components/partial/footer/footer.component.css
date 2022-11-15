@@ -22,12 +22,14 @@ footer ul {
 }
 
 footer li {
+    display: flex;
+    justify-content: center;
     font-family: "Quicksand", Arial, sans-serif;
     color: rgba(0, 0, 0);
     font-weight: 400;
     text-transform: uppercase;
     cursor: pointer;
-    width: 50%;
+    width: 100%;
     padding: 1em 1em;
     text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6);
     text-align: center;
@@ -44,10 +46,25 @@ footer .active {
     font-weight: 700;
 }
 
+#languageFlag {
+    width: 20px;
+}
+
+.language-selector {
+    display: flex;
+}
+
 @media (min-width: 650px) {
     footer ul {
         font-size: 1rem;
     }
+}
+
+@media (min-width: 1300px) {
+    #languageFlag {
+        width: 30px;
+    }
+
 }
 
 @media (min-width: 1800px) {

@@ -20,7 +20,7 @@ export class UserService {
     );
   }
 
-  updateUser(id: number | undefined, user: User) {
+  updateUser(id: number | undefined, user: User) {    
     return this.http.put<{ token: string }>(this.url + '/' + id, user);
   }
   

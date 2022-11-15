@@ -169,6 +169,7 @@ export class CartDetailsComponent implements OnInit {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('language', 'session');
     this.authService.signOut();
     this.connectedUser = {};
     this.iziToast.success({

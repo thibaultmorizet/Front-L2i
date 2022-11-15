@@ -1,107 +1,108 @@
 {
-	"book": {
-		"clear_all": "Clear All",
-		"format": "Format",
-		"only_books_in_stock": "Only books in stock",
-		"only_books_out_of_stock": "Only books out of stock",
-		"price_range": "Price Range",
-		"search": "Search",
-		"type": "Type"
-	},
-	"book_details": {
-		"book_details": "Book details",
-		"summary": "Summary"
-	},
-	"cart_details": {
-		"add_billing_address": "Add billing address",
-		"add_delivery_address": "Add delivery address",
-		"available": "Available(s)",
-		"create_valid_addresses_to_check_out": "Create valid addresses to check out",
-		"delivery_by": "Delivery by",
-		"only": "Only",
-		"remove": "Remove",
-		"your_cart_is_empty": "Your cart is empty",
-		"your_cart_total_is": "Your cart total is"
-	},
-	"contact": {
-		"message": "Message",
-		"send_mail": "Send mail",
-		"subject": "Subject"
-	},
-	"general": {
-		"add_to_cart": "Add to cart",
-		"author": "Author",
-		"billing_address": "Billing address",
-		"check_out": "Check out",
-		"city": "City",
-		"contact": "Contact",
-		"country": "Country",
-		"delivery_address": "Delivery address",
-		"delivery_taxes": "Delivery taxes",
-		"editor": "Editor",
-		"email": "Email",
-		"free": "Free",
-		"legal_notices": "Legal notices",
-		"make_a_purchase": "Make a purchase",
-		"out_of_stock": "Out of Stock",
-		"postal_code": "Postal code",
-		"price": "Price",
-		"quantity": "Quantity",
-		"save_the_changes": "Save the changes",
-		"street": "Street",
-		"subtotal": "Subtotal",
-		"total": "Total",
-		"year_of_publication": "Year of publication"
-	},
-	"header": {
-		"home": "home",
-		"login_sign_in": "login / sign in",
-		"my_account": "my account",
-		"my_cart": "my cart",
-		"shop": "shop"
-	},
-	"home": {
-		"next": "Next",
-		"our_best_sell": "Our best sell",
-		"prev": "Prev"
-	},
-	"izitoast": {
-		"book_add_to_cart": "Book add to cart",
-		"lack_of_stock": "Lack of stock",
-		"lack_of_stock_message": "There are {{bookStock}} copies of the book {{bookTitle}} left and you are requesting {{bookNumber}}",
-		"login_before_confirm_check_out": "Login before confirm check out",
-		"modification_confirm": "Modification confirm",
-		"successful_login": "Successful login",
-		"successful_registration": "Successful registration",
-		"you_re_logout": "you're logout",
-		"your_order_is_validate": "Your order is validate"
-	},
-	"my_account": {
-		"are_you_sure_that_you_want_delete_your_account": "Are you sure that you want delete your account ?",
-		"confirm_your_new_password": "Confirm your new password",
-		"confirm_your_password": "Confirm your password",
-		"delete_my_account": "Delete my account",
-		"firstname": "Firstname",
-		"insert_your_new_password": "Insert your new password",
-		"lastname": "Lastname",
-		"login": "Login",
-		"login_with_facebook": "Login with Facebook",
-		"login_with_google": "Login with Google",
-		"logout": "Logout",
-		"order_date": "Order date",
-		"order_number": "Order number",
-		"password": "Password",
-		"register": "Register",
-		"register_with_facebook": "Register with Facebook",
-		"register_with_google": "Register with Google",
-		"user_personnal_data": "User personnal data",
-		"view_personnal_data": "View personnal data",
-		"view_pervious_orders": "View pervious orders",
-		"you_already_have_an_account": "You already have an account",
-		"you_havn_t_any_orders": "You havn't any orders",
-		"you_re_not_registered": "you're not registered"
-	},
-	"page_not_found": {
-		"back_to_homepage": "back to Homepage"
-	}
+  "book": {
+    "clear_all": "Clear All",
+    "format": "Format",
+    "only_books_in_stock": "Only books in stock",
+    "only_books_out_of_stock": "Only books out of stock",
+    "price_range": "Price Range",
+    "search": "Search",
+    "type": "Type"
+  },
+  "book_details": {
+    "book_details": "Book details",
+    "summary": "Summary"
+  },
+  "cart_details": {
+    "add_billing_address": "Add billing address",
+    "add_delivery_address": "Add delivery address",
+    "available": "Available(s)",
+    "create_valid_addresses_to_check_out": "Create valid addresses to check out",
+    "delivery_by": "Delivery by",
+    "only": "Only",
+    "remove": "Remove",
+    "your_cart_is_empty": "Your cart is empty",
+    "your_cart_total_is": "Your cart total is"
+  },
+  "contact": {
+    "message": "Message",
+    "send_mail": "Send mail",
+    "subject": "Subject"
+  },
+  "general": {
+    "add_to_cart": "Add to cart",
+    "author": "Author",
+    "billing_address": "Billing address",
+    "check_out": "Check out",
+    "city": "City",
+    "contact": "Contact",
+    "country": "Country",
+    "delivery_address": "Delivery address",
+    "delivery_taxes": "Delivery taxes",
+    "editor": "Editor",
+    "email": "Email",
+    "free": "Free",
+    "legal_notices": "Legal notices",
+    "make_a_purchase": "Make a purchase",
+    "out_of_stock": "Out of Stock",
+    "postal_code": "Postal code",
+    "price": "Price",
+    "quantity": "Quantity",
+    "save_the_changes": "Save the changes",
+    "street": "Street",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "year_of_publication": "Year of publication",
+    "your_language": "Your language"
+  },
+  "header": {
+    "home": "home",
+    "login_sign_in": "login / sign in",
+    "my_account": "my account",
+    "my_cart": "my cart",
+    "shop": "shop"
+  },
+  "home": {
+    "next": "Next",
+    "our_best_sell": "Our best sell",
+    "prev": "Prev"
+  },
+  "izitoast": {
+    "book_add_to_cart": "Book add to cart",
+    "lack_of_stock": "Lack of stock",
+    "lack_of_stock_message": "There are {{bookStock}} copies of the book {{bookTitle}} left and you are requesting {{bookNumber}}",
+    "login_before_confirm_check_out": "Login before confirm check out",
+    "modification_confirm": "Modification confirm",
+    "successful_login": "Successful login",
+    "successful_registration": "Successful registration",
+    "you_re_logout": "you're logout",
+    "your_order_is_validate": "Your order is validate"
+  },
+  "my_account": {
+    "are_you_sure_that_you_want_delete_your_account": "Are you sure that you want delete your account ?",
+    "confirm_your_new_password": "Confirm your new password",
+    "confirm_your_password": "Confirm your password",
+    "delete_my_account": "Delete my account",
+    "firstname": "Firstname",
+    "insert_your_new_password": "Insert your new password",
+    "lastname": "Lastname",
+    "login": "Login",
+    "login_with_facebook": "Login with Facebook",
+    "login_with_google": "Login with Google",
+    "logout": "Logout",
+    "order_date": "Order date",
+    "order_number": "Order number",
+    "password": "Password",
+    "register": "Register",
+    "register_with_facebook": "Register with Facebook",
+    "register_with_google": "Register with Google",
+    "user_personnal_data": "User personnal data",
+    "view_personnal_data": "View personnal data",
+    "view_pervious_orders": "View pervious orders",
+    "you_already_have_an_account": "You already have an account",
+    "you_havn_t_any_orders": "You havn't any orders",
+    "you_re_not_registered": "you're not registered"
+  },
+  "page_not_found": {
+    "back_to_homepage": "back to Homepage"
+  }
 }

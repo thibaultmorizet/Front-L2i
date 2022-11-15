@@ -5,13 +5,18 @@
         [routerLink]="['/contact']"
         [ngClass]="{ active: path === 'contact' }"
       >
-      {{'general.contact' | translate}}
+        {{ "general.contact" | translate }}
       </li>
       <li
         [routerLink]="['/legal-notices']"
         [ngClass]="{ active: path === 'legal-notices' }"
       >
-      {{'general.legal_notices' | translate}}
+        {{ "general.legal_notices" | translate }}
+      </li>
+      <li class="language-selector">
+        <div (click)="changeLanguage()">
+          {{ "general.your_language" | translate }} :  <img id="languageFlag" [src]="flagimg" alt="languageFlag" />
+        </div>
       </li>
     </ul>
   </nav>

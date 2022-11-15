@@ -260,6 +260,7 @@ export class MyAccountComponent implements OnInit {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('language', 'session');
     this.connectedUser = {};
     this.router.navigateByUrl('/home');
     this.iziToast.success({

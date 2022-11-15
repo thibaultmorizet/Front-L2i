@@ -78,6 +78,7 @@ export class LegalNoticesComponent implements OnInit {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('language', 'session');
     this.authService.signOut();
     this.connectedUser = null;
     this.router.navigateByUrl('/home');

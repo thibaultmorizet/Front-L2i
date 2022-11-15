@@ -30,7 +30,7 @@ export class PagenotfoundComponent implements OnInit {
     private translate: TranslateService
   ) {}
 
-  ngOnInit(): void {   
+  ngOnInit(): void {
     this.translate.use(this.translate.getDefaultLang());
     try {
       this.connectedUser = JSON.parse(
@@ -74,6 +74,7 @@ export class PagenotfoundComponent implements OnInit {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('language', 'session');
     this.authService.signOut();
     this.connectedUser = {};
     this.router.navigateByUrl('/home');
