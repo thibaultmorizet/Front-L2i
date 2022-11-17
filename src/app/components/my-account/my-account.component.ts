@@ -341,14 +341,14 @@ export class MyAccountComponent implements OnInit {
     this.as.getTheUser(this.userInscription.email).subscribe((res) => {
       if (res[0] == undefined) {
         this.errorEmail = '';
-        this.userInscription.language='en';
+        this.userInscription.language = 'en';
         this.us.register(this.userInscription).subscribe((resRegister) => {
           this.userInscription = {};
           this.iziToast.success({
             message: this.translate.instant('izitoast.successful_registration'),
             position: 'topRight',
           });
-          this.isLoginPage=true;
+          this.isLoginPage = true;
           this.router.navigateByUrl('/my-account');
         });
       } else {
@@ -368,11 +368,12 @@ export class MyAccountComponent implements OnInit {
       if (this.isLoggedin) {
         this.us.getTheUser(this.socialUser.email).subscribe((el) => {
           if (el[0] != undefined) {
-            if (el[0].token == data.id) {              
-              this.userLogin = el[0];
+            if (el[0].token == data.id) {
+              this.userLogin.email = el[0].email;
               this.userLogin.password = el[0].token;
               this.userLogin.passwordConfirm = el[0].token;
               this.login();
+              this.userLogin = {};
             } else {
               this.authService.signOut();
               this.iziToast.success({
@@ -381,14 +382,20 @@ export class MyAccountComponent implements OnInit {
               });
             }
           } else {
-            this.userInscription={};
-            this.userInscription.email=this.socialUser.email;
-            this.userInscription.lastname=this.socialUser.lastName;
-            this.userInscription.firstname=this.socialUser.firstName;
-            this.userInscription.password=this.socialUser.id;
-            this.userInscription.token=this.socialUser.id;
+            this.userInscription = {};
+            this.userInscription.email = this.socialUser.email;
+            this.userInscription.lastname = this.socialUser.lastName;
+            this.userInscription.firstname = this.socialUser.firstName;
+            this.userInscription.password = this.socialUser.id;
+            this.userInscription.token = this.socialUser.id;
+            this.userInscription = {};
 
-            this.register()
+            this.register();
+
+            this.userLogin.email = this.socialUser.email;
+            this.userLogin.password = this.socialUser.id;
+            this.login();
+            this.userLogin = {};
           }
         });
       }
