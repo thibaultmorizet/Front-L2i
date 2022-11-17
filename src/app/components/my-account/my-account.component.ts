@@ -365,6 +365,8 @@ export class MyAccountComponent implements OnInit {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((data) => {
       if (this.isLoggedin) {
         this.us.getTheUser(this.socialUser.email).subscribe((el) => {
+          console.log(el,el[0],el[0].token,data.authToken);
+          
           if (el[0].token == data.authToken) {
             console.log('is same user');
             
