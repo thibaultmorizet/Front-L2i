@@ -136,7 +136,7 @@ export class MyAccountComponent implements OnInit {
     }
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
-      this.isLoggedin = user != null;      
+      this.isLoggedin = user != null;
     });
   }
 
@@ -362,14 +362,14 @@ export class MyAccountComponent implements OnInit {
   }
 
   signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-    console.log(this.isLoggedin,1);
-    
-    if(this.isLoggedin){
-      this.us.getTheUser(this.socialUser.email).subscribe((el)=>{
-        console.log(el,2);
-        
-      })
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((data) => {
+      console.log(data, this.isLoggedin, 1);
+    });
+
+    if (this.isLoggedin) {
+      this.us.getTheUser(this.socialUser.email).subscribe((el) => {
+        console.log(el, 2);
+      });
     }
   }
   toggleIsLoginPage() {
