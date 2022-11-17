@@ -12,4 +12,5 @@ export interface User {
   orders?: object;
   roles?: Array<string>;
   language?: string;
+  token?: string;
 }
