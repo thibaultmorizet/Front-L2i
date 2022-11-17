@@ -40,7 +40,7 @@ export class MyAccountComponent implements OnInit {
   errorFirstname: string | null = null;
   errorPasswordConfirm: string | null = null;
   orders: Array<Order> = [];
-
+  loginAfterRegister: boolean = false;
   userLogin: User = {};
   isLoginPage: boolean = true;
   isOrderPage: boolean = false;
@@ -293,6 +293,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   login() {
+    this.loginAfterRegister = false;
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
@@ -344,12 +345,19 @@ export class MyAccountComponent implements OnInit {
         this.userInscription.language = 'en';
         this.us.register(this.userInscription).subscribe((resRegister) => {
           this.userInscription = {};
-          this.iziToast.success({
-            message: this.translate.instant('izitoast.successful_registration'),
-            position: 'topRight',
-          });
           this.isLoginPage = true;
-          this.router.navigateByUrl('/my-account');
+
+          if (this.loginAfterRegister) {
+            this.login();
+          } else {
+            this.iziToast.success({
+              message: this.translate.instant(
+                'izitoast.successful_registration'
+              ),
+              position: 'topRight',
+            });
+            this.router.navigateByUrl('/my-account');
+          }
         });
       } else {
         this.errorEmail = 'This email has already been registered';
@@ -382,6 +390,7 @@ export class MyAccountComponent implements OnInit {
               });
             }
           } else {
+            this.loginAfterRegister = true;
             this.userInscription = {};
             this.userInscription.email = this.socialUser.email;
             this.userInscription.lastname = this.socialUser.lastName;
@@ -392,11 +401,6 @@ export class MyAccountComponent implements OnInit {
             this.userLogin.password = this.socialUser.id;
 
             this.register();
-            setTimeout(() => {
-              this.login();
-              this.userInscription = {};
-              this.userLogin = {};
-            }, 250);
           }
         });
       }
