@@ -374,6 +374,8 @@ export class MyAccountComponent implements OnInit {
   }
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    console.log(this.authService);
+    
   }
 
   signInWithFB(): void {
