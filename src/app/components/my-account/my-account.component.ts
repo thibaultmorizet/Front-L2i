@@ -298,8 +298,9 @@ export class MyAccountComponent implements OnInit {
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
-      } else {console.log(theUser[0].token == null,this.loginAfterRegister);
-      
+      } else {
+        console.log(theUser[0].token == null, this.loginAfterRegister);
+
         if (theUser[0].token == null || this.loginAfterRegister) {
           this.errorEmail = null;
           this.as.login(this.userLogin).subscribe({
@@ -373,9 +374,10 @@ export class MyAccountComponent implements OnInit {
     this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
   }
   signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.authService
+      .signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then((data) => console.log(data));
     console.log(this.authService);
-    
   }
 
   signInWithFB(): void {
