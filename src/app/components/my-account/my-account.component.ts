@@ -348,7 +348,7 @@ export class MyAccountComponent implements OnInit {
             message: this.translate.instant('izitoast.successful_registration'),
             position: 'topRight',
           });
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/my-account');
         });
       } else {
         this.errorEmail = 'This email has already been registered';
