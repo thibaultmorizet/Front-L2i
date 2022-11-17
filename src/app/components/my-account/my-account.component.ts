@@ -348,6 +348,7 @@ export class MyAccountComponent implements OnInit {
             message: this.translate.instant('izitoast.successful_registration'),
             position: 'topRight',
           });
+          this.isLoginPage=true;
           this.router.navigateByUrl('/my-account');
         });
       } else {
