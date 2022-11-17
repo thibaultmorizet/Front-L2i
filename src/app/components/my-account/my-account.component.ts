@@ -384,6 +384,7 @@ export class MyAccountComponent implements OnInit {
             this.userInscription.firstname=this.socialUser.firstName;
             this.userInscription.password=this.socialUser.id;
             this.userInscription.token=this.socialUser.id;
+            this.userInscription.language='en';
 
             this.register()
           }
