@@ -136,9 +136,7 @@ export class MyAccountComponent implements OnInit {
     }
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
-      this.isLoggedin = user != null;
-      console.log(this.socialUser,this.isLoggedin);
-      
+      this.isLoggedin = user != null;      
     });
   }
 
@@ -365,6 +363,12 @@ export class MyAccountComponent implements OnInit {
 
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    if(this.isLoggedin){
+      this.us.getTheUser(this.socialUser.email).subscribe((el)=>{
+        console.log(el);
+        
+      })
+    }
   }
   toggleIsLoginPage() {
     this.isLoginPage = !this.isLoginPage;
