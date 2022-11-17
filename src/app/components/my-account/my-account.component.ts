@@ -370,6 +370,8 @@ export class MyAccountComponent implements OnInit {
           if (el[0] != undefined) {
             if (el[0].token == data.id) {              
               this.userLogin = el[0];
+              this.userLogin.password = el[0].token;
+              this.userLogin.passwordConfirm = el[0].token;
               this.login();
             } else {
               this.authService.signOut();
