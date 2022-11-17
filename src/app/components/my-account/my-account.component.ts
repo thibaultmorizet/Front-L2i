@@ -264,12 +264,13 @@ export class MyAccountComponent implements OnInit {
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.storageCrypter.removeItem('language', 'session');
+    this.authService.signOut();
     this.connectedUser = {};
-    this.router.navigateByUrl('/home');
     this.iziToast.success({
       message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
     });
+    this.router.navigateByUrl('/home');
   }
 
   refreshToken() {
@@ -367,13 +368,19 @@ export class MyAccountComponent implements OnInit {
         this.us.getTheUser(this.socialUser.email).subscribe((el) => {
           if (el[0] != undefined) {
             if (el[0].token == data.id) {
-              console.log('is same user');
+              console.log(el[0]);
+              
+              this.userLogin = el[0];
+              this.login();
             } else {
-              console.log('error in user');
+              this.authService.signOut();
+              this.iziToast.success({
+                message: 'this email is already use',
+                position: 'topRight',
+              });
             }
-          }else{
+          } else {
             console.log('no user');
-            
           }
         });
       }
