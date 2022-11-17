@@ -392,9 +392,11 @@ export class MyAccountComponent implements OnInit {
             this.userLogin.password = this.socialUser.id;
 
             this.register();
-            this.login();
-            this.userInscription = {};
-            this.userLogin = {};
+            setTimeout(() => {
+              this.login();
+              this.userInscription = {};
+              this.userLogin = {};
+            }, 250);
           }
         });
       }
