@@ -12,12 +12,9 @@ import {
   FacebookLoginProvider,
   GoogleLoginProvider,
   SocialAuthService,
+  SocialUser,
 } from 'angularx-social-login';
-import {
-  PrimeNGConfig,
-  ConfirmationService,
-  MessageService,
-} from 'primeng/api';
+import { PrimeNGConfig, ConfirmationService } from 'primeng/api';
 import { FormControl, Validators } from '@angular/forms';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/interfaces/order';
@@ -28,7 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.css', './../../../css/main.css'],
   encapsulation: ViewEncapsulation.None,
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService],
 })
 export class MyAccountComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
@@ -51,6 +48,9 @@ export class MyAccountComponent implements OnInit {
   passwordIsClear: boolean = false;
   passwordType: string = 'password';
 
+  socialUser!: SocialUser;
+  isLoggedin?: boolean;
+
   constructor(
     private router: Router,
     private iziToast: NgxIzitoastService,
@@ -60,7 +60,6 @@ export class MyAccountComponent implements OnInit {
     private authService: SocialAuthService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
     private os: OrderService,
     private translate: TranslateService
   ) {}
@@ -135,6 +134,10 @@ export class MyAccountComponent implements OnInit {
         this.logout();
       }
     }
+    this.authService.authState.subscribe((user) => {
+      this.socialUser = user;
+      this.isLoggedin = user != null;
+    });
   }
 
   tokenExpired(token: string) {

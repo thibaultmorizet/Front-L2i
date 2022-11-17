@@ -20,8 +20,6 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 import {
   SocialLoginModule,
   SocialAuthServiceConfig,
-} from 'angularx-social-login';
-import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from 'angularx-social-login';
@@ -124,12 +122,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
       useValue: {
         autoLogin: false,
         providers: [
-          /* {
+          {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
               '191085854417-q1nheuh4v1hgspdo64vs87hn3ovajlh3.apps.googleusercontent.com'
             ),
-          }, */
+          },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider('496421065692400'),
