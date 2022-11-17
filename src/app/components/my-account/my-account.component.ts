@@ -341,7 +341,7 @@ export class MyAccountComponent implements OnInit {
     this.as.getTheUser(this.userInscription.email).subscribe((res) => {
       if (res[0] == undefined) {
         this.errorEmail = '';
-
+        this.userInscription.language='en';
         this.us.register(this.userInscription).subscribe((resRegister) => {
           this.userInscription = {};
           this.iziToast.success({
@@ -384,7 +384,6 @@ export class MyAccountComponent implements OnInit {
             this.userInscription.firstname=this.socialUser.firstName;
             this.userInscription.password=this.socialUser.id;
             this.userInscription.token=this.socialUser.id;
-            this.userInscription.language='en';
 
             this.register()
           }
