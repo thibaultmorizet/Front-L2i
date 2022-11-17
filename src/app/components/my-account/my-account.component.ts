@@ -388,13 +388,12 @@ export class MyAccountComponent implements OnInit {
             this.userInscription.firstname = this.socialUser.firstName;
             this.userInscription.password = this.socialUser.id;
             this.userInscription.token = this.socialUser.id;
-            this.userInscription = {};
-
-            this.register();
-
             this.userLogin.email = this.socialUser.email;
             this.userLogin.password = this.socialUser.id;
+
+            this.register();
             this.login();
+            this.userInscription = {};
             this.userLogin = {};
           }
         });
