@@ -23,7 +23,6 @@ export class ContactService {
           { headers: headers }
         )
         .subscribe((response) => {
-          console.log(response);
         });
     
   }
