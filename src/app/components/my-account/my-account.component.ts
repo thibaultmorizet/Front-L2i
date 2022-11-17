@@ -367,9 +367,7 @@ export class MyAccountComponent implements OnInit {
       if (this.isLoggedin) {
         this.us.getTheUser(this.socialUser.email).subscribe((el) => {
           if (el[0] != undefined) {
-            if (el[0].token == data.id) {
-              console.log(el[0]);
-              
+            if (el[0].token == data.id) {              
               this.userLogin = el[0];
               this.login();
             } else {
@@ -380,7 +378,14 @@ export class MyAccountComponent implements OnInit {
               });
             }
           } else {
-            console.log('no user');
+            this.userInscription={};
+            this.userInscription.email=this.socialUser.email;
+            this.userInscription.lastname=this.socialUser.lastName;
+            this.userInscription.firstname=this.socialUser.firstName;
+            this.userInscription.password=this.socialUser.id;
+            this.userInscription.token=this.socialUser.id;
+
+            this.register()
           }
         });
       }
