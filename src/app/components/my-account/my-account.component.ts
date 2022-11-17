@@ -146,30 +146,32 @@ export class MyAccountComponent implements OnInit {
   }
 
   setNewPersonnalData() {
-    if (this.newUserData.password == '') {
-      delete this.newUserData.password;
-      delete this.newUserData.passwordConfirm;
-    }
-    if (this.newUserData.password == this.newUserData.passwordConfirm) {
-      this.errorPassword = null;
-      this.us
-        .updateUser(this.newUserData.id, this.newUserData)
-        .subscribe((res) => {
-          this.iziToast.success({
-            message: this.translate.instant('izitoast.modification_confirm'),
-            position: 'topRight',
+    if (this.newUserData.token == null) {
+      if (this.newUserData.password == '') {
+        delete this.newUserData.password;
+        delete this.newUserData.passwordConfirm;
+      }
+      if (this.newUserData.password == this.newUserData.passwordConfirm) {
+        this.errorPassword = null;
+        this.us
+          .updateUser(this.newUserData.id, this.newUserData)
+          .subscribe((res) => {
+            this.iziToast.success({
+              message: this.translate.instant('izitoast.modification_confirm'),
+              position: 'topRight',
+            });
+            delete this.newUserData.password;
+            delete this.newUserData.passwordConfirm;
+            this.connectedUser = this.newUserData;
+            this.storageCrypter.setItem(
+              'user',
+              JSON.stringify(this.connectedUser),
+              'session'
+            );
           });
-          delete this.newUserData.password;
-          delete this.newUserData.passwordConfirm;
-          this.connectedUser = this.newUserData;
-          this.storageCrypter.setItem(
-            'user',
-            JSON.stringify(this.connectedUser),
-            'session'
-          );
-        });
-    } else {
-      this.errorPassword = "The password isn't identical";
+      } else {
+        this.errorPassword = "The password isn't identical";
+      }
     }
   }
 
@@ -293,50 +295,53 @@ export class MyAccountComponent implements OnInit {
   }
 
   login() {
-    this.loginAfterRegister = false;
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
-      } else {
-        this.errorEmail = null;
-        this.as.login(this.userLogin).subscribe({
-          next: (res) => {
-            if (res.token != null) {
-              this.storageCrypter.setItem('jeton', res.token, 'local');
+      } else {console.log(theUser[0].token == null,this.loginAfterRegister);
+      
+        if (theUser[0].token == null || this.loginAfterRegister) {
+          this.errorEmail = null;
+          this.as.login(this.userLogin).subscribe({
+            next: (res) => {
+              if (res.token != null) {
+                this.storageCrypter.setItem('jeton', res.token, 'local');
 
-              this.storageCrypter.setItem(
-                'user',
-                JSON.stringify(theUser[0]),
-                'session'
-              );
-
-              this.connectedUser = theUser[0];
-              this.errorPassword = null;
-              try {
-                this.translate.setDefaultLang(
-                  this.connectedUser.language != undefined
-                    ? this.connectedUser.language
-                    : ''
+                this.storageCrypter.setItem(
+                  'user',
+                  JSON.stringify(theUser[0]),
+                  'session'
                 );
-              } catch (error) {
-                this.translate.setDefaultLang('en');
+
+                this.connectedUser = theUser[0];
+                this.errorPassword = null;
+                try {
+                  this.translate.setDefaultLang(
+                    this.connectedUser.language != undefined
+                      ? this.connectedUser.language
+                      : ''
+                  );
+                } catch (error) {
+                  this.translate.setDefaultLang('en');
+                }
+                this.userLogin = {};
+                this.iziToast.success({
+                  message: this.translate.instant('izitoast.successful_login'),
+                  position: 'topRight',
+                });
+                setTimeout(() => {
+                  this.router.navigateByUrl('/home');
+                }, 250);
               }
-              this.userLogin = {};
-              this.iziToast.success({
-                message: this.translate.instant('izitoast.successful_login'),
-                position: 'topRight',
-              });
-              setTimeout(() => {
-                this.router.navigateByUrl('/home');
-              }, 250);
-            }
-          },
-          error: (res) => {
-            this.errorPassword = 'Incorrect password';
-          },
-        });
+            },
+            error: (res) => {
+              this.errorPassword = 'Incorrect password';
+            },
+          });
+        }
       }
     });
+    this.loginAfterRegister = false;
   }
   register() {
     this.as.getTheUser(this.userInscription.email).subscribe((res) => {
@@ -380,6 +385,7 @@ export class MyAccountComponent implements OnInit {
               this.userLogin.email = el[0].email;
               this.userLogin.password = el[0].token;
               this.userLogin.passwordConfirm = el[0].token;
+              this.loginAfterRegister = true;
               this.login();
               this.userLogin = {};
             } else {
@@ -399,7 +405,6 @@ export class MyAccountComponent implements OnInit {
             this.userInscription.token = this.socialUser.id;
             this.userLogin.email = this.socialUser.email;
             this.userLogin.password = this.socialUser.id;
-
             this.register();
           }
         });

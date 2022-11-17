@@ -4,7 +4,7 @@
   <main id="content">
     <div class="container" *ngIf="!connectedUser.id && isLoginPage">
       <div class="login-container">
-        <p class="title text-center">{{ 'my_account.login' | translate }}</p>
+        <p class="title text-center">{{ "my_account.login" | translate }}</p>
 
         <form #loginForm="ngForm" (ngSubmit)="login()">
           <div class="mb-3">
@@ -67,7 +67,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 [disabled]="!loginForm.valid"
               >
-              {{ 'my_account.login' | translate }}
+                {{ "my_account.login" | translate }}
               </button>
             </div>
           </div>
@@ -83,23 +83,24 @@
               alt="logo Google"
               class="logo-google"
             />
-            {{ 'my_account.login_with_google' | translate }}</button
+            {{ "my_account.login_with_google" | translate }}</button
           ><br />
           <button class="btn btn-facebook mt-3" (click)="signInWithFB()">
-            <i class="fa-brands fa-facebook mr-1"></i> {{ 'my_account.login_with_facebook' | translate }}
+            <i class="fa-brands fa-facebook mr-1"></i>
+            {{ "my_account.login_with_facebook" | translate }}
           </button>
         </div>
         <p
           class="text-center text-underline pointer"
           (click)="toggleIsLoginPage()"
         >
-        {{ 'my_account.you_re_not_registered' | translate }}
+          {{ "my_account.you_re_not_registered" | translate }}
         </p>
       </div>
     </div>
     <div class="container" *ngIf="!connectedUser.id && !isLoginPage">
       <div class="register-container">
-        <p class="title text-center">{{ 'my_account.register' | translate }}</p>
+        <p class="title text-center">{{ "my_account.register" | translate }}</p>
 
         <form #registerForm="ngForm" (ngSubmit)="register()">
           <div class="mb-3">
@@ -205,7 +206,9 @@
                     id="passwordConfirm"
                     name="passwordConfirm"
                     [type]="passwordType"
-                    placeholder="{{ 'my_account.confirm_your_password' | translate }}"
+                    placeholder="{{
+                      'my_account.confirm_your_password' | translate
+                    }}"
                     pInputText
                     [(ngModel)]="userInscription.passwordConfirm"
                     [ngClass]="{ 'ng-invalid': errorPasswordConfirm }"
@@ -247,7 +250,7 @@
                   errorPasswordConfirm
                 "
               >
-              {{ 'my_account.register' | translate }}
+                {{ "my_account.register" | translate }}
               </button>
             </div>
           </div>
@@ -264,17 +267,18 @@
               alt="logo Google"
               class="logo-google"
             />
-            {{ 'my_account.register_with_google' | translate }}</button
+            {{ "my_account.register_with_google" | translate }}</button
           ><br />
           <button class="btn btn-facebook mt-3" (click)="signInWithFB()">
-            <i class="fa-brands fa-facebook mr-1"></i> {{ 'my_account.register_with_facebook' | translate }}
+            <i class="fa-brands fa-facebook mr-1"></i>
+            {{ "my_account.register_with_facebook" | translate }}
           </button>
         </div>
         <p
           class="text-center text-underline pointer"
           (click)="toggleIsLoginPage()"
         >
-        {{ 'my_account.you_already_have_an_account' | translate }}
+          {{ "my_account.you_already_have_an_account" | translate }}
         </p>
       </div>
     </div>
@@ -304,12 +308,16 @@
             *ngIf="connectedUser.id"
             (click)="isOrderPage = !isOrderPage"
           >
-            <span>{{ 'my_account.view_pervious_orders' | translate }}</span>
+            <span>{{ "my_account.view_pervious_orders" | translate }}</span>
           </button>
         </div>
         <div id="personnalData" class="my-3">
           <p-accordion>
-            <p-accordionTab header="{{ 'my_account.user_personnal_data' | translate }}" [selected]="true">
+            <p-accordionTab
+              header="{{ 'my_account.user_personnal_data' | translate }}"
+              [selected]="connectedUser.token == null"
+              [disabled]="connectedUser.token != null"
+            >
               <form
                 #personnalDataForm="ngForm"
                 role="personnalData"
@@ -368,7 +376,9 @@
                         id="password"
                         name="password"
                         [type]="passwordType"
-                        placeholder="{{ 'my_account.insert_your_new_password' | translate }}"
+                        placeholder="{{
+                          'my_account.insert_your_new_password' | translate
+                        }}"
                         pInputText
                         [(ngModel)]="newUserData.password"
                         class="form-control"
@@ -402,7 +412,9 @@
                         id="passwordConfirm"
                         name="passwordConfirm"
                         [type]="passwordType"
-                        placeholder="{{ 'my_account.confirm_your_new_password' | translate }}"
+                        placeholder="{{
+                          'my_account.confirm_your_new_password' | translate
+                        }}"
                         pInputText
                         [(ngModel)]="newUserData.passwordConfirm"
                         [ngClass]="{ 'ng-invalid': errorPasswordConfirm }"
@@ -443,12 +455,15 @@
                       errorPasswordConfirm
                     "
                   >
-                  {{ 'general.save_the_changes' | translate }}
+                    {{ "general.save_the_changes" | translate }}
                   </button>
                 </div>
               </form>
             </p-accordionTab>
-            <p-accordionTab header="{{ 'general.billing_address' | translate }}">
+            <p-accordionTab
+              header="{{ 'general.billing_address' | translate }}"
+              [selected]="connectedUser.token != null"
+            >
               <form
                 #AddressBillingForm="ngForm"
                 role="AddressBilling"
@@ -522,12 +537,14 @@
                     class="p-button-raised p-button-primary-color btn-primary-color"
                     [disabled]="!AddressBillingForm.valid"
                   >
-                  {{ 'general.save_the_changes' | translate }}
+                    {{ "general.save_the_changes" | translate }}
                   </button>
                 </div>
               </form>
             </p-accordionTab>
-            <p-accordionTab header="{{ 'general.delivery_address' | translate }}">
+            <p-accordionTab
+              header="{{ 'general.delivery_address' | translate }}"
+            >
               <form
                 #AddressDeliveryForm="ngForm"
                 role="AddressDelivery"
@@ -601,7 +618,7 @@
                     class="p-button-raised p-button-primary-color btn-primary-color"
                     [disabled]="!AddressDeliveryForm.valid"
                   >
-                  {{ "general.save_the_changes" | translate }}
+                    {{ "general.save_the_changes" | translate }}
                   </button>
                 </div>
               </form>
@@ -613,7 +630,7 @@
               (click)="confirmDeleteAccount()"
               class="btn btn-danger mt-3"
             >
-            {{ "my_account.delete_my_account" | translate }}
+              {{ "my_account.delete_my_account" | translate }}
             </button>
 
             <button
@@ -621,7 +638,7 @@
               (click)="logout()"
               class="btn btn-outline-danger mt-3"
             >
-            {{ "my_account.logout" | translate }}
+              {{ "my_account.logout" | translate }}
             </button>
           </div>
         </div>
@@ -663,7 +680,8 @@
               <div class="order-product-middle-info">
                 <div class="order-product-title">{{ aBook.title }}</div>
                 <div class="order-product-quantity">
-                  {{ "general.quantity" | translate }} : {{ aBook.number_ordered }}
+                  {{ "general.quantity" | translate }} :
+                  {{ aBook.number_ordered }}
                 </div>
               </div>
               <div class="order-product-price">{{ aBook.unitpricettc }} €</div>
@@ -672,14 +690,18 @@
           <div class="order-addresses-total">
             <div class="order-addresses">
               <div class="order-delivery-address">
-                <div class="order-delivery-address-title">{{ "general.delivery_address" | translate }}</div>
+                <div class="order-delivery-address-title">
+                  {{ "general.delivery_address" | translate }}
+                </div>
                 <div
                   [innerHTML]="replaceInAddress(anOrder.deliveryaddress)"
                 ></div>
               </div>
 
               <div class="order-billing-address">
-                <div class="order-billing-address-title">{{ "general.billing_address" | translate }}</div>
+                <div class="order-billing-address-title">
+                  {{ "general.billing_address" | translate }}
+                </div>
                 <div
                   [innerHTML]="replaceInAddress(anOrder.billingaddress)"
                 ></div>
