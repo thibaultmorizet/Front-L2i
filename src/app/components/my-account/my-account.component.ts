@@ -365,14 +365,14 @@ export class MyAccountComponent implements OnInit {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((data) => {
       if (this.isLoggedin) {
         this.us.getTheUser(this.socialUser.email).subscribe((el) => {
-          console.log(el);
-          console.log(el[0]);
-          
-          if (el[0].token == data.id) {
-            console.log('is same user');
-            
+          if (el[0] != undefined) {
+            if (el[0].token == data.id) {
+              console.log('is same user');
+            } else {
+              console.log('error in user');
+            }
           }else{
-            console.log('error in user');
+            console.log('no user');
             
           }
         });
