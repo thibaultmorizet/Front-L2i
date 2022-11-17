@@ -363,11 +363,11 @@ export class MyAccountComponent implements OnInit {
 
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-    console.log(this.isLoggedin);
+    console.log(this.isLoggedin,1);
     
     if(this.isLoggedin){
       this.us.getTheUser(this.socialUser.email).subscribe((el)=>{
-        console.log(el);
+        console.log(el,2);
         
       })
     }
