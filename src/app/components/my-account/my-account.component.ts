@@ -137,6 +137,8 @@ export class MyAccountComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       this.socialUser = user;
       this.isLoggedin = user != null;
+      console.log(this.socialUser,this.isLoggedin);
+      
     });
   }
 
