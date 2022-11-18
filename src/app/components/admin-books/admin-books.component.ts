@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   PrimeNGConfig,
   ConfirmationService,
@@ -28,7 +29,8 @@ export class AdminBooksComponent implements OnInit {
   constructor(
     private bs: BookService,
     private primengConfig: PrimeNGConfig,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private iziToast: NgxIzitoastService
   ) {}
 
   ngOnInit() {
@@ -55,16 +57,14 @@ export class AdminBooksComponent implements OnInit {
         this.allBooks = this.allBooks.filter(
           (val) => !this.selectedBooks.includes(val)
         );
-        this.selectedBooks.forEach(aBook => {
+        this.selectedBooks.forEach((aBook) => {
           this.bs.deleteTheBook(aBook.id).subscribe((el) => {});
         });
         this.selectedBooks = [];
-        /* this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'books Deleted',
-          life: 3000,
-        }); */
+        this.iziToast.success({
+          message: 'Books deleted',
+          position: 'topRight',
+        });
       },
     });
   }
@@ -84,12 +84,10 @@ export class AdminBooksComponent implements OnInit {
         this.allBooks = this.allBooks.filter((val) => val.id !== book.id);
         this.bs.deleteTheBook(book.id).subscribe((el) => {});
         this.book = {};
-        /*  this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'book Deleted',
-          life: 3000,
-        }); */
+        this.iziToast.success({
+          message: 'Book deleted',
+          position: 'topRight',
+        });
       },
     });
   }
@@ -105,22 +103,18 @@ export class AdminBooksComponent implements OnInit {
     if (this.book.title && this.book.title.trim()) {
       if (this.book.id) {
         this.allBooks[this.findIndexById(this.book.id)] = this.book;
-        /* this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'book Updated',
-          life: 3000,
-        }); */
+        this.iziToast.success({
+          message: 'Book updated',
+          position: 'topRight',
+        });
       } else {
         /*         this.book.id = this.createId();*/
         this.book.image = 'book-placeholder.svg';
         this.allBooks.push(this.book);
-        /* this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'book Created',
-          life: 3000,
-        }); */
+        this.iziToast.success({
+          message: 'Book created',
+          position: 'topRight',
+        });
       }
 
       this.allBooks = [...this.allBooks];
