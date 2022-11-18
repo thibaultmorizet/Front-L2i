@@ -1,4 +1,12 @@
 {
+  "admin_header": {
+    "home": "home",
+    "login_sign_in": "login / sign in",
+    "users": "Users",
+    "admins": "Admins",
+    "books": "Books",
+    "my_account": "my account"
+  },
   "book": {
     "clear_all": "Clear All",
     "format": "Format",

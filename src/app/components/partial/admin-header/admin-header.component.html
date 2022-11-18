@@ -1,0 +1,57 @@
+<header>
+  <div id="top">
+    <nav class="navbar">
+      <div class="container">
+        <a class="navbar-brand"
+          ><img
+            src="https://www.thibaultmorizet.fr/assets/logo-l2i.png"
+            alt="logo-l2i"
+            width="40"
+        /></a>
+        <a
+          *ngIf="connectedAdmin.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/admin/home']"
+          [ngClass]="{ active: path === 'admin/home/' }"
+          >{{ "admin_header.home" | translate }}</a
+        >
+        <a
+          *ngIf="connectedAdmin.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/admin/users']"
+          [ngClass]="{ active: path === 'admin/users/' }"
+          >{{ "admin_header.users" | translate }}</a
+        >
+        <a
+          *ngIf="connectedAdmin.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/admin/admins']"
+          [ngClass]="{ active: path === 'admin/admins/' }"
+          >{{ "admin_header.admins" | translate }}</a
+        >
+        <a
+          *ngIf="connectedAdmin.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/admin/books']"
+          [ngClass]="{ active: path === 'admin/books/' }"
+          >{{ "admin_header.books" | translate }}</a
+        >
+        <a
+          *ngIf="connectedAdmin.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/admin/account']"
+          [ngClass]="{ active: path === 'admin/account' }"
+          >{{ "admin_header.my_account" | translate }}</a
+        >
+
+        <a
+          *ngIf="!connectedAdmin.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/admin/login']"
+          [ngClass]="{ active: path === 'admin/login/' }"
+          >{{ "admin_header.login_sign_in" | translate }}</a
+        >
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,4 +1,12 @@
 {
+  "admin_header": {
+    "home": "Accueil",
+    "login_sign_in": "Se connecter",
+    "users": "Utilisateurs",
+    "admins": "Admins",
+    "books": "Livres",
+    "my_account": "Mon compte"
+  },
   "book": {
     "clear_all": "Tout effacer",
     "format": "Format",
@@ -56,7 +64,7 @@
   },
   "header": {
     "home": "Accueil",
-    "login_sign_in": "se connecter ",
+    "login_sign_in": "Se connecter",
     "my_account": "Mon compte",
     "my_cart": "Mon Panier",
     "shop": "Boutique"

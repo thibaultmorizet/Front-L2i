@@ -275,29 +275,15 @@ export class MyAccountComponent implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
-  refreshToken() {
-    if (!this.storageCrypter.getItem('user', 'session')) {
-      this.storageCrypter.removeItem('jeton', 'local');
-    }
-
-    this.as
-      .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
-      .subscribe({
-        next: (res) => {
-          if (res.token != null) {
-            this.storageCrypter.setItem('jeton', res.token, 'local');
-          }
-        },
-        error: (res) => {
-          this.logout();
-        },
-      });
-  }
-
   login() {
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
+      } else if (theUser[0].roles?.includes('ROLE_ADMIN')) {
+        this.iziToast.error({
+          message: "you can't connect here as admin",
+          position: 'topRight',
+        });
       } else {
         if (theUser[0].token == null || this.loginAfterRegister) {
           this.errorEmail = null;
@@ -367,9 +353,6 @@ export class MyAccountComponent implements OnInit {
         this.errorEmail = 'This email has already been registered';
       }
     });
-  }
-  refreshTokenAuth(): void {
-    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
   }
   signInWithGoogle(): void {
     this.authService

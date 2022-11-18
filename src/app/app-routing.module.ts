@@ -5,12 +5,13 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
-import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
 import { NewBookComponent } from './components/new-book/new-book.component';
 import { HomeComponent } from './components/home/home.component';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminBooksComponent } from './components/admin-books/admin-books.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,12 +19,14 @@ const routes: Routes = [
   { path: 'cart', component: CartDetailsComponent },
   { path: 'books/:id', component: BookDetailsComponent },
   { path: 'my-account', component: MyAccountComponent },
-  { path: 'admin-home', component: AdminHomeComponent },
-  { path: 'admin-register', component: AdminRegisterComponent },
   { path: 'new-book', component: NewBookComponent },
   { path: 'home', component: HomeComponent },
   { path: 'legal-notices', component: LegalNoticesComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'admin/home', component: AdminHomeComponent },
+  { path: 'admin/login', component: AdminLoginComponent },
+  { path: 'admin/books', component: AdminBooksComponent },
+
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 

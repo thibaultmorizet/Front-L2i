@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -14,39 +13,29 @@ import StorageCrypter from 'storage-crypter';
 })
 export class AdminHomeComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
-  connectedUser: User | null = {};
-  cart: Array<Book> = [];
-
-  socialUser!: SocialUser;
-  isLoggedin?: boolean;
+  connectedAdmin: User | null = {};
 
   constructor(
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private as: AuthService,
-    private authService: SocialAuthService
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     try {
-      this.connectedUser = JSON.parse(
-        this.storageCrypter.getItem('user', 'session')
+      this.connectedAdmin = JSON.parse(
+        this.storageCrypter.getItem('adminUser', 'session')
       );
     } catch (error) {
-      this.connectedUser = null;
+      this.connectedAdmin = null;
+      this.router.navigateByUrl('/admin/login');
     }
-    if (this.storageCrypter.getItem('cart', 'local') != '') {
-      this.cart = JSON.parse(this.storageCrypter.getItem('cart', 'local'));
-    }
+
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-        this.logout();
+        this.adminLogout();
       }
     }
-    this.authService.authState.subscribe((user) => {
-      this.socialUser = user;
-      this.isLoggedin = user != null;
-    });
   }
 
   tokenExpired(token: string) {
@@ -54,35 +43,16 @@ export class AdminHomeComponent implements OnInit {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 
-  logout() {
+  adminLogout() {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
-    this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('adminUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
-    this.connectedUser = null;
-    this.router.navigateByUrl('/home');
+    this.connectedAdmin = null;
+    this.router.navigateByUrl('/admin/login');
     this.iziToast.success({
-      message: 'You\'re logout',
+      message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
     });
-  }
-
-  refreshToken() {
-    if (!this.storageCrypter.getItem('user', 'session')) {
-      this.storageCrypter.removeItem('jeton', 'local');
-    }
-
-    this.as
-      .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
-      .subscribe({
-        next: (res) => {
-          if (res.token != null) {
-            this.storageCrypter.setItem('jeton', res.token, 'local');
-          }
-        },
-        error: (res) => {
-          this.logout();
-        },
-      });
   }
 }

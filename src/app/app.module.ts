@@ -25,7 +25,6 @@ import {
 } from 'angularx-social-login';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
-import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
 import { NewBookComponent } from './components/new-book/new-book.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,12 +52,19 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SliderModule } from 'primeng/slider';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PaginatorModule } from 'primeng/paginator';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TableModule } from 'primeng/table';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminHeaderComponent } from './components/partial/admin-header/admin-header.component';
+import { AdminFooterComponent } from './components/partial/admin-footer/admin-footer.component';
+import { AdminBooksComponent } from './components/admin-books/admin-books.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +74,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     CartDetailsComponent,
     MyAccountComponent,
     AdminHomeComponent,
-    AdminRegisterComponent,
     NewBookComponent,
     HomeComponent,
     HeaderComponent,
@@ -76,6 +81,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     LegalNoticesComponent,
     ContactComponent,
     PagenotfoundComponent,
+    AdminLoginComponent,
+    AdminHeaderComponent,
+    AdminFooterComponent,
+    AdminBooksComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +123,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
         deps: [HttpClient],
       },
     }),
+    ToastModule,
+    ToolbarModule,
+    TableModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

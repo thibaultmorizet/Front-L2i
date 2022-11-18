@@ -143,24 +143,6 @@ export class NewBookComponent implements OnInit {
     });
   }
 
-  refreshToken() {
-    if (!this.storageCrypter.getItem('user', 'session')) {
-      this.storageCrypter.removeItem('jeton', 'local');
-    }
-
-    this.as
-      .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
-      .subscribe({
-        next: (res) => {
-          if (res.token != null) {
-            this.storageCrypter.setItem('jeton', res.token, 'local');
-          }
-        },
-        error: (res) => {
-          this.logout();
-        },
-      });
-  }
   setBook() {
     if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
       this.newBook.type = [];

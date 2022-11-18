@@ -2,7 +2,7 @@ body {
     margin: 0px;
 }
 
-body:has(.general-best-sell-container), body:has(.login-container), body:has(.register-container) {
+body:has(.general-best-sell-container), body:has(.login-container), body:has(.register-container), body:has(.admin-login-container) {
     background-image: url('https://www.thibaultmorizet.fr/assets/home-background.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -102,8 +102,8 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
 }
 
 .p-button-outline-primary-color:hover {
-    color: #30336B!important;
-    background-color: #fff!important;
+    color: #30336B !important;
+    background-color: #fff !important;
     border: #30336B 1px solid !important;
     transition: all 0.3s;
 }

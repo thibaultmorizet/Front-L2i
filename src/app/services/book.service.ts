@@ -36,7 +36,7 @@ export class BookService {
     types: Array<Type>,
     search: string,
     prices: Array<number>,
-    inStock: boolean
+    inStock: boolean | null
   ) {
     this.formatsString = '';
     this.typesString = '';
@@ -63,7 +63,9 @@ export class BookService {
       this.pricesString +=
         '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
     }
-    if (inStock) {
+    if (inStock == null) {
+      this.inStockString = '';
+    } else if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
     } else {
       this.inStockString = '&stock%5Blte%5D=0';

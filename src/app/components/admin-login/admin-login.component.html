@@ -1,0 +1,79 @@
+<div class="general-content">
+  <app-admin-header></app-admin-header>
+
+  <main id="content">
+    <div class="container">
+      <div class="admin-login-container">
+        <p class="title text-center">{{ "my_account.login" | translate }}</p>
+
+        <form #loginForm="ngForm" (ngSubmit)="login()">
+          <div class="mb-3">
+            <div class="input-group">
+              <div class="field mb-3">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="{{ 'general.email' | translate }}"
+                  pInputText
+                  [(ngModel)]="adminLogin.email"
+                  [ngClass]="{ 'ng-invalid': errorEmail }"
+                  required
+                />
+                <small class="p-error" [ngClass]="{ 'd-none': !errorEmail }">{{
+                  errorEmail
+                }}</small>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="field mb-3">
+                <div>
+                  <input
+                    id="password"
+                    name="password"
+                    [type]="passwordType"
+                    placeholder="{{ 'my_account.password' | translate }}"
+                    pInputText
+                    [(ngModel)]="adminLogin.password"
+                    [ngClass]="{ 'ng-invalid': errorPassword }"
+                    required
+                  />
+                  <span
+                    class="toogle-password-clear"
+                    (click)="tooglePasswordClear()"
+                    ><i
+                      class="fa-regular"
+                      [ngClass]="{
+                        'fa-eye-slash': !passwordIsClear,
+                        'fa-eye': passwordIsClear
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorPassword }"
+                  >{{ errorPassword }}</small
+                >
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-2">
+              <button
+                pButton
+                pRipple
+                type="submit"
+                class="p-button-raised p-button-primary-color btn-primary-color"
+                [disabled]="!loginForm.valid"
+              >
+                {{ "my_account.login" | translate }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+  <app-admin-footer></app-admin-footer>
+</div>

@@ -179,25 +179,6 @@ export class CartDetailsComponent implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
-  refreshToken() {
-    if (!this.storageCrypter.getItem('user', 'session')) {
-      this.storageCrypter.removeItem('jeton', 'local');
-    }
-
-    this.as
-      .login(JSON.parse(this.storageCrypter.getItem('user', 'session')))
-      .subscribe({
-        next: (res) => {
-          if (res.token != null) {
-            this.storageCrypter.setItem('jeton', res.token, 'local');
-          }
-        },
-        error: (res) => {
-          this.logout();
-        },
-      });
-  }
-
   updateQuantity(bookId: number | undefined, numberOrdered: number) {
     if (numberOrdered == 0) {
       numberOrdered = 1;
