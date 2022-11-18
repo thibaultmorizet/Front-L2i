@@ -63,8 +63,7 @@
     padding: 0;
 }
 
-@media screen and (max-width: 960px) {
-    #pr_id_2 .p-datatable-tbody>tr>td {
-        display: table-cell !important;
-    }
+#pr_id_2 .p-datatable-tbody>tr>td {
+    display: table-cell !important;
+    border-width: 0 0 1px 0 !important;
 }
