@@ -5,40 +5,12 @@
     <div class="container">
       <p-toast></p-toast>
 
-      <div class="card">
-        <p-toolbar styleClass="mb-4 gap-2">
-          <ng-template pTemplate="left">
-            <button
-              pButton
-              pRipple
-              label="New"
-              icon="pi pi-plus"
-              class="p-button-success mr-2"
-              (click)="openNew()"
-            ></button>
-            <button
-              pButton
-              pRipple
-              label="Delete"
-              icon="pi pi-trash"
-              class="p-button-danger"
-              (click)="deleteSelectedBooks()"
-              [disabled]="!selectedBooks || !selectedBooks.length"
-            ></button>
-          </ng-template>
-        </p-toolbar>
-
         <p-table
           #dt
-          [value]="books"
-          [rows]="10"
+          [value]="allBooks"
+          [rows]="12"
           [paginator]="true"
-          [globalFilterFields]="[
-            'name',
-            'country.name',
-            'representative.name',
-            'status'
-          ]"
+          [globalFilterFields]="['title']"
           [tableStyle]="{ 'min-width': '75rem' }"
           [(selection)]="selectedBooks"
           [rowHover]="true"
@@ -47,37 +19,72 @@
           [showCurrentPageReport]="true"
         >
           <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-              <h5 class="m-0">Manage books</h5>
+            <div>
+              <button
+                pButton
+                pRipple
+                label="New"
+                icon="pi pi-plus"
+                class="p-button-success"
+                (click)="openNew()"
+              ></button>
+              <button
+                pButton
+                pRipple
+                label="Delete"
+                icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="deleteSelectedBooks()"
+                [disabled]="!selectedBooks || !selectedBooks.length"
+              ></button>
+            </div>
+            <div>
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input
                   pInputText
                   type="text"
                   (input)="dt.filterGlobal($event.target, 'contains')"
-                  placeholder="Search..."
+                  placeholder="Search"
                 />
               </span>
             </div>
           </ng-template>
+          
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 4rem">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
               </th>
-              <th pSortableColumn="name" style="min-width: 15rem">
-                Name <p-sortIcon field="name"></p-sortIcon>
-              </th>
               <th>Image</th>
-              <th pSortableColumn="price">
-                Price <p-sortIcon field="price"></p-sortIcon>
+              <th pSortableColumn="title" style="min-width: 15rem">
+                Title <p-sortIcon field="title"></p-sortIcon>
               </th>
-              <th pSortableColumn="category" style="min-width: 10rem">
-                Category <p-sortIcon field="category"></p-sortIcon>
+              <th pSortableColumn="unitpricettc">
+                Price TTC <p-sortIcon field="unitpricettc"></p-sortIcon>
               </th>
-              <th pSortableColumn="inventoryStatus" style="min-width: 10rem">
-                Status <p-sortIcon field="inventoryStatus"></p-sortIcon>
+              <th pSortableColumn="unitpriceht">
+                Price HT <p-sortIcon field="unitpriceht"></p-sortIcon>
               </th>
+              <th pSortableColumn="format.name" style="min-width: 10rem">
+                Format <p-sortIcon field="format.name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="editor.name" style="min-width: 10rem">
+                Editor <p-sortIcon field="editor.name"></p-sortIcon>
+              </th>
+
+              <th pSortableColumn="isbn" style="min-width: 10rem">
+                ISBN <p-sortIcon field="isbn"></p-sortIcon>
+              </th>
+
+              <th pSortableColumn="year" style="min-width: 10rem">
+                Year <p-sortIcon field="year"></p-sortIcon>
+              </th>
+              <th pSortableColumn="stock" style="min-width: 10rem">
+                Stock <p-sortIcon field="stock"></p-sortIcon>
+              </th>
+              <th>Author</th>
+              <th>Type</th>
               <th></th>
             </tr>
           </ng-template>
@@ -86,27 +93,42 @@
               <td>
                 <p-tableCheckbox [value]="book"></p-tableCheckbox>
               </td>
-              <td>{{ book.title }}</td>
               <td>
                 <img
-                  [src]="'assets/showcase/images/demo/book/' + book.image"
+                  [src]="book.image"
                   [alt]="book.title"
-                  width="100"
-                  class="shadow-4"
+                  class="img-icon"
                 />
               </td>
-              <td>{{ book.price | currency: "USD" }}</td>
-              <td>{{ book.type }}</td>
+              <td>{{ book.title }}</td>
+              <td>{{ book.unitpricettc }} €</td>
+              <td>{{ book.unitpriceht }} €</td>
+              <td>{{ book.format.name }}</td>
+              <td>{{ book.editor.name }}</td>
+
+              <td>{{ book.isbn }}</td>
+              <td>{{ book.year }}</td>
+
               <td>
                 <span
-                  [class]="
-                    'book-badge status-' +
-                    (book.stock
-                      ? book.stock.toLowerCase()
-                      : '')
-                  "
+                  class="book-badge"
+                  [ngClass]="{
+                    'status-instock': book.stock > 50,
+                    'status-lowstock': book.stock <= 50 && book.stock > 0,
+                    'status-outofstock': book.stock <= 0
+                  }"
                   >{{ book.stock }}</span
                 >
+              </td>
+              <td>
+                <span *ngFor="let anAuthor of book.author"
+                  >{{ anAuthor.firstname }} {{ anAuthor.lastname }} <br
+                /></span>
+              </td>
+              <td>
+                <span *ngFor="let aType of book.type"
+                  >{{ aType.name }} <br
+                /></span>
               </td>
               <td>
                 <button
@@ -128,7 +150,7 @@
           </ng-template>
           <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-              In total there are {{ books ? books.length : 0 }} books.
+              In total there are {{ allBooks ? allBooks.length : 0 }} books.
             </div>
           </ng-template>
         </p-table>
@@ -143,23 +165,23 @@
       >
         <ng-template pTemplate="content">
           <img
-            [src]="'assets/showcase/images/demo/book/' + book.image"
+            [src]="book.image"
             [alt]="book.image"
             class="book-image"
             *ngIf="book.image"
           />
           <div class="field">
-            <label for="name">Name</label>
+            <label for="title">Title</label>
             <input
               type="text"
               pInputText
-              id="name"
+              id="title"
               [(ngModel)]="book.title"
               required
               autofocus
             />
             <small class="p-error" *ngIf="submitted && !book.title"
-              >Name is required.</small
+              >Title is required.</small
             >
           </div>
           <div class="field">
@@ -175,10 +197,10 @@
           </div>
 
           <div class="field">
-            <label for="inventoryStatus">Inventory Status</label>
+            <label for="stock">Stock</label>
             <p-dropdown
               [(ngModel)]="book.stock"
-              inputId="inventoryStatus"
+              inputId="stock"
               [options]="statuses"
               placeholder="Select"
             >
@@ -191,45 +213,33 @@
           </div>
 
           <div class="field">
-            <label class="mb-3">Category</label>
-            <div class="formgrid grid">
-              <div class="field-radiobutton col-6">
-                <p-radioButton
-                  id="category1"
-                  name="category"
-                  value="Accessories"
-                  [(ngModel)]="book.type"
-                ></p-radioButton>
-                <label for="category1">Accessories</label>
-              </div>
-              <div class="field-radiobutton col-6">
-                <p-radioButton
-                  id="category2"
-                  name="category"
-                  value="Clothing"
-                  [(ngModel)]="book.type"
-                ></p-radioButton>
-                <label for="category2">Clothing</label>
-              </div>
-              <div class="field-radiobutton col-6">
-                <p-radioButton
-                  id="category3"
-                  name="category"
-                  value="Electronics"
-                  [(ngModel)]="book.type"
-                ></p-radioButton>
-                <label for="category3">Electronics</label>
-              </div>
-              <div class="field-radiobutton col-6">
-                <p-radioButton
-                  id="category4"
-                  name="category"
-                  value="Fitness"
-                  [(ngModel)]="book.type"
-                ></p-radioButton>
-                <label for="category4">Fitness</label>
-              </div>
-            </div>
+            <label for="format" class="mb-3">Format</label>
+            <input
+              type="text"
+              pInputText
+              id="format"
+              [(ngModel)]="updatedFormat.name"
+              required
+              autofocus
+            />
+            <small class="p-error" *ngIf="submitted && !updatedFormat.name"
+              >Book format is required.</small
+            >
+          </div>
+
+          <div class="field">
+            <label for="editor" class="mb-3">Editor</label>
+            <input
+              type="text"
+              pInputText
+              id="editor"
+              [(ngModel)]="updatedEditor.name"
+              required
+              autofocus
+            />
+            <small class="p-error" *ngIf="submitted && !updatedEditor.name"
+              >Book editor is required.</small
+            >
           </div>
 
           <div class="formgrid grid">
@@ -274,7 +284,6 @@
       </p-dialog>
 
       <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
-    </div>
   </main>
   <app-admin-footer></app-admin-footer>
 </div>

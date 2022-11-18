@@ -1,30 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  PrimeNGConfig,
+  ConfirmationService,
+  MessageService,
+} from 'primeng/api';
 import { Book } from 'src/app/interfaces/book';
+import { Editor } from 'src/app/interfaces/editor';
+import { Format } from 'src/app/interfaces/format';
 import { BookService } from 'src/app/services/book.service';
 
 @Component({
   selector: 'app-admin-books',
   templateUrl: './admin-books.component.html',
   styleUrls: ['./admin-books.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  providers: [ConfirmationService, MessageService],
 })
 export class AdminBooksComponent implements OnInit {
   bookDialog: boolean = false;
-  books: Book[] = [];
+  allBooks: Book[] = [];
   book: Book = {};
   selectedBooks: Book[] = [];
   submitted: boolean = false;
   statuses: any[] = [];
+  updatedFormat: Format = {};
+  updatedEditor: Editor = {};
 
   constructor(
     private bs: BookService,
+    private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
+    this.primengConfig.ripple = true;
+
     this.bs
       .getAllBooksWithoutLimit([], [], '', [], null)
-      .subscribe((data) => (this.books = data));
+      .subscribe((data) => (this.allBooks = data));
 
     this.statuses = [
       { label: 'INSTOCK', value: 'instock' },
@@ -45,7 +58,7 @@ export class AdminBooksComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.books = this.books.filter(
+        this.allBooks = this.allBooks.filter(
           (val) => !this.selectedBooks.includes(val)
         );
         this.selectedBooks = [];
@@ -70,9 +83,9 @@ export class AdminBooksComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.books = this.books.filter((val) => val.id !== book.id);
+        this.allBooks = this.allBooks.filter((val) => val.id !== book.id);
         this.book = {};
-       /*  this.messageService.add({
+        /*  this.messageService.add({
           severity: 'success',
           summary: 'Successful',
           detail: 'book Deleted',
@@ -92,7 +105,7 @@ export class AdminBooksComponent implements OnInit {
 
     if (this.book.title && this.book.title.trim()) {
       if (this.book.id) {
-        this.books[this.findIndexById(this.book.id)] = this.book;
+        this.allBooks[this.findIndexById(this.book.id)] = this.book;
         /* this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -102,7 +115,7 @@ export class AdminBooksComponent implements OnInit {
       } else {
         /*         this.book.id = this.createId();*/
         this.book.image = 'book-placeholder.svg';
-        this.books.push(this.book);
+        this.allBooks.push(this.book);
         /* this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -111,7 +124,7 @@ export class AdminBooksComponent implements OnInit {
         }); */
       }
 
-      this.books = [...this.books];
+      this.allBooks = [...this.allBooks];
       this.bookDialog = false;
       this.book = {};
     }
@@ -119,8 +132,8 @@ export class AdminBooksComponent implements OnInit {
 
   findIndexById(id: number): number {
     let index = -1;
-    for (let i = 0; i < this.books.length; i++) {
-      if (this.books[i].id === id) {
+    for (let i = 0; i < this.allBooks.length; i++) {
+      if (this.allBooks[i].id === id) {
         index = i;
         break;
       }

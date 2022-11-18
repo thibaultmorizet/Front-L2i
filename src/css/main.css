@@ -192,4 +192,26 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
     .title {
         font-size: 2.5rem;
     }
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 1700px !important;
+    }
+}
+
+@media (min-width: 2000px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 1900px !important;
+    }
+}
+
+@media (min-width: 2200px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 2100px !important;
+    }
+}
+
+@media (min-width: 2500px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 2400px !important;
+    }
 }

@@ -1,0 +1,51 @@
+.p-component {
+    font-family: "Quicksand", Arial, sans-serif !important;
+}
+
+.p-datatable .p-datatable-thead>tr>th, .p-datatable .p-datatable-tbody>tr>td {
+    text-align: center !important;
+}
+
+.book-badge.status-instock {
+    background: #C8E6C9;
+    color: #256029;
+}
+
+.book-badge.status-lowstock {
+    background: #FEEDAF;
+    color: #8a5340;
+}
+
+.book-badge.status-outofstock {
+    background: #FFCDD2;
+    color: #c63737;
+}
+
+.book-badge {
+    border-radius: 2px;
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+
+.p-datatable .p-datatable-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.p-datatable .p-datatable-header div button {
+    margin-right: 1rem;
+}
+
+.img-icon {
+    width: 150px;
+    height: 200px;
+    border-radius: 15px;
+    box-shadow: -1px 2px 15px -6px rgba(0, 0, 0, 0.75);
+}
+
+.p-button.p-button-success, .p-buttonset.p-button-success > .p-button, .p-splitbutton.p-button-success > .p-button {
+    margin-right: 1rem;
+}
