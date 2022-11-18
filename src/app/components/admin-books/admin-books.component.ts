@@ -22,7 +22,6 @@ export class AdminBooksComponent implements OnInit {
   book: Book = {};
   selectedBooks: Book[] = [];
   submitted: boolean = false;
-  statuses: any[] = [];
   updatedFormat: Format = {};
   updatedEditor: Editor = {};
 
@@ -38,12 +37,6 @@ export class AdminBooksComponent implements OnInit {
     this.bs
       .getAllBooksWithoutLimit([], [], '', [], null)
       .subscribe((data) => (this.allBooks = data));
-
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' },
-    ];
   }
 
   openNew() {
@@ -57,10 +50,14 @@ export class AdminBooksComponent implements OnInit {
       message: 'Are you sure you want to delete the selected books?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
+      dismissableMask: true,
       accept: () => {
         this.allBooks = this.allBooks.filter(
           (val) => !this.selectedBooks.includes(val)
         );
+        this.selectedBooks.forEach(aBook => {
+          this.bs.deleteTheBook(aBook.id).subscribe((el) => {});
+        });
         this.selectedBooks = [];
         /* this.messageService.add({
           severity: 'success',
@@ -82,8 +79,10 @@ export class AdminBooksComponent implements OnInit {
       message: 'Are you sure you want to delete ' + book.title + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
+      dismissableMask: true,
       accept: () => {
         this.allBooks = this.allBooks.filter((val) => val.id !== book.id);
+        this.bs.deleteTheBook(book.id).subscribe((el) => {});
         this.book = {};
         /*  this.messageService.add({
           severity: 'success',

@@ -101,3 +101,30 @@
     border-bottom-left-radius: 6px;
     border: none !important;
 }
+
+.p-button-outline-danger {
+    font-family: "Quicksand", Arial, sans-serif;
+
+    border: 1px solid #dc3545;
+    background-color: #fff;
+    color: #dc3545;
+}
+
+.p-button-outline-danger:hover {
+    border: 1px solid #dc3545 !important;
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+.p-button-valid {
+    font-family: "Quicksand", Arial, sans-serif;
+    background-color: #30336B;
+    border: #252860;
+}
+
+.p-button-valid:hover {
+    background-color: #30336B !important;
+    border: #252860 !important;
+    opacity: 0.9 !important;
+    box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75) !important;
+}

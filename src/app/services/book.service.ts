@@ -212,4 +212,8 @@ export class BookService {
       return false;
     }
   }
+
+  deleteTheBook(id: number | undefined) {
+    return this.http.delete<{ token: string }>(this.url + '/' + id);
+  }
 }
