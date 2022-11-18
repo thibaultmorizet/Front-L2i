@@ -5,6 +5,7 @@
     <div class="container">
       <p-toast></p-toast>
 
+      <div class="card">
         <p-table
           #dt
           [value]="allBooks"
@@ -97,7 +98,8 @@
                 <img
                   [src]="book.image"
                   [alt]="book.title"
-                  class="img-icon"
+                  width="100"
+                  class="shadow-4"
                 />
               </td>
               <td>{{ book.title }}</td>
@@ -284,6 +286,7 @@
       </p-dialog>
 
       <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+    </div>
   </main>
   <app-admin-footer></app-admin-footer>
 </div>
