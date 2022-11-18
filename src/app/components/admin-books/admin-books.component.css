@@ -2,8 +2,6 @@
     font-family: "Quicksand", Arial, sans-serif !important;
 }
 
-
-
 .book-badge.status-instock {
     background: #C8E6C9;
     color: #256029;
@@ -61,17 +59,45 @@
     padding: 0;
 }
 
-.p-datatable .p-datatable-thead>tr>th, .p-datatable .p-datatable-tbody>tr>td {
-    display: table-cell !important;
+.p-datatable .p-datatable-thead>tr>th {
     text-align: center !important;
 }
 
 .p-datatable .p-datatable-tbody>tr>td {
     border: 1px solid #dee2e6 !important;
     border-width: 0 0 1px 0 !important;
+    display: table-cell !important;
 }
 
 .p-datatable-wrapper {
     width: 100%;
     overflow-x: scroll;
+}
+
+.manage-books {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#content:has(p-table) {
+    padding: 1rem;
+}
+
+.p-datatable {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+}
+
+.p-datatable-header {
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-width: 0 0 1px 0 !important;
+}
+
+.p-datatable-footer {
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border: none !important;
 }
