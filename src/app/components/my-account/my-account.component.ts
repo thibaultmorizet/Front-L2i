@@ -299,8 +299,6 @@ export class MyAccountComponent implements OnInit {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
       } else {
-        console.log(theUser[0].token == null, this.loginAfterRegister);
-
         if (theUser[0].token == null || this.loginAfterRegister) {
           this.errorEmail = null;
           this.as.login(this.userLogin).subscribe({
