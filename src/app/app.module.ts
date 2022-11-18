@@ -134,7 +134,7 @@ import { AdminBooksComponent } from './components/admin-books/admin-books.compon
       useValue: {
         autoLogin: false,
         providers: [
-          {
+         /*  {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
               '191085854417-q1nheuh4v1hgspdo64vs87hn3ovajlh3.apps.googleusercontent.com',
@@ -142,7 +142,7 @@ import { AdminBooksComponent } from './components/admin-books/admin-books.compon
                 scope: 'profile email',
               }
             ),
-          },
+          }, */
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider('496421065692400'),

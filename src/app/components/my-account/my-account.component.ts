@@ -355,25 +355,27 @@ export class MyAccountComponent implements OnInit {
     });
   }
   signInWithGoogle(): void {
-    this.authService
+    /*  this.authService
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((data) => console.log(data));
-    console.log(this.authService);
+    console.log(this.authService); */
   }
 
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((data) => {
       if (this.isLoggedin) {
         this.us.getTheUser(this.socialUser.email).subscribe((el) => {
+          this.loginAfterRegister = true;
+
           if (el[0] != undefined) {
             if (el[0].token == data.id) {
               this.userLogin.email = el[0].email;
               this.userLogin.password = el[0].token;
               this.userLogin.passwordConfirm = el[0].token;
-              this.loginAfterRegister = true;
               this.login();
               this.userLogin = {};
             } else {
+              this.loginAfterRegister = false;
               this.authService.signOut();
               this.iziToast.success({
                 message: 'this email is already use',
@@ -381,7 +383,6 @@ export class MyAccountComponent implements OnInit {
               });
             }
           } else {
-            this.loginAfterRegister = true;
             this.userInscription = {};
             this.userInscription.email = this.socialUser.email;
             this.userInscription.lastname = this.socialUser.lastName;
