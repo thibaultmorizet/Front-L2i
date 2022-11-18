@@ -6,6 +6,28 @@
       <p-toast></p-toast>
 
       <div class="card">
+        <p-toolbar styleClass="mb-4 gap-2">
+          <ng-template pTemplate="left">
+            <button
+              pButton
+              pRipple
+              label="New"
+              icon="pi pi-plus"
+              class="p-button-success mr-2"
+              (click)="openNew()"
+            ></button>
+            <button
+              pButton
+              pRipple
+              label="Delete"
+              icon="pi pi-trash"
+              class="p-button-danger"
+              (click)="deleteSelectedBooks()"
+              [disabled]="!selectedBooks || !selectedBooks.length"
+            ></button>
+          </ng-template>
+        </p-toolbar>
+
         <p-table
           #dt
           [value]="allBooks"
@@ -20,38 +42,19 @@
           [showCurrentPageReport]="true"
         >
           <ng-template pTemplate="caption">
-            <div>
-              <button
-                pButton
-                pRipple
-                label="New"
-                icon="pi pi-plus"
-                class="p-button-success"
-                (click)="openNew()"
-              ></button>
-              <button
-                pButton
-                pRipple
-                label="Delete"
-                icon="pi pi-trash"
-                class="p-button-danger"
-                (click)="deleteSelectedBooks()"
-                [disabled]="!selectedBooks || !selectedBooks.length"
-              ></button>
-            </div>
-            <div>
+            <div class="flex align-items-center justify-content-between">
+              <h5 class="m-0">Manage books</h5>
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input
                   pInputText
                   type="text"
                   (input)="dt.filterGlobal($event.target, 'contains')"
-                  placeholder="Search"
+                  placeholder="Search..."
                 />
               </span>
             </div>
           </ng-template>
-          
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 4rem">
