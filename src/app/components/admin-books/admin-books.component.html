@@ -2,162 +2,184 @@
   <app-admin-header></app-admin-header>
 
   <main id="content">
-      <p-toast></p-toast>
+    <p-toast></p-toast>
 
-        <p-toolbar styleClass="mb-4 gap-2">
-          <ng-template pTemplate="left">
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="New"
+          icon="pi pi-plus"
+          class="p-button-success mr-2"
+          (click)="openNew()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Delete"
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteSelectedBooks()"
+          [disabled]="!selectedBooks || !selectedBooks.length"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="allBooks"
+      [rows]="12"
+      [paginator]="true"
+      [globalFilterFields]="['title']"
+      [(selection)]="selectedBooks"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <h5 class="m-0">Manage books</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($event.target, 'contains')"
+              placeholder="Search..."
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="display: table-cell !important; width: 4rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th style="display: table-cell !important">Image</th>
+          <th
+            style="display: table-cell !important; min-width: 15rem"
+            pSortableColumn="title"
+          >
+            Title <p-sortIcon field="title"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important"
+            pSortableColumn="unitpricettc"
+          >
+            Price TTC <p-sortIcon field="unitpricettc"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important"
+            pSortableColumn="unitpriceht"
+          >
+            Price HT <p-sortIcon field="unitpriceht"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="format.name"
+          >
+            Format <p-sortIcon field="format.name"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="editor.name"
+          >
+            Editor <p-sortIcon field="editor.name"></p-sortIcon>
+          </th>
+
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="isbn"
+          >
+            ISBN <p-sortIcon field="isbn"></p-sortIcon>
+          </th>
+
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="year"
+          >
+            Year <p-sortIcon field="year"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="stock"
+          >
+            Stock <p-sortIcon field="stock"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important">Author</th>
+          <th style="display: table-cell !important">Type</th>
+          <th style="display: table-cell !important"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-book>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="book"></p-tableCheckbox>
+          </td>
+          <td>
+            <img
+              [src]="book.image"
+              [alt]="book.title"
+              width="100"
+              class="shadow-4"
+            />
+          </td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.unitpricettc }} €</td>
+          <td>{{ book.unitpriceht }} €</td>
+          <td>{{ book.format.name }}</td>
+          <td>{{ book.editor.name }}</td>
+
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.year }}</td>
+
+          <td>
+            <span
+              class="book-badge"
+              [ngClass]="{
+                'status-instock': book.stock > 50,
+                'status-lowstock': book.stock <= 50 && book.stock > 0,
+                'status-outofstock': book.stock <= 0
+              }"
+              >{{ book.stock }}</span
+            >
+          </td>
+          <td>
+            <span *ngFor="let anAuthor of book.author"
+              >{{ anAuthor.firstname }} {{ anAuthor.lastname }} <br
+            /></span>
+          </td>
+          <td>
+            <span *ngFor="let aType of book.type">{{ aType.name }} <br /></span>
+          </td>
+          <td>
             <button
               pButton
               pRipple
-              label="New"
-              icon="pi pi-plus"
-              class="p-button-success mr-2"
-              (click)="openNew()"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editBook(book)"
             ></button>
             <button
               pButton
               pRipple
-              label="Delete"
               icon="pi pi-trash"
-              class="p-button-danger"
-              (click)="deleteSelectedBooks()"
-              [disabled]="!selectedBooks || !selectedBooks.length"
+              class="p-button-rounded p-button-warning"
+              (click)="deletebook(book)"
             ></button>
-          </ng-template>
-        </p-toolbar>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there are {{ allBooks ? allBooks.length : 0 }} books.
+        </div>
+      </ng-template>
+    </p-table>
 
-        <p-table
-          #dt
-          [value]="allBooks"
-          [rows]="12"
-          [paginator]="true"
-          [globalFilterFields]="['title']"
-          [(selection)]="selectedBooks"
-          [rowHover]="true"
-          dataKey="id"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [showCurrentPageReport]="true"
-        >
-          <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-              <h5 class="m-0">Manage books</h5>
-              <span class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input
-                  pInputText
-                  type="text"
-                  (input)="dt.filterGlobal($event.target, 'contains')"
-                  placeholder="Search..."
-                />
-              </span>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="width: 4rem">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
-              <th>Image</th>
-              <th pSortableColumn="title" style="min-width: 15rem">
-                Title <p-sortIcon field="title"></p-sortIcon>
-              </th>
-              <th pSortableColumn="unitpricettc">
-                Price TTC <p-sortIcon field="unitpricettc"></p-sortIcon>
-              </th>
-              <th pSortableColumn="unitpriceht">
-                Price HT <p-sortIcon field="unitpriceht"></p-sortIcon>
-              </th>
-              <th pSortableColumn="format.name" style="min-width: 10rem">
-                Format <p-sortIcon field="format.name"></p-sortIcon>
-              </th>
-              <th pSortableColumn="editor.name" style="min-width: 10rem">
-                Editor <p-sortIcon field="editor.name"></p-sortIcon>
-              </th>
-
-              <th pSortableColumn="isbn" style="min-width: 10rem">
-                ISBN <p-sortIcon field="isbn"></p-sortIcon>
-              </th>
-
-              <th pSortableColumn="year" style="min-width: 10rem">
-                Year <p-sortIcon field="year"></p-sortIcon>
-              </th>
-              <th pSortableColumn="stock" style="min-width: 10rem">
-                Stock <p-sortIcon field="stock"></p-sortIcon>
-              </th>
-              <th>Author</th>
-              <th>Type</th>
-              <th></th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-book>
-            <tr>
-              <td>
-                <p-tableCheckbox [value]="book"></p-tableCheckbox>
-              </td>
-              <td>
-                <img
-                  [src]="book.image"
-                  [alt]="book.title"
-                  width="100"
-                  class="shadow-4"
-                />
-              </td>
-              <td>{{ book.title }}</td>
-              <td>{{ book.unitpricettc }} €</td>
-              <td>{{ book.unitpriceht }} €</td>
-              <td>{{ book.format.name }}</td>
-              <td>{{ book.editor.name }}</td>
-
-              <td>{{ book.isbn }}</td>
-              <td>{{ book.year }}</td>
-
-              <td>
-                <span
-                  class="book-badge"
-                  [ngClass]="{
-                    'status-instock': book.stock > 50,
-                    'status-lowstock': book.stock <= 50 && book.stock > 0,
-                    'status-outofstock': book.stock <= 0
-                  }"
-                  >{{ book.stock }}</span
-                >
-              </td>
-              <td>
-                <span *ngFor="let anAuthor of book.author"
-                  >{{ anAuthor.firstname }} {{ anAuthor.lastname }} <br
-                /></span>
-              </td>
-              <td>
-                <span *ngFor="let aType of book.type"
-                  >{{ aType.name }} <br
-                /></span>
-              </td>
-              <td>
-                <button
-                  pButton
-                  pRipple
-                  icon="pi pi-pencil"
-                  class="p-button-rounded p-button-success mr-2"
-                  (click)="editBook(book)"
-                ></button>
-                <button
-                  pButton
-                  pRipple
-                  icon="pi pi-trash"
-                  class="p-button-rounded p-button-warning"
-                  (click)="deletebook(book)"
-                ></button>
-              </td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-between">
-              In total there are {{ allBooks ? allBooks.length : 0 }} books.
-            </div>
-          </ng-template>
-        </p-table>
-
-      <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+    <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
   </main>
   <app-admin-footer></app-admin-footer>
 </div>
