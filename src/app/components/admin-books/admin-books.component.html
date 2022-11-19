@@ -187,101 +187,189 @@
       acceptButtonStyleClass="p-button-valid"
     ></p-confirmDialog>
 
-
-
-
-
-
-
-
-
-
-
-    <p-dialog [(visible)]="bookDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid" [dismissableMask]="true">
+    <p-dialog
+      [(visible)]="bookDialog"
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      header="Product Details"
+      [modal]="true"
+      styleClass="p-fluid"
+      [dismissableMask]="true"
+    >
       <ng-template pTemplate="content">
+        <!--           <img [src]=" book.image" [alt]="book.image" class="product-image" *ngIf="book.image">
+ -->
+        <div class="field">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            pInputText
+            id="title"
+            [(ngModel)]="book.title"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !book.title"
+            >Title is required.</small
+          >
+        </div>
 
+        <div class="field">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            pInputTextarea
+            [(ngModel)]="book.summary"
+            required
+            rows="5"
+            cols="20"
+          ></textarea>
+          <small class="p-error" *ngIf="submitted && !book.summary"
+            >Summary is required.</small
+          >
+        </div>
 
+        <div class="field">
+          <label for="name">ISBN</label>
+          <input
+            type="text"
+            pInputText
+            id="isbn"
+            [(ngModel)]="book.isbn"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !book.isbn"
+            >ISBN is required.</small
+          >
+        </div>
 
+        <div class="field">
+          <label for="pricettc">Price TTC</label>
+          <p-inputNumber
+            id="pricettc"
+            [(ngModel)]="book.unitpricettc"
+            mode="currency"
+            currency="EUR"
+            locale="fr-FR"
+            [min]="0"
+            [required]="true"
+            [allowEmpty]="false"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="submitted && !book.unitpricettc"
+            >Price TTC is required.</small
+          >
+        </div>
 
+        <div class="field">
+          <label for="priceht">Price HT</label>
+          <p-inputNumber
+            id="priceht"
+            [(ngModel)]="book.unitpriceht"
+            mode="currency"
+            currency="EUR"
+            locale="fr-FR"
+            [min]="0"
+            [required]="true"
+            [allowEmpty]="false"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="submitted && !book.unitpriceht"
+            >Price HT is required.</small
+          >
+        </div>
 
+        <div class="field">
+          <label for="stock">Stock</label>
+          <p-inputNumber
+            id="stock"
+            [(ngModel)]="book.stock"
+            [min]="0"
+            [required]="true"
+            [allowEmpty]="false"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="submitted && !book.stock"
+            >Stock is required.</small
+          >
+        </div>
 
+        <div class="field">
+          <label for="year">Year</label>
+          <p-inputNumber
+            id="year"
+            [(ngModel)]="book.year"
+            [min]="1850"
+            mode="decimal"
+            [useGrouping]="false"
+            [required]="true"
+            [allowEmpty]="false"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="submitted && !book.year"
+            >Year is required.</small
+          >
+        </div>
 
+        <div class="field">
+          <label for="editor">Editor</label><br />
+          <p-dropdown
+            [options]="editors"
+            [(ngModel)]="book.editor"
+            placeholder="Select an Editor"
+            optionLabel="name"
+          ></p-dropdown>
+        </div>
 
-<!--           <img [src]=" book.image" [alt]="book.image" class="product-image" *ngIf="book.image">
- -->          
-          <div class="field">
-              <label for="name">Title</label>
-              <input type="text" pInputText id="title" [(ngModel)]="book.title" required autofocus />
-              <small class="p-error" *ngIf="submitted && !book.title">Title is required.</small>
-          </div>
- 
-          <div class="field">
-              <label for="description">Description</label>
-              <textarea id="description" pInputTextarea [(ngModel)]="book.summary" required rows="5" cols="20"></textarea>
-              <small class="p-error" *ngIf="submitted && !book.summary">Summary is required.</small>
-          </div>
+        <div class="field">
+          <label for="format">Format</label><br />
+          <p-dropdown
+            [options]="formats"
+            [(ngModel)]="book.format"
+            placeholder="Select a Format"
+            optionLabel="name"
+          ></p-dropdown>
+        </div>
 
-          <div class="field">
-            <label for="name">ISBN</label>
-            <input type="text" pInputText id="isbn" [(ngModel)]="book.isbn" required autofocus />
-            <small class="p-error" *ngIf="submitted && !book.isbn">ISBN is required.</small>
-          </div>
+        <div class="field">
+          <label for="author">Authors</label><br />
+          <p-multiSelect
+            [options]="authors"
+            [(ngModel)]="book.author"
+            defaultLabel="{{ 'book.author' | translate }}"
+            optionLabel="name"
+            display="chip"
+          ></p-multiSelect>
+        </div>
 
-          <div class="field">
-            <label for="pricettc">Price TTC</label>
-            <p-inputNumber id="pricettc" [(ngModel)]="book.unitpricettc" mode="currency" currency="EUR" locale="fr-FR" [min]="0" [required]="true" [allowEmpty]="false"></p-inputNumber>
-            <small class="p-error" *ngIf="submitted && !book.unitpricettc">Price TTC is required.</small>
-          </div>
-
-          <div class="field">
-            <label for="priceht">Price HT</label>
-            <p-inputNumber id="priceht" [(ngModel)]="book.unitpriceht" mode="currency" currency="EUR" locale="fr-FR" [min]="0" [required]="true" [allowEmpty]="false"></p-inputNumber>
-            <small class="p-error" *ngIf="submitted && !book.unitpriceht">Price HT is required.</small>
-          </div>
-
-          <div class="field">
-              <label for="stock">Stock</label>
-              <p-inputNumber id="stock" [(ngModel)]="book.stock" [min]="0" [required]="true" [allowEmpty]="false"></p-inputNumber> 
-              <small class="p-error" *ngIf="submitted && !book.stock">Stock is required.</small>
-          </div>
-
-          <div class="field">
-            <label for="year">Year</label>
-            <p-inputNumber id="year" [(ngModel)]="book.year" [min]="1850" mode="decimal" [useGrouping]="false" [required]="true" [allowEmpty]="false"></p-inputNumber> 
-            <small class="p-error" *ngIf="submitted && !book.year">Year is required.</small>
-          </div>
-
-
-  
-  
-  
-  
-              
-
-
-
-
-
-
-
-
-
+        <div class="field">
+          <label for="type">Types</label><br />
+          <p-multiSelect
+            [options]="types"
+            [(ngModel)]="book.type"
+            defaultLabel="{{ 'book.type' | translate }}"
+            optionLabel="name"
+            display="chip"
+          ></p-multiSelect>
+        </div>
       </ng-template>
-  
+
       <ng-template pTemplate="footer">
-          <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-          <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveBook()"></button>
+        <button
+          pButton
+          pRipple
+          label="Cancel"
+          icon="pi pi-times"
+          class="p-button-text"
+          (click)="hideDialog()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Save"
+          icon="pi pi-check"
+          class="p-button-text"
+          (click)="saveBook()"
+        ></button>
       </ng-template>
-  </p-dialog>
-
-
-
-
-
-
-
-
-
+    </p-dialog>
   </main>
   <app-admin-footer></app-admin-footer>
 </div>

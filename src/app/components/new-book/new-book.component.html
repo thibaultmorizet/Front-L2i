@@ -119,7 +119,6 @@
               type="checkbox"
               name="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
               id="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
-              [(ngModel)]="anAuthor.isChecked"
             />
 
             <label for="{{ anAuthor.firstname }}_{{ anAuthor.lastname }}"
@@ -134,7 +133,6 @@
               type="checkbox"
               name="{{ aType.name }}"
               id="{{ aType.name }}"
-              [(ngModel)]="aType.isChecked"
             />
 
             <label for="{{ aType.name }}">{{ aType.name }}</label>

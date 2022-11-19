@@ -148,19 +148,6 @@ export class BookComponent implements OnInit {
   }
   getAllFormatsfunc() {
     this.fs.getAllFormats().subscribe((res) => {
-      res.forEach((el) => {
-        el.filter_is_selected = false;
-        if (el.books != undefined) {
-          el.books.forEach((aBook) => {
-            if (el.count_books != undefined) {
-              el.count_books++;
-            } else {
-              el.count_books = 1;
-            }
-          });
-        }
-      });
-
       this.formats = res;
     });
   }
@@ -176,19 +163,6 @@ export class BookComponent implements OnInit {
   }
   getAllTypesfunc() {
     this.ts.getAllTypes().subscribe((res) => {
-      res.forEach((el) => {
-        el.filter_is_selected = false;
-        if (el.books != undefined) {
-          el.books.forEach((aBook) => {
-            if (el.count_books != undefined) {
-              el.count_books++;
-            } else {
-              el.count_books = 1;
-            }
-          });
-        }
-      });
-
       this.types = res;
     });
   }
@@ -351,30 +325,15 @@ export class BookComponent implements OnInit {
             this.actualUpdatebook.author &&
             this.actualUpdatebook.author.length > 0
           ) {
-            this.actualUpdatebook.author.forEach((aBookAuthor) => {
-              if (anAuthor.id == aBookAuthor.id) {
-                anAuthor.isChecked = true;
-              } else {
-                anAuthor.isChecked = false;
-              }
-            });
-          } else {
-            anAuthor.isChecked = false;
+            this.actualUpdatebook.author.forEach((aBookAuthor) => {});
           }
         });
         this.types.forEach((aType) => {
-          aType.isChecked = false;
           if (
             this.actualUpdatebook.type &&
             this.actualUpdatebook.type.length > 0
           ) {
-            this.actualUpdatebook.type.forEach((aBookType) => {
-              if (aType.id == aBookType.id) {
-                aType.isChecked = true;
-              }
-            });
-          } else {
-            aType.isChecked = false;
+            this.actualUpdatebook.type.forEach((aBookType) => {});
           }
         });
         this.modalService
@@ -413,17 +372,9 @@ export class BookComponent implements OnInit {
   updatebook() {
     if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
       this.actualUpdatebook.type = [];
-      this.types.forEach((aType) => {
-        if (aType.isChecked) {
-          this.actualUpdatebook.type?.push(aType);
-        }
-      });
+      this.types.forEach((aType) => {});
       this.actualUpdatebook.author = [];
-      this.authors.forEach((anAuthor) => {
-        if (anAuthor.isChecked) {
-          this.actualUpdatebook.author?.push(anAuthor);
-        }
-      });
+      this.authors.forEach((anAuthor) => {});
 
       this.bs
         .updateBook(this.actualUpdatebook.id, this.actualUpdatebook)

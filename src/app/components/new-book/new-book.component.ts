@@ -80,18 +80,6 @@ export class NewBookComponent implements OnInit {
 
   getAllFormatsfunc() {
     this.fs.getAllFormats().subscribe((res) => {
-      res.forEach((el) => {
-        el.filter_is_selected = false;
-        if (el.books != undefined) {
-          el.books.forEach((aBook) => {
-            if (el.count_books != undefined) {
-              el.count_books++;
-            } else {
-              el.count_books = 1;
-            }
-          });
-        }
-      });
       this.formats = res;
     });
   }
@@ -108,19 +96,6 @@ export class NewBookComponent implements OnInit {
   }
   getAllTypesfunc() {
     this.ts.getAllTypes().subscribe((res) => {
-      res.forEach((el) => {
-        el.filter_is_selected = false;
-        if (el.books != undefined) {
-          el.books.forEach((aBook) => {
-            if (el.count_books != undefined) {
-              el.count_books++;
-            } else {
-              el.count_books = 1;
-            }
-          });
-        }
-      });
-
       this.types = res;
     });
   }
@@ -145,19 +120,6 @@ export class NewBookComponent implements OnInit {
 
   setBook() {
     if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-      this.newBook.type = [];
-      this.types.forEach((aType) => {
-        if (aType.isChecked) {
-          this.newBook.type?.push(aType);
-        }
-      });
-      this.newBook.author = [];
-      this.authors.forEach((anAuthor) => {
-        if (anAuthor.isChecked) {
-          this.newBook.author?.push(anAuthor);
-        }
-      });
-
       this.bs.createBook(this.newBook).subscribe((res) => {
         this.newBook.image =
           'https://www.thibaultmorizet.fr/assets/' + res.id + '.jpeg';

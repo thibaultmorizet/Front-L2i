@@ -5,10 +5,16 @@ import {
   ConfirmationService,
   MessageService,
 } from 'primeng/api';
+import { Author } from 'src/app/interfaces/author';
 import { Book } from 'src/app/interfaces/book';
 import { Editor } from 'src/app/interfaces/editor';
 import { Format } from 'src/app/interfaces/format';
+import { Type } from 'src/app/interfaces/type';
+import { AuthorService } from 'src/app/services/author.service';
 import { BookService } from 'src/app/services/book.service';
+import { EditorService } from 'src/app/services/editor.service';
+import { FormatService } from 'src/app/services/format.service';
+import { TypeService } from 'src/app/services/type.service';
 
 @Component({
   selector: 'app-admin-books',
@@ -25,9 +31,24 @@ export class AdminBooksComponent implements OnInit {
   submitted: boolean = false;
   updatedFormat: Format = {};
   updatedEditor: Editor = {};
+  formats: Array<Format> = [];
+  editors: Array<Editor> = [];
+  authors: Array<Author> = [];
+  types: Array<Type> = [];
+  selectedAuthors: Array<Author> = [];
+  selectedTypes: Array<Type> = [];
+  selectedFormat: Format = {};
+  selectedEditor: Editor = {};
+
+  shortLink: string = '';
+  file: File | null = null;
 
   constructor(
     private bs: BookService,
+    private fs: FormatService,
+    private es: EditorService,
+    private ts: TypeService,
+    private authorService: AuthorService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
     private iziToast: NgxIzitoastService
@@ -39,6 +60,10 @@ export class AdminBooksComponent implements OnInit {
     this.bs
       .getAllBooksWithoutLimit([], [], '', [], null)
       .subscribe((data) => (this.allBooks = data));
+    this.getAllFormatsfunc();
+    this.getAllEditorsfunc();
+    this.getAllAuthorsfunc();
+    this.getAllTypesfunc();
   }
 
   openNew() {
@@ -70,6 +95,9 @@ export class AdminBooksComponent implements OnInit {
   }
 
   editBook(book: Book) {
+    book.author?.forEach((anAuthor) => {
+      anAuthor.name = anAuthor.firstname + ' ' + anAuthor.lastname;
+    });
     this.book = { ...book };
     this.bookDialog = true;
   }
@@ -99,39 +127,52 @@ export class AdminBooksComponent implements OnInit {
 
   saveBook() {
     this.submitted = true;
-
-    if (this.book.title && this.book.title.trim()) {
-      if (this.book.id) {
-        this.allBooks[this.findIndexById(this.book.id)] = this.book;
-        this.iziToast.success({
-          message: 'Book updated',
-          position: 'topRight',
-        });
-      } else {
-        /*         this.book.id = this.createId();*/
-        this.book.image = 'book-placeholder.svg';
-        this.allBooks.push(this.book);
-        this.iziToast.success({
-          message: 'Book created',
-          position: 'topRight',
-        });
-      }
-
-      this.allBooks = [...this.allBooks];
-      this.bookDialog = false;
-      this.book = {};
+    if (this.book.id) {
+      this.iziToast.success({
+        message: 'Book updated',
+        position: 'topRight',
+      });
+    } else {
+      this.allBooks.push(this.book);
+      this.iziToast.success({
+        message: 'Book created',
+        position: 'topRight',
+      });
     }
+
+    this.allBooks = [...this.allBooks];
+    this.bookDialog = false;
+    this.book = {};
   }
 
-  findIndexById(id: number): number {
-    let index = -1;
-    for (let i = 0; i < this.allBooks.length; i++) {
-      if (this.allBooks[i].id === id) {
-        index = i;
-        break;
-      }
-    }
+  getAllFormatsfunc() {
+    this.fs.getAllFormats().subscribe((res) => {
+      res.forEach((aFormat) => {
+        delete aFormat.books;
+      });
+      this.formats = res;
+    });
+  }
+  getAllEditorsfunc() {
+    this.es.getAllEditors().subscribe((res) => {
+      this.editors = res;
+    });
+  }
+  getAllAuthorsfunc() {
+    this.authorService.getAllAuthors().subscribe((res) => {
+      res.forEach((anAuthor) => {
+        anAuthor.name = anAuthor.firstname + ' ' + anAuthor.lastname;
+      });
 
-    return index;
+      this.authors = res;
+    });
+  }
+  getAllTypesfunc() {
+    this.ts.getAllTypes().subscribe((res) => {
+      res.forEach((aType) => {
+        delete aType.books;
+      });
+      this.types = res;
+    });
   }
 }
