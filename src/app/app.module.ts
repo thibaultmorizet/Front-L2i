@@ -65,6 +65,7 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { AdminHeaderComponent } from './components/partial/admin-header/admin-header.component';
 import { AdminFooterComponent } from './components/partial/admin-footer/admin-footer.component';
 import { AdminBooksComponent } from './components/admin-books/admin-books.component';
+import { AdminAccountComponent } from './components/admin-account/admin-account.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { AdminBooksComponent } from './components/admin-books/admin-books.compon
     AdminHeaderComponent,
     AdminFooterComponent,
     AdminBooksComponent,
+    AdminAccountComponent,
   ],
   imports: [
     BrowserModule,
