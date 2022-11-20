@@ -14,7 +14,8 @@
     "only_books_out_of_stock": "Seulement les livres en rupture de stock",
     "price_range": "Échelle des prix",
     "search": "Chercher",
-    "type": "Type"
+    "type": "Type",
+    "author": "Auteur"
   },
   "book_details": {
     "book_details": "Détails du livre",

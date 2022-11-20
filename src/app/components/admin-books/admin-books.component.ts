@@ -127,16 +127,32 @@ export class AdminBooksComponent implements OnInit {
 
   saveBook() {
     this.submitted = true;
+    
+    if (this.book.year) {
+      this.book.year = this.book.year.toString();
+    }
     if (this.book.id) {
-      this.iziToast.success({
-        message: 'Book updated',
-        position: 'topRight',
+      this.bs.updateBook(this.book.id, this.book).subscribe((result) => {
+        this.book = {};
+        this.ngOnInit();
+        this.iziToast.success({
+          message: 'Book updated',
+          position: 'topRight',
+        });
       });
     } else {
       this.allBooks.push(this.book);
-      this.iziToast.success({
-        message: 'Book created',
-        position: 'topRight',
+      this.bs.createBook(this.book).subscribe((res) => {
+        this.book.image =
+          'https://www.thibaultmorizet.fr/assets/' + res.id + '.jpeg';
+        this.bs.updateBook(res.id, this.book).subscribe((result) => {
+          this.book = {};
+          this.ngOnInit();
+          this.iziToast.success({
+            message: 'Book created',
+            position: 'topRight',
+          });
+        });
       });
     }
 

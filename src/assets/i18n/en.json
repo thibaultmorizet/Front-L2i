@@ -14,7 +14,8 @@
     "only_books_out_of_stock": "Only books out of stock",
     "price_range": "Price Range",
     "search": "Search",
-    "type": "Type"
+    "type": "Type",
+    "author": "Author"
   },
   "book_details": {
     "book_details": "Book details",
