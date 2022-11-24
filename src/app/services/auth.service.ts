@@ -18,4 +18,10 @@ export class AuthService {
       'https://thibaultmorizet.fr/ws/users?email=' + email
     );
   }
+  sendNewPassword(mailInfo: object) {
+    return this.http.post<{ token: string }>(
+      'https://thibaultmorizet.fr/mail',
+      mailInfo
+    );
+  }
 }

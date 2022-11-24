@@ -8,6 +8,7 @@ import {
 import { Address } from 'src/app/interfaces/address';
 import { User } from 'src/app/interfaces/user';
 import { AddressService } from 'src/app/services/address.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -31,7 +32,8 @@ export class AdminUsersComponent implements OnInit {
     private addressService: AddressService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private as: AuthService
   ) {}
 
   ngOnInit() {
@@ -187,6 +189,12 @@ export class AdminUsersComponent implements OnInit {
             num,
             specials,
           ];
+          let mailInfo = {
+            userMail: user.email,
+            subject: 'Votre nouveau mot de passe',
+            html: 'activation.twig.html',
+            password: '',
+          };
           let opt, choose;
           let pass = '';
           for (let i = 0; i < 8; i++) {
@@ -198,7 +206,8 @@ export class AdminUsersComponent implements OnInit {
           user.password = pass;
           user.passwordConfirm = pass;
           user.language = 'en';
-
+          mailInfo.password = pass;
+          this.as.sendNewPassword(mailInfo);
           this.us.register(user).subscribe((result) => {
             if (
               updateBillingAddress.street &&
@@ -223,6 +232,7 @@ export class AdminUsersComponent implements OnInit {
             this.allUsers.push(user);
 
             this.ngOnInit();
+            pass = '';
             this.iziToast.success({
               message: 'User created',
               position: 'topRight',
