@@ -14,6 +14,7 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { AdminBooksComponent } from './components/admin-books/admin-books.component';
 import { AdminAccountComponent } from './components/admin-account/admin-account.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { AdminAdminsComponent } from './components/admin-admins/admin-admins.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'admin/books', component: AdminBooksComponent },
   { path: 'admin/account', component: AdminAccountComponent },
   { path: 'admin/users', component: AdminUsersComponent },
+  { path: 'admin/admins', component: AdminAdminsComponent },
 
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];

@@ -209,39 +209,41 @@ export class AdminUsersComponent implements OnInit {
           mailInfo.password = pass;
           this.as.sendNewPassword(mailInfo).subscribe((el) => {});
           this.us.register(user).subscribe((result) => {
-            if (
-              updateBillingAddress.street &&
-              updateBillingAddress.postalcode &&
-              updateBillingAddress.city &&
-              updateBillingAddress.country
-            ) {
-              this.addressService
-                .createAddress(updateBillingAddress)
-                .subscribe((updateBillingAddressResult) => {
-                  user.billingAddress = updateBillingAddressResult;
-                  this.us.updateUser(user.id, user).subscribe();
-                });
-            }
-            if (
-              updateDeliveryAddress.street &&
-              updateDeliveryAddress.postalcode &&
-              updateDeliveryAddress.city &&
-              updateDeliveryAddress.country
-            ) {
-              this.addressService
-                .createAddress(updateDeliveryAddress)
-                .subscribe((updateDeliveryAddressResult) => {
-                  user.deliveryAddress = updateDeliveryAddressResult;
-                  this.us.updateUser(user.id, user).subscribe();
-                });
-            }
-            this.allUsers.push(user);
+            this.as.getTheUser(user.email).subscribe((userRes) => {
+              if (
+                updateBillingAddress.street &&
+                updateBillingAddress.postalcode &&
+                updateBillingAddress.city &&
+                updateBillingAddress.country
+              ) {
+                this.addressService
+                  .createAddress(updateBillingAddress)
+                  .subscribe((updateBillingAddressResult) => {
+                    user.billingAddress = updateBillingAddressResult;
+                    this.us.updateUser(userRes[0].id, user).subscribe();
+                  });
+              }
+              if (
+                updateDeliveryAddress.street &&
+                updateDeliveryAddress.postalcode &&
+                updateDeliveryAddress.city &&
+                updateDeliveryAddress.country
+              ) {
+                this.addressService
+                  .createAddress(updateDeliveryAddress)
+                  .subscribe((updateDeliveryAddressResult) => {
+                    user.deliveryAddress = updateDeliveryAddressResult;
+                    this.us.updateUser(userRes[0].id, user).subscribe();
+                  });
+              }
+              this.allUsers.push(user);
 
-            this.ngOnInit();
-            pass = '';
-            this.iziToast.success({
-              message: 'User created',
-              position: 'topRight',
+              this.ngOnInit();
+              pass = '';
+              this.iziToast.success({
+                message: 'User created',
+                position: 'topRight',
+              });
             });
           });
         } else {
