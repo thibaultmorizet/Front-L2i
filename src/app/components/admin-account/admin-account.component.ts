@@ -103,14 +103,14 @@ export class AdminAccountComponent implements OnInit {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('adminUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
-    this.authService.signOut();
     this.connectedAdmin = {};
     this.iziToast.success({
       message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
     });
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/admin/home');
   }
 
   tooglePasswordClear() {
