@@ -5,10 +5,12 @@ import {
   ConfirmationService,
   MessageService,
 } from 'primeng/api';
+import { Observable, Subscriber } from 'rxjs';
 import { Author } from 'src/app/interfaces/author';
 import { Book } from 'src/app/interfaces/book';
 import { Editor } from 'src/app/interfaces/editor';
 import { Format } from 'src/app/interfaces/format';
+import { Image } from 'src/app/interfaces/image';
 import { Type } from 'src/app/interfaces/type';
 import { AuthorService } from 'src/app/services/author.service';
 import { BookService } from 'src/app/services/book.service';
@@ -39,6 +41,8 @@ export class AdminBooksComponent implements OnInit {
   selectedTypes: Array<Type> = [];
   selectedFormat: Format = {};
   selectedEditor: Editor = {};
+  base64textString: String = '';
+  imageInfo: Image = {};
 
   constructor(
     private bs: BookService,
@@ -124,11 +128,25 @@ export class AdminBooksComponent implements OnInit {
 
   saveBook() {
     this.submitted = true;
-    
+
     if (this.book.year) {
       this.book.year = this.book.year.toString();
     }
     if (this.book.id) {
+      this.imageInfo.bookId = this.book.id?.toString();
+
+      if (this.imageInfo.url) {
+        this.book.image =
+          'https://www.thibaultmorizet.fr/assets/' +
+          this.book.id +
+          '.' +
+          this.imageInfo.url.split('.').pop();
+      } else {
+        this.book.image =
+          'https://www.thibaultmorizet.fr/assets/' + this.book.id + '.jpeg';
+      }
+      this.bs.addImage(this.imageInfo).subscribe();
+
       this.bs.updateBook(this.book.id, this.book).subscribe((result) => {
         this.book = {};
         this.ngOnInit();
@@ -140,8 +158,18 @@ export class AdminBooksComponent implements OnInit {
     } else {
       this.allBooks.push(this.book);
       this.bs.createBook(this.book).subscribe((res) => {
-        this.book.image =
-          'https://www.thibaultmorizet.fr/assets/' + res.id + '.jpeg';
+        this.imageInfo.bookId = res.id?.toString();
+        if (this.imageInfo.url) {
+          this.book.image =
+            'https://www.thibaultmorizet.fr/assets/' +
+            res.id +
+            '.' +
+            this.imageInfo.url.split('.').pop();
+        } else {
+          this.book.image =
+            'https://www.thibaultmorizet.fr/assets/' + res.id + '.jpeg';
+        }
+        this.bs.addImage(this.imageInfo).subscribe();
         this.bs.updateBook(res.id, this.book).subscribe((result) => {
           this.book = {};
           this.ngOnInit();
@@ -187,5 +215,43 @@ export class AdminBooksComponent implements OnInit {
       });
       this.types = res;
     });
+  }
+
+  addImageToServer($event: Event) {
+    /*     let imageSrcString = this.toDataURL(image.files[0]);
+    console.log(imageSrcString); */
+
+    const target = $event.target as HTMLInputElement;
+
+    const file: File = (target.files as FileList)[0];
+
+    this.imageInfo = {
+      url: file.name,
+      bookId: '5',
+    };
+
+    this.convertToBase64(file);
+  }
+
+  convertToBase64(file: File) {
+    const observable = new Observable((subscriber: Subscriber<any>) => {
+      this.readFile(file, subscriber);
+    });
+    observable.subscribe((d) => {
+      this.imageInfo.data = d.substring(d.indexOf('base64,') + 7);
+    });
+  }
+
+  readFile(file: File, subscriber: Subscriber<any>) {
+    const filereader = new FileReader();
+    filereader.readAsDataURL(file);
+    filereader.onload = () => {
+      subscriber.next(filereader.result);
+      subscriber.complete();
+    };
+    filereader.onerror = () => {
+      subscriber.error();
+      subscriber.complete();
+    };
   }
 }

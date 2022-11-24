@@ -347,6 +347,18 @@
             display="chip"
           ></p-multiSelect>
         </div>
+
+        <div class="field">
+          <label for="coverBook">Cover book</label><br />
+          <input
+            #imageInput
+            type="file"
+            accept="image/*"
+            class="form-control mb-3 file-upload"
+            (change)="addImageToServer($event)"
+            name="coverImage"
+          />
+        </div>
       </ng-template>
 
       <ng-template pTemplate="footer">

@@ -216,4 +216,10 @@ export class BookService {
   deleteTheBook(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
   }
+  addImage(imageInfo: object) {
+    return this.http.post<{ token: string }>(
+      'https://thibaultmorizet.fr/add_image',
+      imageInfo
+    );
+  }
 }
