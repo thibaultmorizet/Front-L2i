@@ -1,0 +1,319 @@
+<div class="general-content">
+  <app-admin-header></app-admin-header>
+
+  <main id="content">
+    <p-toast></p-toast>
+
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="New"
+          icon="pi pi-plus"
+          class="p-button-success mr-2"
+          (click)="openNew()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Delete"
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteSelectedUsers()"
+          [disabled]="!selectedUsers || !selectedUsers.length"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="allUsers"
+      [rows]="12"
+      [paginator]="true"
+      [globalFilterFields]="['firstname']"
+      [(selection)]="selectedUsers"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="manage-users">
+          <h5 class="m-0">Manage users</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($event.target, 'contains')"
+              placeholder="Search..."
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="display: table-cell !important; width: 4rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 15rem"
+            pSortableColumn="firstname"
+          >
+            Firstname <p-sortIcon field="firstname"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important" pSortableColumn="lastname">
+            Lastname <p-sortIcon field="lastname"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important" pSortableColumn="email">
+            Email <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important"
+            pSortableColumn="billingAddress"
+          >
+            Billing Address <p-sortIcon field="billingAddress"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important"
+            pSortableColumn="deliveryAddress"
+          >
+            Delivery Address <p-sortIcon field="deliveryAddress"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="user"></p-tableCheckbox>
+          </td>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.email }}</td>
+          <td *ngIf="user.billingAddress?.street">
+            {{ user.billingAddress?.street }},
+            {{ user.billingAddress?.postalcode }} {{ user.billingAddress?.city
+            }}<br />{{ user.billingAddress?.country }}
+          </td>
+          <td *ngIf="!user.billingAddress?.street"></td>
+          <td *ngIf="user.deliveryAddress?.street">
+            {{ user.deliveryAddress?.street }},
+            {{ user.deliveryAddress?.postalcode }}
+            {{ user.deliveryAddress?.city }}<br />{{
+              user.deliveryAddress?.country
+            }}
+          </td>
+          <td *ngIf="!user.deliveryAddress?.street"></td>
+
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editUser(user)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteUser(user)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there are {{ allUsers ? allUsers.length : 0 }} users.
+        </div>
+      </ng-template>
+    </p-table>
+
+    <p-confirmDialog
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      [baseZIndex]="10000"
+      rejectButtonStyleClass="p-button-outline-danger"
+      acceptButtonStyleClass="p-button-valid"
+    ></p-confirmDialog>
+
+    <p-dialog
+      [(visible)]="userDialog"
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      header="User Details"
+      [modal]="true"
+      styleClass="p-fluid"
+      [dismissableMask]="true"
+    >
+      <ng-template pTemplate="content">
+        <div class="field">
+          <label for="firstname">Firstname</label>
+          <input
+            type="text"
+            pInputText
+            id="firstname"
+            [(ngModel)]="user.firstname"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !user.firstname"
+            >Firstname is required.</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="lastname">Lastname</label>
+          <input
+            type="text"
+            pInputText
+            id="lastname"
+            [(ngModel)]="user.lastname"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !user.lastname"
+            >Lastname is required.</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            pInputText
+            id="email"
+            [(ngModel)]="user.email"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !user.email"
+            >Email is required.</small
+          >
+        </div>
+
+        <br />
+
+        <div class="field">
+          <label for="billingAddressStreet">Billing Address - Street</label>
+          <input
+            type="text"
+            pInputText
+            id="billingAddressStreet"
+            [(ngModel)]="updateBillingAddress.street"
+            autofocus
+          />
+        </div>
+
+        <div class="field">
+          <label for="billingAddressPostalcode"
+            >Billing Address - Postal code</label
+          >
+          <p-inputMask
+            type="text"
+            id="billingAddressPostalcode"
+            mask="99999"
+            [(ngModel)]="updateBillingAddress.postalcode"
+            placeholder="59000"
+            autofocus
+          ></p-inputMask>
+        </div>
+
+        <div class="field">
+          <label for="billingAddressCity">Billing Address - City</label>
+          <input
+            type="text"
+            pInputText
+            id="billingAddressCity"
+            [(ngModel)]="updateBillingAddress.city"
+            autofocus
+          />
+        </div>
+
+        <div class="field">
+          <label for="billingAddressCountry">Billing Address - Country</label>
+          <input
+            type="text"
+            pInputText
+            id="billingAddressCountry"
+            [(ngModel)]="updateBillingAddress.country"
+            autofocus
+          />
+        </div>
+
+        <br />
+
+        <div class="field">
+          <label for="deliveryAddressStreet">Delivery Address - Street</label>
+          <input
+            type="text"
+            pInputText
+            id="deliveryAddressStreet"
+            [(ngModel)]="updateDeliveryAddress.street"
+            autofocus
+          />
+        </div>
+
+        <div class="field">
+          <label for="deliveryAddressPostalcode"
+            >Delivery Address - Postal code</label
+          >
+          <p-inputMask
+            type="text"
+            id="deliveryAddressPostalcode"
+            mask="99999"
+            [(ngModel)]="updateDeliveryAddress.postalcode"
+            placeholder="59000"
+            autofocus
+          ></p-inputMask>
+        </div>
+
+        <div class="field">
+          <label for="deliveryAddressCity">Delivery Address - City</label>
+          <input
+            type="text"
+            pInputText
+            id="deliveryAddressCity"
+            [(ngModel)]="updateDeliveryAddress.city"
+            autofocus
+          />
+        </div>
+
+        <div class="field">
+          <label for="deliveryAddressCountry">Delivery Address - Country</label>
+          <input
+            type="text"
+            pInputText
+            id="deliveryAddressCountry"
+            [(ngModel)]="updateDeliveryAddress.country"
+            autofocus
+          />
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          label="Cancel"
+          icon="pi pi-times"
+          class="p-button-text"
+          (click)="hideDialog()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Save"
+          icon="pi pi-check"
+          class="p-button-text"
+          (click)="saveUser()"
+          [disabled]="!user.firstname || !user.lastname || !user.email"
+        ></button>
+      </ng-template>
+    </p-dialog>
+  </main>
+  <app-admin-footer></app-admin-footer>
+</div>

@@ -13,6 +13,7 @@ import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.co
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminBooksComponent } from './components/admin-books/admin-books.component';
 import { AdminAccountComponent } from './components/admin-account/admin-account.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'admin/login', component: AdminLoginComponent },
   { path: 'admin/books', component: AdminBooksComponent },
   { path: 'admin/account', component: AdminAccountComponent },
+  { path: 'admin/users', component: AdminUsersComponent },
 
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];

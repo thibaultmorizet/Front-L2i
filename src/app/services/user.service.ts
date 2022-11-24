@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 import { User } from '../interfaces/user';
 
 @Injectable({
@@ -20,11 +21,46 @@ export class UserService {
     );
   }
 
-  updateUser(id: number | undefined, user: User) {    
+  updateUser(id: number | undefined, user: User) {
     return this.http.put<{ token: string }>(this.url + '/' + id, user);
   }
-  
+
   deleteTheUser(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
+  }
+  getAllUsers() {
+    return this.http.get<Array<User>>(this.url);
+  }
+  getAllAdminsUsers() {
+    return new Promise((resolve) => {
+      this.http
+        .get<Array<User>>(this.url + '?itemsPerPage=10000')
+        .pipe()
+        .subscribe((data: any) => {
+          let users: Array<User> = [];
+          data.forEach((anUser: any) => {
+            if (anUser.roles?.includes('ROLE_ADMIN')) {
+              users.push(anUser);
+            }
+          });
+          resolve(users);
+        });
+    });
+  }
+  getAllNotAdminsUsers() {
+    return new Promise((resolve) => {
+      this.http
+        .get<Array<User>>(this.url + '?itemsPerPage=10000')
+        .pipe()
+        .subscribe((data: any) => {
+          let users: Array<User> = [];
+          data.forEach((anUser: any) => {
+            if (!anUser.roles?.includes('ROLE_ADMIN')) {
+              users.push(anUser);
+            }
+          });
+          resolve(users);
+        });
+    });
   }
 }

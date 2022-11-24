@@ -55,6 +55,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TableModule } from 'primeng/table';
+import { InputMaskModule } from 'primeng/inputmask';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
@@ -66,6 +67,7 @@ import { AdminHeaderComponent } from './components/partial/admin-header/admin-he
 import { AdminFooterComponent } from './components/partial/admin-footer/admin-footer.component';
 import { AdminBooksComponent } from './components/admin-books/admin-books.component';
 import { AdminAccountComponent } from './components/admin-account/admin-account.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +89,7 @@ import { AdminAccountComponent } from './components/admin-account/admin-account.
     AdminFooterComponent,
     AdminBooksComponent,
     AdminAccountComponent,
+    AdminUsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -128,6 +131,7 @@ import { AdminAccountComponent } from './components/admin-account/admin-account.
     ToastModule,
     ToolbarModule,
     TableModule,
+    InputMaskModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -136,7 +140,7 @@ import { AdminAccountComponent } from './components/admin-account/admin-account.
       useValue: {
         autoLogin: false,
         providers: [
-         /*  {
+          /*  {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
               '191085854417-q1nheuh4v1hgspdo64vs87hn3ovajlh3.apps.googleusercontent.com',

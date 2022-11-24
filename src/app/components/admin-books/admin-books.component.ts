@@ -40,9 +40,6 @@ export class AdminBooksComponent implements OnInit {
   selectedFormat: Format = {};
   selectedEditor: Editor = {};
 
-  shortLink: string = '';
-  file: File | null = null;
-
   constructor(
     private bs: BookService,
     private fs: FormatService,
@@ -74,7 +71,7 @@ export class AdminBooksComponent implements OnInit {
 
   deleteSelectedBooks() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected books?',
+      message: 'Are you sure you want to delete the selected books ?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
