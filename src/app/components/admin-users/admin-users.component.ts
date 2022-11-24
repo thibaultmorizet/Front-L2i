@@ -207,7 +207,7 @@ export class AdminUsersComponent implements OnInit {
           user.passwordConfirm = pass;
           user.language = 'en';
           mailInfo.password = pass;
-          this.as.sendNewPassword(mailInfo).subscribe((el)=>{});
+          this.as.sendNewPassword(mailInfo).subscribe((el) => {});
           this.us.register(user).subscribe((result) => {
             if (
               updateBillingAddress.street &&
@@ -217,7 +217,10 @@ export class AdminUsersComponent implements OnInit {
             ) {
               this.addressService
                 .createAddress(updateBillingAddress)
-                .subscribe();
+                .subscribe((updateBillingAddressResult) => {
+                  user.billingAddress = updateBillingAddressResult;
+                  this.us.updateUser(user.id, user).subscribe();
+                });
             }
             if (
               updateDeliveryAddress.street &&
@@ -227,7 +230,10 @@ export class AdminUsersComponent implements OnInit {
             ) {
               this.addressService
                 .createAddress(updateDeliveryAddress)
-                .subscribe();
+                .subscribe((updateDeliveryAddressResult) => {
+                  user.deliveryAddress = updateDeliveryAddressResult;
+                  this.us.updateUser(user.id, user).subscribe();
+                });
             }
             this.allUsers.push(user);
 
