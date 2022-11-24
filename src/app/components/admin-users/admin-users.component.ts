@@ -207,7 +207,7 @@ export class AdminUsersComponent implements OnInit {
           user.passwordConfirm = pass;
           user.language = 'en';
           mailInfo.password = pass;
-          this.as.sendNewPassword(mailInfo);
+          this.as.sendNewPassword(mailInfo).subscribe((el)=>{});
           this.us.register(user).subscribe((result) => {
             if (
               updateBillingAddress.street &&
