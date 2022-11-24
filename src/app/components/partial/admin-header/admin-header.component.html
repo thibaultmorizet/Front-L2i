@@ -33,7 +33,14 @@
           *ngIf="connectedAdmin.id"
           class="home-link text-uppercase"
           [routerLink]="['/admin/books']"
-          [ngClass]="{ active: path === 'admin/books/' }"
+          [ngClass]="{
+            active:
+              path === 'admin/books/' ||
+              path === 'admin/formats/' ||
+              path === 'admin/editors/' ||
+              path === 'admin/authors/' ||
+              path === 'admin/types/'
+          }"
           >{{ "admin_header.books" | translate }}</a
         >
         <a

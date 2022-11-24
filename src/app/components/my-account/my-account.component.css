@@ -1,31 +1,3 @@
-.login-container {
-    padding: 2em 1em;
-    background-color: rgba(255, 255, 255, .6);
-    backdrop-filter: blur(2px);
-    border-radius: 20px;
-    max-width: 500px;
-    min-width: 290px;
-    box-shadow: -1px 2px 15px -6px rgba(0, 0, 0, 0.75);
-    padding-bottom: 0;
-}
-
-.register-container {
-    padding: 2em 1em;
-    background-color: rgba(255, 255, 255, .6);
-    backdrop-filter: blur(2px);
-    border-radius: 20px;
-    max-width: 500px;
-    min-width: 290px;
-    box-shadow: -1px 2px 15px -6px rgba(0, 0, 0, 0.75);
-    padding-bottom: 0;
-
-}
-
-.container:has(.login-container), .container:has(.register-container) {
-    display: flex;
-    justify-content: center;
-}
-
 .container:has(#personnalData) {
     display: flex;
     justify-content: space-around;
@@ -40,37 +12,6 @@
 #personnalDateImg {
     display: none;
 }
-
-.btn-facebook {
-    background-color: #3B5998;
-    color: #fff;
-    border-radius: 0.25rem;
-    margin-bottom: 2rem;
-}
-
-.btn-facebook:hover {
-    opacity: 0.9;
-    background-color: #3B5998;
-    color: #fff;
-    box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75);
-}
-
-.logo-google {
-    width: 14px;
-    height: 14px;
-}
-
-.btn-google {
-    background-color: #fff;
-    color: #303030;
-    border-radius: 0.25rem;
-}
-
-.btn-google:hover {
-    box-shadow: 0px 2px 14px -8px rgba(0, 0, 0, 0.75);
-    background-color: #f0f0f0;
-}
-
 
 .p-inputtext {
     padding: .375rem .75rem;
@@ -264,19 +205,6 @@
     display: none;
 }
 
-@media (min-width: 650px) {
-    .login-container {
-        padding: 2em 2em;
-        min-width: 350px;
-    }
-
-    .register-container {
-        padding: 2em 2em;
-        min-width: 350px;
-    }
-
-}
-
 @media (min-width: 1000px) {
     .order-product-container {
         justify-content: space-around;
@@ -346,16 +274,6 @@
 }
 
 @media (min-width: 1800px) {
-    .login-container {
-        padding: 2.5em 2.5em;
-        min-width: 400px;
-    }
-
-    .register-container {
-        padding: 2.5em 2.5em;
-        min-width: 400px;
-    }
-
     #personnalDateImg {
         max-width: 700px;
     }

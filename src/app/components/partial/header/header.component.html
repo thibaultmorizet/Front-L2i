@@ -32,8 +32,8 @@
         <a
           *ngIf="!connectedUser"
           class="home-link text-uppercase"
-          [routerLink]="['/my-account']"
-          [ngClass]="{ active: path === 'my-account' }"
+          [routerLink]="['/login']"
+          [ngClass]="{ active: path === 'login' }"
           >{{'header.login_sign_in' | translate}}</a
         >
 

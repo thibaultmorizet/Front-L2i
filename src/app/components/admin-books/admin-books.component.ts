@@ -41,7 +41,6 @@ export class AdminBooksComponent implements OnInit {
   selectedTypes: Array<Type> = [];
   selectedFormat: Format = {};
   selectedEditor: Editor = {};
-  base64textString: String = '';
   imageInfo: Image = {};
 
   constructor(
@@ -145,8 +144,9 @@ export class AdminBooksComponent implements OnInit {
         this.book.image =
           'https://www.thibaultmorizet.fr/assets/' + this.book.id + '.jpeg';
       }
-      this.bs.addImage(this.imageInfo).subscribe();
-
+      if (this.imageInfo.data) {
+        this.bs.addImage(this.imageInfo).subscribe();
+      }
       this.bs.updateBook(this.book.id, this.book).subscribe((result) => {
         this.book = {};
         this.ngOnInit();
@@ -169,7 +169,9 @@ export class AdminBooksComponent implements OnInit {
           this.book.image =
             'https://www.thibaultmorizet.fr/assets/' + res.id + '.jpeg';
         }
-        this.bs.addImage(this.imageInfo).subscribe();
+        if (this.imageInfo.data) {
+          this.bs.addImage(this.imageInfo).subscribe();
+        }
         this.bs.updateBook(res.id, this.book).subscribe((result) => {
           this.book = {};
           this.ngOnInit();
@@ -196,15 +198,18 @@ export class AdminBooksComponent implements OnInit {
   }
   getAllEditorsfunc() {
     this.es.getAllEditors().subscribe((res) => {
+      res.forEach((anEditor) => {
+        delete anEditor.books;
+      });
       this.editors = res;
     });
   }
   getAllAuthorsfunc() {
     this.authorService.getAllAuthors().subscribe((res) => {
       res.forEach((anAuthor) => {
+        delete anAuthor.books;
         anAuthor.name = anAuthor.firstname + ' ' + anAuthor.lastname;
       });
-
       this.authors = res;
     });
   }

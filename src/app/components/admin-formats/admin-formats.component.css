@@ -2,40 +2,9 @@
     font-family: "Quicksand", Arial, sans-serif !important;
 }
 
-.book-badge.status-instock {
-    background: #C8E6C9;
-    color: #256029;
-}
-
-.book-badge.status-lowstock {
-    background: #FEEDAF;
-    color: #8a5340;
-}
-
-.book-badge.status-outofstock {
-    background: #FFCDD2;
-    color: #c63737;
-}
-
-.book-badge {
-    border-radius: 2px;
-    padding: .25em .5rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: .3px;
-}
-
 .p-datatable .p-datatable-header {
     display: flex;
     justify-content: space-between;
-}
-
-.img-icon {
-    width: 120px;
-    height: 150px;
-    border-radius: 15px;
-    box-shadow: -1px 2px 15px -6px rgba(0, 0, 0, 0.75);
 }
 
 .p-button.p-button-success, .p-buttonset.p-button-success>.p-button, .p-splitbutton.p-button-success>.p-button, .p-button.p-button-warning, .p-buttonset.p-button-warning>.p-button, .p-splitbutton.p-button-warning>.p-button, .p-button.p-button-danger, .p-buttonset.p-button-danger>.p-button, .p-splitbutton.p-button-danger>.p-button {
@@ -70,7 +39,7 @@
     overflow-x: scroll;
 }
 
-.manage-books {
+.manage-formats {
     width: 100%;
     display: flex;
     align-items: center;
@@ -137,14 +106,4 @@
     width: 100%;
     display: flex;
     justify-content: center;
-}
-
-.update-subfield-div>div>button>.p-button-label {
-    flex: none;
-}
-
-@media (min-width: 1000px) {
-    .update-subfield-div {
-        grid-template-columns: repeat(4, 1fr);
-    }
 }

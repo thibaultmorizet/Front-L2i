@@ -1,0 +1,199 @@
+<div class="general-content">
+  <app-admin-header></app-admin-header>
+
+  <main id="content">
+    <p-toast></p-toast>
+
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="New"
+          icon="pi pi-plus"
+          class="p-button-success mr-2"
+          (click)="openNew()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Delete"
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteSelectedAuthors()"
+          [disabled]="!selectedAuthors || !selectedAuthors.length"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="allAuthors"
+      [rows]="12"
+      [paginator]="true"
+      [globalFilterFields]="['name']"
+      [(selection)]="selectedAuthors"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="manage-authors">
+          <h5 class="m-0">Manage authors</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Search..."
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="display: table-cell !important; width: 4rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="firstname"
+          >
+            Firstname <p-sortIcon field="firstname"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="lastname"
+          >
+            Lastname <p-sortIcon field="lastname"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="language"
+          >
+            Language <p-sortIcon field="language"></p-sortIcon>
+          </th>
+
+          <th style="display: table-cell !important"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-author>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="author"></p-tableCheckbox>
+          </td>
+          <td>{{ author.firstname }}</td>
+          <td>{{ author.lastname }}</td>
+          <td>{{ author.language }}</td>
+
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editAuthor(author)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteAuthor(author)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there are {{ allAuthors ? allAuthors.length : 0 }} authors.
+        </div>
+      </ng-template>
+    </p-table>
+
+    <p-confirmDialog
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      [baseZIndex]="10000"
+      rejectButtonStyleClass="p-button-outline-danger"
+      acceptButtonStyleClass="p-button-valid"
+    ></p-confirmDialog>
+
+    <p-dialog
+      [(visible)]="authorDialog"
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      header="Product Details"
+      [modal]="true"
+      styleClass="p-fluid"
+      [dismissableMask]="true"
+    >
+      <ng-template pTemplate="content">
+        <div class="field">
+          <label for="firstname">Firstname</label>
+          <input
+            type="text"
+            pInputText
+            id="firstname"
+            [(ngModel)]="author.firstname"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !author.firstname"
+            >Firstname is required.</small
+          >
+        </div>
+        <div class="field">
+          <label for="lastname">Lastname</label>
+          <input
+            type="text"
+            pInputText
+            id="lastname"
+            [(ngModel)]="author.lastname"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !author.lastname"
+            >Lastname is required.</small
+          >
+        </div>
+        <div class="field">
+          <label for="language">Language</label>
+          <input
+            type="text"
+            pInputText
+            id="language"
+            [(ngModel)]="author.language"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !author.language"
+            >Language is required.</small
+          >
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          label="Cancel"
+          icon="pi pi-times"
+          class="p-button-text"
+          (click)="hideDialog()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Save"
+          icon="pi pi-check"
+          class="p-button-text"
+          (click)="saveAuthor()"
+        ></button>
+      </ng-template>
+    </p-dialog>
+  </main>
+  <app-admin-footer></app-admin-footer>
+</div>

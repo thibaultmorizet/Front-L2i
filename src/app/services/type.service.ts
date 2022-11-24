@@ -14,4 +14,14 @@ export class TypeService {
   getAllTypes() {    
     return this.http.get<Array<Type>>(this.url);
   }
+  updateType(id: number | undefined, type: Type) {
+    return this.http.put<{ token: string }>(this.url + '/' + id, type);
+  }
+
+  createType(type: Type) {
+    return this.http.post<Type>(this.url, type);
+  }
+  deleteTheType(id: number | undefined) {
+    return this.http.delete<{ token: string }>(this.url + '/' + id);
+  }
 }

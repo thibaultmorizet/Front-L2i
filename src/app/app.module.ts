@@ -69,6 +69,11 @@ import { AdminBooksComponent } from './components/admin-books/admin-books.compon
 import { AdminAccountComponent } from './components/admin-account/admin-account.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminAdminsComponent } from './components/admin-admins/admin-admins.component';
+import { LoginComponent } from './components/login/login.component';
+import { AdminFormatsComponent } from './components/admin-formats/admin-formats.component';
+import { AdminEditorsComponent } from './components/admin-editors/admin-editors.component';
+import { AdminAuhtorsComponent } from './components/admin-auhtors/admin-auhtors.component';
+import { AdminTypesComponent } from './components/admin-types/admin-types.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +97,11 @@ import { AdminAdminsComponent } from './components/admin-admins/admin-admins.com
     AdminAccountComponent,
     AdminUsersComponent,
     AdminAdminsComponent,
+    LoginComponent,
+    AdminFormatsComponent,
+    AdminEditorsComponent,
+    AdminAuhtorsComponent,
+    AdminTypesComponent,
   ],
   imports: [
     BrowserModule,

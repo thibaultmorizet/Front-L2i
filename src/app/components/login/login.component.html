@@ -1,0 +1,287 @@
+<div class="general-content">
+  <app-header [cartLength]="cart.length"></app-header>
+
+  <main id="content">
+    <div class="container" *ngIf="isLoginPage">
+      <div class="login-container">
+        <p class="title text-center">{{ "my_account.login" | translate }}</p>
+
+        <form #loginForm="ngForm" (ngSubmit)="login()">
+          <div class="mb-3">
+            <div class="input-group">
+              <div class="field mb-3">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="{{ 'general.email' | translate }}"
+                  pInputText
+                  [(ngModel)]="userLogin.email"
+                  [ngClass]="{ 'ng-invalid': errorEmail }"
+                  required
+                />
+                <small class="p-error" [ngClass]="{ 'd-none': !errorEmail }">{{
+                  errorEmail
+                }}</small>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="field mb-3">
+                <div>
+                  <input
+                    id="password"
+                    name="password"
+                    [type]="passwordType"
+                    placeholder="{{ 'my_account.password' | translate }}"
+                    pInputText
+                    [(ngModel)]="userLogin.password"
+                    [ngClass]="{ 'ng-invalid': errorPassword }"
+                    required
+                  />
+                  <span
+                    class="toogle-password-clear"
+                    (click)="tooglePasswordClear()"
+                    ><i
+                      class="fa-regular"
+                      [ngClass]="{
+                        'fa-eye-slash': !passwordIsClear,
+                        'fa-eye': passwordIsClear
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorPassword }"
+                  >{{ errorPassword }}</small
+                >
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-2">
+              <button
+                pButton
+                pRipple
+                type="submit"
+                class="p-button-raised p-button-primary-color btn-primary-color"
+                [disabled]="!loginForm.valid"
+              >
+                {{ "my_account.login" | translate }}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div>
+          <button
+            type="button"
+            (click)="signInWithGoogle()"
+            class="btn btn-google mt-3"
+          >
+            <img
+              src="https://www.thibaultmorizet.fr/assets/logo-google.png"
+              alt="logo Google"
+              class="logo-google"
+            />
+            {{ "my_account.login_with_google" | translate }}</button
+          ><br />
+          <button class="btn btn-facebook mt-3" (click)="signInWithFB()">
+            <i class="fa-brands fa-facebook mr-1"></i>
+            {{ "my_account.login_with_facebook" | translate }}
+          </button>
+        </div>
+        <p
+          class="text-center text-underline pointer"
+          (click)="toggleIsLoginPage()"
+        >
+          {{ "my_account.you_re_not_registered" | translate }}
+        </p>
+      </div>
+    </div>
+    <div class="container" *ngIf="!isLoginPage">
+      <div class="register-container">
+        <p class="title text-center">{{ "my_account.register" | translate }}</p>
+
+        <form #registerForm="ngForm" (ngSubmit)="register()">
+          <div class="mb-3">
+            <div class="input-group">
+              <div class="field mb-3">
+                <input
+                  id="lastname"
+                  name="lastname"
+                  type="text"
+                  placeholder="{{ 'my_account.lastname' | translate }}"
+                  pInputText
+                  [(ngModel)]="userInscription.lastname"
+                  [ngClass]="{ 'ng-invalid': errorLastname }"
+                  required
+                  (keyup)="checkLastnamePattern()"
+                />
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorLastname }"
+                  >{{ errorLastname }}</small
+                >
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="field mb-3">
+                <input
+                  id="firstname"
+                  name="firstname"
+                  type="text"
+                  placeholder="{{ 'my_account.firstname' | translate }}"
+                  pInputText
+                  [(ngModel)]="userInscription.firstname"
+                  [ngClass]="{ 'ng-invalid': errorFirstname }"
+                  required
+                  (keyup)="checkFirstnamePattern()"
+                />
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorFirstname }"
+                  >{{ errorFirstname }}</small
+                >
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="field mb-3">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="{{ 'general.email' | translate }}"
+                  pInputText
+                  [(ngModel)]="userInscription.email"
+                  [ngClass]="{ 'ng-invalid': errorEmail }"
+                  required
+                  (keyup)="checkEmailPattern()"
+                />
+                <small class="p-error" [ngClass]="{ 'd-none': !errorEmail }">{{
+                  errorEmail
+                }}</small>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="field mb-3">
+                <div>
+                  <input
+                    id="password"
+                    name="password"
+                    [type]="passwordType"
+                    placeholder="{{ 'my_account.password' | translate }}"
+                    pInputText
+                    [(ngModel)]="userInscription.password"
+                    [ngClass]="{ 'ng-invalid': errorPassword }"
+                    required
+                    (keyup)="checkPasswordPattern()"
+                  />
+                  <span
+                    class="toogle-password-clear"
+                    (click)="tooglePasswordClear()"
+                    ><i
+                      class="fa-regular"
+                      [ngClass]="{
+                        'fa-eye-slash': !passwordIsClear,
+                        'fa-eye': passwordIsClear
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorPassword }"
+                  >{{ errorPassword }}</small
+                >
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="field mb-3">
+                <div>
+                  <input
+                    id="passwordConfirm"
+                    name="passwordConfirm"
+                    [type]="passwordType"
+                    placeholder="{{
+                      'my_account.confirm_your_password' | translate
+                    }}"
+                    pInputText
+                    [(ngModel)]="userInscription.passwordConfirm"
+                    [ngClass]="{ 'ng-invalid': errorPasswordConfirm }"
+                    required
+                    (keyup)="checkPasswordConfirmPattern()"
+                  />
+                  <span
+                    class="toogle-password-clear"
+                    (click)="tooglePasswordClear()"
+                    ><i
+                      class="fa-regular"
+                      [ngClass]="{
+                        'fa-eye-slash': !passwordIsClear,
+                        'fa-eye': passwordIsClear
+                      }"
+                    ></i
+                  ></span>
+                </div>
+                <small
+                  class="p-error"
+                  [ngClass]="{ 'd-none': !errorPasswordConfirm }"
+                  >{{ errorPasswordConfirm }}</small
+                >
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-2">
+              <button
+                pButton
+                pRipple
+                type="submit"
+                class="p-button-raised p-button-primary-color btn-primary-color"
+                [disabled]="
+                  !registerForm.valid ||
+                  errorEmail ||
+                  errorFirstname ||
+                  errorLastname ||
+                  errorPassword ||
+                  errorPasswordConfirm
+                "
+              >
+                {{ "my_account.register" | translate }}
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div>
+          <button
+            type="button"
+            (click)="signInWithGoogle()"
+            class="btn btn-google mt-3"
+          >
+            <img
+              src="https://www.thibaultmorizet.fr/assets/logo-google.png"
+              alt="logo Google"
+              class="logo-google"
+            />
+            {{ "my_account.register_with_google" | translate }}</button
+          ><br />
+          <button class="btn btn-facebook mt-3" (click)="signInWithFB()">
+            <i class="fa-brands fa-facebook mr-1"></i>
+            {{ "my_account.register_with_facebook" | translate }}
+          </button>
+        </div>
+        <p
+          class="text-center text-underline pointer"
+          (click)="toggleIsLoginPage()"
+        >
+          {{ "my_account.you_already_have_an_account" | translate }}
+        </p>
+      </div>
+    </div>
+  </main>
+  <app-footer></app-footer>
+</div>

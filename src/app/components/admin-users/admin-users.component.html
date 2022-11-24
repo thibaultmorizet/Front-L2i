@@ -31,7 +31,7 @@
       [value]="allUsers"
       [rows]="12"
       [paginator]="true"
-      [globalFilterFields]="['firstname']"
+      [globalFilterFields]="['firstname','lastname','email','billingAddress.street','billingAddress.postalCode','billingAddress.city','billingAddress.country','deliveryAddress.street','deliveryAddress.postalCode','deliveryAddress.city','deliveryAddress.country']"
       [(selection)]="selectedUsers"
       [rowHover]="true"
       dataKey="id"
@@ -46,7 +46,7 @@
             <input
               pInputText
               type="text"
-              (input)="dt.filterGlobal($event.target, 'contains')"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
               placeholder="Search..."
             />
           </span>

@@ -15,6 +15,11 @@ import { AdminBooksComponent } from './components/admin-books/admin-books.compon
 import { AdminAccountComponent } from './components/admin-account/admin-account.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminAdminsComponent } from './components/admin-admins/admin-admins.component';
+import { LoginComponent } from './components/login/login.component';
+import { AdminFormatsComponent } from './components/admin-formats/admin-formats.component';
+import { AdminEditorsComponent } from './components/admin-editors/admin-editors.component';
+import { AdminAuhtorsComponent } from './components/admin-auhtors/admin-auhtors.component';
+import { AdminTypesComponent } from './components/admin-types/admin-types.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,6 +27,7 @@ const routes: Routes = [
   { path: 'cart', component: CartDetailsComponent },
   { path: 'books/:id', component: BookDetailsComponent },
   { path: 'my-account', component: MyAccountComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'new-book', component: NewBookComponent },
   { path: 'home', component: HomeComponent },
   { path: 'legal-notices', component: LegalNoticesComponent },
@@ -32,6 +38,10 @@ const routes: Routes = [
   { path: 'admin/account', component: AdminAccountComponent },
   { path: 'admin/users', component: AdminUsersComponent },
   { path: 'admin/admins', component: AdminAdminsComponent },
+  { path: 'admin/formats', component: AdminFormatsComponent },
+  { path: 'admin/editors', component: AdminEditorsComponent },
+  { path: 'admin/authors', component: AdminAuhtorsComponent },
+  { path: 'admin/types', component: AdminTypesComponent },
 
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];

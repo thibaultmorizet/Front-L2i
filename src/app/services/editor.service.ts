@@ -19,10 +19,14 @@ export class EditorService {
       'https://thibaultmorizet.fr/ws/editors?name=' + name
     );
   }
-  setEditor(editor: Editor) {
-    return this.http.post<{ token: string }>(
-      'https://thibaultmorizet.fr/ws/editors',
-      editor
-    );
+  updateEditor(id: number | undefined, editor: Editor) {
+    return this.http.put<{ token: string }>(this.url + '/' + id, editor);
+  }
+
+  createEditor(editor: Editor) {
+    return this.http.post<Editor>(this.url, editor);
+  }
+  deleteTheEditor(id: number | undefined) {
+    return this.http.delete<{ token: string }>(this.url + '/' + id);
   }
 }

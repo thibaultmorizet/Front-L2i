@@ -14,24 +14,33 @@
             class="p-button-success mr-2"
             (click)="openNew()"
           ></button>
+          <button
+            pButton
+            pRipple
+            label="Delete"
+            icon="pi pi-trash"
+            class="p-button-danger"
+            (click)="deleteSelectedTypes()"
+            [disabled]="!selectedTypes || !selectedTypes.length"
+          ></button>
         </ng-template>
       </p-toolbar>
   
       <p-table
         #dt
-        [value]="allUsers"
+        [value]="allTypes"
         [rows]="12"
         [paginator]="true"
-        [globalFilterFields]="['firstname','lastname','email']"
-        [(selection)]="selectedUsers"
+        [globalFilterFields]="['name']"
+        [(selection)]="selectedTypes"
         [rowHover]="true"
         dataKey="id"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [showCurrentPageReport]="true"
       >
         <ng-template pTemplate="caption">
-          <div class="manage-users">
-            <h5 class="m-0">Manage users</h5>
+          <div class="manage-types">
+            <h5 class="m-0">Manage types</h5>
             <span class="p-input-icon-left">
               <i class="pi pi-search"></i>
               <input
@@ -45,31 +54,47 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
+            <th style="display: table-cell !important; width: 4rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
             <th
-              style="display: table-cell !important; min-width: 15rem"
-              pSortableColumn="firstname"
+              style="display: table-cell !important; min-width: 10rem"
+              pSortableColumn="name"
             >
-              Firstname <p-sortIcon field="firstname"></p-sortIcon>
+              Name <p-sortIcon field="name"></p-sortIcon>
             </th>
-            <th style="display: table-cell !important" pSortableColumn="lastname">
-              Lastname <p-sortIcon field="lastname"></p-sortIcon>
-            </th>
-            <th style="display: table-cell !important" pSortableColumn="email">
-              Email <p-sortIcon field="email"></p-sortIcon>
-            </th>
+  
             <th style="display: table-cell !important"></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-user>
+        <ng-template pTemplate="body" let-type>
           <tr>
-            <td>{{ user.firstname }}</td>
-            <td>{{ user.lastname }}</td>
-            <td>{{ user.email }}</td>  
+            <td>
+              <p-tableCheckbox [value]="type"></p-tableCheckbox>
+            </td>
+            <td>{{ type.name }}</td>
+  
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-success mr-2"
+                (click)="editType(type)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-warning"
+                (click)="deleteType(type)"
+              ></button>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
           <div class="flex align-items-center justify-content-between">
-            In total there are {{ allUsers ? allUsers.length : 0 }} users.
+            In total there are {{ allTypes ? allTypes.length : 0 }} types.
           </div>
         </ng-template>
       </p-table>
@@ -83,60 +108,29 @@
       ></p-confirmDialog>
   
       <p-dialog
-        [(visible)]="userDialog"
+        [(visible)]="typeDialog"
         [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
         [style]="{ width: '50vw' }"
-        header="User Details"
+        header="Product Details"
         [modal]="true"
         styleClass="p-fluid"
         [dismissableMask]="true"
       >
         <ng-template pTemplate="content">
           <div class="field">
-            <label for="firstname">Firstname</label>
+            <label for="name">Name</label>
             <input
               type="text"
               pInputText
-              id="firstname"
-              [(ngModel)]="user.firstname"
+              id="name"
+              [(ngModel)]="type.name"
               required
               autofocus
             />
-            <small class="p-error" *ngIf="submitted && !user.firstname"
-              >Firstname is required.</small
+            <small class="p-error" *ngIf="submitted && !type.name"
+              >Name is required.</small
             >
           </div>
-  
-          <div class="field">
-            <label for="lastname">Lastname</label>
-            <input
-              type="text"
-              pInputText
-              id="lastname"
-              [(ngModel)]="user.lastname"
-              required
-              autofocus
-            />
-            <small class="p-error" *ngIf="submitted && !user.lastname"
-              >Lastname is required.</small
-            >
-          </div>
-  
-          <div class="field">
-            <label for="email">Email</label>
-            <input
-              type="text"
-              pInputText
-              id="email"
-              [(ngModel)]="user.email"
-              required
-              autofocus
-            />
-            <small class="p-error" *ngIf="submitted && !user.email"
-              >Email is required.</small
-            >
-          </div>
-  
         </ng-template>
   
         <ng-template pTemplate="footer">
@@ -154,8 +148,7 @@
             label="Save"
             icon="pi pi-check"
             class="p-button-text"
-            (click)="saveUser()"
-            [disabled]="!user.firstname || !user.lastname || !user.email"
+            (click)="saveType()"
           ></button>
         </ng-template>
       </p-dialog>
