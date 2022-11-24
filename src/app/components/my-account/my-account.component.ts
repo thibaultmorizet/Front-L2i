@@ -286,6 +286,7 @@ export class MyAccountComponent implements OnInit {
       this.errorPasswordConfirm = 'The passwords must be identical';
     } else {
       this.errorPasswordConfirm = null;
+      this.checkUpdatePasswordPattern();
     }
   }
   confirmDeleteAccount() {

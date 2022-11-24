@@ -19,6 +19,7 @@ import { AdminFormatsComponent } from './components/admin-formats/admin-formats.
 import { AdminEditorsComponent } from './components/admin-editors/admin-editors.component';
 import { AdminAuhtorsComponent } from './components/admin-auhtors/admin-auhtors.component';
 import { AdminTypesComponent } from './components/admin-types/admin-types.component';
+import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'legal-notices', component: LegalNoticesComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'forgotten-password', component: ForgottenPasswordComponent },
   { path: 'admin/home', component: AdminHomeComponent },
   { path: 'admin/login', component: AdminLoginComponent },
   { path: 'admin/books', component: AdminBooksComponent },

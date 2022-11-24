@@ -73,6 +73,7 @@ import { AdminFormatsComponent } from './components/admin-formats/admin-formats.
 import { AdminEditorsComponent } from './components/admin-editors/admin-editors.component';
 import { AdminAuhtorsComponent } from './components/admin-auhtors/admin-auhtors.component';
 import { AdminTypesComponent } from './components/admin-types/admin-types.component';
+import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { AdminTypesComponent } from './components/admin-types/admin-types.compon
     AdminEditorsComponent,
     AdminAuhtorsComponent,
     AdminTypesComponent,
+    ForgottenPasswordComponent,
   ],
   imports: [
     BrowserModule,

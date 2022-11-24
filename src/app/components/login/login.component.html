@@ -90,12 +90,20 @@
             {{ "my_account.login_with_facebook" | translate }}
           </button>
         </div>
-        <p
-          class="text-center text-underline pointer"
-          (click)="toggleIsLoginPage()"
-        >
-          {{ "my_account.you_re_not_registered" | translate }}
-        </p>
+        <div class="link-d-flex">
+          <p
+            class="text-center text-underline pointer"
+            [routerLink]="['/forgotten-password']"
+          >
+            forgotten password
+          </p>
+          <p
+            class="text-center text-underline pointer"
+            (click)="toggleIsLoginPage()"
+          >
+            {{ "my_account.you_re_not_registered" | translate }}
+          </p>
+        </div>
       </div>
     </div>
     <div class="container" *ngIf="!isLoginPage">

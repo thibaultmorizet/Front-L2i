@@ -85,7 +85,9 @@ export class FooterComponent implements OnInit {
     if (this.connectedUser.id != undefined) {
       this.us
         .updateUser(this.connectedUser.id, this.connectedUser)
-        .subscribe((user) => {});
+        .subscribe((user) => {
+          this.storageCrypter.setItem('user', JSON.stringify(this.connectedUser), 'session');
+        });
     } else {
       this.storageCrypter.setItem('language', this.language, 'session');
     }
