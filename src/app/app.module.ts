@@ -25,7 +25,6 @@ import {
 } from 'angularx-social-login';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
-import { NewBookComponent } from './components/new-book/new-book.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
@@ -83,7 +82,6 @@ import { AdminTypesComponent } from './components/admin-types/admin-types.compon
     CartDetailsComponent,
     MyAccountComponent,
     AdminHomeComponent,
-    NewBookComponent,
     HomeComponent,
     HeaderComponent,
     FooterComponent,

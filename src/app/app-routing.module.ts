@@ -5,7 +5,6 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
-import { NewBookComponent } from './components/new-book/new-book.component';
 import { HomeComponent } from './components/home/home.component';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
@@ -28,7 +27,6 @@ const routes: Routes = [
   { path: 'books/:id', component: BookDetailsComponent },
   { path: 'my-account', component: MyAccountComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'new-book', component: NewBookComponent },
   { path: 'home', component: HomeComponent },
   { path: 'legal-notices', component: LegalNoticesComponent },
   { path: 'contact', component: ContactComponent },

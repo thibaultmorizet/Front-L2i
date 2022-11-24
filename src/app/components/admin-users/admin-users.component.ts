@@ -39,9 +39,6 @@ export class AdminUsersComponent implements OnInit {
   ngOnInit() {
     this.primengConfig.ripple = true;
 
-    /*     this.us.getAllNotAdminsUsers().subscribe((data) => (this.allUsers = data));
-     */
-
     this.us.getAllNotAdminsUsers().then((data) => {
       this.allUsers = data;
     });

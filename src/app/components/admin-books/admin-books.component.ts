@@ -223,9 +223,6 @@ export class AdminBooksComponent implements OnInit {
   }
 
   addImageToServer($event: Event) {
-    /*     let imageSrcString = this.toDataURL(image.files[0]);
-    console.log(imageSrcString); */
-
     const target = $event.target as HTMLInputElement;
 
     const file: File = (target.files as FileList)[0];

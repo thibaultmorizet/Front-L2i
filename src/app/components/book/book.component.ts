@@ -409,18 +409,7 @@ export class BookComponent implements OnInit {
     });
   }
 
-  uploadFile(file: any) {
-    this.fileToUpload = file.files[0];
-    /*  if (this.fileToUpload) {
-      this.bs.uploadCoverImage(this.fileToUpload).subscribe(resp => {
-        alert("Uploaded")
-      })
-    } else {
-      alert("Please select a file first")
-    } */
-  }
   filterBook(event: any) {
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     let filtered: any[] = [];
     let query = event.query;
     for (let i = 0; i < this.allBooks.length; i++) {
