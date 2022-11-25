@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BookComponent } from './components/book/book.component';
+import { ShopComponent } from './components/shop/shop.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
@@ -23,7 +23,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'books', component: BookComponent },
+  { path: 'shop', component: ShopComponent },
   { path: 'cart', component: CartDetailsComponent },
   { path: 'books/:id', component: BookDetailsComponent },
   { path: 'my-account', component: MyAccountComponent },

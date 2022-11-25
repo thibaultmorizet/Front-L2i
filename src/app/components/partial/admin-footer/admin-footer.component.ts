@@ -8,7 +8,7 @@ import StorageCrypter from 'storage-crypter';
 @Component({
   selector: 'app-admin-footer',
   templateUrl: './admin-footer.component.html',
-  styleUrls: ['./admin-footer.component.css']
+  styleUrls: ['./admin-footer.component.css'],
 })
 export class AdminFooterComponent implements OnInit {
   path: string = '';
@@ -26,14 +26,14 @@ export class AdminFooterComponent implements OnInit {
   ngOnInit(): void {
     try {
       this.connectedAdmin = JSON.parse(
-        this.storageCrypter.getItem('user', 'session')
+        this.storageCrypter.getItem('adminUser', 'session')
       );
     } catch (error) {
       this.connectedAdmin = {};
     }
     try {
       this.translate.setDefaultLang(
-        JSON.parse(this.storageCrypter.getItem('user', 'session')).language
+        JSON.parse(this.storageCrypter.getItem('adminUser', 'session')).language
       );
       this.language = this.translate.getDefaultLang();
     } catch (error) {
@@ -85,7 +85,13 @@ export class AdminFooterComponent implements OnInit {
     if (this.connectedAdmin.id != undefined) {
       this.us
         .updateUser(this.connectedAdmin.id, this.connectedAdmin)
-        .subscribe((user) => {});
+        .subscribe((user) => {
+          this.storageCrypter.setItem(
+            'adminUser',
+            JSON.stringify(this.connectedAdmin),
+            'session'
+          );
+        });
     } else {
       this.storageCrypter.setItem('language', this.language, 'session');
     }

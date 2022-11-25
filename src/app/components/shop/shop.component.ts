@@ -21,12 +21,12 @@ import { PrimeNGConfig } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-book',
-  templateUrl: './book.component.html',
-  styleUrls: ['./book.component.css', './../../../css/main.css'],
+  selector: 'app-shop',
+  templateUrl: './shop.component.html',
+  styleUrls: ['./shop.component.css', './../../../css/main.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class BookComponent implements OnInit {
+export class ShopComponent implements OnInit {
   cart: Array<Book> = [];
   books: Array<Book> = [];
   allBooks: Array<Book> = [];

@@ -33,7 +33,7 @@ export class AdminLoginComponent implements OnInit {
   ngOnInit(): void {
     this.primengConfig.ripple = true;
 
-    this.translate.use('en');
+    this.translate.use(this.translate.getDefaultLang());
 
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');

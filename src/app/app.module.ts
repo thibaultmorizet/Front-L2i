@@ -9,7 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BookComponent } from './components/book/book.component';
+import { ShopComponent } from './components/shop/shop.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { NgxIziToastModule } from 'ngx-izitoast';
 import { AuthInterceptor } from './services/auth.interceptor';
@@ -78,7 +78,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
 @NgModule({
   declarations: [
     AppComponent,
-    BookComponent,
+    ShopComponent,
     BookDetailsComponent,
     CartDetailsComponent,
     MyAccountComponent,
