@@ -1,158 +1,172 @@
 <div class="general-content">
-    <app-admin-header></app-admin-header>
-  
-    <main id="content">
-      <p-toast></p-toast>
-  
-      <p-toolbar styleClass="mb-4 gap-2">
-        <ng-template pTemplate="left">
-          <button
-            pButton
-            pRipple
-            label="New"
-            icon="pi pi-plus"
-            class="p-button-success mr-2"
-            (click)="openNew()"
-          ></button>
-          <button
-            pButton
-            pRipple
-            label="Delete"
-            icon="pi pi-trash"
-            class="p-button-danger"
-            (click)="deleteSelectedTypes()"
-            [disabled]="!selectedTypes || !selectedTypes.length"
-          ></button>
-        </ng-template>
-      </p-toolbar>
-  
-      <p-table
-        #dt
-        [value]="allTypes"
-        [rows]="12"
-        [paginator]="true"
-        [globalFilterFields]="['name']"
-        [(selection)]="selectedTypes"
-        [rowHover]="true"
-        dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [showCurrentPageReport]="true"
-      >
-        <ng-template pTemplate="caption">
-          <div class="manage-types">
-            <h5 class="m-0">Manage types</h5>
-            <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input
-                pInputText
-                type="text"
-                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                placeholder="Search..."
-              />
-            </span>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="display: table-cell !important; width: 4rem">
-              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th
-              style="display: table-cell !important; min-width: 10rem"
-              pSortableColumn="name"
-            >
-              Name <p-sortIcon field="name"></p-sortIcon>
-            </th>
-  
-            <th style="display: table-cell !important"></th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-type>
-          <tr>
-            <td>
-              <p-tableCheckbox [value]="type"></p-tableCheckbox>
-            </td>
-            <td>{{ type.name }}</td>
-  
-            <td>
-              <button
-                pButton
-                pRipple
-                icon="pi pi-pencil"
-                class="p-button-rounded p-button-success mr-2"
-                (click)="editType(type)"
-              ></button>
-              <button
-                pButton
-                pRipple
-                icon="pi pi-trash"
-                class="p-button-rounded p-button-warning"
-                (click)="deleteType(type)"
-              ></button>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-          <div class="flex align-items-center justify-content-between">
-            In total there are {{ allTypes ? allTypes.length : 0 }} types.
-          </div>
-        </ng-template>
-      </p-table>
-  
-      <p-confirmDialog
-        [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-        [style]="{ width: '50vw' }"
-        [baseZIndex]="10000"
-        rejectButtonStyleClass="p-button-outline-danger"
-        acceptButtonStyleClass="p-button-valid"
-      ></p-confirmDialog>
-  
-      <p-dialog
-        [(visible)]="typeDialog"
-        [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-        [style]="{ width: '50vw' }"
-        header="Product Details"
-        [modal]="true"
-        styleClass="p-fluid"
-        [dismissableMask]="true"
-      >
-        <ng-template pTemplate="content">
-          <div class="field">
-            <label for="name">Name</label>
+  <app-admin-header></app-admin-header>
+
+  <main id="content">
+    <p-toast></p-toast>
+
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.new' | translate }}"
+          icon="pi pi-plus"
+          class="p-button-success mr-2"
+          (click)="openNew()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.delete' | translate }}"
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteSelectedTypes()"
+          [disabled]="!selectedTypes || !selectedTypes.length"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="allTypes"
+      [rows]="12"
+      [paginator]="true"
+      [globalFilterFields]="['name']"
+      [(selection)]="selectedTypes"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="{{
+        'general.showing_entries_message'
+          | translate
+            : {
+                first: '{first}',
+                last: '{last}',
+                totalRecords: '{totalRecords}'
+              }
+      }}"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="manage-types">
+          <h5 class="m-0">{{ "admin_types.manage_types" | translate }}</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
             <input
-              type="text"
               pInputText
-              id="name"
-              [(ngModel)]="type.name"
-              required
-              autofocus
+              type="text"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="{{ 'general.search' | translate }}"
             />
-            <small class="p-error" *ngIf="submitted && !type.name"
-              >Name is required.</small
-            >
-          </div>
-        </ng-template>
-  
-        <ng-template pTemplate="footer">
-          <button
-            pButton
-            pRipple
-            label="Cancel"
-            icon="pi pi-times"
-            class="p-button-text"
-            (click)="hideDialog()"
-          ></button>
-          <button
-            pButton
-            pRipple
-            label="Save"
-            icon="pi pi-check"
-            class="p-button-text"
-            (click)="saveType()"
-          ></button>
-        </ng-template>
-      </p-dialog>
-    </main>
-    <app-admin-footer></app-admin-footer>
-  </div>
-  
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="display: table-cell !important; width: 4rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="name"
+          >
+            {{ "admin_types.name" | translate }}
+            <p-sortIcon field="name"></p-sortIcon>
+          </th>
+
+          <th style="display: table-cell !important"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-type>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="type"></p-tableCheckbox>
+          </td>
+          <td>{{ type.name }}</td>
+
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editType(type)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteType(type)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          {{
+            "admin_types.total_types_message"
+              | translate: { typeLength: allTypes ? allTypes.length : 0 }
+          }}
+        </div>
+      </ng-template>
+    </p-table>
+
+    <p-confirmDialog
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      [baseZIndex]="10000"
+      rejectButtonStyleClass="p-button-outline-danger"
+      acceptButtonStyleClass="p-button-valid"
+      acceptLabel="{{ 'general.yes' | translate }}"
+      rejectLabel="{{ 'general.no' | translate }}"
+    ></p-confirmDialog>
+
+    <p-dialog
+      [(visible)]="typeDialog"
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      header="{{ 'admin_types.type_details' | translate }}"
+      [modal]="true"
+      styleClass="p-fluid"
+      [dismissableMask]="true"
+    >
+      <ng-template pTemplate="content">
+        <div class="field">
+          <label for="name">{{ "admin_types.name" | translate }}</label>
+          <input
+            type="text"
+            pInputText
+            id="name"
+            [(ngModel)]="type.name"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !type.name"
+            >{{ "admin_types.name" | translate }}
+            {{ "general.is_required" | translate }}</small
+          >
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.cancel' | translate }}"
+          icon="pi pi-times"
+          class="p-button-text"
+          (click)="hideDialog()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.save' | translate }}"
+          icon="pi pi-check"
+          class="p-button-text"
+          (click)="saveType()"
+        ></button>
+      </ng-template>
+    </p-dialog>
+  </main>
+  <app-admin-footer></app-admin-footer>
+</div>

@@ -1,0 +1,117 @@
+{
+  "admin_header": {
+    "home": "Accueil",
+    "login_sign_in": "Se connecter",
+    "users": "Utilisateurs",
+    "admins": "Admins",
+    "books": "Livres",
+    "my_account": "Mon compte"
+  },
+  "book": {
+    "clear_all": "Tout effacer",
+    "format": "Format",
+    "only_books_in_stock": "Seulement les livres en stock",
+    "only_books_out_of_stock": "Seulement les livres en rupture de stock",
+    "price_range": "Échelle des prix",
+    "search": "Chercher",
+    "type": "Type",
+    "author": "Auteur"
+  },
+  "book_details": {
+    "book_details": "Détails du livre",
+    "summary": "Résumé"
+  },
+  "cart_details": {
+    "add_billing_address": "Ajouter une adresse de facturation",
+    "add_delivery_address": "Ajouter une adresse de livraison",
+    "available": "Disponible(s)",
+    "create_valid_addresses_to_check_out": "Créer des adresses valides pour vérifier",
+    "delivery_by": "Livraison le",
+    "only": "Seulement",
+    "remove": "Retirer",
+    "your_cart_is_empty": "Votre panier est vide",
+    "your_cart_total_is": "Le total de votre panier est de"
+  },
+  "contact": {
+    "message": "Message",
+    "send_mail": "Envoyer le mail",
+    "subject": "Sujet"
+  },
+  "general": {
+    "add_to_cart": "Ajouter au panier",
+    "author": "Auteur",
+    "billing_address": "Adresse de facturation",
+    "check_out": "Valider",
+    "city": "Ville",
+    "contact": "Contact",
+    "country": "Pays",
+    "delivery_address": "Adresse de livraison",
+    "delivery_taxes": "Taxes de livraison",
+    "editor": "Éditeur",
+    "email": "Email",
+    "free": "Gratuit",
+    "legal_notices": "Mentions légales",
+    "make_a_purchase": "Faire un achat",
+    "out_of_stock": "En rupture de stock",
+    "postal_code": "Code postal",
+    "price": "Prix",
+    "quantity": "Quantité",
+    "save_the_changes": "Enregistrer les modifications",
+    "street": "Rue",
+    "subtotal": "Sous-total",
+    "total": "Total",
+    "year_of_publication": "Année de publication",
+    "your_language": "Votre langue"
+  },
+  "header": {
+    "home": "Accueil",
+    "login_sign_in": "Se connecter",
+    "my_account": "Mon compte",
+    "my_cart": "Mon Panier",
+    "shop": "Boutique"
+  },
+  "home": {
+    "next": "Suiv",
+    "our_best_sell": "Nos meilleures ventes",
+    "prev": "Préc"
+  },
+  "izitoast": {
+    "book_add_to_cart": "Livre ajouté au panier",
+    "lack_of_stock": "Manque de stocks",
+    "lack_of_stock_message": "Il reste {{bookStock}} exemplaires du livre {{bookTitle}} et vous en demandez {{bookNumber}}",
+    "login_before_confirm_check_out": "Connectez-vous avant de valider la commande",
+    "modification_confirm": "Modification confirmer",
+    "successful_login": "Connexion réussie",
+    "successful_registration": "Inscription réussie",
+    "you_re_logout": "vous êtes déconnecté",
+    "your_order_is_validate": "Votre commande est validée"
+  },
+  "my_account": {
+    "are_you_sure_that_you_want_delete_your_account": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+    "confirm_your_new_password": "Confirmez votre nouveau mot de passe",
+    "confirm_your_password": "Confirmer votre mot de passe",
+    "delete_my_account": "Supprimer mon compte",
+    "firstname": "Prénom",
+    "insert_your_new_password": "Insérez votre nouveau mot de passe",
+    "lastname": "Nom",
+    "login": "Se connecter",
+    "login_with_facebook": "Se connecter avec Facebook",
+    "login_with_google": "Se connecter avec Google",
+    "logout": "Se déconnecter",
+    "order_date": "Date de commande",
+    "order_number": "Numéro de commande",
+    "password": "Mot de passe",
+    "register": "S'inscrire",
+    "register_with_facebook": "S'inscrire avec avec Facebook",
+    "register_with_google": "S'inscrire avec Google",
+    "user_personnal_data": "Données personnelles de l'utilisateur",
+    "view_personnal_data": "Voir les données personnelles",
+    "view_pervious_orders": "Voir les commandes précédentes",
+    "you_already_have_an_account": "Avez vous déjà un compte",
+    "you_havn_t_any_orders": "Vous n'avez pas de commandes",
+    "you_re_not_registered": "Vous n'êtes  pas inscrit"
+  },
+  "page_not_found": {
+    "back_to_homepage": "Retourner sur la page d'accueil"
+  }
+}

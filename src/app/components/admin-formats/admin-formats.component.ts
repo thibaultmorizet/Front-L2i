@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   PrimeNGConfig,
@@ -30,11 +31,13 @@ export class AdminFormatsComponent implements OnInit {
     private fs: FormatService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
     try {
       JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
     } catch (error) {
@@ -51,8 +54,10 @@ export class AdminFormatsComponent implements OnInit {
 
   deleteSelectedFormats() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected formats ?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_formats.confirm_group_delete_formats_message'
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -68,7 +73,7 @@ export class AdminFormatsComponent implements OnInit {
         });
         this.selectedFormats = [];
         this.iziToast.success({
-          message: 'Formats deleted',
+          message: this.translate.instant('admin_formats.formats_deleted'),
           position: 'topRight',
         });
       },
@@ -82,8 +87,11 @@ export class AdminFormatsComponent implements OnInit {
 
   deleteFormat(format: Format) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + format.name + '?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_formats.confirm_delete_format_message',
+        { name: format.name }
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -94,12 +102,14 @@ export class AdminFormatsComponent implements OnInit {
           this.fs.deleteTheFormat(format.id).subscribe((el) => {});
           this.format = {};
           this.iziToast.success({
-            message: 'Format deleted',
+            message: this.translate.instant('admin_formats.format_deleted'),
             position: 'topRight',
           });
         } else {
           this.iziToast.warning({
-            message: "You can't delete a Format with books",
+            message: this.translate.instant(
+              'admin_formats.you_can_t_delete_a_format_with_books'
+            ),
             position: 'topRight',
           });
         }
@@ -120,7 +130,7 @@ export class AdminFormatsComponent implements OnInit {
         this.format = {};
         this.ngOnInit();
         this.iziToast.success({
-          message: 'Format updated',
+          message: this.translate.instant('admin_formats.format_updated'),
           position: 'topRight',
         });
       });
@@ -131,7 +141,7 @@ export class AdminFormatsComponent implements OnInit {
           this.format = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: 'Format created',
+            message: this.translate.instant('admin_formats.format_created'),
             position: 'topRight',
           });
         });

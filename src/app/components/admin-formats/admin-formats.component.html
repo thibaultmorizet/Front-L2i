@@ -9,7 +9,7 @@
         <button
           pButton
           pRipple
-          label="New"
+          label="{{ 'general.new' | translate }}"
           icon="pi pi-plus"
           class="p-button-success mr-2"
           (click)="openNew()"
@@ -17,7 +17,7 @@
         <button
           pButton
           pRipple
-          label="Delete"
+          label="{{ 'general.delete' | translate }}"
           icon="pi pi-trash"
           class="p-button-danger"
           (click)="deleteSelectedFormats()"
@@ -35,19 +35,27 @@
       [(selection)]="selectedFormats"
       [rowHover]="true"
       dataKey="id"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      currentPageReportTemplate="{{
+        'general.showing_entries_message'
+          | translate
+            : {
+                first: '{first}',
+                last: '{last}',
+                totalRecords: '{totalRecords}'
+              }
+      }}"
       [showCurrentPageReport]="true"
     >
       <ng-template pTemplate="caption">
         <div class="manage-formats">
-          <h5 class="m-0">Manage formats</h5>
+          <h5 class="m-0">{{ "admin_formats.manage_formats" | translate }}</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
               pInputText
               type="text"
               (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-              placeholder="Search..."
+              placeholder="{{ 'general.search' | translate }}"
             />
           </span>
         </div>
@@ -61,7 +69,8 @@
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="name"
           >
-            Name <p-sortIcon field="name"></p-sortIcon>
+            {{ "admin_formats.name" | translate }}
+            <p-sortIcon field="name"></p-sortIcon>
           </th>
 
           <th style="display: table-cell !important"></th>
@@ -94,7 +103,10 @@
       </ng-template>
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
-          In total there are {{ allFormats ? allFormats.length : 0 }} formats.
+          {{
+            "admin_formats.total_formats_message"
+              | translate: { formatLength: allFormats ? allFormats.length : 0 }
+          }}
         </div>
       </ng-template>
     </p-table>
@@ -105,20 +117,22 @@
       [baseZIndex]="10000"
       rejectButtonStyleClass="p-button-outline-danger"
       acceptButtonStyleClass="p-button-valid"
+      acceptLabel="{{ 'general.yes' | translate }}"
+      rejectLabel="{{ 'general.no' | translate }}"
     ></p-confirmDialog>
 
     <p-dialog
       [(visible)]="formatDialog"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
       [style]="{ width: '50vw' }"
-      header="Product Details"
+      header="{{ 'admin_formats.format_details' | translate }}"
       [modal]="true"
       styleClass="p-fluid"
       [dismissableMask]="true"
     >
       <ng-template pTemplate="content">
         <div class="field">
-          <label for="name">Name</label>
+          <label for="name">{{ "admin_formats.name" | translate }}</label>
           <input
             type="text"
             pInputText
@@ -128,7 +142,8 @@
             autofocus
           />
           <small class="p-error" *ngIf="submitted && !format.name"
-            >Name is required.</small
+            >{{ "admin_formats.name" | translate }}
+            {{ "general.is_required" | translate }}</small
           >
         </div>
       </ng-template>
@@ -137,7 +152,7 @@
         <button
           pButton
           pRipple
-          label="Cancel"
+          label="{{ 'general.cancel' | translate }}"
           icon="pi pi-times"
           class="p-button-text"
           (click)="hideDialog()"
@@ -145,7 +160,7 @@
         <button
           pButton
           pRipple
-          label="Save"
+          label="{{ 'general.save' | translate }}"
           icon="pi pi-check"
           class="p-button-text"
           (click)="saveFormat()"

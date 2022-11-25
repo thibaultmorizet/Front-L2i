@@ -1,165 +1,182 @@
 <div class="general-content">
-    <app-admin-header></app-admin-header>
-  
-    <main id="content">
-      <p-toast></p-toast>
-  
-      <p-toolbar styleClass="mb-4 gap-2">
-        <ng-template pTemplate="left">
-          <button
-            pButton
-            pRipple
-            label="New"
-            icon="pi pi-plus"
-            class="p-button-success mr-2"
-            (click)="openNew()"
-          ></button>
-        </ng-template>
-      </p-toolbar>
-  
-      <p-table
-        #dt
-        [value]="allUsers"
-        [rows]="12"
-        [paginator]="true"
-        [globalFilterFields]="['firstname','lastname','email']"
-        [(selection)]="selectedUsers"
-        [rowHover]="true"
-        dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [showCurrentPageReport]="true"
-      >
-        <ng-template pTemplate="caption">
-          <div class="manage-users">
-            <h5 class="m-0">Manage users</h5>
-            <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input
-                pInputText
-                type="text"
-                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                placeholder="Search..."
-              />
-            </span>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th
-              style="display: table-cell !important; min-width: 15rem"
-              pSortableColumn="firstname"
-            >
-              Firstname <p-sortIcon field="firstname"></p-sortIcon>
-            </th>
-            <th style="display: table-cell !important" pSortableColumn="lastname">
-              Lastname <p-sortIcon field="lastname"></p-sortIcon>
-            </th>
-            <th style="display: table-cell !important" pSortableColumn="email">
-              Email <p-sortIcon field="email"></p-sortIcon>
-            </th>
-            <th style="display: table-cell !important"></th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-user>
-          <tr>
-            <td>{{ user.firstname }}</td>
-            <td>{{ user.lastname }}</td>
-            <td>{{ user.email }}</td>  
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-          <div class="flex align-items-center justify-content-between">
-            In total there are {{ allUsers ? allUsers.length : 0 }} users.
-          </div>
-        </ng-template>
-      </p-table>
-  
-      <p-confirmDialog
-        [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-        [style]="{ width: '50vw' }"
-        [baseZIndex]="10000"
-        rejectButtonStyleClass="p-button-outline-danger"
-        acceptButtonStyleClass="p-button-valid"
-      ></p-confirmDialog>
-  
-      <p-dialog
-        [(visible)]="userDialog"
-        [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-        [style]="{ width: '50vw' }"
-        header="User Details"
-        [modal]="true"
-        styleClass="p-fluid"
-        [dismissableMask]="true"
-      >
-        <ng-template pTemplate="content">
-          <div class="field">
-            <label for="firstname">Firstname</label>
+  <app-admin-header></app-admin-header>
+
+  <main id="content">
+    <p-toast></p-toast>
+
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.new' | translate }}"
+          icon="pi pi-plus"
+          class="p-button-success mr-2"
+          (click)="openNew()"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="allUsers"
+      [rows]="12"
+      [paginator]="true"
+      [globalFilterFields]="['firstname', 'lastname', 'email']"
+      [(selection)]="selectedUsers"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="{{
+        'general.showing_entries_message'
+          | translate
+            : {
+                first: '{first}',
+                last: '{last}',
+                totalRecords: '{totalRecords}'
+              }
+      }}"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="manage-users">
+          <h5 class="m-0">{{ "admin_admins.manage_admins" | translate }}</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
             <input
-              type="text"
               pInputText
-              id="firstname"
-              [(ngModel)]="user.firstname"
-              required
-              autofocus
-            />
-            <small class="p-error" *ngIf="submitted && !user.firstname"
-              >Firstname is required.</small
-            >
-          </div>
-  
-          <div class="field">
-            <label for="lastname">Lastname</label>
-            <input
               type="text"
-              pInputText
-              id="lastname"
-              [(ngModel)]="user.lastname"
-              required
-              autofocus
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="{{ 'general.search' | translate }}"
             />
-            <small class="p-error" *ngIf="submitted && !user.lastname"
-              >Lastname is required.</small
-            >
-          </div>
-  
-          <div class="field">
-            <label for="email">Email</label>
-            <input
-              type="text"
-              pInputText
-              id="email"
-              [(ngModel)]="user.email"
-              required
-              autofocus
-            />
-            <small class="p-error" *ngIf="submitted && !user.email"
-              >Email is required.</small
-            >
-          </div>
-  
-        </ng-template>
-  
-        <ng-template pTemplate="footer">
-          <button
-            pButton
-            pRipple
-            label="Cancel"
-            icon="pi pi-times"
-            class="p-button-text"
-            (click)="hideDialog()"
-          ></button>
-          <button
-            pButton
-            pRipple
-            label="Save"
-            icon="pi pi-check"
-            class="p-button-text"
-            (click)="saveUser()"
-            [disabled]="!user.firstname || !user.lastname || !user.email"
-          ></button>
-        </ng-template>
-      </p-dialog>
-    </main>
-    <app-admin-footer></app-admin-footer>
-  </div>
-  
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th
+            style="display: table-cell !important; min-width: 15rem"
+            pSortableColumn="firstname"
+          >
+            {{ "general.firstname" | translate }}
+            <p-sortIcon field="firstname"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important" pSortableColumn="lastname">
+            {{ "general.lastname" | translate }}
+            <p-sortIcon field="lastname"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important" pSortableColumn="email">
+            {{ "general.email" | translate }}
+            <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          {{
+            "admin_admins.total_admins_message"
+              | translate: { userLength: allUsers ? allUsers.length : 0 }
+          }}
+        </div>
+      </ng-template>
+    </p-table>
+
+    <p-confirmDialog
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      [baseZIndex]="10000"
+      rejectButtonStyleClass="p-button-outline-danger"
+      acceptButtonStyleClass="p-button-valid"
+      acceptLabel="{{ 'general.yes' | translate }}"
+      rejectLabel="{{ 'general.no' | translate }}"
+></p-confirmDialog>
+
+    <p-dialog
+      [(visible)]="userDialog"
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      header="{{ 'admin_admins.admin_details' | translate }}"
+      [modal]="true"
+      styleClass="p-fluid"
+      [dismissableMask]="true"
+    >
+      <ng-template pTemplate="content">
+        <div class="field">
+          <label for="firstname">{{ "general.firstname" | translate }}</label>
+          <input
+            type="text"
+            pInputText
+            id="firstname"
+            [(ngModel)]="user.firstname"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !user.firstname"
+            >{{ "general.firstname" | translate }}
+            {{ "general.is_required" | translate }}</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="lastname">{{ "general.lastname" | translate }}</label>
+          <input
+            type="text"
+            pInputText
+            id="lastname"
+            [(ngModel)]="user.lastname"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !user.lastname"
+            >{{ "general.lastname" | translate }}
+            {{ "general.is_required" | translate }}</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="email">{{ "general.email" | translate }}</label>
+          <input
+            type="text"
+            pInputText
+            id="email"
+            [(ngModel)]="user.email"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !user.email"
+            >{{ "general.email" | translate }}
+            {{ "general.is_required" | translate }}</small
+          >
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.cancel' | translate }}"
+          icon="pi pi-times"
+          class="p-button-text"
+          (click)="hideDialog()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.save' | translate }}"
+          icon="pi pi-check"
+          class="p-button-text"
+          (click)="saveUser()"
+          [disabled]="!user.firstname || !user.lastname || !user.email"
+        ></button>
+      </ng-template>
+    </p-dialog>
+  </main>
+  <app-admin-footer></app-admin-footer>
+</div>

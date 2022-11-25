@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   ConfirmationService,
@@ -37,11 +38,14 @@ export class AdminUsersComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
     private iziToast: NgxIzitoastService,
-    private as: AuthService
+    private as: AuthService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
+
     try {
       JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
     } catch (error) {
@@ -55,14 +59,18 @@ export class AdminUsersComponent implements OnInit {
 
   openNew() {
     this.user = {};
+    this.updateBillingAddress = {};
+    this.updateDeliveryAddress = {};
     this.submitted = false;
     this.userDialog = true;
   }
 
   deleteSelectedUsers() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected users ?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_users.confirm_group_delete_users_message'
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -74,7 +82,28 @@ export class AdminUsersComponent implements OnInit {
         });
         this.selectedUsers = [];
         this.iziToast.success({
-          message: 'Users deleted',
+          message: this.translate.instant('admin_users.users_deleted'),
+          position: 'topRight',
+        });
+      },
+    });
+  }
+
+  deleteUser(user: User) {
+    this.confirmationService.confirm({
+      message: this.translate.instant(
+        'admin_users.confirm_delete_user_message',
+        { firstname: user.firstname, lastname: user.lastname }
+      ),
+      header: this.translate.instant('general.confirm'),
+      icon: 'pi pi-exclamation-triangle',
+      dismissableMask: true,
+      accept: () => {
+        this.allUsers = this.allUsers.filter((val: any) => val.id !== user.id);
+        this.us.deleteTheUser(user.id).subscribe((el) => {});
+        this.user = {};
+        this.iziToast.success({
+          message: this.translate.instant('admin_users.user_deleted'),
           position: 'topRight',
         });
       },
@@ -86,29 +115,6 @@ export class AdminUsersComponent implements OnInit {
     this.updateBillingAddress = { ...user.billingAddress };
     this.updateDeliveryAddress = { ...user.deliveryAddress };
     this.userDialog = true;
-  }
-
-  deleteUser(user: User) {
-    this.confirmationService.confirm({
-      message:
-        'Are you sure you want to delete ' +
-        user.firstname +
-        ' ' +
-        user.lastname +
-        '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      dismissableMask: true,
-      accept: () => {
-        this.allUsers = this.allUsers.filter((val: any) => val.id !== user.id);
-        this.us.deleteTheUser(user.id).subscribe((el) => {});
-        this.user = {};
-        this.iziToast.success({
-          message: 'User deleted',
-          position: 'topRight',
-        });
-      },
-    });
   }
 
   hideDialog() {
@@ -172,7 +178,7 @@ export class AdminUsersComponent implements OnInit {
           });
         } else {
           this.iziToast.error({
-            message: 'This email is already use',
+            message: this.translate.instant('general.this_email_is_already_use'),
             position: 'topRight',
           });
         }
@@ -246,14 +252,14 @@ export class AdminUsersComponent implements OnInit {
               this.ngOnInit();
               pass = '';
               this.iziToast.success({
-                message: 'User created',
+                message: this.translate.instant('admin_users.user_created'),
                 position: 'topRight',
               });
             });
           });
         } else {
           this.iziToast.error({
-            message: 'This email is already use',
+            message: this.translate.instant('general.this_email_is_already_use'),
             position: 'topRight',
           });
         }

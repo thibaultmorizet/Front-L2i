@@ -15,7 +15,7 @@
         >
           <ng-template pTemplate="caption">
             <div class="manage-best-sell">
-              <h5 class="m-0">Best sell</h5>
+              <h5 class="m-0">{{ "admin_home.best_sell" | translate }}</h5>
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input
@@ -24,26 +24,26 @@
                   (input)="
                     dt.filterGlobal($any($event.target).value, 'contains')
                   "
-                  placeholder="Search..."
+                  placeholder="{{ 'general.search' | translate }}"
                 />
               </span>
             </div>
           </ng-template>
           <ng-template pTemplate="header">
             <tr>
-              <th style="display: table-cell !important">Image</th>
+              <th style="display: table-cell !important">{{ "admin_home.image" | translate }}</th>
               <th
                 style="display: table-cell !important; min-width: 15rem"
                 pSortableColumn="title"
               >
-                Title <p-sortIcon field="title"></p-sortIcon>
+              {{ "admin_home.title" | translate }} <p-sortIcon field="title"></p-sortIcon>
               </th>
 
               <th
                 style="display: table-cell !important; min-width: 10rem"
                 pSortableColumn="soldnumber"
               >
-                Sold number <p-sortIcon field="soldnumber"></p-sortIcon>
+              {{ "admin_home.sold_number" | translate }} <p-sortIcon field="soldnumber"></p-sortIcon>
               </th>
             </tr>
           </ng-template>
@@ -75,7 +75,7 @@
         >
           <ng-template pTemplate="caption">
             <div class="manage-more-visited">
-              <h5 class="m-0">More visited books</h5>
+              <h5 class="m-0">{{ "admin_home.more_visited_books" | translate }}</h5>
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input
@@ -84,26 +84,26 @@
                   (input)="
                     dt.filterGlobal($any($event.target).value, 'contains')
                   "
-                  placeholder="Search..."
+                  placeholder="{{ 'general.search' | translate }}"
                 />
               </span>
             </div>
           </ng-template>
           <ng-template pTemplate="header">
             <tr>
-              <th style="display: table-cell !important">Image</th>
+              <th style="display: table-cell !important">{{ "admin_home.image" | translate }}</th>
               <th
                 style="display: table-cell !important; min-width: 15rem"
                 pSortableColumn="title"
               >
-                Title <p-sortIcon field="title"></p-sortIcon>
+              {{ "admin_home.title" | translate }} <p-sortIcon field="title"></p-sortIcon>
               </th>
 
               <th
                 style="display: table-cell !important; min-width: 10rem"
                 pSortableColumn="visitnumber"
               >
-                Visit number <p-sortIcon field="visitnumber"></p-sortIcon>
+              {{ "admin_home.visit_number" | translate }} <p-sortIcon field="visitnumber"></p-sortIcon>
               </th>
             </tr>
           </ng-template>

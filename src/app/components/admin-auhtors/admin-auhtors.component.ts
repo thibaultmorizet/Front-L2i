@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   ConfirmationService,
@@ -30,11 +31,13 @@ export class AdminAuhtorsComponent implements OnInit {
     private authorService: AuthorService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
     try {
       JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
     } catch (error) {
@@ -51,8 +54,10 @@ export class AdminAuhtorsComponent implements OnInit {
 
   deleteSelectedAuthors() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected authors ?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_authors.confirm_group_delete_authors_message'
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -70,7 +75,7 @@ export class AdminAuhtorsComponent implements OnInit {
         });
         this.selectedAuthors = [];
         this.iziToast.success({
-          message: 'Authors deleted',
+          message: this.translate.instant('admin_authors.authors_deleted'),
           position: 'topRight',
         });
       },
@@ -84,8 +89,11 @@ export class AdminAuhtorsComponent implements OnInit {
 
   deleteAuthor(author: Author) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + author.name + '?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_authors.confirm_delete_author_message',
+        { firstname: author.firstname,lastname: author.lastname }
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -96,12 +104,14 @@ export class AdminAuhtorsComponent implements OnInit {
           this.authorService.deleteTheAuthor(author.id).subscribe((el) => {});
           this.author = {};
           this.iziToast.success({
-            message: 'Author deleted',
+            message: this.translate.instant('admin_authors.author_deleted'),
             position: 'topRight',
           });
         } else {
           this.iziToast.warning({
-            message: "You can't delete a Author with books",
+            message: this.translate.instant(
+              'admin_authors.you_can_t_delete_a_author_with_books'
+            ),
             position: 'topRight',
           });
         }
@@ -124,7 +134,7 @@ export class AdminAuhtorsComponent implements OnInit {
           this.author = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: 'Author updated',
+            message: this.translate.instant('admin_authors.author_updated'),
             position: 'topRight',
           });
         });
@@ -137,7 +147,7 @@ export class AdminAuhtorsComponent implements OnInit {
             this.author = {};
             this.ngOnInit();
             this.iziToast.success({
-              message: 'Author created',
+              message: this.translate.instant('admin_authors.author_created'),
               position: 'topRight',
             });
           });

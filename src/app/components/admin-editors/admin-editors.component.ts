@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   ConfirmationService,
@@ -26,15 +27,17 @@ export class AdminEditorsComponent implements OnInit {
   selectedEditors: Array<Editor> = [];
 
   constructor(
-    private router:Router,
+    private router: Router,
     private es: EditorService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
     try {
       JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
     } catch (error) {
@@ -51,8 +54,10 @@ export class AdminEditorsComponent implements OnInit {
 
   deleteSelectedEditors() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected editors ?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_editors.confirm_group_delete_editors_message'
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -68,7 +73,7 @@ export class AdminEditorsComponent implements OnInit {
         });
         this.selectedEditors = [];
         this.iziToast.success({
-          message: 'Editors deleted',
+          message: this.translate.instant('admin_editors.editors_deleted'),
           position: 'topRight',
         });
       },
@@ -82,8 +87,11 @@ export class AdminEditorsComponent implements OnInit {
 
   deleteEditor(editor: Editor) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + editor.name + '?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_formats.confirm_delete_format_message',
+        { name: editor.name }
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -94,12 +102,14 @@ export class AdminEditorsComponent implements OnInit {
           this.es.deleteTheEditor(editor.id).subscribe((el) => {});
           this.editor = {};
           this.iziToast.success({
-            message: 'Editor deleted',
+            message: this.translate.instant('admin_editors.editor_deleted'),
             position: 'topRight',
           });
         } else {
           this.iziToast.warning({
-            message: "You can't delete a Editor with books",
+            message: this.translate.instant(
+              'admin_editors.you_can_t_delete_an_editor_with_books'
+            ),
             position: 'topRight',
           });
         }
@@ -120,7 +130,7 @@ export class AdminEditorsComponent implements OnInit {
         this.editor = {};
         this.ngOnInit();
         this.iziToast.success({
-          message: 'Editor updated',
+          message: this.translate.instant('admin_editors.editor_updated'),
           position: 'topRight',
         });
       });
@@ -131,7 +141,7 @@ export class AdminEditorsComponent implements OnInit {
           this.editor = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: 'Editor created',
+            message: this.translate.instant('admin_editors.editor_created'),
             position: 'topRight',
           });
         });

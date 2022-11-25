@@ -4,7 +4,7 @@
   <main id="content">
     <div class="container" *ngIf="isLoginPage">
       <div class="login-container">
-        <p class="title text-center">{{ "my_account.login" | translate }}</p>
+        <p class="title text-center">{{ "login.login" | translate }}</p>
 
         <form #loginForm="ngForm" (ngSubmit)="login()">
           <div class="mb-3">
@@ -33,7 +33,7 @@
                     id="password"
                     name="password"
                     [type]="passwordType"
-                    placeholder="{{ 'my_account.password' | translate }}"
+                    placeholder="{{ 'login.password' | translate }}"
                     pInputText
                     [(ngModel)]="userLogin.password"
                     [ngClass]="{ 'ng-invalid': errorPassword }"
@@ -67,7 +67,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 [disabled]="!loginForm.valid"
               >
-                {{ "my_account.login" | translate }}
+                {{ "login.login" | translate }}
               </button>
             </div>
           </div>
@@ -83,11 +83,11 @@
               alt="logo Google"
               class="logo-google"
             />
-            {{ "my_account.login_with_google" | translate }}</button
+            {{ "login.login_with_google" | translate }}</button
           ><br />
           <button class="btn btn-facebook mt-3" (click)="signInWithFB()">
             <i class="fa-brands fa-facebook mr-1"></i>
-            {{ "my_account.login_with_facebook" | translate }}
+            {{ "login.login_with_facebook" | translate }}
           </button>
         </div>
         <div class="link-d-flex">
@@ -95,20 +95,20 @@
             class="text-center text-underline pointer"
             [routerLink]="['/forgotten-password']"
           >
-            forgotten password
+          {{ "login.forgotten_password" | translate }}
           </p>
           <p
             class="text-center text-underline pointer"
             (click)="toggleIsLoginPage()"
           >
-            {{ "my_account.you_re_not_registered" | translate }}
+            {{ "login.you_re_not_registered" | translate }}
           </p>
         </div>
       </div>
     </div>
     <div class="container" *ngIf="!isLoginPage">
       <div class="register-container">
-        <p class="title text-center">{{ "my_account.register" | translate }}</p>
+        <p class="title text-center">{{ "login.register" | translate }}</p>
 
         <form #registerForm="ngForm" (ngSubmit)="register()">
           <div class="mb-3">
@@ -118,7 +118,7 @@
                   id="lastname"
                   name="lastname"
                   type="text"
-                  placeholder="{{ 'my_account.lastname' | translate }}"
+                  placeholder="{{ 'general.lastname' | translate }}"
                   pInputText
                   [(ngModel)]="userInscription.lastname"
                   [ngClass]="{ 'ng-invalid': errorLastname }"
@@ -139,7 +139,7 @@
                   id="firstname"
                   name="firstname"
                   type="text"
-                  placeholder="{{ 'my_account.firstname' | translate }}"
+                  placeholder="{{ 'general.firstname' | translate }}"
                   pInputText
                   [(ngModel)]="userInscription.firstname"
                   [ngClass]="{ 'ng-invalid': errorFirstname }"
@@ -180,7 +180,7 @@
                     id="password"
                     name="password"
                     [type]="passwordType"
-                    placeholder="{{ 'my_account.password' | translate }}"
+                    placeholder="{{ 'login.password' | translate }}"
                     pInputText
                     [(ngModel)]="userInscription.password"
                     [ngClass]="{ 'ng-invalid': errorPassword }"
@@ -215,7 +215,7 @@
                     name="passwordConfirm"
                     [type]="passwordType"
                     placeholder="{{
-                      'my_account.confirm_your_password' | translate
+                      'login.confirm_your_password' | translate
                     }}"
                     pInputText
                     [(ngModel)]="userInscription.passwordConfirm"
@@ -258,7 +258,7 @@
                   errorPasswordConfirm
                 "
               >
-                {{ "my_account.register" | translate }}
+                {{ "login.register" | translate }}
               </button>
             </div>
           </div>
@@ -275,18 +275,18 @@
               alt="logo Google"
               class="logo-google"
             />
-            {{ "my_account.register_with_google" | translate }}</button
+            {{ "login.register_with_google" | translate }}</button
           ><br />
           <button class="btn btn-facebook mt-3" (click)="signInWithFB()">
             <i class="fa-brands fa-facebook mr-1"></i>
-            {{ "my_account.register_with_facebook" | translate }}
+            {{ "login.register_with_facebook" | translate }}
           </button>
         </div>
         <p
           class="text-center text-underline pointer"
           (click)="toggleIsLoginPage()"
         >
-          {{ "my_account.you_already_have_an_account" | translate }}
+          {{ "login.you_already_have_an_account" | translate }}
         </p>
       </div>
     </div>

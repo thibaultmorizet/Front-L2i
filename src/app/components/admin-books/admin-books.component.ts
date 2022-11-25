@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   PrimeNGConfig,
@@ -55,11 +56,13 @@ export class AdminBooksComponent implements OnInit {
     private authorService: AuthorService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
     try {
       JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
     } catch (error) {
@@ -82,8 +85,10 @@ export class AdminBooksComponent implements OnInit {
 
   deleteSelectedBooks() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected books ?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_books.confirm_group_delete_books_message'
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -95,7 +100,7 @@ export class AdminBooksComponent implements OnInit {
         });
         this.selectedBooks = [];
         this.iziToast.success({
-          message: 'Books deleted',
+          message: this.translate.instant('admin_books.books_deleted'),
           position: 'topRight',
         });
       },
@@ -112,8 +117,11 @@ export class AdminBooksComponent implements OnInit {
 
   deletebook(book: Book) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + book.title + '?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_books.confirm_delete_book_message',
+        { title: book.title }
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -121,7 +129,7 @@ export class AdminBooksComponent implements OnInit {
         this.bs.deleteTheBook(book.id).subscribe((el) => {});
         this.book = {};
         this.iziToast.success({
-          message: 'Book deleted',
+          message: this.translate.instant('admin_books.book_deleted'),
           position: 'topRight',
         });
       },
@@ -159,7 +167,7 @@ export class AdminBooksComponent implements OnInit {
         this.book = {};
         this.ngOnInit();
         this.iziToast.success({
-          message: 'Book updated',
+          message: this.translate.instant('admin_books.book_updated'),
           position: 'topRight',
         });
       });
@@ -184,7 +192,7 @@ export class AdminBooksComponent implements OnInit {
           this.book = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: 'Book created',
+            message: this.translate.instant('admin_books.book_created'),
             position: 'topRight',
           });
         });
@@ -237,7 +245,6 @@ export class AdminBooksComponent implements OnInit {
 
     this.imageInfo = {
       url: file.name,
-      bookId: '5',
     };
 
     this.convertToBase64(file);

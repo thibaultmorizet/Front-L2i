@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   ConfirmationService,
@@ -30,11 +31,14 @@ export class AdminAdminsComponent implements OnInit {
     private us: UserService,
     private primengConfig: PrimeNGConfig,
     private iziToast: NgxIzitoastService,
-    private as: AuthService
+    private as: AuthService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
+
     try {
       JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
     } catch (error) {
@@ -105,14 +109,16 @@ export class AdminAdminsComponent implements OnInit {
               this.ngOnInit();
               pass = '';
               this.iziToast.success({
-                message: 'User created',
+                message: this.translate.instant('admin_admins.admin_created'),
                 position: 'topRight',
               });
             });
           });
         } else {
           this.iziToast.error({
-            message: 'This email is already use',
+            message: this.translate.instant(
+              'general.this_email_is_already_use'
+            ),
             position: 'topRight',
           });
         }

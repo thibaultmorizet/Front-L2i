@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   ConfirmationService,
@@ -30,11 +31,13 @@ export class AdminTypesComponent implements OnInit {
     private ts: TypeService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
-    private iziToast: NgxIzitoastService
+    private iziToast: NgxIzitoastService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.translate.use(this.translate.getDefaultLang());
     try {
       JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
     } catch (error) {
@@ -51,8 +54,10 @@ export class AdminTypesComponent implements OnInit {
 
   deleteSelectedTypes() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected types ?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_types.confirm_group_delete_types_message'
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -68,7 +73,7 @@ export class AdminTypesComponent implements OnInit {
         });
         this.selectedTypes = [];
         this.iziToast.success({
-          message: 'Types deleted',
+          message: this.translate.instant('admin_types.types_deleted'),
           position: 'topRight',
         });
       },
@@ -82,8 +87,11 @@ export class AdminTypesComponent implements OnInit {
 
   deleteType(type: Type) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + type.name + '?',
-      header: 'Confirm',
+      message: this.translate.instant(
+        'admin_types.confirm_delete_type_message',
+        { name: type.name }
+      ),
+      header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
@@ -92,12 +100,14 @@ export class AdminTypesComponent implements OnInit {
           this.ts.deleteTheType(type.id).subscribe((el) => {});
           this.type = {};
           this.iziToast.success({
-            message: 'Type deleted',
+            message: this.translate.instant('admin_types.type_deleted'),
             position: 'topRight',
           });
         } else {
           this.iziToast.warning({
-            message: "You can't delete a Type with books",
+            message: this.translate.instant(
+              'admin_types.you_can_t_delete_a_type_with_books'
+            ),
             position: 'topRight',
           });
         }
@@ -118,7 +128,7 @@ export class AdminTypesComponent implements OnInit {
         this.type = {};
         this.ngOnInit();
         this.iziToast.success({
-          message: 'Type updated',
+          message: this.translate.instant('admin_types.type_updated'),
           position: 'topRight',
         });
       });
@@ -129,7 +139,7 @@ export class AdminTypesComponent implements OnInit {
           this.type = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: 'Type created',
+            message: this.translate.instant('admin_types.type_created'),
             position: 'topRight',
           });
         });

@@ -4,7 +4,7 @@
   <main id="content">
     <div class="container">
       <div class="admin-login-container">
-        <p class="title text-center">{{ "my_account.login" | translate }}</p>
+        <p class="title text-center">{{ "login.login" | translate }}</p>
 
         <form #loginForm="ngForm" (ngSubmit)="login()">
           <div class="mb-3">
@@ -67,7 +67,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 [disabled]="!loginForm.valid"
               >
-                {{ "my_account.login" | translate }}
+                {{ "login.login" | translate }}
               </button>
             </div>
           </div>

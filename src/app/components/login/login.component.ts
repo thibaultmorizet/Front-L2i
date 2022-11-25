@@ -202,7 +202,7 @@ export class LoginComponent implements OnInit {
               this.loginAfterRegister = false;
               this.authService.signOut();
               this.iziToast.success({
-                message: 'this email is already use',
+                message: this.translate.instant('general.this_email_is_already_use'),
                 position: 'topRight',
               });
             }

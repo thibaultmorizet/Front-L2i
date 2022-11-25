@@ -11,7 +11,7 @@
           class="p-button-raised p-button-primary-color btn-primary-color"
           [routerLink]="['/admin/formats']"
         >
-          Formats
+          {{ "general.formats" | translate }}
         </button>
       </div>
       <div class="d-flex justify-content-end mt-2">
@@ -21,8 +21,8 @@
           type="button"
           class="p-button-raised p-button-primary-color btn-primary-color"
           [routerLink]="['/admin/editors']"
-          >
-          Editors
+        >
+          {{ "general.editors" | translate }}
         </button>
       </div>
       <div class="d-flex justify-content-end mt-2">
@@ -32,8 +32,8 @@
           type="button"
           class="p-button-raised p-button-primary-color btn-primary-color"
           [routerLink]="['/admin/authors']"
-          >
-          Authors
+        >
+          {{ "general.authors" | translate }}
         </button>
       </div>
       <div class="d-flex justify-content-end mt-2">
@@ -43,8 +43,8 @@
           type="button"
           class="p-button-raised p-button-primary-color btn-primary-color"
           [routerLink]="['/admin/types']"
-          >
-          Types
+        >
+          {{ "general.types" | translate }}
         </button>
       </div>
     </div>
@@ -56,7 +56,7 @@
         <button
           pButton
           pRipple
-          label="New"
+          label="{{ 'general.new' | translate }}"
           icon="pi pi-plus"
           class="p-button-success mr-2"
           (click)="openNew()"
@@ -64,7 +64,7 @@
         <button
           pButton
           pRipple
-          label="Delete"
+          label="{{ 'general.delete' | translate }}"
           icon="pi pi-trash"
           class="p-button-danger"
           (click)="deleteSelectedBooks()"
@@ -78,23 +78,41 @@
       [value]="allBooks"
       [rows]="12"
       [paginator]="true"
-      [globalFilterFields]="['title','unitpricettc','unitpriceht','stock','isbn','image','format.name','editor.name','year']"
+      [globalFilterFields]="[
+        'title',
+        'unitpricettc',
+        'unitpriceht',
+        'stock',
+        'isbn',
+        'image',
+        'format.name',
+        'editor.name',
+        'year'
+      ]"
       [(selection)]="selectedBooks"
       [rowHover]="true"
       dataKey="id"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      currentPageReportTemplate="{{
+        'general.showing_entries_message'
+          | translate
+            : {
+                first: '{first}',
+                last: '{last}',
+                totalRecords: '{totalRecords}'
+              }
+      }}"
       [showCurrentPageReport]="true"
     >
       <ng-template pTemplate="caption">
         <div class="manage-books">
-          <h5 class="m-0">Manage books</h5>
+          <h5 class="m-0">{{ "admin_books.manage_books" | translate }}</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
               pInputText
               type="text"
               (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-              placeholder="Search..."
+              placeholder="{{ 'general.search' | translate }}"
             />
           </span>
         </div>
@@ -104,36 +122,39 @@
           <th style="display: table-cell !important; width: 4rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th style="display: table-cell !important">Image</th>
+          <th style="display: table-cell !important">
+            {{ "admin_books.image" | translate }}
+          </th>
           <th
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="title"
           >
-            Title <p-sortIcon field="title"></p-sortIcon>
+            {{ "admin_books.title" | translate }}
+            <p-sortIcon field="title"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important"
             pSortableColumn="unitpricettc"
           >
-            Price TTC <p-sortIcon field="unitpricettc"></p-sortIcon>
+          {{ "admin_books.price_ttc" | translate }} <p-sortIcon field="unitpricettc"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important"
             pSortableColumn="unitpriceht"
           >
-            Price HT <p-sortIcon field="unitpriceht"></p-sortIcon>
+          {{ "admin_books.price_ht" | translate }} <p-sortIcon field="unitpriceht"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="format.name"
           >
-            Format <p-sortIcon field="format.name"></p-sortIcon>
+          {{ "admin_books.format" | translate }} <p-sortIcon field="format.name"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="editor.name"
           >
-            Editor <p-sortIcon field="editor.name"></p-sortIcon>
+          {{ "admin_books.editor" | translate }} <p-sortIcon field="editor.name"></p-sortIcon>
           </th>
 
           <th
@@ -147,16 +168,16 @@
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="year"
           >
-            Year <p-sortIcon field="year"></p-sortIcon>
+          {{ "admin_books.year" | translate }} <p-sortIcon field="year"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="stock"
           >
-            Stock <p-sortIcon field="stock"></p-sortIcon>
+          {{ "admin_books.stock" | translate }} <p-sortIcon field="stock"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important">Author</th>
-          <th style="display: table-cell !important">Type</th>
+          <th style="display: table-cell !important">{{ "general.authors" | translate }}</th>
+          <th style="display: table-cell !important">{{ "general.types" | translate }}</th>
           <th style="display: table-cell !important"></th>
         </tr>
       </ng-template>
@@ -221,7 +242,10 @@
       </ng-template>
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
-          In total there are {{ allBooks ? allBooks.length : 0 }} books.
+          {{
+            "admin_books.total_books_message"
+              | translate: { bookLength: allBooks ? allBooks.length : 0 }
+          }}
         </div>
       </ng-template>
     </p-table>
@@ -232,20 +256,22 @@
       [baseZIndex]="10000"
       rejectButtonStyleClass="p-button-outline-danger"
       acceptButtonStyleClass="p-button-valid"
+      acceptLabel="{{ 'general.yes' | translate }}"
+      rejectLabel="{{ 'general.no' | translate }}"
     ></p-confirmDialog>
 
     <p-dialog
       [(visible)]="bookDialog"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
       [style]="{ width: '50vw' }"
-      header="Product Details"
+      header='{{ "admin_books.book_details" | translate }}'
       [modal]="true"
       styleClass="p-fluid"
       [dismissableMask]="true"
     >
       <ng-template pTemplate="content">
         <div class="field">
-          <label for="title">Title</label>
+          <label for="title">{{ "admin_books.title" | translate }}</label>
           <input
             type="text"
             pInputText
@@ -255,14 +281,14 @@
             autofocus
           />
           <small class="p-error" *ngIf="submitted && !book.title"
-            >Title is required.</small
+            >{{ "admin_books.title" | translate }} {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="description">Description</label>
+          <label for="summary">{{ "admin_books.summary" | translate }}</label>
           <textarea
-            id="description"
+            id="summary"
             pInputTextarea
             [(ngModel)]="book.summary"
             required
@@ -270,7 +296,7 @@
             cols="20"
           ></textarea>
           <small class="p-error" *ngIf="submitted && !book.summary"
-            >Summary is required.</small
+            >{{ "admin_books.summary" | translate }} {{ "general.is_required" | translate }}</small
           >
         </div>
 
@@ -285,12 +311,12 @@
             autofocus
           />
           <small class="p-error" *ngIf="submitted && !book.isbn"
-            >ISBN is required.</small
+            >ISBN {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="pricettc">Price TTC</label>
+          <label for="pricettc">{{ "admin_books.price_ttc" | translate }}</label>
           <p-inputNumber
             id="pricettc"
             [(ngModel)]="book.unitpricettc"
@@ -302,12 +328,12 @@
             [allowEmpty]="false"
           ></p-inputNumber>
           <small class="p-error" *ngIf="submitted && !book.unitpricettc"
-            >Price TTC is required.</small
+            >{{ "admin_books.price_ttc" | translate }} {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="priceht">Price HT</label>
+          <label for="priceht">{{ "admin_books.price_ht" | translate }}</label>
           <p-inputNumber
             id="priceht"
             [(ngModel)]="book.unitpriceht"
@@ -319,12 +345,12 @@
             [allowEmpty]="false"
           ></p-inputNumber>
           <small class="p-error" *ngIf="submitted && !book.unitpriceht"
-            >Price HT is required.</small
+            >{{ "admin_books.price_ht" | translate }} {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="stock">Stock</label>
+          <label for="stock">{{ "admin_books.stock" | translate }}</label>
           <p-inputNumber
             id="stock"
             [(ngModel)]="book.stock"
@@ -333,12 +359,12 @@
             [allowEmpty]="false"
           ></p-inputNumber>
           <small class="p-error" *ngIf="submitted && !book.stock"
-            >Stock is required.</small
+            >{{ "admin_books.stock" | translate }} {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="year">Year</label>
+          <label for="year">{{ "admin_books.year" | translate }}</label>
           <p-inputNumber
             id="year"
             [(ngModel)]="book.year"
@@ -349,32 +375,32 @@
             [allowEmpty]="false"
           ></p-inputNumber>
           <small class="p-error" *ngIf="submitted && !book.year"
-            >Year is required.</small
+            >{{ "admin_books.year" | translate }} {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="editor">Editor</label><br />
+          <label for="editor">{{ "admin_books.editor" | translate }}</label><br />
           <p-dropdown
             [options]="editors"
             [(ngModel)]="book.editor"
-            placeholder="Select an Editor"
+            placeholder='{{ "admin_books.select_an_editor" | translate }}'
             optionLabel="name"
           ></p-dropdown>
         </div>
 
         <div class="field">
-          <label for="format">Format</label><br />
+          <label for="format">{{ "admin_books.format" | translate }}</label><br />
           <p-dropdown
             [options]="formats"
             [(ngModel)]="book.format"
-            placeholder="Select a Format"
+            placeholder='{{ "admin_books.select_a_format" | translate }}'
             optionLabel="name"
           ></p-dropdown>
         </div>
 
         <div class="field">
-          <label for="author">Authors</label><br />
+          <label for="author">{{ "general.authors" | translate }}</label><br />
           <p-multiSelect
             [options]="authors"
             [(ngModel)]="book.author"
@@ -385,7 +411,7 @@
         </div>
 
         <div class="field">
-          <label for="type">Types</label><br />
+          <label for="type">{{ "general.types" | translate }}</label><br />
           <p-multiSelect
             [options]="types"
             [(ngModel)]="book.type"
@@ -396,7 +422,7 @@
         </div>
 
         <div class="field">
-          <label for="coverBook">Cover book</label><br />
+          <label for="coverBook">{{ "admin_books.cover_books" | translate }}</label><br />
           <input
             #imageInput
             type="file"
@@ -412,7 +438,7 @@
         <button
           pButton
           pRipple
-          label="Cancel"
+          label='{{ "general.cancel" | translate }}'
           icon="pi pi-times"
           class="p-button-text"
           (click)="hideDialog()"
@@ -420,7 +446,7 @@
         <button
           pButton
           pRipple
-          label="Save"
+          label='{{ "general.save" | translate }}'
           icon="pi pi-check"
           class="p-button-text"
           (click)="saveBook()"

@@ -93,7 +93,7 @@ export class AdminAccountComponent implements OnInit {
             );
           });
       } else {
-        this.errorPassword = "The password isn't identical";
+        this.errorPassword = "The passwords must be identical";
       }
     }
   }

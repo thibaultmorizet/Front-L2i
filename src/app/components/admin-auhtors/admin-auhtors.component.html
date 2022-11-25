@@ -9,7 +9,7 @@
         <button
           pButton
           pRipple
-          label="New"
+          label="{{ 'general.new' | translate }}"
           icon="pi pi-plus"
           class="p-button-success mr-2"
           (click)="openNew()"
@@ -17,7 +17,7 @@
         <button
           pButton
           pRipple
-          label="Delete"
+          label="{{ 'general.delete' | translate }}"
           icon="pi pi-trash"
           class="p-button-danger"
           (click)="deleteSelectedAuthors()"
@@ -35,19 +35,27 @@
       [(selection)]="selectedAuthors"
       [rowHover]="true"
       dataKey="id"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      currentPageReportTemplate="{{
+        'general.showing_entries_message'
+          | translate
+            : {
+                first: '{first}',
+                last: '{last}',
+                totalRecords: '{totalRecords}'
+              }
+      }}"
       [showCurrentPageReport]="true"
     >
       <ng-template pTemplate="caption">
         <div class="manage-authors">
-          <h5 class="m-0">Manage authors</h5>
+          <h5 class="m-0">{{ "admin_authors.manage_authors" | translate }}</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
               pInputText
               type="text"
               (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-              placeholder="Search..."
+              placeholder="{{ 'general.search' | translate }}"
             />
           </span>
         </div>
@@ -61,19 +69,20 @@
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="firstname"
           >
-            Firstname <p-sortIcon field="firstname"></p-sortIcon>
+            {{ "admin_authors.firstname" | translate }}
+            <p-sortIcon field="firstname"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="lastname"
           >
-            Lastname <p-sortIcon field="lastname"></p-sortIcon>
+          {{ "admin_authors.lastname" | translate }} <p-sortIcon field="lastname"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="language"
           >
-            Language <p-sortIcon field="language"></p-sortIcon>
+          {{ "admin_authors.language" | translate }} <p-sortIcon field="language"></p-sortIcon>
           </th>
 
           <th style="display: table-cell !important"></th>
@@ -108,8 +117,10 @@
       </ng-template>
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
-          In total there are {{ allAuthors ? allAuthors.length : 0 }} authors.
-        </div>
+          {{
+            "admin_authors.total_authors_message"
+              | translate: { authorLength: allAuthors ? allAuthors.length : 0 }
+          }}        </div>
       </ng-template>
     </p-table>
 
@@ -119,20 +130,22 @@
       [baseZIndex]="10000"
       rejectButtonStyleClass="p-button-outline-danger"
       acceptButtonStyleClass="p-button-valid"
+      acceptLabel="{{ 'general.yes' | translate }}"
+      rejectLabel="{{ 'general.no' | translate }}"
     ></p-confirmDialog>
 
     <p-dialog
       [(visible)]="authorDialog"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
       [style]="{ width: '50vw' }"
-      header="Product Details"
+      header='{{ "admin_authors.author_details" | translate }}'
       [modal]="true"
       styleClass="p-fluid"
       [dismissableMask]="true"
     >
       <ng-template pTemplate="content">
         <div class="field">
-          <label for="firstname">Firstname</label>
+          <label for="firstname">{{ "admin_authors.firstname" | translate }}</label>
           <input
             type="text"
             pInputText
@@ -142,11 +155,11 @@
             autofocus
           />
           <small class="p-error" *ngIf="submitted && !author.firstname"
-            >Firstname is required.</small
+            >{{ "admin_authors.firstname" | translate }} {{ "general.is_required" | translate }}</small
           >
         </div>
         <div class="field">
-          <label for="lastname">Lastname</label>
+          <label for="lastname">{{ "admin_authors.lastname" | translate }}</label>
           <input
             type="text"
             pInputText
@@ -156,11 +169,11 @@
             autofocus
           />
           <small class="p-error" *ngIf="submitted && !author.lastname"
-            >Lastname is required.</small
+            >{{ "admin_authors.lastname" | translate }} {{ "general.is_required" | translate }}</small
           >
         </div>
         <div class="field">
-          <label for="language">Language</label>
+          <label for="language">{{ "admin_authors.language" | translate }}</label>
           <input
             type="text"
             pInputText
@@ -170,7 +183,7 @@
             autofocus
           />
           <small class="p-error" *ngIf="submitted && !author.language"
-            >Language is required.</small
+            >{{ "admin_authors.language" | translate }} {{ "general.is_required" | translate }}</small
           >
         </div>
       </ng-template>
@@ -179,7 +192,7 @@
         <button
           pButton
           pRipple
-          label="Cancel"
+          label='{{ "general.cancel" | translate }}'
           icon="pi pi-times"
           class="p-button-text"
           (click)="hideDialog()"
@@ -187,7 +200,7 @@
         <button
           pButton
           pRipple
-          label="Save"
+          label='{{ "general.save" | translate }}'
           icon="pi pi-check"
           class="p-button-text"
           (click)="saveAuthor()"
