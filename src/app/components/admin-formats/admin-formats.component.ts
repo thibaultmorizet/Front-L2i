@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   PrimeNGConfig,
@@ -7,6 +8,7 @@ import {
 } from 'primeng/api';
 import { Format } from 'src/app/interfaces/format';
 import { FormatService } from 'src/app/services/format.service';
+import StorageCrypter from 'storage-crypter';
 
 @Component({
   selector: 'app-admin-formats',
@@ -16,6 +18,7 @@ import { FormatService } from 'src/app/services/format.service';
   providers: [ConfirmationService, MessageService],
 })
 export class AdminFormatsComponent implements OnInit {
+  storageCrypter = new StorageCrypter('Secret');
   formatDialog: boolean = false;
   format: Format = {};
   submitted: boolean = false;
@@ -23,6 +26,7 @@ export class AdminFormatsComponent implements OnInit {
   selectedFormats: Array<Format> = [];
 
   constructor(
+    private router: Router,
     private fs: FormatService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
@@ -31,7 +35,11 @@ export class AdminFormatsComponent implements OnInit {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-
+    try {
+      JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
+    } catch (error) {
+      this.router.navigateByUrl('/admin/login');
+    }
     this.getAllFormatsfunc();
   }
 

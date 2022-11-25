@@ -1,8 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
+import {
+  ConfirmationService,
+  MessageService,
+  PrimeNGConfig,
+} from 'primeng/api';
 import { Type } from 'src/app/interfaces/type';
 import { TypeService } from 'src/app/services/type.service';
+import StorageCrypter from 'storage-crypter';
 
 @Component({
   selector: 'app-admin-types',
@@ -12,6 +18,7 @@ import { TypeService } from 'src/app/services/type.service';
   providers: [ConfirmationService, MessageService],
 })
 export class AdminTypesComponent implements OnInit {
+  storageCrypter = new StorageCrypter('Secret');
   typeDialog: boolean = false;
   type: Type = {};
   submitted: boolean = false;
@@ -19,6 +26,7 @@ export class AdminTypesComponent implements OnInit {
   selectedTypes: Array<Type> = [];
 
   constructor(
+    private router: Router,
     private ts: TypeService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
@@ -27,7 +35,11 @@ export class AdminTypesComponent implements OnInit {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-
+    try {
+      JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
+    } catch (error) {
+      this.router.navigateByUrl('/admin/login');
+    }
     this.getAllTypesfunc();
   }
 
@@ -76,9 +88,7 @@ export class AdminTypesComponent implements OnInit {
       dismissableMask: true,
       accept: () => {
         if (type.books && type.books.length == 0) {
-          this.allTypes = this.allTypes.filter(
-            (val) => val.id !== type.id
-          );
+          this.allTypes = this.allTypes.filter((val) => val.id !== type.id);
           this.ts.deleteTheType(type.id).subscribe((el) => {});
           this.type = {};
           this.iziToast.success({

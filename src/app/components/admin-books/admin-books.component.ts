@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   PrimeNGConfig,
@@ -17,6 +18,7 @@ import { BookService } from 'src/app/services/book.service';
 import { EditorService } from 'src/app/services/editor.service';
 import { FormatService } from 'src/app/services/format.service';
 import { TypeService } from 'src/app/services/type.service';
+import StorageCrypter from 'storage-crypter';
 
 @Component({
   selector: 'app-admin-books',
@@ -26,6 +28,7 @@ import { TypeService } from 'src/app/services/type.service';
   providers: [ConfirmationService, MessageService],
 })
 export class AdminBooksComponent implements OnInit {
+  storageCrypter = new StorageCrypter('Secret');
   bookDialog: boolean = false;
   allBooks: Book[] = [];
   book: Book = {};
@@ -44,6 +47,7 @@ export class AdminBooksComponent implements OnInit {
   imageInfo: Image = {};
 
   constructor(
+    private router: Router,
     private bs: BookService,
     private fs: FormatService,
     private es: EditorService,
@@ -56,7 +60,11 @@ export class AdminBooksComponent implements OnInit {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-
+    try {
+      JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
+    } catch (error) {
+      this.router.navigateByUrl('/admin/login');
+    }
     this.bs
       .getAllBooksWithoutLimit([], [], '', [], null)
       .subscribe((data) => (this.allBooks = data));

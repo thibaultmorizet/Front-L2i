@@ -37,14 +37,14 @@ export class AdminHomeComponent implements OnInit {
     plugins: {
       title: {
         display: true,
-        text: 'Best sell',
+        text: 'More visited books',
       },
       legend: {
         position: 'right',
       },
     },
   };
-  
+
   constructor(
     private router: Router,
     private iziToast: NgxIzitoastService,

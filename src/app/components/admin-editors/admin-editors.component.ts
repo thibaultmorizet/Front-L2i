@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   ConfirmationService,
@@ -7,6 +8,7 @@ import {
 } from 'primeng/api';
 import { Editor } from 'src/app/interfaces/editor';
 import { EditorService } from 'src/app/services/editor.service';
+import StorageCrypter from 'storage-crypter';
 
 @Component({
   selector: 'app-admin-editors',
@@ -16,6 +18,7 @@ import { EditorService } from 'src/app/services/editor.service';
   providers: [ConfirmationService, MessageService],
 })
 export class AdminEditorsComponent implements OnInit {
+  storageCrypter = new StorageCrypter('Secret');
   editorDialog: boolean = false;
   editor: Editor = {};
   submitted: boolean = false;
@@ -23,6 +26,7 @@ export class AdminEditorsComponent implements OnInit {
   selectedEditors: Array<Editor> = [];
 
   constructor(
+    private router:Router,
     private es: EditorService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
@@ -31,7 +35,11 @@ export class AdminEditorsComponent implements OnInit {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-
+    try {
+      JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
+    } catch (error) {
+      this.router.navigateByUrl('/admin/login');
+    }
     this.getAllEditorsfunc();
   }
 

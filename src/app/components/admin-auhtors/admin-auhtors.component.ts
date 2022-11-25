@@ -1,8 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
+import {
+  ConfirmationService,
+  MessageService,
+  PrimeNGConfig,
+} from 'primeng/api';
 import { Author } from 'src/app/interfaces/author';
 import { AuthorService } from 'src/app/services/author.service';
+import StorageCrypter from 'storage-crypter';
 
 @Component({
   selector: 'app-admin-auhtors',
@@ -12,6 +18,7 @@ import { AuthorService } from 'src/app/services/author.service';
   providers: [ConfirmationService, MessageService],
 })
 export class AdminAuhtorsComponent implements OnInit {
+  storageCrypter = new StorageCrypter('Secret');
   authorDialog: boolean = false;
   author: Author = {};
   submitted: boolean = false;
@@ -19,6 +26,7 @@ export class AdminAuhtorsComponent implements OnInit {
   selectedAuthors: Array<Author> = [];
 
   constructor(
+    private router: Router,
     private authorService: AuthorService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
@@ -27,7 +35,11 @@ export class AdminAuhtorsComponent implements OnInit {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-
+    try {
+      JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
+    } catch (error) {
+      this.router.navigateByUrl('/admin/login');
+    }
     this.getAllAuthorsfunc();
   }
 
@@ -51,7 +63,9 @@ export class AdminAuhtorsComponent implements OnInit {
         );
         this.selectedAuthors.forEach((anAuthor) => {
           if (anAuthor.books && anAuthor.books.length == 0) {
-            this.authorService.deleteTheAuthor(anAuthor.id).subscribe((el) => {});
+            this.authorService
+              .deleteTheAuthor(anAuthor.id)
+              .subscribe((el) => {});
           }
         });
         this.selectedAuthors = [];
@@ -104,25 +118,29 @@ export class AdminAuhtorsComponent implements OnInit {
     this.submitted = true;
 
     if (this.author.id) {
-      this.authorService.updateAuthor(this.author.id, this.author).subscribe((result) => {
-        this.author = {};
-        this.ngOnInit();
-        this.iziToast.success({
-          message: 'Author updated',
-          position: 'topRight',
-        });
-      });
-    } else {
-      this.allAuthors.push(this.author);
-      this.authorService.createAuthor(this.author).subscribe((res) => {
-        this.authorService.updateAuthor(res.id, this.author).subscribe((result) => {
+      this.authorService
+        .updateAuthor(this.author.id, this.author)
+        .subscribe((result) => {
           this.author = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: 'Author created',
+            message: 'Author updated',
             position: 'topRight',
           });
         });
+    } else {
+      this.allAuthors.push(this.author);
+      this.authorService.createAuthor(this.author).subscribe((res) => {
+        this.authorService
+          .updateAuthor(res.id, this.author)
+          .subscribe((result) => {
+            this.author = {};
+            this.ngOnInit();
+            this.iziToast.success({
+              message: 'Author created',
+              position: 'topRight',
+            });
+          });
       });
     }
 

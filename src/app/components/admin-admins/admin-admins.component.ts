@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   ConfirmationService,
@@ -8,6 +9,7 @@ import {
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import StorageCrypter from 'storage-crypter';
 @Component({
   selector: 'app-admin-admins',
   templateUrl: './admin-admins.component.html',
@@ -16,6 +18,7 @@ import { UserService } from 'src/app/services/user.service';
   providers: [ConfirmationService, MessageService],
 })
 export class AdminAdminsComponent implements OnInit {
+  storageCrypter = new StorageCrypter('Secret');
   userDialog: boolean = false;
   allUsers: any = [];
   user: User = {};
@@ -23,6 +26,7 @@ export class AdminAdminsComponent implements OnInit {
   submitted: boolean = false;
 
   constructor(
+    private router: Router,
     private us: UserService,
     private primengConfig: PrimeNGConfig,
     private iziToast: NgxIzitoastService,
@@ -31,7 +35,11 @@ export class AdminAdminsComponent implements OnInit {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-
+    try {
+      JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
+    } catch (error) {
+      this.router.navigateByUrl('/admin/login');
+    }
     this.us.getAllAdminsUsers().then((data) => {
       this.allUsers = data;
     });
