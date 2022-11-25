@@ -3,27 +3,125 @@
 
   <main id="content">
     <div class="container">
-      <div class="doughnut-info">
-        <div class="best-sell-doughnut">
-          <p-chart
-            type="doughnut"
-            [data]="bestSellDoughnut"
-            [options]="bestSellOptions"
-            *ngIf="bestSellDoughnut.labels"
-          ></p-chart>
-        </div>
-        <div class="more-visit-doughnut">
-          <p-chart
-            type="doughnut"
-            [data]="moreVisitDoughnut"
-            [options]="moreVisitedOptions"
-            *ngIf="moreVisitDoughnut.labels"
-          ></p-chart>
-        </div>
+      <div class="best-sell-table">
+        <p-table
+          #dt
+          [value]="booksBestSell"
+          [rows]="10"
+          [globalFilterFields]="['title']"
+          [rowHover]="true"
+          dataKey="id"
+          [showCurrentPageReport]="true"
+        >
+          <ng-template pTemplate="caption">
+            <div class="manage-best-sell">
+              <h5 class="m-0">Best sell</h5>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                    dt.filterGlobal($any($event.target).value, 'contains')
+                  "
+                  placeholder="Search..."
+                />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="display: table-cell !important">Image</th>
+              <th
+                style="display: table-cell !important; min-width: 15rem"
+                pSortableColumn="title"
+              >
+                Title <p-sortIcon field="title"></p-sortIcon>
+              </th>
+
+              <th
+                style="display: table-cell !important; min-width: 10rem"
+                pSortableColumn="soldnumber"
+              >
+                Sold number <p-sortIcon field="soldnumber"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-book>
+            <tr>
+              <td>
+                <img
+                  [src]="book.image"
+                  [alt]="book.title"
+                  width="100"
+                  class="img-icon"
+                />
+              </td>
+              <td>{{ book.title }}</td>
+              <td>{{ book.soldnumber }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
-      <div class="table-info">
-        <div class="best-sell-table"></div>
-        <div class="more-visit-table"></div>
+      <div class="more-visited-table">
+        <p-table
+          #dt
+          [value]="booksMoreVisited"
+          [rows]="10"
+          [globalFilterFields]="['title']"
+          [rowHover]="true"
+          dataKey="id"
+          [showCurrentPageReport]="true"
+        >
+          <ng-template pTemplate="caption">
+            <div class="manage-more-visited">
+              <h5 class="m-0">More visited books</h5>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                    dt.filterGlobal($any($event.target).value, 'contains')
+                  "
+                  placeholder="Search..."
+                />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="display: table-cell !important">Image</th>
+              <th
+                style="display: table-cell !important; min-width: 15rem"
+                pSortableColumn="title"
+              >
+                Title <p-sortIcon field="title"></p-sortIcon>
+              </th>
+
+              <th
+                style="display: table-cell !important; min-width: 10rem"
+                pSortableColumn="visitnumber"
+              >
+                Visit number <p-sortIcon field="visitnumber"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-book>
+            <tr>
+              <td>
+                <img
+                  [src]="book.image"
+                  [alt]="book.title"
+                  width="100"
+                  class="img-icon"
+                />
+              </td>
+              <td>{{ book.title }}</td>
+              <td>{{ book.visitnumber }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
     </div>
   </main>

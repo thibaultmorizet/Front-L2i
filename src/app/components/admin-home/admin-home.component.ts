@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import { DoughnutInfo } from 'src/app/interfaces/doughnut-info';
+import { Book } from 'src/app/interfaces/book';
 import { User } from 'src/app/interfaces/user';
 import { BookService } from 'src/app/services/book.service';
 import StorageCrypter from 'storage-crypter';
@@ -10,40 +10,14 @@ import StorageCrypter from 'storage-crypter';
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
-  styleUrls: ['./admin-home.component.css', './../../../css/main.css'],
+  styleUrls: ['./admin-home.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AdminHomeComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   connectedAdmin: User | null = {};
-  bestSellDoughnut: DoughnutInfo = {
-    datasets: [{}],
-  };
-  moreVisitDoughnut: DoughnutInfo = {
-    datasets: [{}],
-  };
-
-  bestSellOptions = {
-    plugins: {
-      title: {
-        display: true,
-        text: 'Best sell',
-      },
-      legend: {
-        position: 'right',
-      },
-    },
-  };
-  moreVisitedOptions = {
-    plugins: {
-      title: {
-        display: true,
-        text: 'More visited books',
-      },
-      legend: {
-        position: 'right',
-      },
-    },
-  };
+  booksBestSell: Array<Book> = [];
+  booksMoreVisited: Array<Book> = [];
 
   constructor(
     private router: Router,
@@ -67,8 +41,8 @@ export class AdminHomeComponent implements OnInit {
         this.adminLogout();
       }
     }
-    this.getBestSellDoughnut();
-    this.getMoreVisitDoughnut();
+    this.getBooksBestSell();
+    this.getBooksMoreVisited();
   }
 
   tokenExpired(token: string) {
@@ -90,43 +64,16 @@ export class AdminHomeComponent implements OnInit {
     });
   }
 
-
-  getBestSellDoughnut() {
-    this.bs.getBooksBestSell().subscribe((bestBooks) => {
-      bestBooks.forEach((aBook) => {
-        if (this.bestSellDoughnut.labels) {
-          this.bestSellDoughnut.labels.push(aBook.title ?? '');
-        } else {
-          this.bestSellDoughnut.labels = [aBook.title ?? ''];
-        }
-        if (this.bestSellDoughnut.datasets) {
-          if (this.bestSellDoughnut.datasets[0].data) {
-            this.bestSellDoughnut.datasets[0].data.push(aBook.soldnumber ?? 0);
-          } else {
-            this.bestSellDoughnut.datasets[0].data = [aBook.soldnumber ?? 0];
-          }
-        }
-      });
+  getBooksBestSell() {
+    this.bs.getBooksBestSell().subscribe((res) => {
+      this.booksBestSell = res;
     });
   }
-  getMoreVisitDoughnut() {
-    this.bs.getBooksMoreVisited().subscribe((moreVisitedBooks) => {
-      moreVisitedBooks.forEach((aBook) => {
-        if (this.moreVisitDoughnut.labels) {
-          this.moreVisitDoughnut.labels.push(aBook.title ?? '');
-        } else {
-          this.moreVisitDoughnut.labels = [aBook.title ?? ''];
-        }
-        if (this.moreVisitDoughnut.datasets) {
-          if (this.moreVisitDoughnut.datasets[0].data) {
-            this.moreVisitDoughnut.datasets[0].data.push(
-              aBook.visitnumber ?? 0
-            );
-          } else {
-            this.moreVisitDoughnut.datasets[0].data = [aBook.visitnumber ?? 0];
-          }
-        }
-      });
+  getBooksMoreVisited() {
+    this.bs.getBooksMoreVisited().subscribe((res) => {
+      console.log(res);
+      
+      this.booksMoreVisited = res;
     });
   }
 }
