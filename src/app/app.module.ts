@@ -55,6 +55,7 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TableModule } from 'primeng/table';
 import { InputMaskModule } from 'primeng/inputmask';
+import { ChartModule } from 'primeng/chart';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
@@ -144,6 +145,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
     ToolbarModule,
     TableModule,
     InputMaskModule,
+    ChartModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

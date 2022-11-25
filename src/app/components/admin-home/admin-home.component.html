@@ -3,6 +3,28 @@
 
   <main id="content">
     <div class="container">
+      <div class="doughnut-info">
+        <div class="best-sell-doughnut">
+          <p-chart
+            type="doughnut"
+            [data]="bestSellDoughnut"
+            [options]="bestSellOptions"
+            *ngIf="bestSellDoughnut.labels"
+          ></p-chart>
+        </div>
+        <div class="more-visit-doughnut">
+          <p-chart
+            type="doughnut"
+            [data]="moreVisitDoughnut"
+            [options]="moreVisitedOptions"
+            *ngIf="moreVisitDoughnut.labels"
+          ></p-chart>
+        </div>
+      </div>
+      <div class="table-info">
+        <div class="best-sell-table"></div>
+        <div class="more-visit-table"></div>
+      </div>
     </div>
   </main>
   <app-admin-footer></app-admin-footer>

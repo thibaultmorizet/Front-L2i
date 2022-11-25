@@ -1,0 +1,25 @@
+.doughnut-info {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem
+}
+
+.doughnut-info>div {
+    margin: 2rem 0;
+    background-color: rgba(215, 215, 215, 0.6);
+    box-shadow: -1px 2px 15px -6px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+}
+
+@media (min-width: 1000px) {
+    .doughnut-info {
+        flex-direction: row;
+    }
+
+    .doughnut-info>div {
+        padding: 1rem;
+        margin: 2rem 1rem;
+
+    }
+
+}

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import { Book } from 'src/app/interfaces/book';
+import { DoughnutInfo } from 'src/app/interfaces/doughnut-info';
 import { User } from 'src/app/interfaces/user';
+import { BookService } from 'src/app/services/book.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -14,10 +15,40 @@ import StorageCrypter from 'storage-crypter';
 export class AdminHomeComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   connectedAdmin: User | null = {};
+  bestSellDoughnut: DoughnutInfo = {
+    datasets: [{}],
+  };
+  moreVisitDoughnut: DoughnutInfo = {
+    datasets: [{}],
+  };
 
+  bestSellOptions = {
+    plugins: {
+      title: {
+        display: true,
+        text: 'Best sell',
+      },
+      legend: {
+        position: 'right',
+      },
+    },
+  };
+  moreVisitedOptions = {
+    plugins: {
+      title: {
+        display: true,
+        text: 'Best sell',
+      },
+      legend: {
+        position: 'right',
+      },
+    },
+  };
+  
   constructor(
     private router: Router,
     private iziToast: NgxIzitoastService,
+    private bs: BookService,
     private translate: TranslateService
   ) {}
 
@@ -36,6 +67,8 @@ export class AdminHomeComponent implements OnInit {
         this.adminLogout();
       }
     }
+    this.getBestSellDoughnut();
+    this.getMoreVisitDoughnut();
   }
 
   tokenExpired(token: string) {
@@ -54,6 +87,46 @@ export class AdminHomeComponent implements OnInit {
     this.iziToast.success({
       message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
+    });
+  }
+
+
+  getBestSellDoughnut() {
+    this.bs.getBooksBestSell().subscribe((bestBooks) => {
+      bestBooks.forEach((aBook) => {
+        if (this.bestSellDoughnut.labels) {
+          this.bestSellDoughnut.labels.push(aBook.title ?? '');
+        } else {
+          this.bestSellDoughnut.labels = [aBook.title ?? ''];
+        }
+        if (this.bestSellDoughnut.datasets) {
+          if (this.bestSellDoughnut.datasets[0].data) {
+            this.bestSellDoughnut.datasets[0].data.push(aBook.soldnumber ?? 0);
+          } else {
+            this.bestSellDoughnut.datasets[0].data = [aBook.soldnumber ?? 0];
+          }
+        }
+      });
+    });
+  }
+  getMoreVisitDoughnut() {
+    this.bs.getBooksMoreVisited().subscribe((moreVisitedBooks) => {
+      moreVisitedBooks.forEach((aBook) => {
+        if (this.moreVisitDoughnut.labels) {
+          this.moreVisitDoughnut.labels.push(aBook.title ?? '');
+        } else {
+          this.moreVisitDoughnut.labels = [aBook.title ?? ''];
+        }
+        if (this.moreVisitDoughnut.datasets) {
+          if (this.moreVisitDoughnut.datasets[0].data) {
+            this.moreVisitDoughnut.datasets[0].data.push(
+              aBook.visitnumber ?? 0
+            );
+          } else {
+            this.moreVisitDoughnut.datasets[0].data = [aBook.visitnumber ?? 0];
+          }
+        }
+      });
     });
   }
 }

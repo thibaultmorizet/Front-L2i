@@ -33,6 +33,7 @@
     "@popperjs/core": "^2.11.6",
     "angularx-social-login": "^4.1.0",
     "bootstrap": "^5.2.2",
+    "chart.js": "^4.0.1",
     "jquery": "^3.6.1",
     "mdb-angular-ui-kit": "^2.3.0",
     "ng2-animate-on-scroll": "^2.3.2",
