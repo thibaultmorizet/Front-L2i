@@ -437,6 +437,11 @@
                 </div>
 
                 <div>
+                  <p>{{ "general.subtotal" | translate }} (HT)</p>
+                  <p>{{ anOrder.totalpriceht }} €</p>
+                </div>
+
+                <div>
                   <p>{{ "general.delivery_taxes" | translate }}</p>
                   <p>{{ "general.free" | translate }}</p>
                 </div>
@@ -445,8 +450,12 @@
 
               <div class="order-total">
                 <div>
-                  <p>{{ "general.total" | translate }}</p>
+                  <p>{{ "general.total" | translate }} (TTC)</p>
                   <p>{{ anOrder.totalpricettc }} €</p>
+                </div>
+                <div>
+                  <p>{{ "general.total" | translate }} (HT)</p>
+                  <p>{{ anOrder.totalpriceht }} €</p>
                 </div>
               </div>
             </div>

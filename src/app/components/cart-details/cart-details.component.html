@@ -89,7 +89,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 [disabled]="!AddressDeliveryForm.valid"
               >
-              {{ 'general.save_the_changes' | translate }}
+                {{ "general.save_the_changes" | translate }}
               </button>
             </div>
           </form>
@@ -181,14 +181,17 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 [disabled]="!AddressBillingForm.valid"
               >
-              {{ 'general.save_the_changes' | translate }}
+                {{ "general.save_the_changes" | translate }}
               </button>
             </div>
           </form>
         </div>
       </p-dialog>
       <div class="cart-details-general" *ngIf="cart.length > 0">
-        <p class="cart-title">{{ 'cart_details.your_cart_total_is' | translate }} {{ cartTotalPriceTtc }} €</p>
+        <p class="cart-title">
+          {{ "cart_details.your_cart_total_is" | translate }}
+          {{ cartTotalPriceTtc }} €
+        </p>
         <p-divider></p-divider>
         <div *ngFor="let elt of cart">
           <div class="cart-details">
@@ -226,7 +229,7 @@
                       class="cart-details-remove"
                       (click)="deleteBookOfCart(elt.id)"
                     >
-                    {{ 'cart_details.remove' | translate }}
+                      {{ "cart_details.remove" | translate }}
                     </p>
                   </div>
                 </div>
@@ -235,15 +238,16 @@
                 <p>
                   <i class="pi pi-send"></i
                   ><span
-                    >{{ 'cart_details.delivery_by' | translate }}
+                    >{{ "cart_details.delivery_by" | translate }}
                     <span class="bold"> {{ deliveryDate }}.</span></span
                   >
                 </p>
                 <p *ngIf="elt.stock && elt.stock <= 10">
                   <i class="pi pi-exclamation-triangle"></i
                   ><span
-                    >{{ 'cart_details.only' | translate }}
-                    <span class="bold">{{ elt.stock }}</span> {{ 'cart_details.available' | translate }}.</span
+                    >{{ "cart_details.only" | translate }}
+                    <span class="bold">{{ elt.stock }}</span>
+                    {{ "cart_details.available" | translate }}.</span
                   >
                 </p>
               </div>
@@ -260,7 +264,7 @@
               class="cart-details-delivery-address-title"
               (click)="showModalDeliveryAddress()"
             >
-            {{ 'general.delivery_address' | translate }}
+              {{ "general.delivery_address" | translate }}
             </div>
             <div>
               {{ connectedUser.deliveryAddress?.street }}
@@ -286,7 +290,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 (click)="showModalDeliveryAddress()"
               >
-              {{ 'cart_details.add_delivery_address' | translate }}
+                {{ "cart_details.add_delivery_address" | translate }}
               </button>
             </div>
             <p-divider class="cart-details-divider"></p-divider>
@@ -299,7 +303,7 @@
               class="cart-details-billing-address-title"
               (click)="showModalBillingAddress()"
             >
-            {{ 'general.billing_address' | translate }}
+              {{ "general.billing_address" | translate }}
             </div>
             <div>
               {{ connectedUser.billingAddress?.street }}
@@ -325,7 +329,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 (click)="showModalBillingAddress()"
               >
-              {{ 'cart_details.add_billing_address' | translate }}
+                {{ "cart_details.add_billing_address" | translate }}
               </button>
             </div>
             <p-divider class="cart-details-divider"></p-divider>
@@ -334,24 +338,28 @@
         <div class="cart-details-total-subtotal">
           <div class="cart-details-subtotal">
             <div>
-              <p>{{ 'general.subtotal' | translate }} (TTC)</p>
+              <p>{{ "general.subtotal" | translate }} (TTC)</p>
               <p>{{ cartTotalPriceTtc }} €</p>
             </div>
-            <!-- <div>
-            <p>{{ 'general.subtotal' | translate }} (HT)</p>
-            <p>{{ cartTotalPriceHt }} €</p>
-          </div> -->
             <div>
-              <p>{{ 'general.delivery_taxes' | translate }}</p>
-              <p>{{ 'general.free' | translate }}</p>
+              <p>{{ "general.subtotal" | translate }} (HT)</p>
+              <p>{{ cartTotalPriceHt }} €</p>
+            </div>
+            <div>
+              <p>{{ "general.delivery_taxes" | translate }}</p>
+              <p>{{ "general.free" | translate }}</p>
             </div>
             <p-divider class="cart-details-divider"></p-divider>
           </div>
 
           <div class="cart-details-total">
             <div>
-              <p>{{ 'general.total' | translate }}</p>
+              <p>{{ "general.total" | translate }} (TTC)</p>
               <p>{{ cartTotalPriceTtc }} €</p>
+            </div>
+            <div>
+              <p>{{ "general.total" | translate }} (HT)</p>
+              <p>{{ cartTotalPriceHt }} €</p>
             </div>
           </div>
         </div>
@@ -371,14 +379,16 @@
             (click)="checkOut()"
           >
             <span
-              pTooltip="{{ 'cart_details.create_valid_addresses_to_check_out' | translate }}"
+              pTooltip="{{
+                'cart_details.create_valid_addresses_to_check_out' | translate
+              }}"
               [tooltipDisabled]="
                 (connectedUser.deliveryAddress != undefined &&
                   connectedUser.billingAddress != undefined) ||
                 connectedUser.id == undefined
               "
             >
-            {{ "general.check_out" | translate }}</span
+              {{ "general.check_out" | translate }}</span
             >
           </button>
         </div>
