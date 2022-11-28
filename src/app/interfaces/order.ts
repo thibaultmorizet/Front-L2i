@@ -5,7 +5,8 @@ export interface Order {
   id?: number;
   user?: User;
   booklist?: Array<Book>;
-  totalprice?: number;
+  totalpricettc?: number;
+  totalpriceht?: number;
   deliveryaddress?: string;
   billingaddress?: string;
   date?: Date;

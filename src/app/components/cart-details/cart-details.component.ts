@@ -411,7 +411,8 @@ export class CartDetailsComponent implements OnInit {
         this.order.user = this.connectedUser;
 
         this.order.booklist = this.cart;
-        this.order.totalprice = this.cartTotalPriceTtc;
+        this.order.totalpricettc = this.cartTotalPriceTtc;
+        this.order.totalpriceht = this.cartTotalPriceHt;
         this.order.date = new Date();
         this.order.deliveryaddress =
           this.newAddressDelivery.street +
