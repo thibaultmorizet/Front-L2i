@@ -67,6 +67,7 @@ export class MyAccountComponent implements OnInit {
       delete this.newUserData.orders;
     } catch (error) {
       this.connectedUser = {};
+      this.router.navigateByUrl('/home');
     }
 
     if (this.connectedUser.id) {
