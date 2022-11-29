@@ -159,7 +159,7 @@ export class BookService {
     types.forEach((el) => {
       this.typesString += '&type.name[]=' + el.name;
     });
-    if (prices[0] && prices[1]) {
+    if (typeof prices[0] == 'number' && typeof prices[1] == 'number') {
       this.pricesString +=
         '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
     }
@@ -205,7 +205,6 @@ export class BookService {
     );
   }
   getBooksMoreVisited() {
-    
     return this.http.get<Array<Book>>(
       this.url + '?itemsPerPage=10&stock%5Bgt%5D=0&order%5Bvisitnumber%5D=desc'
     );
