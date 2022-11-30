@@ -43,7 +43,6 @@
                 pInputText
                 [(ngModel)]="contactInfo.subject"
                 class="w-100"
-                required
               />
             </div>
             <div class="input-group mb-3">
@@ -66,7 +65,7 @@
                 pRipple
                 type="submit"
                 class="p-button-raised p-button-primary-color btn-primary-color"
-                [disabled]="!contactForm.valid"
+                [disabled]="!contactForm.valid && contactInfo.subject"
               >
               {{ "contact.send_mail" | translate }}
               </button>

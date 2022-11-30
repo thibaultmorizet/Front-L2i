@@ -193,7 +193,7 @@
   },
   "home": {
     "next": "Suiv",
-    "our_best_sell": "Nos meilleures ventes",
+    "our_best_sells": "Nos meilleures ventes",
     "prev": "Préc"
   },
   "izitoast": {
@@ -205,7 +205,8 @@
     "successful_login": "Connexion réussie",
     "successful_registration": "Inscription réussie",
     "you_re_logout": "vous êtes déconnecté",
-    "your_order_is_validate": "Votre commande est validée"
+    "your_order_is_validate": "Votre commande est validée",
+    "mail_sent": "Mail envoyé"
   },
   "my_account": {
     "are_you_sure_that_you_want_delete_your_account": "Êtes-vous sûr de vouloir supprimer votre compte ?",
