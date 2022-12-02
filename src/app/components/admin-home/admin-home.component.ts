@@ -71,8 +71,6 @@ export class AdminHomeComponent implements OnInit {
   }
   getBooksMoreVisited() {
     this.bs.getBooksMoreVisited().subscribe((res) => {
-      console.log(res);
-      
       this.booksMoreVisited = res;
     });
   }
