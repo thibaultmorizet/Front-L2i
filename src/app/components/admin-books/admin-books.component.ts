@@ -96,6 +96,12 @@ export class AdminBooksComponent implements OnInit {
           (val) => !this.selectedBooks.includes(val)
         );
         this.selectedBooks.forEach((aBook) => {
+          let imageUrlToDelete = {
+            imageUrl: aBook.image?.substring(aBook.image?.indexOf('assets')),
+          };
+
+          this.bs.deleteImage(imageUrlToDelete).subscribe((el) => {});
+
           this.bs.deleteTheBook(aBook.id).subscribe((el) => {});
         });
         this.selectedBooks = [];
@@ -126,6 +132,11 @@ export class AdminBooksComponent implements OnInit {
       dismissableMask: true,
       accept: () => {
         this.allBooks = this.allBooks.filter((val) => val.id !== book.id);
+        let imageUrlToDelete = {
+          imageUrl: book.image?.substring(book.image?.indexOf('assets')),
+        };
+
+        this.bs.deleteImage(imageUrlToDelete).subscribe((el) => {});
         this.bs.deleteTheBook(book.id).subscribe((el) => {});
         this.book = {};
         this.iziToast.success({
@@ -148,19 +159,19 @@ export class AdminBooksComponent implements OnInit {
       this.book.year = this.book.year.toString();
     }
     if (this.book.id) {
-      this.imageInfo.bookId = this.book.id?.toString();
-
-      if (this.imageInfo.url) {
-        this.book.image =
-          'https://www.thibaultmorizet.fr/assets/' +
-          this.book.id +
-          '.' +
-          this.imageInfo.url.split('.').pop();
-      } else {
-        this.book.image =
-          'https://www.thibaultmorizet.fr/assets/' + this.book.id + '.jpeg';
-      }
       if (this.imageInfo.data) {
+        this.imageInfo.bookId = this.book.id?.toString();
+
+        if (this.imageInfo.url) {
+          this.book.image =
+            'https://www.thibaultmorizet.fr/assets/' +
+            this.book.id +
+            '.' +
+            this.imageInfo.url.split('.').pop();
+        } else {
+          this.book.image =
+            'https://www.thibaultmorizet.fr/assets/' + this.book.id + '.jpeg';
+        }
         this.bs.addImage(this.imageInfo).subscribe();
       }
       this.bs.updateBook(this.book.id, this.book).subscribe((result) => {
@@ -174,18 +185,19 @@ export class AdminBooksComponent implements OnInit {
     } else {
       this.allBooks.push(this.book);
       this.bs.createBook(this.book).subscribe((res) => {
-        this.imageInfo.bookId = res.id?.toString();
-        if (this.imageInfo.url) {
-          this.book.image =
-            'https://www.thibaultmorizet.fr/assets/' +
-            res.id +
-            '.' +
-            this.imageInfo.url.split('.').pop();
-        } else {
-          this.book.image =
-            'https://www.thibaultmorizet.fr/assets/' + res.id + '.jpeg';
-        }
         if (this.imageInfo.data) {
+          this.imageInfo.bookId = res.id?.toString();
+          if (this.imageInfo.url) {
+            this.book.image =
+              'https://www.thibaultmorizet.fr/assets/' +
+              res.id +
+              '.' +
+              this.imageInfo.url.split('.').pop();
+          } else {
+            this.book.image =
+              'https://www.thibaultmorizet.fr/assets/' + res.id + '.jpeg';
+          }
+
           this.bs.addImage(this.imageInfo).subscribe();
         }
         this.bs.updateBook(res.id, this.book).subscribe((result) => {

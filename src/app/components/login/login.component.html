@@ -65,7 +65,7 @@
                 pRipple
                 type="submit"
                 class="p-button-raised p-button-primary-color btn-primary-color"
-                [disabled]="!loginForm.valid"
+                [disabled]="!userLogin.email || !userLogin.password"
               >
                 {{ "login.login" | translate }}
               </button>

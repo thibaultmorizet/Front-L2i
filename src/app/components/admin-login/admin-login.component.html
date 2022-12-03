@@ -18,7 +18,7 @@
                   pInputText
                   [(ngModel)]="adminLogin.email"
                   [ngClass]="{ 'ng-invalid': errorEmail }"
-                  required
+                  
                 />
                 <small class="p-error" [ngClass]="{ 'd-none': !errorEmail }">{{
                   errorEmail
@@ -37,7 +37,7 @@
                     pInputText
                     [(ngModel)]="adminLogin.password"
                     [ngClass]="{ 'ng-invalid': errorPassword }"
-                    required
+                    
                   />
                   <span
                     class="toogle-password-clear"
@@ -65,7 +65,7 @@
                 pRipple
                 type="submit"
                 class="p-button-raised p-button-primary-color btn-primary-color"
-                [disabled]="!loginForm.valid"
+                [disabled]="!adminLogin.password || !adminLogin.email "
               >
                 {{ "login.login" | translate }}
               </button>

@@ -226,4 +226,10 @@ export class BookService {
       imageInfo
     );
   }
+  deleteImage(imageUrl: object) {
+    return this.http.post<{ token: string }>(
+      'https://thibaultmorizet.fr/delete_image',
+      imageUrl
+    );
+  }
 }
