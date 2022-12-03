@@ -78,7 +78,12 @@ export class AdminBooksComponent implements OnInit {
   }
 
   openNew() {
-    this.book = {};
+    this.book = {
+      unitpricettc: 1,
+      unitpriceht: 1,
+      stock: 1,
+      year: "1850",
+    };
     this.submitted = false;
     this.bookDialog = true;
   }
