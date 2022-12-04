@@ -267,7 +267,7 @@ export class CartDetailsComponent implements OnInit {
         ),
         position: 'topRight',
       });
-      this.router.navigateByUrl('/my-account');
+      this.router.navigateByUrl('/login');
     }
   }
 
@@ -281,7 +281,7 @@ export class CartDetailsComponent implements OnInit {
         ),
         position: 'topRight',
       });
-      this.router.navigateByUrl('/my-account');
+      this.router.navigateByUrl('/login');
     }
   }
 
@@ -467,7 +467,7 @@ export class CartDetailsComponent implements OnInit {
         ),
         position: 'topRight',
       });
-      this.router.navigateByUrl('/my-account');
+      this.router.navigateByUrl('/login');
     }
   }
 }
