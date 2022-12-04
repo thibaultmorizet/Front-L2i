@@ -56,6 +56,10 @@
     margin: 0;
 }
 
+.text-small {
+    font-size: .9rem;
+}
+
 .cart-details-remove {
     cursor: pointer;
     font-size: .875rem;
@@ -180,7 +184,9 @@
     .cart-details-price {
         font-size: 1.1rem;
     }
-
+    .text-small {
+        font-size: .8rem;
+    }
     p-inputnumber {
         height: 50px;
         margin: 0 .2rem;
@@ -212,7 +218,9 @@
         font-size: 1.25rem;
         width: 150px;
     }
-
+    .text-small {
+        font-size: .9rem;
+    }
     p-inputnumber {
         margin: 0 1rem;
     }
