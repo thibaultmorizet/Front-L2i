@@ -258,11 +258,31 @@ export class CartDetailsComponent implements OnInit {
   }
 
   showModalDeliveryAddress() {
-    this.displayModalDeliveryAddress = true;
+    if (this.connectedUser.id) {
+      this.displayModalDeliveryAddress = true;
+    } else {
+      this.iziToast.warning({
+        message: this.translate.instant(
+          'izitoast.login_before_confirm_check_out'
+        ),
+        position: 'topRight',
+      });
+      this.router.navigateByUrl('/my-account');
+    }
   }
 
   showModalBillingAddress() {
-    this.displayModalBillingAddress = true;
+    if (this.connectedUser.id) {
+      this.displayModalBillingAddress = true;
+    } else {
+      this.iziToast.warning({
+        message: this.translate.instant(
+          'izitoast.login_before_confirm_check_out'
+        ),
+        position: 'topRight',
+      });
+      this.router.navigateByUrl('/my-account');
+    }
   }
 
   setNewAddressBilling() {
