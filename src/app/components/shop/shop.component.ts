@@ -3,14 +3,12 @@ import { Router } from '@angular/router';
 import { Book } from 'src/app/interfaces/book';
 import { BookService } from 'src/app/services/book.service';
 import { FormatService } from 'src/app/services/format.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/interfaces/user';
 import { Format } from 'src/app/interfaces/format';
 import { Type } from 'src/app/interfaces/type';
 import { TypeService } from 'src/app/services/type.service';
 import StorageCrypter from 'storage-crypter';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 
 import { Editor } from 'src/app/interfaces/editor';
@@ -64,10 +62,8 @@ export class ShopComponent implements OnInit {
     private es: EditorService,
     private authorService: AuthorService,
     private ts: TypeService,
-    private as: AuthService,
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private modalService: NgbModal,
     private authService: SocialAuthService,
     private primengConfig: PrimeNGConfig,
     private translate: TranslateService
@@ -299,98 +295,6 @@ export class ShopComponent implements OnInit {
             );
           }
         }
-      });
-    }
-  }
-  updatebookModal(content: any, id: number | undefined) {
-    if (id != undefined) {
-      this.bs.getOneBook(id).subscribe((b) => {
-        this.actualUpdatebook = b;
-        this.formats.forEach((aFormat) => {
-          if (this.actualUpdatebook.format) {
-            if (this.actualUpdatebook.format.id == aFormat.id) {
-              aFormat = this.actualUpdatebook.format;
-            }
-          }
-        });
-        this.editors.forEach((anEditor) => {
-          if (this.actualUpdatebook.editor) {
-            if (this.actualUpdatebook.editor.id == anEditor.id) {
-              anEditor = this.actualUpdatebook.editor;
-            }
-          }
-        });
-        this.authors.forEach((anAuthor) => {
-          if (
-            this.actualUpdatebook.author &&
-            this.actualUpdatebook.author.length > 0
-          ) {
-            this.actualUpdatebook.author.forEach((aBookAuthor) => {});
-          }
-        });
-        this.types.forEach((aType) => {
-          if (
-            this.actualUpdatebook.type &&
-            this.actualUpdatebook.type.length > 0
-          ) {
-            this.actualUpdatebook.type.forEach((aBookType) => {});
-          }
-        });
-        this.modalService
-          .open(content, { ariaLabelledBy: 'modal-basic-title' })
-          .result.then(
-            (result) => {
-              this.closeResult = `Closed with: ${result}`;
-            },
-            (reason) => {
-              if (reason == 0 || reason == 'Cross click') {
-                this.actualUpdatebook = {};
-              }
-              this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-            }
-          );
-        setTimeout(() => {
-          if (this.actualUpdatebook.format?.name) {
-            document.getElementById(this.actualUpdatebook.format.name)?.click();
-          }
-          if (this.actualUpdatebook.editor?.name) {
-            document.getElementById(this.actualUpdatebook.editor.name)?.click();
-          }
-        }, 500);
-      });
-    }
-  }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-  updatebook() {
-    if (this.connectedUser?.roles?.includes('ROLE_ADMIN')) {
-      this.actualUpdatebook.type = [];
-      this.types.forEach((aType) => {});
-      this.actualUpdatebook.author = [];
-      this.authors.forEach((anAuthor) => {});
-
-      this.bs
-        .updateBook(this.actualUpdatebook.id, this.actualUpdatebook)
-        .subscribe((res) => {
-          this.actualUpdatebook = {};
-          this.modalService.dismissAll();
-          this.ngOnInit();
-          this.iziToast.success({
-            message: this.translate.instant('izitoast.modification_confirm'),
-            position: 'topRight',
-          });
-        });
-    } else {
-      this.iziToast.error({
-        message: "Impossible de modifier un livre si vous n'êtes pas admin",
-        position: 'topRight',
       });
     }
   }

@@ -14,7 +14,6 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
 import { NgxIziToastModule } from 'ngx-izitoast';
 import { AuthInterceptor } from './services/auth.interceptor';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
 import {
@@ -28,7 +27,6 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
-import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
@@ -109,12 +107,10 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule,
     NgxIziToastModule,
     SocialLoginModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    NgbCarouselModule,
     CarouselModule,
     ButtonModule,
     RippleModule,
