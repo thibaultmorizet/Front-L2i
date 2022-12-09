@@ -13,11 +13,13 @@ import { Book } from 'src/app/interfaces/book';
 import { Editor } from 'src/app/interfaces/editor';
 import { Format } from 'src/app/interfaces/format';
 import { Image } from 'src/app/interfaces/image';
+import { Taxe } from 'src/app/interfaces/taxe';
 import { Type } from 'src/app/interfaces/type';
 import { AuthorService } from 'src/app/services/author.service';
 import { BookService } from 'src/app/services/book.service';
 import { EditorService } from 'src/app/services/editor.service';
 import { FormatService } from 'src/app/services/format.service';
+import { TaxeService } from 'src/app/services/taxe.service';
 import { TypeService } from 'src/app/services/type.service';
 import StorageCrypter from 'storage-crypter';
 
@@ -35,16 +37,11 @@ export class AdminBooksComponent implements OnInit {
   book: Book = {};
   selectedBooks: Book[] = [];
   submitted: boolean = false;
-  updatedFormat: Format = {};
-  updatedEditor: Editor = {};
   formats: Array<Format> = [];
   editors: Array<Editor> = [];
+  taxes: Array<Taxe> = [];
   authors: Array<Author> = [];
   types: Array<Type> = [];
-  selectedAuthors: Array<Author> = [];
-  selectedTypes: Array<Type> = [];
-  selectedFormat: Format = {};
-  selectedEditor: Editor = {};
   imageInfo: Image = {};
 
   constructor(
@@ -52,6 +49,7 @@ export class AdminBooksComponent implements OnInit {
     private bs: BookService,
     private fs: FormatService,
     private es: EditorService,
+    private taxeService: TaxeService,
     private ts: TypeService,
     private authorService: AuthorService,
     private primengConfig: PrimeNGConfig,
@@ -73,6 +71,7 @@ export class AdminBooksComponent implements OnInit {
       .subscribe((data) => (this.allBooks = data));
     this.getAllFormatsfunc();
     this.getAllEditorsfunc();
+    this.getAllTaxesfunc();
     this.getAllAuthorsfunc();
     this.getAllTypesfunc();
   }
@@ -81,7 +80,7 @@ export class AdminBooksComponent implements OnInit {
     this.book = {
       unitpriceht: 1,
       stock: 1,
-      year: "1850",
+      year: '1850',
     };
     this.submitted = false;
     this.bookDialog = true;
@@ -123,6 +122,8 @@ export class AdminBooksComponent implements OnInit {
     });
     this.book = { ...book };
     this.bookDialog = true;
+    console.log(this.book);
+    
   }
 
   deletebook(book: Book) {
@@ -236,6 +237,14 @@ export class AdminBooksComponent implements OnInit {
       this.editors = res;
     });
   }
+  getAllTaxesfunc() {
+    this.taxeService.getAllTaxes().subscribe((res) => {
+      res.forEach((aTaxe) => {
+        delete aTaxe.books;
+      });
+      this.taxes = res;      
+    });
+  }
   getAllAuthorsfunc() {
     this.authorService.getAllAuthors().subscribe((res) => {
       res.forEach((anAuthor) => {
@@ -286,5 +295,19 @@ export class AdminBooksComponent implements OnInit {
       subscriber.error();
       subscriber.complete();
     };
+  }
+  getUnitpricettcFromUnitpricehtAndTva(
+    unitpriceht: number | undefined,
+    tva: number | undefined
+  ) {
+    if (unitpriceht != undefined) {
+      if (tva != undefined) {
+        return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
+      } else {
+        return unitpriceht.toFixed(2);
+      }
+    } else {
+      return null;
+    }
   }
 }

@@ -3,126 +3,93 @@
 
   <main id="content">
     <div class="container">
-      <div class="best-sell-table">
-        <p-table
-          #dt
-          [value]="booksBestSell"
-          [rows]="10"
-          [globalFilterFields]="['title']"
-          [rowHover]="true"
-          dataKey="id"
-          [showCurrentPageReport]="true"
-        >
-          <ng-template pTemplate="caption">
-            <div class="manage-best-sell">
-              <h5 class="m-0">{{ "admin_home.best_sell" | translate }}</h5>
-              <span class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input
-                  pInputText
-                  type="text"
-                  (input)="
-                    dt.filterGlobal($any($event.target).value, 'contains')
-                  "
-                  placeholder="{{ 'general.search' | translate }}"
-                />
-              </span>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="display: table-cell !important">{{ "admin_home.image" | translate }}</th>
-              <th
-                style="display: table-cell !important; min-width: 15rem"
-                pSortableColumn="title"
-              >
-              {{ "admin_home.title" | translate }} <p-sortIcon field="title"></p-sortIcon>
-              </th>
+      <p-table
+        #dt
+        [value]="allBooks"
+        [rows]="12"
+        [paginator]="true"
+        [globalFilterFields]="['title']"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="{{
+          'general.showing_entries_message'
+            | translate
+              : {
+                  first: '{first}',
+                  last: '{last}',
+                  totalRecords: '{totalRecords}'
+                }
+        }}"
+        [showCurrentPageReport]="true"
+      >
+        <ng-template pTemplate="caption">
+          <div class="manage-books">
+            <h5 class="m-0">{{ "admin_home.stats" | translate }}</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="{{ 'general.search' | translate }}"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="display: table-cell !important">
+              {{ "admin_home.image" | translate }}
+            </th>
+            <th
+              style="display: table-cell !important; min-width: 15rem"
+              pSortableColumn="title"
+            >
+              {{ "admin_home.title" | translate }}
+              <p-sortIcon field="title"></p-sortIcon>
+            </th>
 
-              <th
-                style="display: table-cell !important; min-width: 10rem"
-                pSortableColumn="soldnumber"
-              >
-              {{ "admin_home.sold_number" | translate }} <p-sortIcon field="soldnumber"></p-sortIcon>
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-book>
-            <tr>
-              <td>
-                <img
-                  [src]="book.image"
-                  [alt]="book.title"
-                  width="100"
-                  class="img-icon"
-                />
-              </td>
-              <td>{{ book.title }}</td>
-              <td>{{ book.soldnumber }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-      <div class="more-visited-table">
-        <p-table
-          #dt
-          [value]="booksMoreVisited"
-          [rows]="10"
-          [globalFilterFields]="['title']"
-          [rowHover]="true"
-          dataKey="id"
-          [showCurrentPageReport]="true"
-        >
-          <ng-template pTemplate="caption">
-            <div class="manage-more-visited">
-              <h5 class="m-0">{{ "admin_home.more_visited_books" | translate }}</h5>
-              <span class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input
-                  pInputText
-                  type="text"
-                  (input)="
-                    dt.filterGlobal($any($event.target).value, 'contains')
-                  "
-                  placeholder="{{ 'general.search' | translate }}"
-                />
-              </span>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="display: table-cell !important">{{ "admin_home.image" | translate }}</th>
-              <th
-                style="display: table-cell !important; min-width: 15rem"
-                pSortableColumn="title"
-              >
-              {{ "admin_home.title" | translate }} <p-sortIcon field="title"></p-sortIcon>
-              </th>
-
-              <th
-                style="display: table-cell !important; min-width: 10rem"
-                pSortableColumn="visitnumber"
-              >
-              {{ "admin_home.visit_number" | translate }} <p-sortIcon field="visitnumber"></p-sortIcon>
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-book>
-            <tr>
-              <td>
-                <img
-                  [src]="book.image"
-                  [alt]="book.title"
-                  width="100"
-                  class="img-icon"
-                />
-              </td>
-              <td>{{ book.title }}</td>
-              <td>{{ book.visitnumber }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
+            <th
+              style="display: table-cell !important; min-width: 15rem"
+              pSortableColumn="soldnumber"
+            >
+              {{ "admin_home.sold_number" | translate }}
+              <p-sortIcon field="soldnumber"></p-sortIcon>
+            </th>
+            <th
+              style="display: table-cell !important; min-width: 15rem"
+              pSortableColumn="visitnumber"
+            >
+              {{ "admin_home.visit_number" | translate }}
+              <p-sortIcon field="visitnumber"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-book>
+          <tr>
+            <td>
+              <img
+                [src]="book.image"
+                [alt]="book.title"
+                width="100"
+                class="img-icon"
+              />
+            </td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.soldnumber ?? 0 }}</td>
+            <td>{{ book.visitnumber ?? 0 }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            {{
+              "admin_books.total_books_message"
+                | translate : { bookLength: allBooks ? allBooks.length : 0 }
+            }}
+          </div>
+        </ng-template>
+      </p-table>
+      <div class="best-sell-table"></div>
     </div>
   </main>
   <app-admin-footer></app-admin-footer>

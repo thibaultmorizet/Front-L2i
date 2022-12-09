@@ -8,12 +8,11 @@
     "my_account": "My account"
   },
   "admin_home": {
-    "best_sell": "Best sell",
+    "stats": "Statistics",
     "image": "Image",
     "title": "Title",
     "sold_number": "Sold number",
-    "visit_number": "Visit number",
-    "more_visited_books": "More visited books"
+    "visit_number": "Visit number"
   },
   "admin_users": {
     "manage_users": "Manage users",
@@ -54,6 +53,7 @@
     "stock": "Stock",
     "summary": "Summary",
     "select_an_editor": "Select an editor",
+    "select_a_taxe": "Select a taxe",
     "select_a_format": "Select a format",
     "cover_books": "Cover book"
   },

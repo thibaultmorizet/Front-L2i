@@ -16,7 +16,7 @@ import StorageCrypter from 'storage-crypter';
 export class AdminHomeComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   connectedAdmin: User | null = {};
-  booksBestSell: Array<Book> = [];
+  allBooks: Array<Book> = [];
   booksMoreVisited: Array<Book> = [];
 
   constructor(
@@ -41,8 +41,7 @@ export class AdminHomeComponent implements OnInit {
         this.adminLogout();
       }
     }
-    this.getBooksBestSell();
-    this.getBooksMoreVisited();
+    this.getAllBooks();
   }
 
   tokenExpired(token: string) {
@@ -64,14 +63,9 @@ export class AdminHomeComponent implements OnInit {
     });
   }
 
-  getBooksBestSell() {
-    this.bs.getBooksBestSell().subscribe((res) => {
-      this.booksBestSell = res;
-    });
-  }
-  getBooksMoreVisited() {
-    this.bs.getBooksMoreVisited().subscribe((res) => {
-      this.booksMoreVisited = res;
+  getAllBooks() {
+    this.bs.getAllBooksWithoutLimit([], [], '', [], null).subscribe((res) => {
+      this.allBooks = res;
     });
   }
 }

@@ -215,11 +215,6 @@ export class BookService {
       this.url + '?itemsPerPage=10&stock%5Bgt%5D=0'
     );
   }
-  getBooksMoreVisited() {
-    return this.http.get<Array<Book>>(
-      this.url + '?itemsPerPage=10&stock%5Bgt%5D=0&order%5Bvisitnumber%5D=desc'
-    );
-  }
   updateBookStock(id: number | undefined, book: Book) {
     if (book.stock && book.stock >= 0) {
       return this.http.put<{ token: string }>(this.url + '/' + id, book);

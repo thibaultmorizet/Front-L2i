@@ -1,4 +1,4 @@
-<!-- <div class="general-content">
+<div class="general-content">
   <app-admin-header></app-admin-header>
 
   <main id="content">
@@ -132,12 +132,8 @@
             {{ "admin_books.title" | translate }}
             <p-sortIcon field="title"></p-sortIcon>
           </th>
-          <th
-            style="display: table-cell !important"
-            pSortableColumn="unitpricettc"
-          >
+          <th style="display: table-cell !important">
             {{ "admin_books.price_ttc" | translate }}
-            <p-sortIcon field="unitpricettc"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important"
@@ -145,6 +141,10 @@
           >
             {{ "admin_books.price_ht" | translate }}
             <p-sortIcon field="unitpriceht"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important" pSortableColumn="taxe.tva">
+            TVA
+            <p-sortIcon field="taxe.tva"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
@@ -205,8 +205,17 @@
             />
           </td>
           <td>{{ book.title }}</td>
-          <td>{{ book.unitpricettc }} €</td>
+          <td>
+            {{
+              getUnitpricettcFromUnitpricehtAndTva(
+                book.unitpriceht,
+                book.taxe?.tva
+              )
+            }}
+            €
+          </td>
           <td>{{ book.unitpriceht }} €</td>
+          <td>{{ book.taxe.tva }} %</td>
           <td>{{ book.format.name }}</td>
           <td>{{ book.editor.name }}</td>
 
@@ -328,26 +337,6 @@
         </div>
 
         <div class="field">
-          <label for="pricettc">{{
-            "admin_books.price_ttc" | translate
-          }}</label>
-          <p-inputNumber
-            id="pricettc"
-            [(ngModel)]="book.unitpricettc"
-            mode="currency"
-            currency="EUR"
-            locale="fr-FR"
-            [min]="0"
-            [required]="true"
-            [allowEmpty]="false"
-          ></p-inputNumber>
-          <small class="p-error" *ngIf="submitted && !book.unitpricettc"
-            >{{ "admin_books.price_ttc" | translate }}
-            {{ "general.is_required" | translate }}</small
-          >
-        </div>
-
-        <div class="field">
           <label for="priceht">{{ "admin_books.price_ht" | translate }}</label>
           <p-inputNumber
             id="priceht"
@@ -395,6 +384,25 @@
             >{{ "admin_books.year" | translate }}
             {{ "general.is_required" | translate }}</small
           >
+        </div>
+
+        <div class="field">
+          <label for="taxe">TVA</label><br />
+          <p-dropdown
+            [options]="taxes"
+            [(ngModel)]="book.taxe"
+            optionLabel="tva"
+            placeholder="{{ 'admin_books.select_a_taxe' | translate }}"
+          >
+            <ng-template pTemplate="selectedItem">
+              <div *ngIf="book.taxe">
+                <div>{{ book.taxe.tva }} %</div>
+              </div>
+            </ng-template>
+            <ng-template let-taxe pTemplate="item">
+              <div>{{ taxe.tva }} %</div>
+            </ng-template>
+          </p-dropdown>
         </div>
 
         <div class="field">
@@ -479,7 +487,6 @@
             !book.title ||
             !book.summary ||
             !book.isbn ||
-            !book.unitpricettc ||
             !book.unitpriceht ||
             !book.stock ||
             !book.year ||
@@ -494,4 +501,3 @@
   </main>
   <app-admin-footer></app-admin-footer>
 </div>
- -->
