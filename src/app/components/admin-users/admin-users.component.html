@@ -154,7 +154,7 @@
         <div class="flex align-items-center justify-content-between">
           {{
             "admin_users.total_users_message"
-              | translate: { userLength: allUsers ? allUsers.length : 0 }
+              | translate : { userLength: allUsers ? allUsers.length : 0 }
           }}
         </div>
       </ng-template>
@@ -168,7 +168,7 @@
       acceptButtonStyleClass="p-button-valid"
       acceptLabel="{{ 'general.yes' | translate }}"
       rejectLabel="{{ 'general.no' | translate }}"
- ></p-confirmDialog>
+    ></p-confirmDialog>
 
     <p-dialog
       [(visible)]="userDialog"
@@ -181,7 +181,7 @@
     >
       <ng-template pTemplate="content">
         <div class="field">
-          <label for="firstname">{{ "general.firstname" | translate }}</label>
+          <label for="firstname">{{ "general.firstname" | translate }} *</label>
           <input
             type="text"
             pInputText
@@ -191,56 +191,62 @@
             autofocus
           />
           <small class="p-error" *ngIf="submitted && !user.firstname"
-            >{{ "general.firstname" | translate }} {{ "general.is_required" | translate }}</small
+            >{{ "general.firstname" | translate }}
+            {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="lastname">{{ "general.lastname" | translate }}</label>
+          <label for="lastname">{{ "general.lastname" | translate }} *</label>
           <input
             type="text"
             pInputText
             id="lastname"
             [(ngModel)]="user.lastname"
             required
-            autofocus
           />
           <small class="p-error" *ngIf="submitted && !user.lastname"
-            >{{ "general.lastname" | translate }} {{ "general.is_required" | translate }}</small
+            >{{ "general.lastname" | translate }}
+            {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="email">{{ "general.email" | translate }}</label>
+          <label for="email">{{ "general.email" | translate }} *</label>
           <input
             type="text"
             pInputText
             id="email"
             [(ngModel)]="user.email"
             required
-            autofocus
           />
           <small class="p-error" *ngIf="submitted && !user.email"
-            >{{ "general.email" | translate }} {{ "general.is_required" | translate }}</small
+            >{{ "general.email" | translate }}
+            {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <br />
 
         <div class="field">
-          <label for="billingAddressStreet">{{ "general.billing_address" | translate }} - {{ "general.street" | translate }}</label>
+          <label for="billingAddressStreet"
+            >{{ "general.billing_address" | translate }} -
+            {{ "general.street" | translate }}</label
+          >
           <input
             type="text"
             pInputText
             id="billingAddressStreet"
             [(ngModel)]="updateBillingAddress.street"
-            autofocus
           />
         </div>
 
         <div class="field">
-          <label for="billingAddressPostalcode"
-            >{{ "general.billing_address" | translate }} - {{ "general.postal_code" | translate }}</label
+          <label
+            *ngIf="updateBillingAddress.street"
+            for="billingAddressPostalcode"
+            >{{ "general.billing_address" | translate }} -
+            {{ "general.postal_code" | translate }} *</label
           >
           <p-inputMask
             type="text"
@@ -248,48 +254,59 @@
             mask="99999"
             [(ngModel)]="updateBillingAddress.postalcode"
             placeholder="59000"
-            autofocus
+            *ngIf="updateBillingAddress.street"
           ></p-inputMask>
         </div>
 
         <div class="field">
-          <label for="billingAddressCity">{{ "general.billing_address" | translate }} - {{ "general.city" | translate }}</label>
+          <label *ngIf="updateBillingAddress.street" for="billingAddressCity"
+            >{{ "general.billing_address" | translate }} -
+            {{ "general.city" | translate }} *</label
+          >
           <input
             type="text"
             pInputText
             id="billingAddressCity"
             [(ngModel)]="updateBillingAddress.city"
-            autofocus
+            *ngIf="updateBillingAddress.street"
           />
         </div>
 
         <div class="field">
-          <label for="billingAddressCountry">{{ "general.billing_address" | translate }} - {{ "general.country" | translate }}</label>
+          <label *ngIf="updateBillingAddress.street" for="billingAddressCountry"
+            >{{ "general.billing_address" | translate }} -
+            {{ "general.country" | translate }} *</label
+          >
           <input
             type="text"
             pInputText
             id="billingAddressCountry"
             [(ngModel)]="updateBillingAddress.country"
-            autofocus
+            *ngIf="updateBillingAddress.street"
           />
         </div>
 
         <br />
 
         <div class="field">
-          <label for="deliveryAddressStreet">{{ "general.delivery_address" | translate }} - {{ "general.street" | translate }}</label>
+          <label for="deliveryAddressStreet"
+            >{{ "general.delivery_address" | translate }} -
+            {{ "general.street" | translate }}</label
+          >
           <input
             type="text"
             pInputText
             id="deliveryAddressStreet"
             [(ngModel)]="updateDeliveryAddress.street"
-            autofocus
           />
         </div>
 
         <div class="field">
-          <label for="deliveryAddressPostalcode"
-            >{{ "general.delivery_address" | translate }} - {{ "general.postal_code" | translate }}</label
+          <label
+            *ngIf="updateDeliveryAddress.street"
+            for="deliveryAddressPostalcode"
+            >{{ "general.delivery_address" | translate }} -
+            {{ "general.postal_code" | translate }} *</label
           >
           <p-inputMask
             type="text"
@@ -297,29 +314,37 @@
             mask="99999"
             [(ngModel)]="updateDeliveryAddress.postalcode"
             placeholder="59000"
-            autofocus
+            *ngIf="updateDeliveryAddress.street"
           ></p-inputMask>
         </div>
 
         <div class="field">
-          <label for="deliveryAddressCity">{{ "general.delivery_address" | translate }} - {{ "general.city" | translate }}</label>
+          <label *ngIf="updateDeliveryAddress.street" for="deliveryAddressCity"
+            >{{ "general.delivery_address" | translate }} -
+            {{ "general.city" | translate }} *</label
+          >
           <input
             type="text"
             pInputText
             id="deliveryAddressCity"
             [(ngModel)]="updateDeliveryAddress.city"
-            autofocus
+            *ngIf="updateDeliveryAddress.street"
           />
         </div>
 
         <div class="field">
-          <label for="deliveryAddressCountry">{{ "general.delivery_address" | translate }} - {{ "general.country" | translate }}</label>
+          <label
+            *ngIf="updateDeliveryAddress.street"
+            for="deliveryAddressCountry"
+            >{{ "general.delivery_address" | translate }} -
+            {{ "general.country" | translate }} *</label
+          >
           <input
             type="text"
             pInputText
             id="deliveryAddressCountry"
             [(ngModel)]="updateDeliveryAddress.country"
-            autofocus
+            *ngIf="updateDeliveryAddress.street"
           />
         </div>
       </ng-template>
@@ -328,7 +353,7 @@
         <button
           pButton
           pRipple
-          label='{{ "general.cancel" | translate }}'
+          label="{{ 'general.cancel' | translate }}"
           icon="pi pi-times"
           class="p-button-text"
           (click)="hideDialog()"
@@ -336,11 +361,23 @@
         <button
           pButton
           pRipple
-          label='{{ "general.save" | translate }}'
+          label="{{ 'general.save' | translate }}"
           icon="pi pi-check"
           class="p-button-text"
           (click)="saveUser()"
-          [disabled]="!user.firstname || !user.lastname || !user.email"
+          [disabled]="
+            !user.firstname ||
+            !user.lastname ||
+            !user.email ||
+            (updateDeliveryAddress.street &&
+              (!updateDeliveryAddress.postalcode ||
+                !updateDeliveryAddress.city ||
+                !updateDeliveryAddress.country)) ||
+            (updateBillingAddress.street &&
+              (!updateBillingAddress.postalcode ||
+                !updateBillingAddress.city ||
+                !updateBillingAddress.country))
+          "
         ></button>
       </ng-template>
     </p-dialog>
