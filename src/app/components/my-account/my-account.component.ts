@@ -153,7 +153,7 @@ export class MyAccountComponent implements OnInit {
             );
           });
       } else {
-        this.errorPassword = "The passwords must be identical";
+        this.errorPassword = 'The passwords must be identical';
       }
     }
   }
@@ -377,6 +377,20 @@ export class MyAccountComponent implements OnInit {
       }
     } else {
       return false;
+    }
+  }
+  getUnitpricettcFromUnitpricehtAndTva(
+    unitpriceht: number | undefined,
+    tva: number | undefined
+  ) {
+    if (unitpriceht != undefined) {
+      if (tva != undefined) {
+        return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
+      } else {
+        return unitpriceht.toFixed(2);
+      }
+    } else {
+      return null;
     }
   }
 }

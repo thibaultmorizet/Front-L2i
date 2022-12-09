@@ -405,7 +405,20 @@
                   {{ aBook.number_ordered }}
                 </div>
               </div>
-              <div class="order-product-price">{{ aBook.unitpricettc }} €</div>
+              <div class="order-product-price">
+                <p>
+                  {{
+                    getUnitpricettcFromUnitpricehtAndTva(
+                      aBook.unitpriceht,
+                      aBook.taxe?.tva
+                    )
+                  }}
+                  € (TTC)
+                </p>
+                <p class="text-small">
+                  {{ aBook.unitpriceht }} € (HT)
+                </p>
+              </div>
             </div>
           </div>
           <div class="order-addresses-total">

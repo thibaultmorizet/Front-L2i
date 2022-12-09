@@ -75,8 +75,12 @@
               }"
               (click)="updateShowBooksInStock()"
             >
-              <span *ngIf="showBooksInStock">{{ 'book.only_books_in_stock' | translate }}</span>
-              <span *ngIf="!showBooksInStock">{{ 'book.only_books_out_of_stock' | translate }}</span>
+              <span *ngIf="showBooksInStock">{{
+                "book.only_books_in_stock" | translate
+              }}</span>
+              <span *ngIf="!showBooksInStock">{{
+                "book.only_books_out_of_stock" | translate
+              }}</span>
             </button>
           </div>
 
@@ -88,7 +92,7 @@
               class="p-button-raised p-button-just-text"
               (click)="clearAllFilter()"
             >
-            {{ 'book.clear_all' | translate }}
+              {{ "book.clear_all" | translate }}
             </button>
           </div>
         </div>
@@ -100,7 +104,7 @@
               <img src="{{ aBook.image }}" alt="" class="img-icon"
             /></a>
             <div class="out-of-stock-message" *ngIf="aBook.stock == 0">
-              {{ 'general.out_of_stock' | translate }}
+              {{ "general.out_of_stock" | translate }}
             </div>
             <div
               class="shop-article-add-to-cart-message"
@@ -108,7 +112,8 @@
               pRipple
               *ngIf="aBook.stock && aBook.stock > 0"
             >
-              <i class="pi pi-shopping-cart"></i> {{ 'general.add_to_cart' | translate }}
+              <i class="pi pi-shopping-cart"></i>
+              {{ "general.add_to_cart" | translate }}
             </div>
           </div>
           <div class="shop-article-info">
@@ -122,7 +127,13 @@
               class="shop-article-info-price"
               [routerLink]="['/books/' + aBook.id]"
             >
-              {{ aBook.unitpricettc }} €
+              {{
+                getUnitpricettcFromUnitpricehtAndTva(
+                  aBook.unitpriceht,
+                  aBook.taxe?.tva
+                )
+              }}
+              €
             </div>
           </div>
         </div>
@@ -133,8 +144,7 @@
         [rowsPerPageOptions]="[12, 18, 24]"
         (onPageChange)="getAllBooksByPage($event)"
       ></p-paginator>
-
-      </div>
+    </div>
   </main>
   <app-footer></app-footer>
 </div>

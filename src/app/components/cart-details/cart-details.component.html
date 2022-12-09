@@ -223,7 +223,13 @@
                   </p-inputNumber>
                   <div class="cart-details-price-remove">
                     <p class="cart-details-price">
-                      {{ elt.unitpricettc }} € (TTC)
+                      {{
+                        getUnitpricettcFromUnitpricehtAndTva(
+                          elt.unitpriceht,
+                          elt.taxe?.tva
+                        )
+                      }} €
+                      (TTC)
                     </p>
                     <p class="cart-details-price text-small">
                       {{ elt.unitpriceht }} € (HT)

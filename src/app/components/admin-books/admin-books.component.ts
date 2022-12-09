@@ -79,7 +79,6 @@ export class AdminBooksComponent implements OnInit {
 
   openNew() {
     this.book = {
-      unitpricettc: 1,
       unitpriceht: 1,
       stock: 1,
       year: "1850",

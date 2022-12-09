@@ -17,6 +17,7 @@ import { AuthorService } from 'src/app/services/author.service';
 import { Author } from 'src/app/interfaces/author';
 import { PrimeNGConfig } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
+import { TaxeService } from 'src/app/services/taxe.service';
 
 @Component({
   selector: 'app-shop',
@@ -60,6 +61,7 @@ export class ShopComponent implements OnInit {
     private bs: BookService,
     private fs: FormatService,
     private es: EditorService,
+    private taxeService: TaxeService,
     private authorService: AuthorService,
     private ts: TypeService,
     private router: Router,
@@ -76,12 +78,24 @@ export class ShopComponent implements OnInit {
     this.bs.getAllBooksWithoutLimit([], [], '', [], true).subscribe((res) => {
       res.forEach((aBook) => {
         if (
-          aBook.unitpricettc &&
-          (aBook.unitpricettc > this.selectedPriceRange[1] ||
+          aBook.unitpriceht &&
+          aBook.taxe?.tva &&
+          (Math.ceil(
+            aBook.unitpriceht + (aBook.taxe.tva * aBook.unitpriceht) / 100
+          ) > this.selectedPriceRange[1] ||
             this.selectedPriceRange[1] == undefined)
         ) {
-          this.maxPrice = aBook.unitpricettc;
-          this.selectedPriceRange = [0, aBook.unitpricettc];
+          this.maxPrice = Math.ceil(
+            aBook.unitpriceht + (aBook.taxe.tva * aBook.unitpriceht) / 100
+          );
+          console.log(this.maxPrice);
+
+          this.selectedPriceRange = [
+            0,
+            Math.ceil(
+              aBook.unitpriceht + (aBook.taxe.tva * aBook.unitpriceht) / 100
+            ),
+          ];
         }
       });
     });
@@ -232,15 +246,19 @@ export class ShopComponent implements OnInit {
             } else {
               if (el.number_ordered != undefined) {
                 el.number_ordered = el.number_ordered + 1;
-                if (el.unitpricettc) {
-                  el.totalpricettc = parseFloat(
-                    (el.number_ordered * el.unitpricettc).toFixed(2)
-                  );
-                }
+
                 if (el.unitpriceht) {
                   el.totalpriceht = parseFloat(
                     (el.number_ordered * el.unitpriceht).toFixed(2)
                   );
+                  if (el.taxe?.tva) {
+                    el.totalpricettc = parseFloat(
+                      (
+                        el.number_ordered *
+                        (el.unitpriceht + (el.taxe.tva * el.unitpriceht) / 100)
+                      ).toFixed(2)
+                    );
+                  }
                 }
                 this.iziToast.success({
                   message: this.translate.instant('izitoast.book_add_to_cart'),
@@ -272,15 +290,18 @@ export class ShopComponent implements OnInit {
             });
           } else {
             res.number_ordered = 1;
-            if (res.unitpricettc) {
-              res.totalpricettc = parseFloat(
-                (res.number_ordered * res.unitpricettc).toFixed(2)
-              );
-            }
             if (res.unitpriceht) {
               res.totalpriceht = parseFloat(
                 (res.number_ordered * res.unitpriceht).toFixed(2)
               );
+              if (res.taxe?.tva) {
+                res.totalpricettc = parseFloat(
+                  (
+                    res.number_ordered *
+                    (res.unitpriceht + (res.taxe.tva * res.unitpriceht) / 100)
+                  ).toFixed(2)
+                );
+              }
             }
 
             this.cart.push(res);
@@ -354,5 +375,19 @@ export class ShopComponent implements OnInit {
     this.showBooksInStock = true;
     this.searchBook = null;
     this.getBooksWithFormatAndTypeAndPriceAndSearch();
+  }
+  getUnitpricettcFromUnitpricehtAndTva(
+    unitpriceht: number | undefined,
+    tva: number | undefined
+  ) {
+    if (unitpriceht != undefined) {
+      if (tva != undefined) {
+        return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
+      } else {
+        return unitpriceht.toFixed(2);
+      }
+    } else {
+      return null;
+    }
   }
 }

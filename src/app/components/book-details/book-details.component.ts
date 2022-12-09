@@ -116,16 +116,21 @@ export class BookDetailsComponent implements OnInit {
               ) {
                 el.number_ordered =
                   el.number_ordered + bookToOrder.number_ordered;
-                if (el.unitpricettc) {
-                  el.totalpricettc = parseFloat(
-                    (el.number_ordered * el.unitpricettc).toFixed(2)
-                  );
-                }
+
                 if (el.unitpriceht) {
                   el.totalpriceht = parseFloat(
                     (el.number_ordered * el.unitpriceht).toFixed(2)
                   );
+                  if (el.taxe?.tva) {
+                    el.totalpricettc = parseFloat(
+                      (
+                        el.number_ordered *
+                        (el.unitpriceht + (el.taxe.tva * el.unitpriceht) / 100)
+                      ).toFixed(2)
+                    );
+                  }
                 }
+
                 this.iziToast.success({
                   message: this.translate.instant('izitoast.book_add_to_cart'),
                   position: 'topRight',
@@ -160,15 +165,19 @@ export class BookDetailsComponent implements OnInit {
             });
           } else {
             res.number_ordered = bookToOrder.number_ordered;
-            if (res.unitpricettc && res.number_ordered) {
-              res.totalpricettc = parseFloat(
-                (res.number_ordered * res.unitpricettc).toFixed(2)
-              );
-            }
+
             if (res.unitpriceht && res.number_ordered) {
               res.totalpriceht = parseFloat(
                 (res.number_ordered * res.unitpriceht).toFixed(2)
               );
+              if (res.taxe?.tva) {
+                res.totalpricettc = parseFloat(
+                  (
+                    res.number_ordered *
+                    (res.unitpriceht + (res.taxe.tva * res.unitpriceht) / 100)
+                  ).toFixed(2)
+                );
+              }
             }
 
             this.cart.push(res);
@@ -201,5 +210,18 @@ export class BookDetailsComponent implements OnInit {
       position: 'topRight',
     });
   }
-
+  getUnitpricettcFromUnitpricehtAndTva(
+    unitpriceht: number | undefined,
+    tva: number | undefined
+  ) {
+    if (unitpriceht != undefined) {
+      if (tva != undefined) {
+        return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
+      } else {
+        return unitpriceht.toFixed(2);
+      }
+    } else {
+      return null;
+    }
+  }
 }

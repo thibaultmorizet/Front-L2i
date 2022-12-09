@@ -195,13 +195,24 @@ export class CartDetailsComponent implements OnInit {
       if (el.id == bookId) {
         el.number_ordered = numberOrdered;
       }
-      if (el.number_ordered && el.unitpricettc) {
-        el.totalpricettc = el.number_ordered * el.unitpricettc;
-        this.cartTotalPriceTtc += el.number_ordered * el.unitpricettc;
-      }
+
       if (el.number_ordered && el.unitpriceht) {
         el.totalpriceht = el.number_ordered * el.unitpriceht;
         this.cartTotalPriceHt += el.number_ordered * el.unitpriceht;
+        if (el.taxe?.tva) {
+          el.totalpricettc = parseFloat(
+            (
+              el.number_ordered *
+              (el.unitpriceht + (el.taxe.tva * el.unitpriceht) / 100)
+            ).toFixed(2)
+          );
+          this.cartTotalPriceTtc += parseFloat(
+            (
+              el.number_ordered *
+              (el.unitpriceht + (el.taxe.tva * el.unitpriceht) / 100)
+            ).toFixed(2)
+          );
+        }
       }
     });
     this.cartTotalPriceTtc = parseFloat(this.cartTotalPriceTtc.toFixed(2));
@@ -468,6 +479,20 @@ export class CartDetailsComponent implements OnInit {
         position: 'topRight',
       });
       this.router.navigateByUrl('/login');
+    }
+  }
+  getUnitpricettcFromUnitpricehtAndTva(
+    unitpriceht: number | undefined,
+    tva: number | undefined
+  ) {
+    if (unitpriceht != undefined) {
+      if (tva != undefined) {
+        return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
+      } else {
+        return unitpriceht.toFixed(2);
+      }
+    } else {
+      return null;
     }
   }
 }

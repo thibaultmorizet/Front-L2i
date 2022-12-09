@@ -61,7 +61,10 @@ export class BookService {
     });
     if (prices[0] && prices[1]) {
       this.pricesString +=
-        '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
+        '&unitpriceht[between]=' +
+        Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
+        '..' +
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100);
     }
     if (inStock == null) {
       this.inStockString = '';
@@ -110,7 +113,10 @@ export class BookService {
     });
     if (prices[0] && prices[1]) {
       this.pricesString +=
-        '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
+        '&unitpriceht[between]=' +
+        Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
+        '..' +
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
@@ -138,6 +144,8 @@ export class BookService {
     booknumber: number,
     inStock: boolean
   ) {
+    console.log(prices);
+
     this.formatsString = '';
     this.typesString = '';
     this.searchString = '';
@@ -161,7 +169,10 @@ export class BookService {
     });
     if (typeof prices[0] == 'number' && typeof prices[1] == 'number') {
       this.pricesString +=
-        '&unitpricettc[between]=' + prices[0] + '..' + prices[1];
+        '&unitpriceht[between]=' +
+        Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
+        '..' +
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';

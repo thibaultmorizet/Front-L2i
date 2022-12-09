@@ -16,7 +16,9 @@
             [responsiveOptions]="responsiveOptions"
           >
             <ng-template pTemplate="header">
-              <p class="title text-center">{{ "home.our_best_sells" | translate }}</p>
+              <p class="title text-center">
+                {{ "home.our_best_sells" | translate }}
+              </p>
               <p-skeleton
                 class="carouselSkeleton"
                 width="100%"
@@ -25,10 +27,7 @@
               ></p-skeleton>
             </ng-template>
 
-            <ng-template
-              let-oneBook
-              pTemplate="item"
-            >
+            <ng-template let-oneBook pTemplate="item">
               <div class="best-sell-container">
                 <div class="best-sell-img">
                   <img
@@ -42,9 +41,9 @@
                     class="best-sell-add-to-cart-message"
                     (click)="addBookToCart(oneBook.id)"
                     pRipple
-
                   >
-                    <i class="pi pi-shopping-cart"></i> {{ "general.add_to_cart" | translate }}
+                    <i class="pi pi-shopping-cart"></i>
+                    {{ "general.add_to_cart" | translate }}
                   </div>
                 </div>
 
@@ -57,7 +56,13 @@
                   <span
                     class="best-sell-price pointer"
                     [routerLink]="['/books/', oneBook.id]"
-                    >{{ oneBook.unitpricettc }} € (TTC)</span
+                    >{{
+                      getUnitpricettcFromUnitpricehtAndTva(
+                        oneBook.unitpriceht,
+                        oneBook.taxe?.tva
+                      )
+                    }}
+                    € (TTC)</span
                   >
                 </div>
               </div>
@@ -81,7 +86,7 @@
             class="p-button-raised p-button-primary-color best-sell-button best-sell-button-next"
             (click)="nextBestBook()"
           >
-          {{ "home.next" | translate }} <i class="far fa-arrow-right"></i>
+            {{ "home.next" | translate }} <i class="far fa-arrow-right"></i>
           </button>
         </div>
       </div>

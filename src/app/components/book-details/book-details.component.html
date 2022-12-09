@@ -37,7 +37,15 @@
             <p class="subtitle text-center">{{ book.title }}</p>
 
             <div class="book-details-price">
-              <p class="price">{{ book.unitpricettc }} € (TTC)</p>
+              <p class="price">
+                {{
+                  getUnitpricettcFromUnitpricehtAndTva(
+                    book.unitpriceht,
+                    book.taxe?.tva
+                  )
+                }} €
+                (TTC)
+              </p>
               <p
                 class="subtitle book-details-quantity"
                 *ngIf="book.stock && book.stock > 0"
@@ -94,7 +102,9 @@
             ><ul>
               <li>
                 <span>
-                  <span class="bold">{{ "general.price" | translate }} (HT) : </span>
+                  <span class="bold"
+                    >{{ "general.price" | translate }} (HT) :
+                  </span>
                   <span>{{ book.unitpriceht }} €</span>
                 </span>
               </li>
@@ -106,19 +116,25 @@
               </li>
               <li *ngFor="let anAuthor of book.author">
                 <span>
-                  <span class="bold">{{ "general.author" | translate }} : </span>
+                  <span class="bold"
+                    >{{ "general.author" | translate }} :
+                  </span>
                   <span>{{ anAuthor.lastname }} {{ anAuthor.firstname }}</span>
                 </span>
               </li>
               <li>
                 <span>
-                  <span class="bold">{{ "general.editor" | translate }} : </span>
+                  <span class="bold"
+                    >{{ "general.editor" | translate }} :
+                  </span>
                   <span>{{ book.editor?.name }}</span>
                 </span>
               </li>
               <li>
                 <span>
-                  <span class="bold">{{ "general.year_of_publication" | translate }} : </span>
+                  <span class="bold"
+                    >{{ "general.year_of_publication" | translate }} :
+                  </span>
                   <span>{{ book.year }}</span>
                 </span>
               </li>

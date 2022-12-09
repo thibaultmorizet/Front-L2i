@@ -18,7 +18,6 @@
                   pInputText
                   [(ngModel)]="userLogin.email"
                   [ngClass]="{ 'ng-invalid': errorEmail }"
-                  required
                 />
                 <small class="p-error" [ngClass]="{ 'd-none': !errorEmail }">{{
                   errorEmail
@@ -37,7 +36,6 @@
                     pInputText
                     [(ngModel)]="userLogin.password"
                     [ngClass]="{ 'ng-invalid': errorPassword }"
-                    required
                   />
                   <span
                     class="toogle-password-clear"
