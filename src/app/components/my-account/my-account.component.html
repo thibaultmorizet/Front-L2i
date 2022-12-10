@@ -24,7 +24,6 @@
           <button
             pButton
             pRipple
-            type="submit"
             class="p-button-raised p-button-primary-color btn-primary-color"
             *ngIf="connectedUser.id"
             (click)="isOrderPage = !isOrderPage"
@@ -33,6 +32,12 @@
           </button>
         </div>
         <div id="personnalData" class="my-3">
+          <div
+            *ngIf="forceToUpdatePassword"
+            class="force-to-update-password-div mb-3"
+          >
+            {{ "general.please_change_your_password" | translate }}
+          </div>
           <p-accordion>
             <p-accordionTab
               header="{{ 'my_account.user_personnal_data' | translate }}"
@@ -415,9 +420,7 @@
                   }}
                   € (TTC)
                 </p>
-                <p class="text-small">
-                  {{ aBook.unitpriceht }} € (HT)
-                </p>
+                <p class="text-small">{{ aBook.unitpriceht }} € (HT)</p>
               </div>
             </div>
           </div>

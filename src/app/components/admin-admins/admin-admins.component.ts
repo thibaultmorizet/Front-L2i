@@ -98,6 +98,7 @@ export class AdminAdminsComponent implements OnInit {
           }
           user.password = pass;
           user.passwordConfirm = pass;
+          user.forceToUpdatePassword = true;
           user.language = 'en';
           user.roles = ['ROLE_ADMIN'];
           mailInfo.password = pass;

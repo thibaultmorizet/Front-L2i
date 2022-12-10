@@ -18,11 +18,19 @@
           acceptButtonStyleClass="p-button-valid"
           acceptLabel="{{ 'general.yes' | translate }}"
           rejectLabel="{{ 'general.no' | translate }}"
-    >
+        >
         </p-confirmDialog>
-
         <div id="personnalData" class="my-3">
-          <div class="subtitle"> {{ "admin_account.personnal_data" | translate }}</div>
+          <div
+            *ngIf="forceToUpdatePassword"
+            class="force-to-update-password-div"
+          >
+            {{ "general.please_change_your_password" | translate }}
+          </div>
+
+          <div class="subtitle">
+            {{ "admin_account.personnal_data" | translate }}
+          </div>
           <form
             #personnalDataForm="ngForm"
             role="personnalData"

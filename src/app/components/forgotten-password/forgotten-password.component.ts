@@ -82,6 +82,7 @@ export class ForgottenPasswordComponent implements OnInit {
         mailInfo.password = pass;
         user[0].password = pass;
         this.as.sendNewPassword(mailInfo).subscribe((el) => {
+          user[0].forceToUpdatePassword = true;
           this.us.updateUser(user[0].id, user[0]).subscribe();
           this.emailToReset = '';
           this.iziToast.success({

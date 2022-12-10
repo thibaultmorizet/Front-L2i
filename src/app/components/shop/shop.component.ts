@@ -88,8 +88,6 @@ export class ShopComponent implements OnInit {
           this.maxPrice = Math.ceil(
             aBook.unitpriceht + (aBook.taxe.tva * aBook.unitpriceht) / 100
           );
-          console.log(this.maxPrice);
-
           this.selectedPriceRange = [
             0,
             Math.ceil(

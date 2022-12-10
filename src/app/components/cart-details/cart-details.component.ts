@@ -310,7 +310,7 @@ export class CartDetailsComponent implements OnInit {
           );
 
           this.iziToast.success({
-            message: this.translate.instant('izitoast.modification_confirm'),
+            message: this.translate.instant('izitoast.modification_confirmed'),
             position: 'topRight',
           });
           (
@@ -335,7 +335,7 @@ export class CartDetailsComponent implements OnInit {
             .subscribe((res) => {
               this.iziToast.success({
                 message: this.translate.instant(
-                  'izitoast.modification_confirm'
+                  'izitoast.modification_confirmed'
                 ),
                 position: 'topRight',
               });
@@ -363,7 +363,7 @@ export class CartDetailsComponent implements OnInit {
           );
 
           this.iziToast.success({
-            message: this.translate.instant('izitoast.modification_confirm'),
+            message: this.translate.instant('izitoast.modification_confirmed'),
             position: 'topRight',
           });
           (
@@ -388,7 +388,7 @@ export class CartDetailsComponent implements OnInit {
             .subscribe((res) => {
               this.iziToast.success({
                 message: this.translate.instant(
-                  'izitoast.modification_confirm'
+                  'izitoast.modification_confirmed'
                 ),
                 position: 'topRight',
               });

@@ -178,7 +178,9 @@ export class AdminUsersComponent implements OnInit {
           });
         } else {
           this.iziToast.error({
-            message: this.translate.instant('general.this_email_is_already_use'),
+            message: this.translate.instant(
+              'general.this_email_is_already_use'
+            ),
             position: 'topRight',
           });
         }
@@ -216,6 +218,7 @@ export class AdminUsersComponent implements OnInit {
           }
           user.password = pass;
           user.passwordConfirm = pass;
+          user.forceToUpdatePassword = true;
           user.language = 'en';
           mailInfo.password = pass;
           this.as.sendNewPassword(mailInfo).subscribe((el) => {});
@@ -259,7 +262,9 @@ export class AdminUsersComponent implements OnInit {
           });
         } else {
           this.iziToast.error({
-            message: this.translate.instant('general.this_email_is_already_use'),
+            message: this.translate.instant(
+              'general.this_email_is_already_use'
+            ),
             position: 'topRight',
           });
         }

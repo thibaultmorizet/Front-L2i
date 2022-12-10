@@ -27,6 +27,7 @@ export class AdminAccountComponent implements OnInit {
   errorPasswordConfirm: string | null = null;
   passwordIsClear: boolean = false;
   passwordType: string = 'password';
+  forceToUpdatePassword: boolean = false;
 
   constructor(
     private router: Router,
@@ -56,6 +57,11 @@ export class AdminAccountComponent implements OnInit {
     } catch (error) {
       this.connectedAdmin = {};
     }
+    if (this.connectedAdmin?.id && this.connectedAdmin.forceToUpdatePassword) {
+      this.forceToUpdatePassword = true;
+    } else {
+      this.forceToUpdatePassword = false;
+    }
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
         this.logout();
@@ -76,11 +82,15 @@ export class AdminAccountComponent implements OnInit {
       }
       if (this.newAdminData.password == this.newAdminData.passwordConfirm) {
         this.errorPassword = null;
+        this.newAdminData.forceToUpdatePassword = false;
         this.us
           .updateUser(this.newAdminData.id, this.newAdminData)
           .subscribe((res) => {
+            this.forceToUpdatePassword = false;
             this.iziToast.success({
-              message: this.translate.instant('izitoast.modification_confirm'),
+              message: this.translate.instant(
+                'izitoast.modification_confirmed'
+              ),
               position: 'topRight',
             });
             delete this.newAdminData.password;
@@ -93,11 +103,10 @@ export class AdminAccountComponent implements OnInit {
             );
           });
       } else {
-        this.errorPassword = "The passwords must be identical";
+        this.errorPassword = 'The passwords must be identical';
       }
     }
   }
-
 
   logout() {
     this.storageCrypter.removeItem('jeton', 'local');

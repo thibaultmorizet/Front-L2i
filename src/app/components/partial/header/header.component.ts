@@ -1,8 +1,9 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
 import StorageCrypter from 'storage-crypter';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { NgxIzitoastService } from 'ngx-izitoast';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,9 @@ export class HeaderComponent implements OnInit {
   path: string = '';
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
+    private iziToast: NgxIzitoastService,
     private translate: TranslateService
   ) {}
 
@@ -33,6 +36,19 @@ export class HeaderComponent implements OnInit {
       );
     } catch (error) {
       this.connectedUser = null;
+    }
+    if (this.connectedUser?.id && this.connectedUser.forceToUpdatePassword) {
+      this.router.navigateByUrl('my-account');
+      setTimeout(() => {
+        if (this.path != 'my-account') {
+          this.iziToast.warning({
+            message: this.translate.instant(
+              'general.please_change_your_password'
+            ),
+            position: 'topRight',
+          });
+        }
+      }, 500);
     }
   }
 }

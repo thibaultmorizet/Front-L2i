@@ -37,6 +37,7 @@ export class MyAccountComponent implements OnInit {
   isOrderPage: boolean = false;
   passwordIsClear: boolean = false;
   passwordType: string = 'password';
+  forceToUpdatePassword: boolean = false;
 
   constructor(
     private router: Router,
@@ -69,7 +70,11 @@ export class MyAccountComponent implements OnInit {
       this.connectedUser = {};
       this.router.navigateByUrl('/home');
     }
-
+    if (this.connectedUser?.id && this.connectedUser.forceToUpdatePassword) {
+      this.forceToUpdatePassword = true;
+    } else {
+      this.forceToUpdatePassword = false;
+    }
     if (this.connectedUser.id) {
       try {
         if (
@@ -136,11 +141,15 @@ export class MyAccountComponent implements OnInit {
       }
       if (this.newUserData.password == this.newUserData.passwordConfirm) {
         this.errorPassword = null;
+        this.newUserData.forceToUpdatePassword = false;
         this.us
           .updateUser(this.newUserData.id, this.newUserData)
           .subscribe((res) => {
+            this.forceToUpdatePassword = false;
             this.iziToast.success({
-              message: this.translate.instant('izitoast.modification_confirm'),
+              message: this.translate.instant(
+                'izitoast.modification_confirmed'
+              ),
               position: 'topRight',
             });
             delete this.newUserData.password;
@@ -172,7 +181,7 @@ export class MyAccountComponent implements OnInit {
           );
 
           this.iziToast.success({
-            message: this.translate.instant('izitoast.modification_confirm'),
+            message: this.translate.instant('izitoast.modification_confirmed'),
             position: 'topRight',
           });
         });
@@ -192,7 +201,7 @@ export class MyAccountComponent implements OnInit {
             .subscribe((res) => {
               this.iziToast.success({
                 message: this.translate.instant(
-                  'izitoast.modification_confirm'
+                  'izitoast.modification_confirmed'
                 ),
                 position: 'topRight',
               });
@@ -215,7 +224,7 @@ export class MyAccountComponent implements OnInit {
           );
 
           this.iziToast.success({
-            message: this.translate.instant('izitoast.modification_confirm'),
+            message: this.translate.instant('izitoast.modification_confirmed'),
             position: 'topRight',
           });
         });
@@ -235,7 +244,7 @@ export class MyAccountComponent implements OnInit {
             .subscribe((res) => {
               this.iziToast.success({
                 message: this.translate.instant(
-                  'izitoast.modification_confirm'
+                  'izitoast.modification_confirmed'
                 ),
                 position: 'topRight',
               });

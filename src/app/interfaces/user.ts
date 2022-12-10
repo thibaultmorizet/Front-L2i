@@ -13,4 +13,5 @@ export interface User {
   roles?: Array<string>;
   language?: string;
   token?: string;
+  forceToUpdatePassword?: boolean;
 }

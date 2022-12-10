@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { NgxIzitoastService } from 'ngx-izitoast';
 import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
@@ -16,9 +17,10 @@ export class AdminHeaderComponent implements OnInit {
   path: string = '';
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private translate: TranslateService,
-    private us: UserService
+    private iziToast: NgxIzitoastService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +39,20 @@ export class AdminHeaderComponent implements OnInit {
       );
     } catch (error) {
       this.connectedAdmin = {};
+    }
+
+    if (this.connectedAdmin?.id && this.connectedAdmin.forceToUpdatePassword) {
+      this.router.navigateByUrl('/admin/account');
+      setTimeout(() => {
+        if (this.path != 'admin/account/') {
+          this.iziToast.warning({
+            message: this.translate.instant(
+              'general.please_change_your_password'
+            ),
+            position: 'topRight',
+          });
+        }
+      }, 500);
     }
   }
 }
