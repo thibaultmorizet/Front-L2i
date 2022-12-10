@@ -228,8 +228,8 @@
                           elt.unitpriceht,
                           elt.taxe?.tva
                         )
-                      }} €
-                      (TTC)
+                      }}
+                      € (TTC)
                     </p>
                     <p class="cart-details-price text-small">
                       {{ elt.unitpriceht }} € (HT)
@@ -345,12 +345,18 @@
           </div>
         </div>
         <div class="cart-details-total-subtotal">
+          <div class="switch-container">
+            {{ "general.view_prices" | translate : { prices: "HT" } }}
+            <p-inputSwitch [(ngModel)]="isViewTtcTotal"></p-inputSwitch>
+            {{ "general.view_prices" | translate : { prices: "TTC" } }}
+          </div>
+
           <div class="cart-details-subtotal">
-            <div>
+            <div *ngIf="isViewTtcTotal">
               <p>{{ "general.subtotal" | translate }} (TTC)</p>
               <p>{{ cartTotalPriceTtc }} €</p>
             </div>
-            <div>
+            <div *ngIf="!isViewTtcTotal">
               <p>{{ "general.subtotal" | translate }} (HT)</p>
               <p>{{ cartTotalPriceHt }} €</p>
             </div>
@@ -362,11 +368,11 @@
           </div>
 
           <div class="cart-details-total">
-            <div>
+            <div *ngIf="isViewTtcTotal">
               <p>{{ "general.total" | translate }} (TTC)</p>
               <p>{{ cartTotalPriceTtc }} €</p>
             </div>
-            <div>
+            <div *ngIf="!isViewTtcTotal">
               <p>{{ "general.total" | translate }} (HT)</p>
               <p>{{ cartTotalPriceHt }} €</p>
             </div>

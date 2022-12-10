@@ -183,7 +183,9 @@
     "formats": "Formats",
     "authors": "Auteurs",
     "editors": "Éditeurs",
-    "types": "Types"
+    "types": "Types",
+    "view_prices": "Voir les prix {{prices}}"
+
   },
   "header": {
     "home": "Accueil",

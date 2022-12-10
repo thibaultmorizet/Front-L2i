@@ -44,6 +44,7 @@ export class CartDetailsComponent implements OnInit {
   newAddressDelivery: Address = {};
   errorStock: boolean = false;
   order: Order = {};
+  isViewTtcTotal: boolean = true;
 
   constructor(
     private router: Router,

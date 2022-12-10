@@ -183,7 +183,8 @@
     "formats": "Formats",
     "authors": "Authors",
     "editors": "Editors",
-    "types": "Types"
+    "types": "Types",
+    "view_prices": "View {{prices}} prices"
   },
   "header": {
     "home": "home",
