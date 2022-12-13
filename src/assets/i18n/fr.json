@@ -134,7 +134,10 @@
     "only": "Seulement",
     "remove": "Retirer",
     "your_cart_is_empty": "Votre panier est vide",
-    "your_cart_total_is": "Le total de votre panier est de"
+    "your_cart_total_is": "Le total de votre panier est de",
+    "use_the_same_address_for_the_delivery_address": "Utiliser la même adresse pour l'adresse de livraison",
+    "are_you_sure_that_you_want_use_the_same_address": "Êtes-vous sûr de vouloir utiliser la même adresse ?",
+    "use_the_same_address": "Utiliser la même adresse"
   },
   "contact": {
     "message": "Message",
@@ -185,7 +188,6 @@
     "editors": "Éditeurs",
     "types": "Types",
     "view_prices": "Voir les prix {{prices}}"
-
   },
   "header": {
     "home": "Accueil",

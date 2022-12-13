@@ -3,6 +3,17 @@
 
   <main id="content">
     <div class="container">
+      <p-confirmDialog
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      [baseZIndex]="10000"
+      rejectButtonStyleClass="p-button-outline-danger"
+      acceptButtonStyleClass="p-button-valid"
+      acceptLabel="{{ 'general.yes' | translate }}"
+      rejectLabel="{{ 'general.no' | translate }}"
+    >
+    </p-confirmDialog>
+
       <p-dialog
         *ngIf="cart.length > 0"
         header="{{ 'general.delivery_address' | translate }}"
@@ -266,45 +277,6 @@
         </div>
         <div class="cart-details-addresses">
           <div
-            class="cart-details-delivery-address"
-            *ngIf="connectedUser?.deliveryAddress"
-          >
-            <div
-              class="cart-details-delivery-address-title"
-              (click)="showModalDeliveryAddress()"
-            >
-              {{ "general.delivery_address" | translate }}
-            </div>
-            <div>
-              {{ connectedUser.deliveryAddress?.street }}
-            </div>
-            <div>
-              {{ connectedUser.deliveryAddress?.postalcode }}
-              {{ connectedUser.deliveryAddress?.city }}
-            </div>
-            <div>
-              {{ connectedUser.deliveryAddress?.country }}
-            </div>
-            <p-divider class="cart-details-divider"></p-divider>
-          </div>
-          <div
-            class="cart-details-delivery-address"
-            *ngIf="!connectedUser?.deliveryAddress"
-          >
-            <div class="d-flex justify-content-start mt-2">
-              <button
-                pButton
-                pRipple
-                type="submit"
-                class="p-button-raised p-button-primary-color btn-primary-color"
-                (click)="showModalDeliveryAddress()"
-              >
-                {{ "cart_details.add_delivery_address" | translate }}
-              </button>
-            </div>
-            <p-divider class="cart-details-divider"></p-divider>
-          </div>
-          <div
             class="cart-details-billing-address"
             *ngIf="connectedUser?.billingAddress"
           >
@@ -330,7 +302,7 @@
             class="cart-details-billing-address"
             *ngIf="!connectedUser?.billingAddress"
           >
-            <div class="d-flex justify-content-start mt-2">
+            <div class="d-flex justify-content-center mt-2">
               <button
                 pButton
                 pRipple
@@ -339,6 +311,62 @@
                 (click)="showModalBillingAddress()"
               >
                 {{ "cart_details.add_billing_address" | translate }}
+              </button>
+            </div>
+            <p-divider class="cart-details-divider"></p-divider>
+          </div>
+          <div
+            class="cart-details-delivery-address"
+            *ngIf="connectedUser?.deliveryAddress"
+          >
+            <div
+              class="cart-details-delivery-address-title"
+              (click)="showModalDeliveryAddress()"
+            >
+              {{ "general.delivery_address" | translate }}
+            </div>
+            <div>
+              {{ connectedUser.deliveryAddress?.street }}
+            </div>
+            <div>
+              {{ connectedUser.deliveryAddress?.postalcode }}
+              {{ connectedUser.deliveryAddress?.city }}
+            </div>
+            <div>
+              {{ connectedUser.deliveryAddress?.country }}
+            </div>
+            <p-divider class="cart-details-divider"></p-divider>
+          </div>
+          <div
+            class="cart-details-delivery-address"
+            *ngIf="!connectedUser?.deliveryAddress"
+          >
+            <div
+              class="d-flex align-items-center flex-column"
+            >
+              <div class="field-checkbox" *ngIf="connectedUser?.billingAddress">
+                <p-checkbox
+                  name="use_the_same_address"
+                  value="use_the_same_address"
+                  inputId="sameAddress"
+                  (onChange)="confirmUseSameAddress()"
+                  [(ngModel)]="sameAddressCheckbox"
+                  class="m-2"
+                ></p-checkbox>
+                <label for="sameAddress">{{
+                  "cart_details.use_the_same_address_for_the_delivery_address"
+                    | translate
+                }}</label>
+              </div>
+
+              <button
+                pButton
+                pRipple
+                type="submit"
+                class="p-button-raised p-button-primary-color btn-primary-color my-2"
+                (click)="showModalDeliveryAddress()"
+              >
+                {{ "cart_details.add_delivery_address" | translate }}
               </button>
             </div>
             <p-divider class="cart-details-divider"></p-divider>

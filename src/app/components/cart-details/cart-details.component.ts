@@ -45,6 +45,8 @@ export class CartDetailsComponent implements OnInit {
   errorStock: boolean = false;
   order: Order = {};
   isViewTtcTotal: boolean = true;
+  sameAddressCheckbox: boolean = false;
+  copyAddress: Address = {};
 
   constructor(
     private router: Router,
@@ -56,7 +58,8 @@ export class CartDetailsComponent implements OnInit {
     private us: UserService,
     private bs: BookService,
     private os: OrderService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -494,6 +497,49 @@ export class CartDetailsComponent implements OnInit {
       }
     } else {
       return null;
+    }
+  }
+  confirmUseSameAddress() {
+    this.confirmationService.confirm({
+      message: this.translate.instant(
+        'cart_details.are_you_sure_that_you_want_use_the_same_address'
+      ),
+      header: this.translate.instant('cart_details.use_the_same_address'),
+      dismissableMask: true,
+      accept: () => {
+        this.UseSameAddress();
+      },
+      reject: () => {
+        this.sameAddressCheckbox = false;
+      },
+    });
+  }
+  UseSameAddress() {
+    if (this.connectedUser?.billingAddress?.id != undefined) {
+      this.copyAddress.street = this.connectedUser?.billingAddress.street;
+      this.copyAddress.postalcode =
+        this.connectedUser?.billingAddress.postalcode;
+      this.copyAddress.city = this.connectedUser?.billingAddress.city;
+      this.copyAddress.country = this.connectedUser?.billingAddress.country;
+      this.addressService.createAddress(this.copyAddress).subscribe((res) => {
+        this.connectedUser.deliveryAddress = res;
+
+        this.storageCrypter.setItem(
+          'user',
+          JSON.stringify(this.connectedUser),
+          'session'
+        );
+        this.us
+          .updateUser(this.connectedUser?.id, this.connectedUser)
+          .subscribe((res) => {
+            this.iziToast.success({
+              message: this.translate.instant(
+                'izitoast.modification_confirmed'
+              ),
+              position: 'topRight',
+            });
+          });
+      });
     }
   }
 }

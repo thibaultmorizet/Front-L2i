@@ -134,7 +134,11 @@
     "only": "Only",
     "remove": "Remove",
     "your_cart_is_empty": "Your cart is empty",
-    "your_cart_total_is": "Your cart total is"
+    "your_cart_total_is": "Your cart total is",
+    "use_the_same_address_for_the_delivery_address":"Use the same address for the delivery address",
+    "are_you_sure_that_you_want_use_the_same_address": "Are you sure that you want use the same address ?",
+    "use_the_same_address": "Use the same address"
+
   },
   "contact": {
     "message": "Message",

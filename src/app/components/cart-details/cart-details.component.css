@@ -190,10 +190,20 @@
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
     background-color: #30336B;
 }
+
 .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
     background-color: #30336bed;
     transition: all 0.5s;
 }
+
+.cart-details-billing-address div.use-the-same-address-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0;
+    font-size: .9rem;
+}
+
 @media (min-width: 650px) {
 
     .cart-details-title {
