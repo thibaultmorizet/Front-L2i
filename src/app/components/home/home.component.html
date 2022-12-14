@@ -37,33 +37,29 @@
                     [routerLink]="['/books/', oneBook.id]"
                     (load)="carouselIsLoaded = true"
                   />
-                  <div
-                    class="best-sell-add-to-cart-message"
-                    (click)="addBookToCart(oneBook.id)"
-                    pRipple
-                  >
-                    <i class="pi pi-shopping-cart"></i>
-                    {{ "general.add_to_cart" | translate }}
-                  </div>
                 </div>
 
-                <div class="best-sell-description">
+                <span
+                  class="best-sell-title pointer"
+                  [routerLink]="['/books/', oneBook.id]"
+                  >{{ oneBook.title }}</span
+                >
+
+                <div
+                  class="best-sell-add-to-cart-message"
+                  (click)="addBookToCart(oneBook.id)"
+                  pRipple
+                >
+                  <i class="pi pi-shopping-cart"></i>
                   <span
-                    class="best-sell-title pointer"
-                    [routerLink]="['/books/', oneBook.id]"
-                    >{{ oneBook.title }}</span
-                  >
-                  <span
-                    class="best-sell-price pointer"
-                    [routerLink]="['/books/', oneBook.id]"
                     >{{
                       getUnitpricettcFromUnitpricehtAndTva(
                         oneBook.unitpriceht,
                         oneBook.taxe?.tva
                       )
                     }}
-                    € (TTC)</span
-                  >
+                    €
+                  </span>
                 </div>
               </div>
             </ng-template>

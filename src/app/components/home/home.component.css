@@ -8,50 +8,46 @@
 }
 
 .best-sell-container {
+    font-family: "Quicksand", Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
+    justify-content: space-between;
 }
 
 .best-sell-img {
     display: flex;
     justify-content: center;
-    width: 200px;
-    height: 280px;
+    width: 90px;
+    height: 124px;
     position: relative;
 }
 
-.best-sell-img:hover .img-best-sell {
-    opacity: 0.9;
-    transition: all 0.3s;
-
+.best-sell-container:hover .img-best-sell {
+    transform: perspective(200px) translateZ(-20px);
+    transition: transform .2s linear;
 }
 
 .img-best-sell {
-    width: 200px;
-    height: 280px;
+    width: 90px;
+    height: 124px;
     border-radius: 10px;
 
 }
 
 .best-sell-title {
     text-align: center;
-    padding: 10px 1rem;
+    padding: 10px 0;
     min-height: 60px;
     display: flex;
     align-items: center;
-    width: 200px;
+    width: 90px;
+    font-size: .8rem;
+    word-wrap: break-word;
 }
 
 .best-sell-title:hover {
-    color: #30336B;
-}
-
-.best-sell-price {
-    font-weight: 400;
-}
-
-.best-sell-price:hover {
     color: #30336B;
 }
 
@@ -71,13 +67,6 @@
     border-radius: 10px;
 }
 
-.best-sell-description {
-    font-family: "Quicksand", Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-}
 
 .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
     background-color: #000;
@@ -100,35 +89,43 @@
 }
 
 .best-sell-add-to-cart-message {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    width: calc(100% - 2rem);
+    display: flex;
+    justify-content: space-around;
+    width: 90px;
     cursor: pointer;
     color: #fff;
-    font-size: 1rem;
-    padding: .5rem 1rem;
-    display: none;
+    font-size: .8rem;
+    padding: .5rem;
     align-items: center;
-    justify-content: center;
     border: #fff 1px solid;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: #30336B;
 }
 
 .best-sell-add-to-cart-message:hover {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: #30336bed;
     transition: all 0.3s;
 }
 
 .best-sell-add-to-cart-message i {
-    margin-right: 1rem;
+    margin-right: .5rem;
     font-weight: 700;
 }
 
-.best-sell-img:hover .best-sell-add-to-cart-message{
-    display: flex;
-    transition: all 0.3s;
+@media (min-width: 450px) {
+    .best-sell-img {
+        width: 100px;
+        height: 140px;
+    }
+
+    .img-best-sell {
+        width: 100px;
+        height: 140px;
+    }
+
+    .best-sell-title {
+        width: 100px;
+    }
 }
 
 @media (min-width: 650px) {
@@ -162,12 +159,43 @@
     }
 }
 
+@media (min-width: 800px) {
+    .best-sell-img {
+        width: 125px;
+        height: 175px;
+    }
+
+    .img-best-sell {
+        width: 125px;
+        height: 175px;
+
+    }
+
+    .best-sell-title {
+        width: 125px;
+        font-size: .9rem;
+    }
+
+    .best-sell-add-to-cart-message {
+        width: 110px;
+    }
+
+}
+
 @media (min-width: 1000px) {
     .carousel-item.active+.carousel-item+.carousel-item {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-right: 30px !important;
+    }
+
+    .best-sell-title {
+        font-size: 1rem;
+    }
+
+    .best-sell-add-to-cart-message {
+        font-size: .9rem;
     }
 }
 
@@ -180,11 +208,7 @@
     }
 
     .best-sell-title {
-        font-size: 1.2rem;
-    }
-
-    .best-sell-price {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 }
 
@@ -201,10 +225,7 @@
     }
 
     .best-sell-title {
-        font-size: 1.1rem;
-    }
-
-    .best-sell-price {
+        width: 150px;
         font-size: 1.1rem;
     }
 
@@ -213,18 +234,19 @@
     }
 
     .best-sell-img {
-        width: 250px;
-        height: 320px;
+        width: 150px;
+        height: 210px;
 
     }
 
-    .best-sell-description {
-        width: 250px;
+    .best-sell-add-to-cart-message {
+        width: 130px;
+        font-size: 1rem;
     }
 
     .img-best-sell {
-        width: 250px;
-        height: 320px;
+        width: 150px;
+        height: 210px;
 
     }
 
