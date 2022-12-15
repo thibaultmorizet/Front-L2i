@@ -262,7 +262,6 @@ export class AdminBooksComponent implements OnInit {
         this.allBooks.forEach((aBook) => {
           if (aBook.id == book.id) {
             aBook.images = book.images;
-            console.log(aBook.images, book.images, this.allBooks);
           }
         });
         this.ngOnInit();
