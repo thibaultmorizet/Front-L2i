@@ -49,7 +49,7 @@ export class AdminBooksComponent implements OnInit {
   types: Array<Type> = [];
   imageInfo: ImageToUpload = {};
   imageInfoList: ArrayOfImageToUpload = { images: [] };
-  bookImageList: Array<Image> = [];
+  bookImageList: Array<File> = [];
   imageTemp: Image = {};
 
   constructor(
@@ -185,6 +185,17 @@ export class AdminBooksComponent implements OnInit {
     });
     this.book = { ...book };
     this.bookDialog = true;
+    if (this.book.images) {
+      this.book.images.forEach((anImage) => {
+        fetch(anImage.url ?? '')
+          .then((res) => res.blob()) // Gets the response and returns it as a blob
+          .then((blob) => {
+            this.bookImageList.push(
+              new File([blob], anImage.url ?? '', { type: blob.type })
+            );
+          });
+      });
+    }
   }
 
   deletebook(book: Book) {

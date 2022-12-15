@@ -470,9 +470,9 @@
             (onSelect)="addImageToServer($event)"
             (onClear)="clearImageListOfServer()"
             (onRemove)="removeImageOfServer($event)"
+            [files]="this.bookImageList"
           >
           </p-fileUpload>
-
         </div>
       </ng-template>
 
