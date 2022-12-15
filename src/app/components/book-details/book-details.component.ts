@@ -46,7 +46,7 @@ export class BookDetailsComponent implements OnInit {
     this.route.paramMap.subscribe((res) => {
       this.idBook = +(res.get('id') ?? '0');
       this.bs.getOneBook(this.idBook).subscribe((b) => {
-        this.book = b;
+        this.book = b;        
         this.book.number_ordered = 1;
         if (this.book.visitnumber) {
           this.book.visitnumber += 1;

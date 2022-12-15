@@ -144,8 +144,6 @@ export class BookService {
     booknumber: number,
     inStock: boolean
   ) {
-    console.log(prices);
-
     this.formatsString = '';
     this.typesString = '';
     this.searchString = '';
@@ -199,17 +197,6 @@ export class BookService {
     return this.http.post<Book>(this.url, book);
   }
 
-  uploadCoverImage(file: File) {
-    const formData = new FormData();
-
-    formData.append('file', file, file.name);
-
-    return this.http.post<{ token: string }>(
-      'https://www.thibaultmorizet.fr/assets/',
-      formData
-    );
-  }
-
   getBooksBestSell() {
     return this.http.get<Array<Book>>(
       this.url + '?itemsPerPage=10&stock%5Bgt%5D=0'
@@ -225,17 +212,5 @@ export class BookService {
 
   deleteTheBook(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
-  }
-  addImage(imageInfo: object) {
-    return this.http.post<{ token: string }>(
-      'https://thibaultmorizet.fr/add_image',
-      imageInfo
-    );
-  }
-  deleteImage(imageUrl: object) {
-    return this.http.post<{ token: string }>(
-      'https://thibaultmorizet.fr/delete_image',
-      imageUrl
-    );
   }
 }

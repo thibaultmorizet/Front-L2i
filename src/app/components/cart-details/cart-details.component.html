@@ -207,7 +207,7 @@
         <div *ngFor="let elt of cart">
           <div class="cart-details">
             <a [routerLink]="['/books/' + elt.id]">
-              <img src="{{ elt.image }}" alt="" class="img-icon"
+              <img *ngIf="elt.images" src="{{ elt.images[0].url }}" alt="" class="img-icon"
             /></a>
             <div class="cart-details-info">
               <div class="cart-details-title-quantity-price">
@@ -439,12 +439,12 @@
       <div class="cart-empty-message" *ngIf="cart.length == 0">
         <img
           id="emptyCartImg"
-          src="https://www.thibaultmorizet.fr/assets/emptyCart.png"
+          src="https://www.thibaultmorizet.fr/assets/background-images/emptyCart.png"
           alt="emptyCartImg"
         />
         <img
           id="emptyCart2Img"
-          src="https://www.thibaultmorizet.fr/assets/emptyCart2.png"
+          src="https://www.thibaultmorizet.fr/assets/background-images/emptyCart2.png"
           alt="emptyCart2Img"
         />
         <div class="empty-cart-text-block">

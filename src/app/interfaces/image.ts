@@ -1,6 +1,8 @@
-export interface Image {
-    data?: String;
-    url?: string;
-    bookId?: string;
+import { Book } from "./book";
 
+export interface Image {
+  id?: number;
+  book?: Book;
+  url?: string;
+  position?: number;
 }

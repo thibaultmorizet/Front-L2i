@@ -5,12 +5,12 @@
     <div class="container">
       <img
         id="bookDetailsImg"
-        src="https://www.thibaultmorizet.fr/assets/bookDetails.png"
+        src="https://www.thibaultmorizet.fr/assets/background-images/bookDetails.png"
         alt="bookDetailsImg"
       />
       <img
         id="bookDetails2Img"
-        src="https://www.thibaultmorizet.fr/assets/bookDetails2.png"
+        src="https://www.thibaultmorizet.fr/assets/background-images/bookDetails2.png"
         alt="bookDetails2Img"
       />
 
@@ -25,8 +25,9 @@
             ></p-skeleton>
 
             <img
+              *ngIf="book.images"
               id="bookDetailsImgCover"
-              src="{{ book.image }}"
+              src="{{ book.images[0].url }}"
               alt="bookDetailsImg"
               (load)="bookDetailsImgCoverIsLoaded = true"
               [ngClass]="{ 'd-none': !bookDetailsImgCoverIsLoaded }"
@@ -43,8 +44,8 @@
                     book.unitpriceht,
                     book.taxe?.tva
                   )
-                }} €
-                (TTC)
+                }}
+                € (TTC)
               </p>
               <p
                 class="subtitle book-details-quantity"

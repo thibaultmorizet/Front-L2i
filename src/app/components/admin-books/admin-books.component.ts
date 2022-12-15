@@ -8,17 +8,20 @@ import {
   MessageService,
 } from 'primeng/api';
 import { Observable, Subscriber } from 'rxjs';
+import { ArrayOfImageToUpload } from 'src/app/interfaces/ArrayOfImageToUpload';
 import { Author } from 'src/app/interfaces/author';
 import { Book } from 'src/app/interfaces/book';
 import { Editor } from 'src/app/interfaces/editor';
 import { Format } from 'src/app/interfaces/format';
 import { Image } from 'src/app/interfaces/image';
+import { ImageToUpload } from 'src/app/interfaces/imageToUpload';
 import { Taxe } from 'src/app/interfaces/taxe';
 import { Type } from 'src/app/interfaces/type';
 import { AuthorService } from 'src/app/services/author.service';
 import { BookService } from 'src/app/services/book.service';
 import { EditorService } from 'src/app/services/editor.service';
 import { FormatService } from 'src/app/services/format.service';
+import { ImageService } from 'src/app/services/image.service';
 import { TaxeService } from 'src/app/services/taxe.service';
 import { TypeService } from 'src/app/services/type.service';
 import StorageCrypter from 'storage-crypter';
@@ -42,13 +45,17 @@ export class AdminBooksComponent implements OnInit {
   taxes: Array<Taxe> = [];
   authors: Array<Author> = [];
   types: Array<Type> = [];
-  imageInfo: Image = {};
+  imageInfo: ImageToUpload = {};
+  imageInfoList: ArrayOfImageToUpload = { images: [] };
+  bookImageList: Array<Image> = [];
+  imageTemp: Image = {};
 
   constructor(
     private router: Router,
     private bs: BookService,
     private fs: FormatService,
     private es: EditorService,
+    private is: ImageService,
     private taxeService: TaxeService,
     private ts: TypeService,
     private authorService: AuthorService,
@@ -66,9 +73,24 @@ export class AdminBooksComponent implements OnInit {
     } catch (error) {
       this.router.navigateByUrl('/admin/login');
     }
-    this.bs
-      .getAllBooksWithoutLimit([], [], '', [], null)
-      .subscribe((data) => (this.allBooks = data));
+    this.bs.getAllBooksWithoutLimit([], [], '', [], null).subscribe((data) => {
+      data.forEach((aBook) => {
+        aBook.images?.sort(function (a, b) {
+          if (typeof a.position == 'number' && typeof b.position == 'number') {
+            if (a.position > b.position) {
+              return 1;
+            }
+            if (a.position < b.position) {
+              return -1;
+            }
+            return 0;
+          } else {
+            return 0;
+          }
+        });
+      });
+      this.allBooks = data;
+    });
     this.getAllFormatsfunc();
     this.getAllEditorsfunc();
     this.getAllTaxesfunc();
@@ -99,13 +121,23 @@ export class AdminBooksComponent implements OnInit {
           (val) => !this.selectedBooks.includes(val)
         );
         this.selectedBooks.forEach((aBook) => {
-          let imageUrlToDelete = {
-            imageUrl: aBook.image?.substring(aBook.image?.indexOf('assets')),
-          };
+          aBook.images?.forEach((anImage) => {
+            let imageUrlToDelete = {
+              imageUrl: anImage.url?.substring(anImage.url?.indexOf('assets')),
+            };
 
-          this.bs.deleteImage(imageUrlToDelete).subscribe((el) => {});
-
-          this.bs.deleteTheBook(aBook.id).subscribe((el) => {});
+            this.is.deleteImageOfServer(imageUrlToDelete).subscribe((el) => {});
+          });
+          this.is.getAllImagesForABook(aBook.id ?? 0).subscribe((el) => {
+            el.forEach((element) => {
+              this.is.deleteImage(element.id).subscribe();
+            });
+            setTimeout(() => {
+              this.bs.deleteTheBook(aBook.id).subscribe((el) => {
+                this.book = {};
+              });
+            }, 500);
+          });
         });
         this.selectedBooks = [];
         this.iziToast.success({
@@ -122,8 +154,6 @@ export class AdminBooksComponent implements OnInit {
     });
     this.book = { ...book };
     this.bookDialog = true;
-    console.log(this.book);
-    
   }
 
   deletebook(book: Book) {
@@ -137,13 +167,23 @@ export class AdminBooksComponent implements OnInit {
       dismissableMask: true,
       accept: () => {
         this.allBooks = this.allBooks.filter((val) => val.id !== book.id);
-        let imageUrlToDelete = {
-          imageUrl: book.image?.substring(book.image?.indexOf('assets')),
-        };
+        book.images?.forEach((anImage) => {
+          let imageUrlToDelete = {
+            imageUrl: anImage.url?.substring(anImage.url?.indexOf('assets')),
+          };
+          this.is.deleteImageOfServer(imageUrlToDelete).subscribe((el) => {});
+        });
+        this.is.getAllImagesForABook(book.id ?? 0).subscribe((el) => {
+          el.forEach((element) => {
+            this.is.deleteImage(element.id).subscribe();
+          });
+          setTimeout(() => {
+            this.bs.deleteTheBook(book.id).subscribe((el) => {
+              this.book = {};
+            });
+          }, 500);
+        });
 
-        this.bs.deleteImage(imageUrlToDelete).subscribe((el) => {});
-        this.bs.deleteTheBook(book.id).subscribe((el) => {});
-        this.book = {};
         this.iziToast.success({
           message: this.translate.instant('admin_books.book_deleted'),
           position: 'topRight',
@@ -155,32 +195,76 @@ export class AdminBooksComponent implements OnInit {
   hideDialog() {
     this.bookDialog = false;
     this.submitted = false;
+    this.imageInfoList.images = [];
   }
 
   saveBook() {
     this.submitted = true;
-
-    if (this.book.year) {
-      this.book.year = this.book.year.toString();
+    let book = this.book;
+    if (book.year) {
+      book.year = book.year.toString();
     }
-    if (this.book.id) {
-      if (this.imageInfo.data) {
-        this.imageInfo.bookId = this.book.id?.toString();
+    if (book.id) {
+      if (this.imageInfoList.images) {
+        this.imageInfoList.images.forEach((anImageInfo) => {
+          anImageInfo.bookId = book.id;
 
-        if (this.imageInfo.url) {
-          this.book.image =
-            'https://www.thibaultmorizet.fr/assets/' +
-            this.book.id +
-            '.' +
-            this.imageInfo.url.split('.').pop();
-        } else {
-          this.book.image =
-            'https://www.thibaultmorizet.fr/assets/' + this.book.id + '.jpeg';
-        }
-        this.bs.addImage(this.imageInfo).subscribe();
+          if (anImageInfo.url) {
+            anImageInfo.url =
+              'https://www.thibaultmorizet.fr/assets/book-images/' +
+              book.id +
+              '/' +
+              book.id +
+              '-' +
+              this.imageInfoList.images?.indexOf(anImageInfo) +
+              '.' +
+              anImageInfo.url.split('.').pop();
+          } else {
+            anImageInfo.url =
+              'https://www.thibaultmorizet.fr/assets/book-images/' +
+              book.id +
+              '-' +
+              this.imageInfoList.images?.indexOf(anImageInfo) +
+              '/' +
+              book.id +
+              '.jpeg';
+          }
+        });
+
+        this.is.getAllImagesForABook(book.id ?? 0).subscribe((el) => {
+          el.forEach((element) => {
+            this.is.deleteImage(element.id).subscribe();
+          });
+          if (this.imageInfoList.images) {
+            book.images = [];
+            this.imageInfoList.images.forEach((element) => {
+              this.bs.getOneBook(element.bookId ?? 0).subscribe((el) => {
+                delete el.author;
+                delete el.type;
+                delete el.format;
+                delete el.editor;
+                delete el.taxe;
+                this.imageTemp = {
+                  book: el,
+                  url: element.url,
+                  position: this.imageInfoList.images?.indexOf(element),
+                };
+                book.images?.push(this.imageTemp);
+                this.is.createImage(this.imageTemp).subscribe();
+              });
+            });
+            this.is.addImage(this.imageInfoList).subscribe((res) => {});
+          }
+        });
       }
-      this.bs.updateBook(this.book.id, this.book).subscribe((result) => {
-        this.book = {};
+      this.bs.updateBook(book.id, book).subscribe((result) => {
+        this.imageInfoList.images = [];
+        this.allBooks.forEach((aBook) => {
+          if (aBook.id == book.id) {
+            aBook.images = book.images;
+            console.log(aBook.images, book.images, this.allBooks);
+          }
+        });
         this.ngOnInit();
         this.iziToast.success({
           message: this.translate.instant('admin_books.book_updated'),
@@ -188,25 +272,70 @@ export class AdminBooksComponent implements OnInit {
         });
       });
     } else {
-      this.allBooks.push(this.book);
-      this.bs.createBook(this.book).subscribe((res) => {
-        if (this.imageInfo.data) {
-          this.imageInfo.bookId = res.id?.toString();
-          if (this.imageInfo.url) {
-            this.book.image =
-              'https://www.thibaultmorizet.fr/assets/' +
-              res.id +
-              '.' +
-              this.imageInfo.url.split('.').pop();
-          } else {
-            this.book.image =
-              'https://www.thibaultmorizet.fr/assets/' + res.id + '.jpeg';
-          }
+      this.bs.createBook(book).subscribe((res) => {
+        if (this.imageInfoList.images) {
+          this.imageInfoList.images.forEach((anImageInfo) => {
+            anImageInfo.bookId = res.id;
 
-          this.bs.addImage(this.imageInfo).subscribe();
+            if (anImageInfo.url) {
+              anImageInfo.url =
+                'https://www.thibaultmorizet.fr/assets/book-images/' +
+                res.id +
+                '/' +
+                res.id +
+                '-' +
+                this.imageInfoList.images?.indexOf(anImageInfo) +
+                '.' +
+                anImageInfo.url.split('.').pop();
+            } else {
+              anImageInfo.url =
+                'https://www.thibaultmorizet.fr/assets/book-images/' +
+                res.id +
+                '-' +
+                this.imageInfoList.images?.indexOf(anImageInfo) +
+                '/' +
+                res.id +
+                '.jpeg';
+            }
+          });
+
+          if (this.imageInfoList.images) {
+            this.imageInfoList.images.forEach((element) => {
+              this.bs.getOneBook(element.bookId ?? 0).subscribe((el) => {
+                delete el.author;
+                delete el.type;
+                delete el.format;
+                delete el.editor;
+                delete el.taxe;
+                this.imageTemp = {
+                  book: el,
+                  url: element.url,
+                  position: this.imageInfoList.images?.indexOf(element),
+                };
+                book.images?.push(this.imageTemp);
+
+                this.is.createImage(this.imageTemp).subscribe();
+              });
+            });
+            this.is.addImage(this.imageInfoList).subscribe((res) => {});
+          }
         }
-        this.bs.updateBook(res.id, this.book).subscribe((result) => {
-          this.book = {};
+        book.images?.sort(function (a, b) {
+          if (typeof a.position == 'number' && typeof b.position == 'number') {
+            if (a.position > b.position) {
+              return 1;
+            }
+            if (a.position < b.position) {
+              return -1;
+            }
+            return 0;
+          } else {
+            return 0;
+          }
+        });
+        this.bs.updateBook(res.id, book).subscribe((result) => {
+          this.imageInfoList.images = [];
+          this.allBooks.push(book);
           this.ngOnInit();
           this.iziToast.success({
             message: this.translate.instant('admin_books.book_created'),
@@ -217,6 +346,7 @@ export class AdminBooksComponent implements OnInit {
     }
 
     this.allBooks = [...this.allBooks];
+
     this.bookDialog = false;
     this.book = {};
   }
@@ -242,7 +372,7 @@ export class AdminBooksComponent implements OnInit {
       res.forEach((aTaxe) => {
         delete aTaxe.books;
       });
-      this.taxes = res;      
+      this.taxes = res;
     });
   }
   getAllAuthorsfunc() {
@@ -263,24 +393,38 @@ export class AdminBooksComponent implements OnInit {
     });
   }
 
-  addImageToServer($event: Event) {
-    const target = $event.target as HTMLInputElement;
-
-    const file: File = (target.files as FileList)[0];
-
-    this.imageInfo = {
-      url: file.name,
-    };
-
-    this.convertToBase64(file);
+  clearImageListOfServer() {
+    this.imageInfoList.images = [];
   }
 
-  convertToBase64(file: File) {
-    const observable = new Observable((subscriber: Subscriber<any>) => {
-      this.readFile(file, subscriber);
-    });
-    observable.subscribe((d) => {
-      this.imageInfo.data = d.substring(d.indexOf('base64,') + 7);
+  removeImageOfServer($event: any) {
+    const file: File = $event.file as File;
+    if (this.imageInfoList.images) {
+      for (let index = 0; index < this.imageInfoList.images.length; index++) {
+        if (this.imageInfoList.images[index].url == file.name) {
+          this.imageInfoList.images.splice(index, 1);
+        }
+      }
+    }
+  }
+
+  addImageToServer($event: any) {
+    const currentFiles: FileList = $event.currentFiles as FileList;
+
+    Array.from(currentFiles).forEach((file) => {
+      this.imageInfo = {};
+      const observable = new Observable((subscriber: Subscriber<any>) => {
+        this.readFile(file, subscriber);
+      });
+      observable.subscribe((d) => {
+        this.imageInfo = {
+          url: file.name,
+          data: d.substring(d.indexOf('base64,') + 7),
+        };
+        if (this.imageInfoList.images) {
+          this.imageInfoList.images.push(this.imageInfo);
+        }
+      });
     });
   }
 
@@ -296,6 +440,7 @@ export class AdminBooksComponent implements OnInit {
       subscriber.complete();
     };
   }
+
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,
     tva: number | undefined

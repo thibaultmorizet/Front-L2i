@@ -55,6 +55,7 @@ import { TableModule } from 'primeng/table';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CheckboxModule } from 'primeng/checkbox';
+import { FileUploadModule } from 'primeng/fileupload';
 import { LegalNoticesComponent } from './components/legal-notices/legal-notices.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
@@ -144,6 +145,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
     InputMaskModule,
     InputSwitchModule,
     CheckboxModule,
+    FileUploadModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

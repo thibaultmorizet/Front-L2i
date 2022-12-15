@@ -5,7 +5,7 @@
     <div class="container" *ngIf="!isOrderPage">
       <img
         id="personnalDateImg"
-        src="https://www.thibaultmorizet.fr/assets/personalData.png"
+        src="https://www.thibaultmorizet.fr/assets/background-images/personalData.png"
         alt="personnalDataImg"
       />
 
@@ -401,7 +401,7 @@
               *ngFor="let aBook of anOrder.booklist"
             >
               <div>
-                <img src="{{ aBook.image }}" alt="" class="order-img-icon" />
+                <img *ngIf="aBook.images" src="{{ aBook.images[0].url }}" alt="" class="order-img-icon" />
               </div>
               <div class="order-product-middle-info">
                 <div class="order-product-title">{{ aBook.title }}</div>
@@ -481,12 +481,12 @@
       <div class="order-empty-message" *ngIf="orders.length == 0">
         <img
           id="emptyOrderImg"
-          src="https://www.thibaultmorizet.fr/assets/emptyOrder.png"
+          src="https://www.thibaultmorizet.fr/assets/background-images/emptyOrder.png"
           alt="emptyOrderImg"
         />
         <img
           id="emptyOrder2Img"
-          src="https://www.thibaultmorizet.fr/assets/emptyOrder2.png"
+          src="https://www.thibaultmorizet.fr/assets/background-images/emptyOrder2.png"
           alt="emptyOrder2Img"
         />
         <div class="empty-order-text-block">
