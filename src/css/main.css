@@ -201,4 +201,7 @@ body:has(.general-best-sell-container), body:has(.login-container), body:has(.re
     .title {
         font-size: 2.5rem;
     }
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    max-width: 1700px;
+    }
 }

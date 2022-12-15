@@ -17,6 +17,7 @@ import { Image } from 'src/app/interfaces/image';
 import { ImageToUpload } from 'src/app/interfaces/imageToUpload';
 import { Taxe } from 'src/app/interfaces/taxe';
 import { Type } from 'src/app/interfaces/type';
+import { User } from 'src/app/interfaces/user';
 import { AuthorService } from 'src/app/services/author.service';
 import { BookService } from 'src/app/services/book.service';
 import { EditorService } from 'src/app/services/editor.service';
@@ -35,6 +36,7 @@ import StorageCrypter from 'storage-crypter';
 })
 export class AdminBooksComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
+  connectedAdmin: User | null = {};
   bookDialog: boolean = false;
   allBooks: Book[] = [];
   book: Book = {};
@@ -68,11 +70,22 @@ export class AdminBooksComponent implements OnInit {
   ngOnInit() {
     this.primengConfig.ripple = true;
     this.translate.use(this.translate.getDefaultLang());
+
     try {
-      JSON.parse(this.storageCrypter.getItem('adminUser', 'session'));
+      this.connectedAdmin = JSON.parse(
+        this.storageCrypter.getItem('adminUser', 'session')
+      );
     } catch (error) {
+      this.connectedAdmin = null;
       this.router.navigateByUrl('/admin/login');
     }
+
+    if (this.storageCrypter.getItem('jeton', 'local')) {
+      if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
+        this.adminLogout();
+      }
+    }
+
     this.bs.getAllBooksWithoutLimit([], [], '', [], null).subscribe((data) => {
       data.forEach((aBook) => {
         aBook.images?.sort(function (a, b) {
@@ -98,6 +111,24 @@ export class AdminBooksComponent implements OnInit {
     this.getAllTypesfunc();
   }
 
+  tokenExpired(token: string) {
+    const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+    return Math.floor(new Date().getTime() / 1000) >= expiry;
+  }
+
+  adminLogout() {
+    this.storageCrypter.removeItem('jeton', 'local');
+    this.storageCrypter.removeItem('cart', 'local');
+    this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('adminUser', 'session');
+    this.storageCrypter.removeItem('language', 'session');
+    this.connectedAdmin = null;
+    this.router.navigateByUrl('/admin/login');
+    this.iziToast.success({
+      message: this.translate.instant('izitoast.you_re_logout'),
+      position: 'topRight',
+    });
+  }
   openNew() {
     this.book = {
       unitpriceht: 1,

@@ -114,11 +114,11 @@
 
 .out-of-stock-message {
   position: absolute;
-  bottom: 8rem;
+  bottom: 5rem;
   left: 1rem;
   width: calc(100% - 2rem);
   color: #dc3545;
-  font-size: 1rem;
+  font-size: .8rem;
   padding: .5rem 1rem;
   display: flex;
   align-items: center;
