@@ -1,8 +1,6 @@
-import { Book } from "./book";
-
 export interface Image {
-  id?: number;
-  book?: Book;
+  data?: String;
   url?: string;
-  position?: number;
+  bookId?: string;
+
 }

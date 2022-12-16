@@ -198,8 +198,7 @@
           </td>
           <td>
             <img
-              *ngIf="book.images[0]"
-              [src]="book.images[0].url"
+              [src]="book.image"
               [alt]="book.title"
               width="100"
               class="img-icon"
@@ -457,22 +456,14 @@
             "admin_books.cover_books" | translate
           }}</label
           ><br />
-
-          <p-fileUpload
-            name="coverImage"
-            [multiple]="true"
+          <input
+            #imageInput
+            type="file"
             accept="image/*"
-            [maxFileSize]="1000000"
-            [fileLimit]="5"
-            uploadIcon=""
-            uploadLabel=""
-            uploadStyleClass="d-none"
-            (onSelect)="addImageToServer($event)"
-            (onClear)="clearImageListOfServer()"
-            (onRemove)="removeImageOfServer($event)"
-            [files]="this.bookImageList"
-          >
-          </p-fileUpload>
+            class="form-control mb-3 file-upload"
+            (change)="addImageToServer($event)"
+            name="coverImage"
+          />
         </div>
       </ng-template>
 
@@ -501,8 +492,7 @@
             !book.editor ||
             !book.format ||
             !book.author ||
-            !book.type ||
-            (this.imageInfoList.images && this.imageInfoList.images.length > 5)
+            !book.type 
           "
         ></button>
       </ng-template>

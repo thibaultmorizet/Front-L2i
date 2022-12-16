@@ -3,7 +3,6 @@ import { Author } from "./author";
 import { Editor } from "./editor";
 import { Format } from "./format";
 import { Taxe } from "./taxe";
-import { Image } from "./image";
 
 export interface Book {
     id?: number;
@@ -12,7 +11,7 @@ export interface Book {
     unitpriceht?: number;
     stock?: number;
     isbn?: string;
-    images?: Array<Image>;
+    image?: string;
     format?: Format;
     editor?: Editor;
     taxe?: Taxe;

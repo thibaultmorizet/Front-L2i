@@ -25,9 +25,8 @@
             ></p-skeleton>
 
             <img
-              *ngIf="book.images"
               id="bookDetailsImgCover"
-              src="{{ book.images[0].url }}"
+              src="{{ book.image }}"
               alt="bookDetailsImg"
               (load)="bookDetailsImgCoverIsLoaded = true"
               [ngClass]="{ 'd-none': !bookDetailsImgCoverIsLoaded }"

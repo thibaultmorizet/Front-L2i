@@ -101,7 +101,7 @@
         <div class="shop-article" *ngFor="let aBook of books">
           <div class="shop-article-img">
             <a [routerLink]="['/books/' + aBook.id]">
-              <img *ngIf="aBook.images" src="{{ aBook.images[0].url }}" alt="" class="img-icon"
+              <img src="{{ aBook.image }}" alt="" class="img-icon"
             /></a>
             <div class="out-of-stock-message" *ngIf="aBook.stock == 0">
               {{ "general.out_of_stock" | translate }}

@@ -401,7 +401,7 @@
               *ngFor="let aBook of anOrder.booklist"
             >
               <div>
-                <img *ngIf="aBook.images" src="{{ aBook.images[0].url }}" alt="" class="order-img-icon" />
+                <img src="{{ aBook.image }}" alt="" class="order-img-icon" />
               </div>
               <div class="order-product-middle-info">
                 <div class="order-product-title">{{ aBook.title }}</div>

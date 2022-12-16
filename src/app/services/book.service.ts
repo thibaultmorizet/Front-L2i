@@ -202,6 +202,7 @@ export class BookService {
       this.url + '?itemsPerPage=10&stock%5Bgt%5D=0'
     );
   }
+
   updateBookStock(id: number | undefined, book: Book) {
     if (book.stock && book.stock >= 0) {
       return this.http.put<{ token: string }>(this.url + '/' + id, book);
@@ -212,5 +213,28 @@ export class BookService {
 
   deleteTheBook(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
+  }
+
+  uploadCoverImage(file: File) {
+    const formData = new FormData();
+
+    formData.append('file', file, file.name);
+
+    return this.http.post<{ token: string }>(
+      'https://www.thibaultmorizet.fr/assets/',
+      formData
+    );
+  }
+  addImage(imageInfo: object) {
+    return this.http.post<{ token: string }>(
+      'https://thibaultmorizet.fr/add_image',
+      imageInfo
+    );
+  }
+  deleteImage(imageUrl: object) {
+    return this.http.post<{ token: string }>(
+      'https://thibaultmorizet.fr/delete_image',
+      imageUrl
+    );
   }
 }

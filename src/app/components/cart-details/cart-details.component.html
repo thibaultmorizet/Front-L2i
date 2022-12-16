@@ -207,7 +207,7 @@
         <div *ngFor="let elt of cart">
           <div class="cart-details">
             <a [routerLink]="['/books/' + elt.id]">
-              <img *ngIf="elt.images" src="{{ elt.images[0].url }}" alt="" class="img-icon"
+              <img src="{{ elt.image }}" alt="" class="img-icon"
             /></a>
             <div class="cart-details-info">
               <div class="cart-details-title-quantity-price">
