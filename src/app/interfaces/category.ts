@@ -1,6 +1,6 @@
 import { Book } from "./book";
 
-export interface Type {
+export interface Category {
     id?: number;
     name?: string;
     books?: Array<Book>;

@@ -20,19 +20,19 @@
           label="{{ 'general.delete' | translate }}"
           icon="pi pi-trash"
           class="p-button-danger"
-          (click)="deleteSelectedTypes()"
-          [disabled]="!selectedTypes || !selectedTypes.length"
+          (click)="deleteSelectedCategories()"
+          [disabled]="!selectedCategories || !selectedCategories.length"
         ></button>
       </ng-template>
     </p-toolbar>
 
     <p-table
       #dt
-      [value]="allTypes"
+      [value]="allCategories"
       [rows]="12"
       [paginator]="true"
       [globalFilterFields]="['name']"
-      [(selection)]="selectedTypes"
+      [(selection)]="selectedCategories"
       [rowHover]="true"
       dataKey="id"
       currentPageReportTemplate="{{
@@ -47,8 +47,8 @@
       [showCurrentPageReport]="true"
     >
       <ng-template pTemplate="caption">
-        <div class="manage-types">
-          <h5 class="m-0">{{ "admin_types.manage_types" | translate }}</h5>
+        <div class="manage-categories">
+          <h5 class="m-0">{{ "admin_categories.manage_categories" | translate }}</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
@@ -69,19 +69,19 @@
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="name"
           >
-            {{ "admin_types.name" | translate }}
+            {{ "admin_categories.name" | translate }}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
 
           <th style="display: table-cell !important"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-type>
+      <ng-template pTemplate="body" let-category>
         <tr>
           <td>
-            <p-tableCheckbox [value]="type"></p-tableCheckbox>
+            <p-tableCheckbox [value]="category"></p-tableCheckbox>
           </td>
-          <td>{{ type.name }}</td>
+          <td>{{ category.name }}</td>
 
           <td>
             <button
@@ -89,14 +89,14 @@
               pRipple
               icon="pi pi-pencil"
               class="p-button-rounded p-button-success mr-2"
-              (click)="editType(type)"
+              (click)="editCategory(category)"
             ></button>
             <button
               pButton
               pRipple
               icon="pi pi-trash"
               class="p-button-rounded p-button-warning"
-              (click)="deleteType(type)"
+              (click)="deleteCategory(category)"
             ></button>
           </td>
         </tr>
@@ -104,8 +104,8 @@
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
           {{
-            "admin_types.total_types_message"
-              | translate: { typeLength: allTypes ? allTypes.length : 0 }
+            "admin_categories.total_categories_message"
+              | translate: { categoryLength: allCategories ? allCategories.length : 0 }
           }}
         </div>
       </ng-template>
@@ -122,27 +122,27 @@
     ></p-confirmDialog>
 
     <p-dialog
-      [(visible)]="typeDialog"
+      [(visible)]="categoryDialog"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
       [style]="{ width: '50vw' }"
-      header="{{ 'admin_types.type_details' | translate }}"
+      header="{{ 'admin_categories.category_details' | translate }}"
       [modal]="true"
       styleClass="p-fluid"
       [dismissableMask]="true"
     >
       <ng-template pTemplate="content">
         <div class="field">
-          <label for="name">{{ "admin_types.name" | translate }}</label>
+          <label for="name">{{ "admin_categories.name" | translate }}</label>
           <input
             type="text"
             pInputText
             id="name"
-            [(ngModel)]="type.name"
+            [(ngModel)]="category.name"
             required
             autofocus
           />
-          <small class="p-error" *ngIf="submitted && !type.name"
-            >{{ "admin_types.name" | translate }}
+          <small class="p-error" *ngIf="submitted && !category.name"
+            >{{ "admin_categories.name" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
@@ -163,7 +163,7 @@
           label="{{ 'general.save' | translate }}"
           icon="pi pi-check"
           class="p-button-text"
-          (click)="saveType()"
+          (click)="saveCategory()"
         ></button>
       </ng-template>
     </p-dialog>

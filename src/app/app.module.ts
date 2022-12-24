@@ -72,7 +72,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AdminFormatsComponent } from './components/admin-formats/admin-formats.component';
 import { AdminEditorsComponent } from './components/admin-editors/admin-editors.component';
 import { AdminAuhtorsComponent } from './components/admin-auhtors/admin-auhtors.component';
-import { AdminTypesComponent } from './components/admin-types/admin-types.component';
+import { AdminCategoriesComponent } from './components/admin-categories/admin-categories.component';
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 
 @NgModule({
@@ -100,7 +100,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
     AdminFormatsComponent,
     AdminEditorsComponent,
     AdminAuhtorsComponent,
-    AdminTypesComponent,
+    AdminCategoriesComponent,
     ForgottenPasswordComponent,
   ],
   imports: [

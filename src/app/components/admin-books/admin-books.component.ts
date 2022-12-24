@@ -14,14 +14,14 @@ import { Editor } from 'src/app/interfaces/editor';
 import { Format } from 'src/app/interfaces/format';
 import { Image } from 'src/app/interfaces/image';
 import { Taxe } from 'src/app/interfaces/taxe';
-import { Type } from 'src/app/interfaces/type';
+import { Category } from 'src/app/interfaces/category';
 import { User } from 'src/app/interfaces/user';
 import { AuthorService } from 'src/app/services/author.service';
 import { BookService } from 'src/app/services/book.service';
 import { EditorService } from 'src/app/services/editor.service';
 import { FormatService } from 'src/app/services/format.service';
 import { TaxeService } from 'src/app/services/taxe.service';
-import { TypeService } from 'src/app/services/type.service';
+import { Categorieservice } from 'src/app/services/category.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -43,7 +43,7 @@ export class AdminBooksComponent implements OnInit {
   editors: Array<Editor> = [];
   taxes: Array<Taxe> = [];
   authors: Array<Author> = [];
-  types: Array<Type> = [];
+  categories: Array<Category> = [];
   imageInfo: Image = {};
 
   constructor(
@@ -52,7 +52,7 @@ export class AdminBooksComponent implements OnInit {
     private fs: FormatService,
     private es: EditorService,
     private taxeService: TaxeService,
-    private ts: TypeService,
+    private ts: Categorieservice,
     private authorService: AuthorService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
@@ -87,7 +87,7 @@ export class AdminBooksComponent implements OnInit {
     this.getAllEditorsfunc();
     this.getAllTaxesfunc();
     this.getAllAuthorsfunc();
-    this.getAllTypesfunc();
+    this.getAllCategoriesfunc();
   }
 
   tokenExpired(token: string) {
@@ -285,12 +285,12 @@ export class AdminBooksComponent implements OnInit {
       this.authors = res;
     });
   }
-  getAllTypesfunc() {
-    this.ts.getAllTypes().subscribe((res) => {
-      res.forEach((aType) => {
-        delete aType.books;
+  getAllCategoriesfunc() {
+    this.ts.getAllCategories().subscribe((res) => {
+      res.forEach((aCategory) => {
+        delete aCategory.books;
       });
-      this.types = res;
+      this.categories = res;
     });
   }
 

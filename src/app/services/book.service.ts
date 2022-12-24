@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '../interfaces/book';
 import { Format } from '../interfaces/format';
-import { Type } from '../interfaces/type';
+import { Category } from '../interfaces/category';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class BookService {
     'https://thibaultmorizet.fr/ws/books?itemsPerPage=10000';
   private books: Array<object> = [];
   private formatsString: string = '';
-  private typesString: string = '';
+  private categoriesString: string = '';
   private searchString: string = '';
   private pricesString: string = '';
   private inStockString: string = '';
@@ -33,13 +33,13 @@ export class BookService {
   }
   getAllBooksWithoutLimit(
     formats: Array<Format>,
-    types: Array<Type>,
+    categories: Array<Category>,
     search: string,
     prices: Array<number>,
     inStock: boolean | null
   ) {
     this.formatsString = '';
-    this.typesString = '';
+    this.categoriesString = '';
     this.searchString = '';
     this.pricesString = '';
     this.inStockString = '';
@@ -56,8 +56,8 @@ export class BookService {
     formats.forEach((el) => {
       this.formatsString += '&format.name[]=' + el.name;
     });
-    types.forEach((el) => {
-      this.typesString += '&type.name[]=' + el.name;
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
     });
     if (prices[0] && prices[1]) {
       this.pricesString +=
@@ -76,7 +76,7 @@ export class BookService {
     return this.http.get<Array<Book>>(
       this.urlWithoutLimit +
         this.formatsString +
-        this.typesString +
+        this.categoriesString +
         this.pricesString +
         this.searchString +
         this.inStockString
@@ -86,13 +86,13 @@ export class BookService {
     page: number,
     booknumber: number,
     formats: Array<Format>,
-    types: Array<Type>,
+    categories: Array<Category>,
     search: string,
     prices: Array<number>,
     inStock: boolean
   ) {
     this.formatsString = '';
-    this.typesString = '';
+    this.categoriesString = '';
     this.searchString = '';
     this.inStockString = '';
 
@@ -108,8 +108,8 @@ export class BookService {
     formats.forEach((el) => {
       this.formatsString += '&format.name[]=' + el.name;
     });
-    types.forEach((el) => {
-      this.typesString += '&type.name[]=' + el.name;
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
     });
     if (prices[0] && prices[1]) {
       this.pricesString +=
@@ -129,23 +129,23 @@ export class BookService {
         '&itemsPerPage=' +
         booknumber +
         this.formatsString +
-        this.typesString +
+        this.categoriesString +
         this.pricesString +
         this.searchString +
         this.inStockString
     );
   }
 
-  getAllBooksByFormatAndTypeAndSearch(
+  getAllBooksByFormatAndCategoryAndSearch(
     formats: Array<Format>,
-    types: Array<Type>,
+    categories: Array<Category>,
     search: string,
     prices: Array<number>,
     booknumber: number,
     inStock: boolean
   ) {
     this.formatsString = '';
-    this.typesString = '';
+    this.categoriesString = '';
     this.searchString = '';
     this.pricesString = '';
     this.inStockString = '';
@@ -162,8 +162,8 @@ export class BookService {
     formats.forEach((el) => {
       this.formatsString += '&format.name[]=' + el.name;
     });
-    types.forEach((el) => {
-      this.typesString += '&type.name[]=' + el.name;
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
     });
     if (typeof prices[0] == 'number' && typeof prices[1] == 'number') {
       this.pricesString +=
@@ -182,7 +182,7 @@ export class BookService {
         'itemsPerPage=' +
         booknumber +
         this.formatsString +
-        this.typesString +
+        this.categoriesString +
         this.pricesString +
         this.searchString +
         this.inStockString

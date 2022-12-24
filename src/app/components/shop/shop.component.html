@@ -13,15 +13,15 @@
             (completeMethod)="filterBook($event)"
             field="title"
             [minLength]="1"
-            (onSelect)="getBooksWithFormatAndTypeAndPriceAndSearch()"
-            (onBlur)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+            (onSelect)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
+            (onBlur)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
           ></p-autoComplete>
           <button
             pButton
             pRipple
             type="button"
             class="btn btn-primary-color button-search"
-            (click)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+            (click)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
           >
             <i class="fa fa-search"></i>
           </button>
@@ -34,17 +34,17 @@
               defaultLabel="{{ 'book.format' | translate }}"
               optionLabel="name"
               display="chip"
-              (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+              (onChange)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
             ></p-multiSelect>
           </div>
           <div>
             <p-multiSelect
-              [options]="types"
-              [(ngModel)]="selectedType"
-              defaultLabel="{{ 'book.type' | translate }}"
+              [options]="categories"
+              [(ngModel)]="selectedCategory"
+              defaultLabel="{{ 'book.category' | translate }}"
               optionLabel="name"
               display="chip"
-              (onChange)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+              (onChange)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
             ></p-multiSelect>
           </div>
           <div>
@@ -57,7 +57,7 @@
             <p-slider
               [(ngModel)]="selectedPriceRange"
               [range]="true"
-              (onSlideEnd)="getBooksWithFormatAndTypeAndPriceAndSearch()"
+              (onSlideEnd)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
               [min]="0"
               [max]="maxPrice"
             ></p-slider>

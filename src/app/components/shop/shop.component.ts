@@ -5,8 +5,8 @@ import { BookService } from 'src/app/services/book.service';
 import { FormatService } from 'src/app/services/format.service';
 import { User } from 'src/app/interfaces/user';
 import { Format } from 'src/app/interfaces/format';
-import { Type } from 'src/app/interfaces/type';
-import { TypeService } from 'src/app/services/type.service';
+import { Category } from 'src/app/interfaces/category';
+import { Categorieservice } from 'src/app/services/category.service';
 import StorageCrypter from 'storage-crypter';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
@@ -32,7 +32,7 @@ export class ShopComponent implements OnInit {
   formats: Array<Format> = [];
   editors: Array<Editor> = [];
   authors: Array<Author> = [];
-  types: Array<Type> = [];
+  categories: Array<Category> = [];
   user: User = {};
   searchBook: any = {};
   bookExistinCart: Boolean = false;
@@ -48,7 +48,7 @@ export class ShopComponent implements OnInit {
   pageRows: number = 12;
 
   selectedFormat: Array<Format> = [];
-  selectedType: Array<Type> = [];
+  selectedCategory: Array<Category> = [];
   selectedPriceRange: Array<number> = [0, 0];
   showBooksInStock: boolean = true;
   filteredBooks: Array<Book> = [];
@@ -63,7 +63,7 @@ export class ShopComponent implements OnInit {
     private es: EditorService,
     private taxeService: TaxeService,
     private authorService: AuthorService,
-    private ts: TypeService,
+    private ts: Categorieservice,
     private router: Router,
     private iziToast: NgxIzitoastService,
     private authService: SocialAuthService,
@@ -102,7 +102,7 @@ export class ShopComponent implements OnInit {
     this.getAllFormatsfunc();
     this.getAllEditorsfunc();
     this.getAllAuthorsfunc();
-    this.getAllTypesfunc();
+    this.getAllCategoriesfunc();
     try {
       this.connectedUser = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
@@ -137,14 +137,14 @@ export class ShopComponent implements OnInit {
   }
   getAllBooks(
     formatFilter: Array<Format> = [],
-    typeFilter: Array<Type> = [],
+    categoryFilter: Array<Category> = [],
     searchBook: string = '',
     prices: Array<number> = []
   ) {
     this.bs
       .getAllBooksWithoutLimit(
         formatFilter,
-        typeFilter,
+        categoryFilter,
         searchBook,
         prices,
         this.showBooksInStock
@@ -169,9 +169,9 @@ export class ShopComponent implements OnInit {
       this.authors = res;
     });
   }
-  getAllTypesfunc() {
-    this.ts.getAllTypes().subscribe((res) => {
-      this.types = res;
+  getAllCategoriesfunc() {
+    this.ts.getAllCategories().subscribe((res) => {
+      this.categories = res;
     });
   }
   getAllBooksByPage(event: any) {
@@ -180,7 +180,7 @@ export class ShopComponent implements OnInit {
         event.page + 1,
         event.rows,
         this.selectedFormat,
-        this.selectedType,
+        this.selectedCategory,
         this.searchBook?.title ?? this.searchBook,
         this.selectedPriceRange,
         this.showBooksInStock
@@ -190,11 +190,11 @@ export class ShopComponent implements OnInit {
         this.pageRows = event.rows;
       });
   }
-  getBooksWithFormatAndTypeAndPriceAndSearch() {
+  getBooksWithFormatAndCategoryAndPriceAndSearch() {
     this.bs
-      .getAllBooksByFormatAndTypeAndSearch(
+      .getAllBooksByFormatAndCategoryAndSearch(
         this.selectedFormat,
-        this.selectedType,
+        this.selectedCategory,
         this.searchBook?.title ?? this.searchBook,
         this.selectedPriceRange,
         this.pageRows,
@@ -203,9 +203,9 @@ export class ShopComponent implements OnInit {
       .subscribe((res) => {
         this.books = res;
         this.bs
-          .getAllBooksByFormatAndTypeAndSearch(
+          .getAllBooksByFormatAndCategoryAndSearch(
             this.selectedFormat,
-            this.selectedType,
+            this.selectedCategory,
             this.searchBook?.title ?? this.searchBook,
             this.selectedPriceRange,
             10000,
@@ -363,16 +363,16 @@ export class ShopComponent implements OnInit {
 
   updateShowBooksInStock() {
     this.showBooksInStock = !this.showBooksInStock;
-    this.getBooksWithFormatAndTypeAndPriceAndSearch();
+    this.getBooksWithFormatAndCategoryAndPriceAndSearch();
   }
 
   clearAllFilter() {
     this.selectedFormat = [];
-    this.selectedType = [];
+    this.selectedCategory = [];
     this.selectedPriceRange = [0, this.maxPrice];
     this.showBooksInStock = true;
     this.searchBook = null;
-    this.getBooksWithFormatAndTypeAndPriceAndSearch();
+    this.getBooksWithFormatAndCategoryAndPriceAndSearch();
   }
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,

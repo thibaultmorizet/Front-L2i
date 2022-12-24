@@ -98,18 +98,18 @@
     "language": "Langue",
     "you_can_t_delete_an_author_with_books": "Vous ne pouvez pas supprimer un auteur avec des livres"
   },
-  "admin_types": {
-    "manage_types": "Gestion des types",
-    "total_types_message": "Au total, il y a {{typeLength}} types.",
-    "type_details": "Détails du type",
-    "confirm_delete_type_message": "Êtes-vous sûr de vouloir supprimer le type : {{name}} ?",
-    "confirm_group_delete_types_message": "Voulez-vous vraiment supprimer les types sélectionnés ?",
-    "types_deleted": "Types supprimés",
-    "type_updated": "Type modifié",
-    "type_deleted": "Type supprimé",
-    "type_created": "Genre créé",
+  "admin_categories": {
+    "manage_categories": "Gestion des catégories",
+    "total_categories_message": "Au total, il y a {{categoryLength}} catégories.",
+    "category_details": "Détails de la catégorie",
+    "confirm_delete_category_message": "Êtes-vous sûr de vouloir supprimer la catégorie : {{name}} ?",
+    "confirm_group_delete_categories_message": "Voulez-vous vraiment supprimer les catégories sélectionnés ?",
+    "categories_deleted": "Catégories supprimés",
+    "category_updated": "Catégorie modifié",
+    "category_deleted": "Catégorie supprimé",
+    "category_created": "Genre créé",
     "name": "Nom",
-    "you_can_t_delete_a_type_with_books": "Vous ne pouvez pas supprimer un type avec des livres"
+    "you_can_t_delete_a_category_with_books": "Vous ne pouvez pas supprimer une catégorie avec des livres"
   },
   "book": {
     "clear_all": "Tout effacer",
@@ -118,7 +118,7 @@
     "only_books_out_of_stock": "Seulement les livres en rupture de stock",
     "price_range": "Échelle des prix",
     "search": "Chercher",
-    "type": "Type",
+    "category": "Catégorie",
     "author": "Auteur"
   },
   "book_details": {
@@ -186,7 +186,7 @@
     "formats": "Formats",
     "authors": "Auteurs",
     "editors": "Éditeurs",
-    "types": "Types",
+    "categories": "Catégories",
     "view_prices": "Voir les prix {{prices}}"
   },
   "header": {

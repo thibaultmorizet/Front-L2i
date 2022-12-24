@@ -98,18 +98,18 @@
     "language": "Language",
     "you_can_t_delete_an_author_with_books": "You can't delete an author with books"
   },
-  "admin_types": {
-    "manage_types": "Manage types",
-    "total_types_message": "In total there are {{typeLength}} types.",
-    "type_details": "Type details",
-    "confirm_delete_type_message": "Are you sure you want to delete the type : {{name}} ?",
-    "confirm_group_delete_types_message": "Are you sure you want to delete the selected types ?",
-    "types_deleted": "Types deleted",
-    "type_updated": "Type updated",
-    "type_deleted": "Type deleted",
-    "type_created": "Type created",
+  "admin_categories": {
+    "manage_categories": "Manage categories",
+    "total_categories_message": "In total there are {{categoryLength}} categories.",
+    "category_details": "Category details",
+    "confirm_delete_category_message": "Are you sure you want to delete the category : {{name}} ?",
+    "confirm_group_delete_categories_message": "Are you sure you want to delete the selected categories ?",
+    "categories_deleted": "Categories deleted",
+    "category_updated": "Category updated",
+    "category_deleted": "Category deleted",
+    "category_created": "Category created",
     "name": "Name",
-    "you_can_t_delete_a_type_with_books": "You can't delete a type with books"
+    "you_can_t_delete_a_category_with_books": "You can't delete a category with books"
   },
   "book": {
     "clear_all": "Clear All",
@@ -118,7 +118,7 @@
     "only_books_out_of_stock": "Only books out of stock",
     "price_range": "Price Range",
     "search": "Search",
-    "type": "Type",
+    "category": "Category",
     "author": "Author"
   },
   "book_details": {
@@ -187,7 +187,7 @@
     "formats": "Formats",
     "authors": "Authors",
     "editors": "Editors",
-    "types": "Types",
+    "categories": "Categories",
     "view_prices": "View {{prices}} prices"
   },
   "header": {
