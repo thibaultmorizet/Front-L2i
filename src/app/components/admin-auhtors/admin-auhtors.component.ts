@@ -64,10 +64,10 @@ export class AdminAuhtorsComponent implements OnInit {
         this.allAuthors = this.allAuthors.filter(
           (val) =>
             !this.selectedAuthors.includes(val) ||
-            (val.books && val.books.length != 0)
+            (val.products && val.products.length != 0)
         );
         this.selectedAuthors.forEach((anAuthor) => {
-          if (anAuthor.books && anAuthor.books.length == 0) {
+          if (anAuthor.products && anAuthor.products.length == 0) {
             this.authorService
               .deleteTheAuthor(anAuthor.id)
               .subscribe((el) => {});
@@ -97,7 +97,7 @@ export class AdminAuhtorsComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        if (author.books && author.books.length == 0) {
+        if (author.products && author.products.length == 0) {
           this.allAuthors = this.allAuthors.filter(
             (val) => val.id !== author.id
           );
@@ -110,7 +110,7 @@ export class AdminAuhtorsComponent implements OnInit {
         } else {
           this.iziToast.warning({
             message: this.translate.instant(
-              'admin_authors.you_can_t_delete_a_author_with_books'
+              'admin_authors.you_can_t_delete_a_author_with_products'
             ),
             position: 'topRight',
           });

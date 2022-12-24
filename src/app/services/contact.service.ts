@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Book } from '../interfaces/book';
+import { Product } from '../interfaces/product';
 
 import { Injectable } from '@angular/core';
 import { Contact } from '../interfaces/contact';

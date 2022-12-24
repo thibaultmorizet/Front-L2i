@@ -1,7 +1,7 @@
-import { Book } from './book';
+import { Product } from './product';
 
 export interface Taxe {
   id?: number;
   tva?: number;
-  books?: Array<Book>;
+  products?: Array<Product>;
 }

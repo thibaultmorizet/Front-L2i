@@ -4,7 +4,7 @@
     "login_sign_in": "Se connecter",
     "users": "Utilisateurs",
     "admins": "Admins",
-    "books": "Livres",
+    "products": "Produits",
     "my_account": "Mon compte"
   },
   "admin_home": {
@@ -33,16 +33,16 @@
   "admin_account": {
     "personnal_data": "Données personnelles"
   },
-  "admin_books": {
-    "manage_books": "Gestion des livres",
-    "total_books_message": "Au total, il y a {{bookLength}} livres.",
-    "book_details": "Détails du livre",
-    "confirm_delete_book_message": "Voulez-vous vraiment supprimer le livre : {{title}} ?",
-    "confirm_group_delete_books_message": "Voulez-vous vraiment supprimer les livres sélectionnés ?",
-    "books_deleted": "Livres supprimés",
-    "book_updated": "Livre modifié",
-    "book_deleted": "Livre supprimé",
-    "book_created": "Livre créé",
+  "admin_products": {
+    "manage_products": "Gestion des produits",
+    "total_products_message": "Au total, il y a {{productLength}} produits.",
+    "product_details": "Détails du produit",
+    "confirm_delete_product_message": "Voulez-vous vraiment supprimer le produit : {{title}} ?",
+    "confirm_group_delete_products_message": "Voulez-vous vraiment supprimer les produits sélectionnés ?",
+    "products_deleted": "Produits supprimés",
+    "product_updated": "Produit modifié",
+    "product_deleted": "Produit supprimé",
+    "product_created": "Produit créé",
     "image": "Image",
     "title": "Titre",
     "price_ttc": "Prix TTC",
@@ -55,7 +55,7 @@
     "select_an_editor": "Sélectionnez un éditeur",
     "select_a_taxe": "Sélectionnez une taxe",
     "select_a_format": "Sélectionnez un format",
-    "cover_books": "Couverture du livre"
+    "cover_products": "Couverture du produit"
   },
   "admin_formats": {
     "manage_formats": "Gestion des formats",
@@ -68,7 +68,7 @@
     "format_deleted": "Format supprimé",
     "format_created": "Format créé",
     "name": "Nom",
-    "you_can_t_delete_a_format_with_books": "Vous ne pouvez pas supprimer un format avec des livres"
+    "you_can_t_delete_a_format_with_products": "Vous ne pouvez pas supprimer un format avec des produits"
   },
   "admin_editors": {
     "manage_editors": "Gestion des éditeurs",
@@ -81,7 +81,7 @@
     "editor_deleted": "Éditeur supprimé",
     "editor_created": "Éditeur créé",
     "name": "Nom",
-    "you_can_t_delete_an_editor_with_books": "Vous ne pouvez pas supprimer un éditeur avec des livres"
+    "you_can_t_delete_an_editor_with_products": "Vous ne pouvez pas supprimer un éditeur avec des produits"
   },
   "admin_authors": {
     "manage_authors": "Gestion des auteurs",
@@ -96,7 +96,7 @@
     "firstname": "Prénom",
     "lastname": "Nom",
     "language": "Langue",
-    "you_can_t_delete_an_author_with_books": "Vous ne pouvez pas supprimer un auteur avec des livres"
+    "you_can_t_delete_an_author_with_products": "Vous ne pouvez pas supprimer un auteur avec des produits"
   },
   "admin_categories": {
     "manage_categories": "Gestion des catégories",
@@ -109,20 +109,20 @@
     "category_deleted": "Catégorie supprimé",
     "category_created": "Genre créé",
     "name": "Nom",
-    "you_can_t_delete_a_category_with_books": "Vous ne pouvez pas supprimer une catégorie avec des livres"
+    "you_can_t_delete_a_category_with_products": "Vous ne pouvez pas supprimer une catégorie avec des produits"
   },
-  "book": {
+  "product": {
     "clear_all": "Tout effacer",
     "format": "Format",
-    "only_books_in_stock": "Seulement les livres en stock",
-    "only_books_out_of_stock": "Seulement les livres en rupture de stock",
+    "only_products_in_stock": "Seulement les produits en stock",
+    "only_products_out_of_stock": "Seulement les produits en rupture de stock",
     "price_range": "Échelle des prix",
     "search": "Chercher",
     "category": "Catégorie",
     "author": "Auteur"
   },
-  "book_details": {
-    "book_details": "Détails du livre",
+  "product_details": {
+    "product_details": "Détails du produit",
     "summary": "Résumé"
   },
   "cart_details": {
@@ -202,9 +202,9 @@
     "prev": "Préc"
   },
   "izitoast": {
-    "book_add_to_cart": "Livre ajouté au panier",
+    "product_add_to_cart": "Produit ajouté au panier",
     "lack_of_stock": "Manque de stocks",
-    "lack_of_stock_message": "Il reste {{bookStock}} exemplaires du livre {{bookTitle}} et vous en demandez {{bookNumber}}",
+    "lack_of_stock_message": "Il reste {{productStock}} exemplaires du produit {{productTitle}} et vous en demandez {{productNumber}}",
     "login_before_confirm_check_out": "Connectez-vous avant de valider la commande",
     "modification_confirmed": "Modification confirmée",
     "successful_login": "Connexion réussie",

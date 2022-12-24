@@ -16,15 +16,15 @@ import { HttpLoaderFactory } from 'src/app/app.module';
 import { FooterComponent } from '../partial/footer/footer.component';
 import { HeaderComponent } from '../partial/header/header.component';
 
-import { BookDetailsComponent } from './book-details.component';
+import { ProductDetailsComponent } from './product-details.component';
 
-describe('BookDetailsComponent', () => {
-  let component: BookDetailsComponent;
-  let fixture: ComponentFixture<BookDetailsComponent>;
+describe('ProductDetailsComponent', () => {
+  let component: ProductDetailsComponent;
+  let fixture: ComponentFixture<ProductDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BookDetailsComponent, HeaderComponent, FooterComponent],
+      declarations: [ProductDetailsComponent, HeaderComponent, FooterComponent],
       imports: [
         NgxIziToastModule,
         HttpClientModule,
@@ -61,7 +61,7 @@ describe('BookDetailsComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BookDetailsComponent);
+    fixture = TestBed.createComponent(ProductDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -67,15 +67,15 @@
           label="{{ 'general.delete' | translate }}"
           icon="pi pi-trash"
           class="p-button-danger"
-          (click)="deleteSelectedBooks()"
-          [disabled]="!selectedBooks || !selectedBooks.length"
+          (click)="deleteSelectedProducts()"
+          [disabled]="!selectedProducts || !selectedProducts.length"
         ></button>
       </ng-template>
     </p-toolbar>
 
     <p-table
       #dt
-      [value]="allBooks"
+      [value]="allProducts"
       [rows]="12"
       [paginator]="true"
       [globalFilterFields]="[
@@ -89,7 +89,7 @@
         'editor.name',
         'year'
       ]"
-      [(selection)]="selectedBooks"
+      [(selection)]="selectedProducts"
       [rowHover]="true"
       dataKey="id"
       currentPageReportTemplate="{{
@@ -104,8 +104,8 @@
       [showCurrentPageReport]="true"
     >
       <ng-template pTemplate="caption">
-        <div class="manage-books">
-          <h5 class="m-0">{{ "admin_books.manage_books" | translate }}</h5>
+        <div class="manage-products">
+          <h5 class="m-0">{{ "admin_products.manage_products" | translate }}</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
@@ -123,23 +123,23 @@
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
           <th style="display: table-cell !important">
-            {{ "admin_books.image" | translate }}
+            {{ "admin_products.image" | translate }}
           </th>
           <th
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="title"
           >
-            {{ "admin_books.title" | translate }}
+            {{ "admin_products.title" | translate }}
             <p-sortIcon field="title"></p-sortIcon>
           </th>
           <th style="display: table-cell !important">
-            {{ "admin_books.price_ttc" | translate }}
+            {{ "admin_products.price_ttc" | translate }}
           </th>
           <th
             style="display: table-cell !important"
             pSortableColumn="unitpriceht"
           >
-            {{ "admin_books.price_ht" | translate }}
+            {{ "admin_products.price_ht" | translate }}
             <p-sortIcon field="unitpriceht"></p-sortIcon>
           </th>
           <th style="display: table-cell !important" pSortableColumn="taxe.tva">
@@ -150,14 +150,14 @@
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="format.name"
           >
-            {{ "admin_books.format" | translate }}
+            {{ "admin_products.format" | translate }}
             <p-sortIcon field="format.name"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="editor.name"
           >
-            {{ "admin_books.editor" | translate }}
+            {{ "admin_products.editor" | translate }}
             <p-sortIcon field="editor.name"></p-sortIcon>
           </th>
 
@@ -172,14 +172,14 @@
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="year"
           >
-            {{ "admin_books.year" | translate }}
+            {{ "admin_products.year" | translate }}
             <p-sortIcon field="year"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="stock"
           >
-            {{ "admin_books.stock" | translate }}
+            {{ "admin_products.stock" | translate }}
             <p-sortIcon field="stock"></p-sortIcon>
           </th>
           <th style="display: table-cell !important">
@@ -191,55 +191,55 @@
           <th style="display: table-cell !important"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-book>
+      <ng-template pTemplate="body" let-product>
         <tr>
           <td>
-            <p-tableCheckbox [value]="book"></p-tableCheckbox>
+            <p-tableCheckbox [value]="product"></p-tableCheckbox>
           </td>
           <td>
             <img
-              [src]="book.image"
-              [alt]="book.title"
+              [src]="product.image"
+              [alt]="product.title"
               width="100"
               class="img-icon"
             />
           </td>
-          <td>{{ book.title }}</td>
+          <td>{{ product.title }}</td>
           <td>
             {{
               getUnitpricettcFromUnitpricehtAndTva(
-                book.unitpriceht,
-                book.taxe?.tva
+                product.unitpriceht,
+                product.taxe?.tva
               )
             }}
             €
           </td>
-          <td>{{ book.unitpriceht }} €</td>
-          <td>{{ book.taxe.tva }} %</td>
-          <td>{{ book.format.name }}</td>
-          <td>{{ book.editor.name }}</td>
+          <td>{{ product.unitpriceht }} €</td>
+          <td>{{ product.taxe.tva }} %</td>
+          <td>{{ product.format.name }}</td>
+          <td>{{ product.editor.name }}</td>
 
-          <td>{{ book.isbn }}</td>
-          <td>{{ book.year }}</td>
+          <td>{{ product.isbn }}</td>
+          <td>{{ product.year }}</td>
 
           <td>
             <span
-              class="book-badge"
+              class="product-badge"
               [ngClass]="{
-                'status-instock': book.stock > 50,
-                'status-lowstock': book.stock <= 50 && book.stock > 0,
-                'status-outofstock': book.stock <= 0
+                'status-instock': product.stock > 50,
+                'status-lowstock': product.stock <= 50 && product.stock > 0,
+                'status-outofstock': product.stock <= 0
               }"
-              >{{ book.stock }}</span
+              >{{ product.stock }}</span
             >
           </td>
           <td>
-            <span *ngFor="let anAuthor of book.author"
+            <span *ngFor="let anAuthor of product.author"
               >{{ anAuthor.firstname }} {{ anAuthor.lastname }} <br
             /></span>
           </td>
           <td>
-            <span *ngFor="let aCategory of book.category">{{ aCategory.name }} <br /></span>
+            <span *ngFor="let aCategory of product.category">{{ aCategory.name }} <br /></span>
           </td>
           <td>
             <button
@@ -247,14 +247,14 @@
               pRipple
               icon="pi pi-pencil"
               class="p-button-rounded p-button-success mr-2"
-              (click)="editBook(book)"
+              (click)="editProduct(product)"
             ></button>
             <button
               pButton
               pRipple
               icon="pi pi-trash"
               class="p-button-rounded p-button-warning"
-              (click)="deletebook(book)"
+              (click)="deleteproduct(product)"
             ></button>
           </td>
         </tr>
@@ -262,8 +262,8 @@
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
           {{
-            "admin_books.total_books_message"
-              | translate : { bookLength: allBooks ? allBooks.length : 0 }
+            "admin_products.total_products_message"
+              | translate : { productLength: allProducts ? allProducts.length : 0 }
           }}
         </div>
       </ng-template>
@@ -280,43 +280,43 @@
     ></p-confirmDialog>
 
     <p-dialog
-      [(visible)]="bookDialog"
+      [(visible)]="productDialog"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
       [style]="{ width: '50vw' }"
-      header="{{ 'admin_books.book_details' | translate }}"
+      header="{{ 'admin_products.product_details' | translate }}"
       [modal]="true"
       styleClass="p-fluid"
       [dismissableMask]="true"
     >
       <ng-template pTemplate="content">
         <div class="field">
-          <label for="title">{{ "admin_books.title" | translate }}</label>
+          <label for="title">{{ "admin_products.title" | translate }}</label>
           <input
             type="text"
             pInputText
             id="title"
-            [(ngModel)]="book.title"
+            [(ngModel)]="product.title"
             required
             autofocus
           />
-          <small class="p-error" *ngIf="submitted && !book.title"
-            >{{ "admin_books.title" | translate }}
+          <small class="p-error" *ngIf="submitted && !product.title"
+            >{{ "admin_products.title" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="summary">{{ "admin_books.summary" | translate }}</label>
+          <label for="summary">{{ "admin_products.summary" | translate }}</label>
           <textarea
             id="summary"
             pInputTextarea
-            [(ngModel)]="book.summary"
+            [(ngModel)]="product.summary"
             required
             rows="5"
             cols="20"
           ></textarea>
-          <small class="p-error" *ngIf="submitted && !book.summary"
-            >{{ "admin_books.summary" | translate }}
+          <small class="p-error" *ngIf="submitted && !product.summary"
+            >{{ "admin_products.summary" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
@@ -327,20 +327,20 @@
             type="text"
             pInputText
             id="isbn"
-            [(ngModel)]="book.isbn"
+            [(ngModel)]="product.isbn"
             required
             autofocus
           />
-          <small class="p-error" *ngIf="submitted && !book.isbn"
+          <small class="p-error" *ngIf="submitted && !product.isbn"
             >ISBN {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="priceht">{{ "admin_books.price_ht" | translate }}</label>
+          <label for="priceht">{{ "admin_products.price_ht" | translate }}</label>
           <p-inputNumber
             id="priceht"
-            [(ngModel)]="book.unitpriceht"
+            [(ngModel)]="product.unitpriceht"
             mode="currency"
             currency="EUR"
             locale="fr-FR"
@@ -348,40 +348,40 @@
             [required]="true"
             [allowEmpty]="false"
           ></p-inputNumber>
-          <small class="p-error" *ngIf="submitted && !book.unitpriceht"
-            >{{ "admin_books.price_ht" | translate }}
+          <small class="p-error" *ngIf="submitted && !product.unitpriceht"
+            >{{ "admin_products.price_ht" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="stock">{{ "admin_books.stock" | translate }}</label>
+          <label for="stock">{{ "admin_products.stock" | translate }}</label>
           <p-inputNumber
             id="stock"
-            [(ngModel)]="book.stock"
+            [(ngModel)]="product.stock"
             [min]="0"
             [required]="true"
             [allowEmpty]="false"
           ></p-inputNumber>
-          <small class="p-error" *ngIf="submitted && !book.stock"
-            >{{ "admin_books.stock" | translate }}
+          <small class="p-error" *ngIf="submitted && !product.stock"
+            >{{ "admin_products.stock" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="year">{{ "admin_books.year" | translate }}</label>
+          <label for="year">{{ "admin_products.year" | translate }}</label>
           <p-inputNumber
             id="year"
-            [(ngModel)]="book.year"
+            [(ngModel)]="product.year"
             [min]="1850"
             mode="decimal"
             [useGrouping]="false"
             [required]="true"
             [allowEmpty]="false"
           ></p-inputNumber>
-          <small class="p-error" *ngIf="submitted && !book.year"
-            >{{ "admin_books.year" | translate }}
+          <small class="p-error" *ngIf="submitted && !product.year"
+            >{{ "admin_products.year" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
@@ -390,13 +390,13 @@
           <label for="taxe">TVA</label><br />
           <p-dropdown
             [options]="taxes"
-            [(ngModel)]="book.taxe"
+            [(ngModel)]="product.taxe"
             optionLabel="tva"
-            placeholder="{{ 'admin_books.select_a_taxe' | translate }}"
+            placeholder="{{ 'admin_products.select_a_taxe' | translate }}"
           >
             <ng-template pTemplate="selectedItem">
-              <div *ngIf="book.taxe">
-                <div>{{ book.taxe.tva }} %</div>
+              <div *ngIf="product.taxe">
+                <div>{{ product.taxe.tva }} %</div>
               </div>
             </ng-template>
             <ng-template let-taxe pTemplate="item">
@@ -406,23 +406,23 @@
         </div>
 
         <div class="field">
-          <label for="editor">{{ "admin_books.editor" | translate }}</label
+          <label for="editor">{{ "admin_products.editor" | translate }}</label
           ><br />
           <p-dropdown
             [options]="editors"
-            [(ngModel)]="book.editor"
-            placeholder="{{ 'admin_books.select_an_editor' | translate }}"
+            [(ngModel)]="product.editor"
+            placeholder="{{ 'admin_products.select_an_editor' | translate }}"
             optionLabel="name"
           ></p-dropdown>
         </div>
 
         <div class="field">
-          <label for="format">{{ "admin_books.format" | translate }}</label
+          <label for="format">{{ "admin_products.format" | translate }}</label
           ><br />
           <p-dropdown
             [options]="formats"
-            [(ngModel)]="book.format"
-            placeholder="{{ 'admin_books.select_a_format' | translate }}"
+            [(ngModel)]="product.format"
+            placeholder="{{ 'admin_products.select_a_format' | translate }}"
             optionLabel="name"
           ></p-dropdown>
         </div>
@@ -432,8 +432,8 @@
           ><br />
           <p-multiSelect
             [options]="authors"
-            [(ngModel)]="book.author"
-            defaultLabel="{{ 'book.author' | translate }}"
+            [(ngModel)]="product.author"
+            defaultLabel="{{ 'product.author' | translate }}"
             optionLabel="name"
             display="chip"
           ></p-multiSelect>
@@ -444,16 +444,16 @@
           ><br />
           <p-multiSelect
             [options]="categories"
-            [(ngModel)]="book.category"
-            defaultLabel="{{ 'book.category' | translate }}"
+            [(ngModel)]="product.category"
+            defaultLabel="{{ 'product.category' | translate }}"
             optionLabel="name"
             display="chip"
           ></p-multiSelect>
         </div>
 
         <div class="field">
-          <label for="coverBook">{{
-            "admin_books.cover_books" | translate
+          <label for="coverProduct">{{
+            "admin_products.cover_products" | translate
           }}</label
           ><br />
           <input
@@ -482,17 +482,17 @@
           label="{{ 'general.save' | translate }}"
           icon="pi pi-check"
           class="p-button-text"
-          (click)="saveBook()"
+          (click)="saveProduct()"
           [disabled]="
-            !book.title ||
-            !book.summary ||
-            !book.isbn ||
-            !book.unitpriceht ||
-            !book.year ||
-            !book.editor ||
-            !book.format ||
-            !book.author ||
-            !book.category 
+            !product.title ||
+            !product.summary ||
+            !product.isbn ||
+            !product.unitpriceht ||
+            !product.year ||
+            !product.editor ||
+            !product.format ||
+            !product.author ||
+            !product.category 
           "
         ></button>
       </ng-template>

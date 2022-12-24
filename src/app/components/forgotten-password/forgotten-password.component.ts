@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
-import { Book } from 'src/app/interfaces/book';
+import { Product } from 'src/app/interfaces/product';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
@@ -17,7 +17,7 @@ import StorageCrypter from 'storage-crypter';
 })
 export class ForgottenPasswordComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
-  cart: Array<Book> = [];
+  cart: Array<Product> = [];
   emailToReset: string = '';
 
   constructor(

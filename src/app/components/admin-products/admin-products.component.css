@@ -2,22 +2,22 @@
     font-family: "Quicksand", Arial, sans-serif !important;
 }
 
-.book-badge.status-instock {
+.product-badge.status-instock {
     background: #C8E6C9;
     color: #256029;
 }
 
-.book-badge.status-lowstock {
+.product-badge.status-lowstock {
     background: #FEEDAF;
     color: #8a5340;
 }
 
-.book-badge.status-outofstock {
+.product-badge.status-outofstock {
     background: #FFCDD2;
     color: #c63737;
 }
 
-.book-badge {
+.product-badge {
     border-radius: 2px;
     padding: .25em .5rem;
     text-transform: uppercase;
@@ -70,7 +70,7 @@
     overflow-x: scroll;
 }
 
-.manage-books {
+.manage-products {
     width: 100%;
     display: flex;
     align-items: center;

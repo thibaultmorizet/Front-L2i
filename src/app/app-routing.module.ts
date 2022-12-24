@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShopComponent } from './components/shop/shop.component';
-import { BookDetailsComponent } from './components/book-details/book-details.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
@@ -10,7 +10,7 @@ import { LegalNoticesComponent } from './components/legal-notices/legal-notices.
 import { ContactComponent } from './components/contact/contact.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
-import { AdminBooksComponent } from './components/admin-books/admin-books.component';
+import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 import { AdminAccountComponent } from './components/admin-account/admin-account.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminAdminsComponent } from './components/admin-admins/admin-admins.component';
@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'shop', component: ShopComponent },
   { path: 'cart', component: CartDetailsComponent },
-  { path: 'books/:id', component: BookDetailsComponent },
+  { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'my-account', component: MyAccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'forgotten-password', component: ForgottenPasswordComponent },
   { path: 'admin/home', component: AdminHomeComponent },
   { path: 'admin/login', component: AdminLoginComponent },
-  { path: 'admin/books', component: AdminBooksComponent },
+  { path: 'admin/products', component: AdminProductsComponent },
   { path: 'admin/account', component: AdminAccountComponent },
   { path: 'admin/users', component: AdminUsersComponent },
   { path: 'admin/admins', component: AdminAdminsComponent },

@@ -9,7 +9,7 @@ import {
 } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
-import { Book } from 'src/app/interfaces/book';
+import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
 import { AddressService } from 'src/app/services/address.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -25,7 +25,7 @@ import StorageCrypter from 'storage-crypter';
 })
 export class LoginComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
-  cart: Array<Book> = [];
+  cart: Array<Product> = [];
   connectedUser: User = {};
   errorPassword: string | null = null;
   errorEmail: string | null = null;

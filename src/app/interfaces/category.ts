@@ -1,7 +1,7 @@
-import { Book } from "./book";
+import { Product } from "./product";
 
 export interface Category {
     id?: number;
     name?: string;
-    books?: Array<Book>;
+    products?: Array<Product>;
 }

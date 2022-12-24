@@ -4,58 +4,58 @@
   <main id="content">
     <div class="container">
       <img
-        id="bookDetailsImg"
-        src="https://www.thibaultmorizet.fr/assets/background-images/bookDetails.png"
-        alt="bookDetailsImg"
+        id="productDetailsImg"
+        src="https://www.thibaultmorizet.fr/assets/background-images/productDetails.png"
+        alt="productDetailsImg"
       />
       <img
-        id="bookDetails2Img"
-        src="https://www.thibaultmorizet.fr/assets/background-images/bookDetails2.png"
-        alt="bookDetails2Img"
+        id="productDetails2Img"
+        src="https://www.thibaultmorizet.fr/assets/background-images/productDetails2.png"
+        alt="productDetails2Img"
       />
 
-      <div class="book-details-container">
-        <div class="book-general-details">
-          <div class="book-details-image-and-title">
+      <div class="product-details-container">
+        <div class="product-general-details">
+          <div class="product-details-image-and-title">
             <p-skeleton
-              class="bookDetailsImgCoverSkeleton"
+              class="productDetailsImgCoverSkeleton"
               width="100%"
               height="100%"
-              *ngIf="!bookDetailsImgCoverIsLoaded"
+              *ngIf="!productDetailsImgCoverIsLoaded"
             ></p-skeleton>
 
             <img
-              id="bookDetailsImgCover"
-              src="{{ book.image }}"
-              alt="bookDetailsImg"
-              (load)="bookDetailsImgCoverIsLoaded = true"
-              [ngClass]="{ 'd-none': !bookDetailsImgCoverIsLoaded }"
+              id="productDetailsImgCover"
+              src="{{ product.image }}"
+              alt="productDetailsImg"
+              (load)="productDetailsImgCoverIsLoaded = true"
+              [ngClass]="{ 'd-none': !productDetailsImgCoverIsLoaded }"
             />
           </div>
 
-          <div class="book-details-quantity-and-price-and-submit">
-            <p class="subtitle text-center">{{ book.title }}</p>
+          <div class="product-details-quantity-and-price-and-submit">
+            <p class="subtitle text-center">{{ product.title }}</p>
 
-            <div class="book-details-price">
+            <div class="product-details-price">
               <p class="price">
                 {{
                   getUnitpricettcFromUnitpricehtAndTva(
-                    book.unitpriceht,
-                    book.taxe?.tva
+                    product.unitpriceht,
+                    product.taxe?.tva
                   )
                 }}
                 € (TTC)
               </p>
               <p
-                class="subtitle book-details-quantity"
-                *ngIf="book.stock && book.stock > 0"
+                class="subtitle product-details-quantity"
+                *ngIf="product.stock && product.stock > 0"
               >
                 {{ "general.quantity" | translate }}
               </p>
             </div>
             <div
-              class="book-details-quantity-and-submit"
-              *ngIf="book.stock && book.stock > 0"
+              class="product-details-quantity-and-submit"
+              *ngIf="product.stock && product.stock > 0"
             >
               <div class="quantity-div">
                 <p-inputNumber
@@ -64,9 +64,9 @@
                   inputId="horizontal"
                   spinnerMode="horizontal"
                   [step]="1"
-                  [(ngModel)]="book.number_ordered"
+                  [(ngModel)]="product.number_ordered"
                   [min]="0"
-                  [max]="book.stock ? book.stock : 0"
+                  [max]="product.stock ? product.stock : 0"
                   decrementButtonClass="p-button-outline-primary"
                   incrementButtonClass="p-button-outline-primary"
                   incrementButtonIcon="pi pi-plus"
@@ -74,47 +74,47 @@
                 >
                 </p-inputNumber>
               </div>
-              <div class="book-details-submit">
+              <div class="product-details-submit">
                 <button
                   pButton
                   pRipple
                   type="submit"
                   class="p-button-raised p-button-primary-color btn-primary-color"
-                  (click)="addBookToCart(book)"
+                  (click)="addProductToCart(product)"
                 >
                   {{ "general.add_to_cart" | translate }}
                 </button>
               </div>
             </div>
-            <div class="out-of-stock-div" *ngIf="book.stock == 0">
+            <div class="out-of-stock-div" *ngIf="product.stock == 0">
               <p class="subtitle color-red">
                 {{ "general.out_of_stock" | translate }}
               </p>
             </div>
           </div>
         </div>
-        <p-divider class="book-details-divider"></p-divider>
+        <p-divider class="product-details-divider"></p-divider>
         <p-tabView>
-          <p-tabPanel header="{{ 'book_details.summary' | translate }}">
-            <p class="text-summary">{{ book.summary }}</p>
+          <p-tabPanel header="{{ 'product_details.summary' | translate }}">
+            <p class="text-summary">{{ product.summary }}</p>
           </p-tabPanel>
-          <p-tabPanel header="{{ 'book_details.book_details' | translate }}"
+          <p-tabPanel header="{{ 'product_details.product_details' | translate }}"
             ><ul>
               <li>
                 <span>
                   <span class="bold"
                     >{{ "general.price" | translate }} (HT) :
                   </span>
-                  <span>{{ book.unitpriceht }} €</span>
+                  <span>{{ product.unitpriceht }} €</span>
                 </span>
               </li>
               <li>
                 <span>
                   <span class="bold">ISBN : </span>
-                  <span>{{ book.isbn }}</span>
+                  <span>{{ product.isbn }}</span>
                 </span>
               </li>
-              <li *ngFor="let anAuthor of book.author">
+              <li *ngFor="let anAuthor of product.author">
                 <span>
                   <span class="bold"
                     >{{ "general.author" | translate }} :
@@ -127,7 +127,7 @@
                   <span class="bold"
                     >{{ "general.editor" | translate }} :
                   </span>
-                  <span>{{ book.editor?.name }}</span>
+                  <span>{{ product.editor?.name }}</span>
                 </span>
               </li>
               <li>
@@ -135,7 +135,7 @@
                   <span class="bold"
                     >{{ "general.year_of_publication" | translate }} :
                   </span>
-                  <span>{{ book.year }}</span>
+                  <span>{{ product.year }}</span>
                 </span>
               </li>
             </ul>

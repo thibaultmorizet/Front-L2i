@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     if (jeton) {
       return true;
     } else {
-      this.router.navigateByUrl('/books');
+      this.router.navigateByUrl('/products');
       return false;
     }
 

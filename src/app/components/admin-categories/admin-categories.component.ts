@@ -8,7 +8,7 @@ import {
   PrimeNGConfig,
 } from 'primeng/api';
 import { Category } from 'src/app/interfaces/category';
-import { Categorieservice } from 'src/app/services/category.service';
+import { Categoryservice } from 'src/app/services/category.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -28,7 +28,7 @@ export class AdminCategoriesComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private ts: Categorieservice,
+    private cs: Categoryservice,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
     private iziToast: NgxIzitoastService,
@@ -64,11 +64,11 @@ export class AdminCategoriesComponent implements OnInit {
         this.allCategories = this.allCategories.filter(
           (val) =>
             !this.selectedCategories.includes(val) ||
-            (val.books && val.books.length != 0)
+            (val.products && val.products.length != 0)
         );
         this.selectedCategories.forEach((anCategory) => {
-          if (anCategory.books && anCategory.books.length == 0) {
-            this.ts.deleteTheCategory(anCategory.id).subscribe((el) => {});
+          if (anCategory.products && anCategory.products.length == 0) {
+            this.cs.deleteTheCategory(anCategory.id).subscribe((el) => {});
           }
         });
         this.selectedCategories = [];
@@ -95,9 +95,9 @@ export class AdminCategoriesComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        if (category.books && category.books.length == 0) {
+        if (category.products && category.products.length == 0) {
           this.allCategories = this.allCategories.filter((val) => val.id !== category.id);
-          this.ts.deleteTheCategory(category.id).subscribe((el) => {});
+          this.cs.deleteTheCategory(category.id).subscribe((el) => {});
           this.category = {};
           this.iziToast.success({
             message: this.translate.instant('admin_categories.category_deleted'),
@@ -106,7 +106,7 @@ export class AdminCategoriesComponent implements OnInit {
         } else {
           this.iziToast.warning({
             message: this.translate.instant(
-              'admin_categories.you_can_t_delete_a_category_with_books'
+              'admin_categories.you_can_t_delete_a_category_with_products'
             ),
             position: 'topRight',
           });
@@ -124,7 +124,7 @@ export class AdminCategoriesComponent implements OnInit {
     this.submitted = true;
 
     if (this.category.id) {
-      this.ts.updateCategory(this.category.id, this.category).subscribe((result) => {
+      this.cs.updateCategory(this.category.id, this.category).subscribe((result) => {
         this.category = {};
         this.ngOnInit();
         this.iziToast.success({
@@ -134,8 +134,8 @@ export class AdminCategoriesComponent implements OnInit {
       });
     } else {
       this.allCategories.push(this.category);
-      this.ts.createCategory(this.category).subscribe((res) => {
-        this.ts.updateCategory(res.id, this.category).subscribe((result) => {
+      this.cs.createCategory(this.category).subscribe((res) => {
+        this.cs.updateCategory(res.id, this.category).subscribe((result) => {
           this.category = {};
           this.ngOnInit();
           this.iziToast.success({
@@ -152,7 +152,7 @@ export class AdminCategoriesComponent implements OnInit {
   }
 
   getAllCategoriesfunc() {
-    this.ts.getAllCategories().subscribe((res) => {
+    this.cs.getAllCategories().subscribe((res) => {
       this.allCategories = res;
     });
   }

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import { Book } from 'src/app/interfaces/book';
-import { BookService } from 'src/app/services/book.service';
+import { Product } from 'src/app/interfaces/product';
+import { ProductService } from 'src/app/services/product.service';
 import StorageCrypter from 'storage-crypter';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,28 +10,28 @@ import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-book-details',
-  templateUrl: './book-details.component.html',
-  styleUrls: ['./book-details.component.css', './../../../css/main.css'],
+  selector: 'app-product-details',
+  templateUrl: './product-details.component.html',
+  styleUrls: ['./product-details.component.css', './../../../css/main.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class BookDetailsComponent implements OnInit {
-  book: Book = {};
-  idBook: number = 0;
-  cart: Array<Book> = [];
+export class ProductDetailsComponent implements OnInit {
+  product: Product = {};
+  idProduct: number = 0;
+  cart: Array<Product> = [];
   storageCrypter = new StorageCrypter('Secret');
-  bookExistinCart: Boolean = false;
+  productExistinCart: Boolean = false;
   closeResult = '';
   errorPassword: string | null = null;
   errorEmail: string | null = null;
   connectedUser: User | null = {};
-  bookDetailsImgCoverIsLoaded: boolean = false;
+  productDetailsImgCoverIsLoaded: boolean = false;
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
 
   constructor(
-    private bs: BookService,
+    private ps: ProductService,
     private as: AuthService,
     private route: ActivatedRoute,
     private router: Router,
@@ -44,17 +44,17 @@ export class BookDetailsComponent implements OnInit {
     this.translate.use(this.translate.getDefaultLang());
 
     this.route.paramMap.subscribe((res) => {
-      this.idBook = +(res.get('id') ?? '0');
-      this.bs.getOneBook(this.idBook).subscribe((b) => {
-        this.book = b;        
-        this.book.number_ordered = 1;
-        if (this.book.visitnumber) {
-          this.book.visitnumber += 1;
+      this.idProduct = +(res.get('id') ?? '0');
+      this.ps.getOneProduct(this.idProduct).subscribe((b) => {
+        this.product = b;        
+        this.product.number_ordered = 1;
+        if (this.product.visitnumber) {
+          this.product.visitnumber += 1;
         } else {
-          this.book.visitnumber = 1;
+          this.product.visitnumber = 1;
         }
 
-        this.bs.updateBook(this.book.id, this.book).subscribe(() => {});
+        this.ps.updateProduct(this.product.id, this.product).subscribe(() => {});
       });
       try {
         this.connectedUser = JSON.parse(
@@ -83,28 +83,28 @@ export class BookDetailsComponent implements OnInit {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 
-  addBookToCart(bookToOrder: Book) {
-    this.bookExistinCart = false;
-    if (bookToOrder.id != undefined) {
-      this.bs.getOneBook(bookToOrder.id).subscribe((res) => {
+  addProductToCart(productToOrder: Product) {
+    this.productExistinCart = false;
+    if (productToOrder.id != undefined) {
+      this.ps.getOneProduct(productToOrder.id).subscribe((res) => {
         this.cart.forEach((el) => {
           if (res.id == el.id) {
-            this.bookExistinCart = true;
+            this.productExistinCart = true;
 
             if (
               el.stock &&
               el.number_ordered &&
-              bookToOrder.number_ordered &&
-              el.number_ordered + bookToOrder.number_ordered > el.stock
+              productToOrder.number_ordered &&
+              el.number_ordered + productToOrder.number_ordered > el.stock
             ) {
               this.iziToast.error({
                 title: this.translate.instant('izitoast.lack_of_stock'),
                 message: this.translate.instant(
                   'izitoast.lack_of_stock_message',
                   {
-                    bookStock: res.stock,
-                    bookTitle: res.title,
-                    bookNumber: el.number_ordered + bookToOrder.number_ordered,
+                    productStock: res.stock,
+                    productTitle: res.title,
+                    productNumber: el.number_ordered + productToOrder.number_ordered,
                   }
                 ),
                 position: 'topRight',
@@ -112,10 +112,10 @@ export class BookDetailsComponent implements OnInit {
             } else {
               if (
                 el.number_ordered != undefined &&
-                bookToOrder.number_ordered != undefined
+                productToOrder.number_ordered != undefined
               ) {
                 el.number_ordered =
-                  el.number_ordered + bookToOrder.number_ordered;
+                  el.number_ordered + productToOrder.number_ordered;
 
                 if (el.unitpriceht) {
                   el.totalpriceht = parseFloat(
@@ -132,7 +132,7 @@ export class BookDetailsComponent implements OnInit {
                 }
 
                 this.iziToast.success({
-                  message: this.translate.instant('izitoast.book_add_to_cart'),
+                  message: this.translate.instant('izitoast.product_add_to_cart'),
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -145,26 +145,26 @@ export class BookDetailsComponent implements OnInit {
           }
         });
 
-        if (!this.bookExistinCart) {
+        if (!this.productExistinCart) {
           if (
             res.stock &&
-            bookToOrder.number_ordered &&
-            bookToOrder.number_ordered > res.stock
+            productToOrder.number_ordered &&
+            productToOrder.number_ordered > res.stock
           ) {
             this.iziToast.error({
               title: this.translate.instant('izitoast.lack_of_stock'),
               message: this.translate.instant(
                 'izitoast.lack_of_stock_message',
                 {
-                  bookStock: res.stock,
-                  bookTitle: res.title,
-                  bookNumber: bookToOrder.number_ordered,
+                  productStock: res.stock,
+                  productTitle: res.title,
+                  productNumber: productToOrder.number_ordered,
                 }
               ),
               position: 'topRight',
             });
           } else {
-            res.number_ordered = bookToOrder.number_ordered;
+            res.number_ordered = productToOrder.number_ordered;
 
             if (res.unitpriceht && res.number_ordered) {
               res.totalpriceht = parseFloat(
@@ -182,7 +182,7 @@ export class BookDetailsComponent implements OnInit {
 
             this.cart.push(res);
             this.iziToast.success({
-              message: this.translate.instant('izitoast.book_add_to_cart'),
+              message: this.translate.instant('izitoast.product_add_to_cart'),
               position: 'topRight',
             });
             this.storageCrypter.setItem(

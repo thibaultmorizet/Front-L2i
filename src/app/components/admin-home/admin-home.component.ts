@@ -2,9 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import { Book } from 'src/app/interfaces/book';
+import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
-import { BookService } from 'src/app/services/book.service';
+import { ProductService } from 'src/app/services/product.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -16,13 +16,13 @@ import StorageCrypter from 'storage-crypter';
 export class AdminHomeComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   connectedAdmin: User | null = {};
-  allBooks: Array<Book> = [];
-  booksMoreVisited: Array<Book> = [];
+  allProducts: Array<Product> = [];
+  productsMoreVisited: Array<Product> = [];
 
   constructor(
     private router: Router,
     private iziToast: NgxIzitoastService,
-    private bs: BookService,
+    private ps: ProductService,
     private translate: TranslateService
   ) {}
 
@@ -41,7 +41,7 @@ export class AdminHomeComponent implements OnInit {
         this.adminLogout();
       }
     }
-    this.getAllBooks();
+    this.getAllProducts();
   }
 
   tokenExpired(token: string) {
@@ -63,9 +63,9 @@ export class AdminHomeComponent implements OnInit {
     });
   }
 
-  getAllBooks() {
-    this.bs.getAllBooksWithoutLimit([], [], '', [], null).subscribe((res) => {
-      this.allBooks = res;
+  getAllProducts() {
+    this.ps.getAllProductsWithoutLimit([], [], '', [], null).subscribe((res) => {
+      this.allProducts = res;
     });
   }
 }

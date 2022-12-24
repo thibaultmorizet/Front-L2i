@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Book } from '../interfaces/book';
+import { Product } from '../interfaces/product';
 import { Format } from '../interfaces/format';
 import { Category } from '../interfaces/category';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BookService {
-  private url: string = 'https://thibaultmorizet.fr/ws/books';
+export class ProductService {
+  private url: string = 'https://thibaultmorizet.fr/ws/products';
   private urlWithoutLimit: string =
-    'https://thibaultmorizet.fr/ws/books?itemsPerPage=10000';
-  private books: Array<object> = [];
+    'https://thibaultmorizet.fr/ws/products?itemsPerPage=10000';
+  private products: Array<object> = [];
   private formatsString: string = '';
   private categoriesString: string = '';
   private searchString: string = '';
@@ -20,18 +20,18 @@ export class BookService {
 
   constructor(private http: HttpClient) {}
 
-  getAllBooks(inStock: boolean) {
+  getAllProducts(inStock: boolean) {
     if (inStock) {
       this.inStockString = '?stock%5Bgt%5D=0';
     } else {
       this.inStockString = '?stock%5Blte%5D=0';
     }
-    return this.http.get<Array<Book>>(this.url + this.inStockString);
+    return this.http.get<Array<Product>>(this.url + this.inStockString);
   }
-  getOneBook(id: number) {
-    return this.http.get<Book>('https://thibaultmorizet.fr/ws/books/' + id);
+  getOneProduct(id: number) {
+    return this.http.get<Product>('https://thibaultmorizet.fr/ws/products/' + id);
   }
-  getAllBooksWithoutLimit(
+  getAllProductsWithoutLimit(
     formats: Array<Format>,
     categories: Array<Category>,
     search: string,
@@ -73,7 +73,7 @@ export class BookService {
     } else {
       this.inStockString = '&stock%5Blte%5D=0';
     }
-    return this.http.get<Array<Book>>(
+    return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
         this.formatsString +
         this.categoriesString +
@@ -82,9 +82,9 @@ export class BookService {
         this.inStockString
     );
   }
-  getAllBooksForPage(
+  getAllProductsForPage(
     page: number,
-    booknumber: number,
+    productnumber: number,
     formats: Array<Format>,
     categories: Array<Category>,
     search: string,
@@ -123,11 +123,11 @@ export class BookService {
     } else {
       this.inStockString = '&stock%5Blte%5D=0';
     }
-    return this.http.get<Array<Book>>(
-      'https://thibaultmorizet.fr/ws/books?page=' +
+    return this.http.get<Array<Product>>(
+      'https://thibaultmorizet.fr/ws/products?page=' +
         page +
         '&itemsPerPage=' +
-        booknumber +
+        productnumber +
         this.formatsString +
         this.categoriesString +
         this.pricesString +
@@ -136,12 +136,12 @@ export class BookService {
     );
   }
 
-  getAllBooksByFormatAndCategoryAndSearch(
+  getAllProductsByFormatAndCategoryAndSearch(
     formats: Array<Format>,
     categories: Array<Category>,
     search: string,
     prices: Array<number>,
-    booknumber: number,
+    productnumber: number,
     inStock: boolean
   ) {
     this.formatsString = '';
@@ -177,10 +177,10 @@ export class BookService {
     } else {
       this.inStockString = '&stock%5Blte%5D=0';
     }
-    return this.http.get<Array<Book>>(
-      'https://thibaultmorizet.fr/ws/books?' +
+    return this.http.get<Array<Product>>(
+      'https://thibaultmorizet.fr/ws/products?' +
         'itemsPerPage=' +
-        booknumber +
+        productnumber +
         this.formatsString +
         this.categoriesString +
         this.pricesString +
@@ -189,29 +189,29 @@ export class BookService {
     );
   }
 
-  updateBook(id: number | undefined, book: Book) {
-    return this.http.put<{ token: string }>(this.url + '/' + id, book);
+  updateProduct(id: number | undefined, product: Product) {
+    return this.http.put<{ token: string }>(this.url + '/' + id, product);
   }
 
-  createBook(book: Book) {
-    return this.http.post<Book>(this.url, book);
+  createProduct(product: Product) {
+    return this.http.post<Product>(this.url, product);
   }
 
-  getBooksBestSell() {
-    return this.http.get<Array<Book>>(
+  getProductsBestSell() {
+    return this.http.get<Array<Product>>(
       this.url + '?itemsPerPage=10&stock%5Bgt%5D=0'
     );
   }
 
-  updateBookStock(id: number | undefined, book: Book) {
-    if (book.stock && book.stock >= 0) {
-      return this.http.put<{ token: string }>(this.url + '/' + id, book);
+  updateProductStock(id: number | undefined, product: Product) {
+    if (product.stock && product.stock >= 0) {
+      return this.http.put<{ token: string }>(this.url + '/' + id, product);
     } else {
       return false;
     }
   }
 
-  deleteTheBook(id: number | undefined) {
+  deleteTheProduct(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
   }
 

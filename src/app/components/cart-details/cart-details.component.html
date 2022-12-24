@@ -206,13 +206,13 @@
         <p-divider></p-divider>
         <div *ngFor="let elt of cart">
           <div class="cart-details">
-            <a [routerLink]="['/books/' + elt.id]">
+            <a [routerLink]="['/products/' + elt.id]">
               <img src="{{ elt.image }}" alt="" class="img-icon"
             /></a>
             <div class="cart-details-info">
               <div class="cart-details-title-quantity-price">
                 <p class="cart-details-title">
-                  <a [routerLink]="['/books/' + elt.id]"> {{ elt.title }}</a>
+                  <a [routerLink]="['/products/' + elt.id]"> {{ elt.title }}</a>
                 </p>
                 <div class="cart-details-quantity-price">
                   <p-inputNumber
@@ -247,7 +247,7 @@
                     </p>
                     <p
                       class="cart-details-remove"
-                      (click)="deleteBookOfCart(elt.id)"
+                      (click)="deleteProductOfCart(elt.id)"
                     >
                       {{ "cart_details.remove" | translate }}
                     </p>

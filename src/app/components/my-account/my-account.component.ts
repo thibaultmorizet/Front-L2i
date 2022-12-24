@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import StorageCrypter from 'storage-crypter';
 import { User } from 'src/app/interfaces/user';
-import { Book } from 'src/app/interfaces/book';
+import { Product } from 'src/app/interfaces/product';
 import { UserService } from 'src/app/services/user.service';
 import { Address } from 'src/app/interfaces/address';
 import { AddressService } from 'src/app/services/address.service';
@@ -23,7 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class MyAccountComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
-  cart: Array<Book> = [];
+  cart: Array<Product> = [];
   connectedUser: User = {};
   newUserData: User = {};
   newAddressBilling: Address = {};

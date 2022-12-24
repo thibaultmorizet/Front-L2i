@@ -64,10 +64,10 @@ export class AdminFormatsComponent implements OnInit {
         this.allFormats = this.allFormats.filter(
           (val) =>
             !this.selectedFormats.includes(val) ||
-            (val.books && val.books.length != 0)
+            (val.products && val.products.length != 0)
         );
         this.selectedFormats.forEach((aFormat) => {
-          if (aFormat.books && aFormat.books.length == 0) {
+          if (aFormat.products && aFormat.products.length == 0) {
             this.fs.deleteTheFormat(aFormat.id).subscribe((el) => {});
           }
         });
@@ -95,7 +95,7 @@ export class AdminFormatsComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        if (format.books && format.books.length == 0) {
+        if (format.products && format.products.length == 0) {
           this.allFormats = this.allFormats.filter(
             (val) => val.id !== format.id
           );
@@ -108,7 +108,7 @@ export class AdminFormatsComponent implements OnInit {
         } else {
           this.iziToast.warning({
             message: this.translate.instant(
-              'admin_formats.you_can_t_delete_a_format_with_books'
+              'admin_formats.you_can_t_delete_a_format_with_products'
             ),
             position: 'topRight',
           });

@@ -4,7 +4,7 @@
     "login_sign_in": "Login / Sign in",
     "users": "Users",
     "admins": "Admins",
-    "books": "Books",
+    "products": "Products",
     "my_account": "My account"
   },
   "admin_home": {
@@ -33,16 +33,16 @@
   "admin_account": {
     "personnal_data": "Personnal data"
   },
-  "admin_books": {
-    "manage_books": "Manage books",
-    "total_books_message": "In total there are {{bookLength}} books.",
-    "book_details": "Book details",
-    "confirm_delete_book_message": "Are you sure you want to delete the book : {{title}} ?",
-    "confirm_group_delete_books_message": "Are you sure you want to delete the selected books ?",
-    "books_deleted": "Books deleted",
-    "book_updated": "Book updated",
-    "book_deleted": "Book deleted",
-    "book_created": "Book created",
+  "admin_products": {
+    "manage_products": "Manage products",
+    "total_products_message": "In total there are {{productLength}} products.",
+    "product_details": "Product details",
+    "confirm_delete_product_message": "Are you sure you want to delete the product : {{title}} ?",
+    "confirm_group_delete_products_message": "Are you sure you want to delete the selected products ?",
+    "products_deleted": "Products deleted",
+    "product_updated": "Product updated",
+    "product_deleted": "Product deleted",
+    "product_created": "Product created",
     "image": "Image",
     "title": "Title",
     "price_ttc": "Price TTC",
@@ -55,7 +55,7 @@
     "select_an_editor": "Select an editor",
     "select_a_taxe": "Select a taxe",
     "select_a_format": "Select a format",
-    "cover_books": "Cover book"
+    "cover_products": "Cover product"
   },
   "admin_formats": {
     "manage_formats": "Manage formats",
@@ -68,7 +68,7 @@
     "format_deleted": "Format deleted",
     "format_created": "Format created",
     "name": "Name",
-    "you_can_t_delete_a_format_with_books": "You can't delete a Format with books"
+    "you_can_t_delete_a_format_with_products": "You can't delete a Format with products"
   },
   "admin_editors": {
     "manage_editors": "Manage editors",
@@ -81,7 +81,7 @@
     "editor_deleted": "Editor deleted",
     "editor_created": "Editor created",
     "name": "Name",
-    "you_can_t_delete_an_editor_with_books": "You can't delete an editor with books"
+    "you_can_t_delete_an_editor_with_products": "You can't delete an editor with products"
   },
   "admin_authors": {
     "manage_authors": "Manage authors",
@@ -96,7 +96,7 @@
     "firstname": "Firstname",
     "lastname": "Lastname",
     "language": "Language",
-    "you_can_t_delete_an_author_with_books": "You can't delete an author with books"
+    "you_can_t_delete_an_author_with_products": "You can't delete an author with products"
   },
   "admin_categories": {
     "manage_categories": "Manage categories",
@@ -109,20 +109,20 @@
     "category_deleted": "Category deleted",
     "category_created": "Category created",
     "name": "Name",
-    "you_can_t_delete_a_category_with_books": "You can't delete a category with books"
+    "you_can_t_delete_a_category_with_products": "You can't delete a category with products"
   },
-  "book": {
+  "product": {
     "clear_all": "Clear All",
     "format": "Format",
-    "only_books_in_stock": "Only books in stock",
-    "only_books_out_of_stock": "Only books out of stock",
+    "only_products_in_stock": "Only products in stock",
+    "only_products_out_of_stock": "Only products out of stock",
     "price_range": "Price Range",
     "search": "Search",
     "category": "Category",
     "author": "Author"
   },
-  "book_details": {
-    "book_details": "Book details",
+  "product_details": {
+    "product_details": "Product details",
     "summary": "Summary"
   },
   "cart_details": {
@@ -203,9 +203,9 @@
     "prev": "Prev"
   },
   "izitoast": {
-    "book_add_to_cart": "Book add to cart",
+    "product_add_to_cart": "Product add to cart",
     "lack_of_stock": "Lack of stock",
-    "lack_of_stock_message": "There are {{bookStock}} copies of the book {{bookTitle}} left and you are requesting {{bookNumber}}",
+    "lack_of_stock_message": "There are {{productStock}} copies of the product {{productTitle}} left and you are requesting {{productNumber}}",
     "login_before_confirm_check_out": "Login before confirm check out",
     "modification_confirmed": "Modification confirmed",
     "successful_login": "Successful login",

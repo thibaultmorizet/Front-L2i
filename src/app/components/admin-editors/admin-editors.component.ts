@@ -64,10 +64,10 @@ export class AdminEditorsComponent implements OnInit {
         this.allEditors = this.allEditors.filter(
           (val) =>
             !this.selectedEditors.includes(val) ||
-            (val.books && val.books.length != 0)
+            (val.products && val.products.length != 0)
         );
         this.selectedEditors.forEach((anEditor) => {
-          if (anEditor.books && anEditor.books.length == 0) {
+          if (anEditor.products && anEditor.products.length == 0) {
             this.es.deleteTheEditor(anEditor.id).subscribe((el) => {});
           }
         });
@@ -95,7 +95,7 @@ export class AdminEditorsComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        if (editor.books && editor.books.length == 0) {
+        if (editor.products && editor.products.length == 0) {
           this.allEditors = this.allEditors.filter(
             (val) => val.id !== editor.id
           );
@@ -108,7 +108,7 @@ export class AdminEditorsComponent implements OnInit {
         } else {
           this.iziToast.warning({
             message: this.translate.instant(
-              'admin_editors.you_can_t_delete_an_editor_with_books'
+              'admin_editors.you_can_t_delete_an_editor_with_products'
             ),
             position: 'topRight',
           });

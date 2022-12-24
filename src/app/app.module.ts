@@ -10,7 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShopComponent } from './components/shop/shop.component';
-import { BookDetailsComponent } from './components/book-details/book-details.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { NgxIziToastModule } from 'ngx-izitoast';
 import { AuthInterceptor } from './services/auth.interceptor';
 
@@ -64,7 +64,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminHeaderComponent } from './components/partial/admin-header/admin-header.component';
 import { AdminFooterComponent } from './components/partial/admin-footer/admin-footer.component';
-import { AdminBooksComponent } from './components/admin-books/admin-books.component';
+import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 import { AdminAccountComponent } from './components/admin-account/admin-account.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminAdminsComponent } from './components/admin-admins/admin-admins.component';
@@ -79,7 +79,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
   declarations: [
     AppComponent,
     ShopComponent,
-    BookDetailsComponent,
+    ProductDetailsComponent,
     CartDetailsComponent,
     MyAccountComponent,
     AdminHomeComponent,
@@ -92,7 +92,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
     AdminLoginComponent,
     AdminHeaderComponent,
     AdminFooterComponent,
-    AdminBooksComponent,
+    AdminProductsComponent,
     AdminAccountComponent,
     AdminUsersComponent,
     AdminAdminsComponent,

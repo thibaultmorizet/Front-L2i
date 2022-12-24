@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import { Book } from 'src/app/interfaces/book';
+import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import StorageCrypter from 'storage-crypter';
@@ -15,7 +15,7 @@ import StorageCrypter from 'storage-crypter';
 })
 export class PagenotfoundComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
-  cart: Array<Book> = [];
+  cart: Array<Product> = [];
   connectedUser: User = {};
   cartTotalPriceTtc: number = 0;
   cartTotalPriceHt: number = 0;

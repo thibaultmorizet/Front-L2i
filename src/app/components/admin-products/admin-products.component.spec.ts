@@ -13,16 +13,16 @@ import { HttpLoaderFactory } from 'src/app/app.module';
 import { AdminFooterComponent } from '../partial/admin-footer/admin-footer.component';
 import { AdminHeaderComponent } from '../partial/admin-header/admin-header.component';
 
-import { AdminBooksComponent } from './admin-books.component';
+import { AdminProductsComponent } from './admin-products.component';
 
-describe('AdminBooksComponent', () => {
-  let component: AdminBooksComponent;
-  let fixture: ComponentFixture<AdminBooksComponent>;
+describe('AdminProductsComponent', () => {
+  let component: AdminProductsComponent;
+  let fixture: ComponentFixture<AdminProductsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AdminBooksComponent,
+        AdminProductsComponent,
         AdminHeaderComponent,
         AdminFooterComponent,
       ],
@@ -46,7 +46,7 @@ describe('AdminBooksComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AdminBooksComponent);
+    fixture = TestBed.createComponent(AdminProductsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

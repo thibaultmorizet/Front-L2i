@@ -4,7 +4,7 @@ import { Editor } from "./editor";
 import { Format } from "./format";
 import { Taxe } from "./taxe";
 
-export interface Book {
+export interface Product {
     id?: number;
     title?: string;
     summary?: string;

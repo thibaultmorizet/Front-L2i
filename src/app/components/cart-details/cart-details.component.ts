@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
-import { Book } from 'src/app/interfaces/book';
+import { Product } from 'src/app/interfaces/product';
 import StorageCrypter from 'storage-crypter';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,7 +14,7 @@ import {
 import { AddressService } from 'src/app/services/address.service';
 import { UserService } from 'src/app/services/user.service';
 import { Address } from 'src/app/interfaces/address';
-import { BookService } from 'src/app/services/book.service';
+import { ProductService } from 'src/app/services/product.service';
 import { Order } from 'src/app/interfaces/order';
 import { OrderService } from 'src/app/services/order.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +27,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class CartDetailsComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
-  cart: Array<Book> = [];
+  cart: Array<Product> = [];
   connectedUser: User = {};
   closeResult = '';
   errorPassword: string | null = null;
@@ -56,7 +56,7 @@ export class CartDetailsComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private addressService: AddressService,
     private us: UserService,
-    private bs: BookService,
+    private ps: ProductService,
     private os: OrderService,
     private translate: TranslateService,
     private confirmationService: ConfirmationService
@@ -145,9 +145,9 @@ export class CartDetailsComponent implements OnInit {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 
-  deleteBookOfCart(bookId: number | undefined) {
+  deleteProductOfCart(productId: number | undefined) {
     this.cart.forEach((el) => {
-      if (el.id == bookId) {
+      if (el.id == productId) {
         if (el.totalpricettc) {
           this.cartTotalPriceTtc -= el.totalpricettc;
           this.cartTotalPriceTtc = parseFloat(
@@ -184,7 +184,7 @@ export class CartDetailsComponent implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
-  updateQuantity(bookId: number | undefined, numberOrdered: number) {
+  updateQuantity(productId: number | undefined, numberOrdered: number) {
     if (numberOrdered == 0) {
       numberOrdered = 1;
     }
@@ -196,7 +196,7 @@ export class CartDetailsComponent implements OnInit {
           numberOrdered = el.stock;
         }
       }
-      if (el.id == bookId) {
+      if (el.id == productId) {
         el.number_ordered = numberOrdered;
       }
 
@@ -409,21 +409,21 @@ export class CartDetailsComponent implements OnInit {
   checkOut() {
     if (this.connectedUser.id) {
       this.errorStock = false;
-      this.cart.forEach((aBook) => {
-        if (aBook.id && !this.errorStock) {
-          this.bs.getOneBook(aBook.id).subscribe((el) => {
-            if (aBook.number_ordered && el.stock) {
-              if (aBook.number_ordered > el.stock) {
+      this.cart.forEach((aProduct) => {
+        if (aProduct.id && !this.errorStock) {
+          this.ps.getOneProduct(aProduct.id).subscribe((el) => {
+            if (aProduct.number_ordered && el.stock) {
+              if (aProduct.number_ordered > el.stock) {
                 this.errorStock = true;
-                aBook.stock = el.stock;
+                aProduct.stock = el.stock;
                 this.iziToast.error({
                   title: this.translate.instant('izitoast.lack_of_stock'),
                   message: this.translate.instant(
                     'izitoast.lack_of_stock_message',
                     {
-                      bookStock: el.stock,
-                      bookTitle: aBook.title,
-                      bookNumber: aBook.number_ordered,
+                      productStock: el.stock,
+                      productTitle: aProduct.title,
+                      productNumber: aProduct.number_ordered,
                     }
                   ),
                 });
@@ -433,19 +433,19 @@ export class CartDetailsComponent implements OnInit {
         }
       });
       if (!this.errorStock) {
-        this.cart.forEach((aBook) => {
-          if (aBook.id) {
-            if (aBook.stock && aBook.number_ordered && aBook.soldnumber) {
-              aBook.stock -= aBook.number_ordered;
-              aBook.soldnumber += aBook.number_ordered;
+        this.cart.forEach((aProduct) => {
+          if (aProduct.id) {
+            if (aProduct.stock && aProduct.number_ordered && aProduct.soldnumber) {
+              aProduct.stock -= aProduct.number_ordered;
+              aProduct.soldnumber += aProduct.number_ordered;
 
-              this.bs.updateBook(aBook.id, aBook).subscribe((el) => {});
+              this.ps.updateProduct(aProduct.id, aProduct).subscribe((el) => {});
             }
           }
         });
         this.order.user = this.connectedUser;
 
-        this.order.booklist = this.cart;
+        this.order.productlist = this.cart;
         this.order.totalpricettc = this.cartTotalPriceTtc;
         this.order.totalpriceht = this.cartTotalPriceHt;
         this.order.date = new Date();

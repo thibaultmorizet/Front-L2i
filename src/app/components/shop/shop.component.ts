@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { Book } from 'src/app/interfaces/book';
-import { BookService } from 'src/app/services/book.service';
+import { Product } from 'src/app/interfaces/product';
+import { ProductService } from 'src/app/services/product.service';
 import { FormatService } from 'src/app/services/format.service';
 import { User } from 'src/app/interfaces/user';
 import { Format } from 'src/app/interfaces/format';
 import { Category } from 'src/app/interfaces/category';
-import { Categorieservice } from 'src/app/services/category.service';
+import { Categoryservice } from 'src/app/services/category.service';
 import StorageCrypter from 'storage-crypter';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
@@ -26,16 +26,16 @@ import { TaxeService } from 'src/app/services/taxe.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class ShopComponent implements OnInit {
-  cart: Array<Book> = [];
-  books: Array<Book> = [];
-  allBooks: Array<Book> = [];
+  cart: Array<Product> = [];
+  products: Array<Product> = [];
+  allProducts: Array<Product> = [];
   formats: Array<Format> = [];
   editors: Array<Editor> = [];
   authors: Array<Author> = [];
   categories: Array<Category> = [];
   user: User = {};
-  searchBook: any = {};
-  bookExistinCart: Boolean = false;
+  searchProduct: any = {};
+  productExistinCart: Boolean = false;
   numberToOrder: string = '1';
   storageCrypter = new StorageCrypter('Secret');
   userInscription: User = {};
@@ -43,27 +43,27 @@ export class ShopComponent implements OnInit {
   errorPassword: string | null = null;
   errorEmail: string | null = null;
   connectedUser: User | null = {};
-  actualUpdatebook: Book = {};
+  actualUpdateproduct: Product = {};
   fileToUpload: any = {};
   pageRows: number = 12;
 
   selectedFormat: Array<Format> = [];
   selectedCategory: Array<Category> = [];
   selectedPriceRange: Array<number> = [0, 0];
-  showBooksInStock: boolean = true;
-  filteredBooks: Array<Book> = [];
+  showProductsInStock: boolean = true;
+  filteredProducts: Array<Product> = [];
   maxPrice: number = 0;
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
 
   constructor(
-    private bs: BookService,
+    private ps: ProductService,
     private fs: FormatService,
     private es: EditorService,
     private taxeService: TaxeService,
     private authorService: AuthorService,
-    private ts: Categorieservice,
+    private cs: Categoryservice,
     private router: Router,
     private iziToast: NgxIzitoastService,
     private authService: SocialAuthService,
@@ -75,30 +75,30 @@ export class ShopComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.translate.use(this.translate.getDefaultLang());
 
-    this.bs.getAllBooksWithoutLimit([], [], '', [], true).subscribe((res) => {
-      res.forEach((aBook) => {
+    this.ps.getAllProductsWithoutLimit([], [], '', [], true).subscribe((res) => {
+      res.forEach((aProduct) => {
         if (
-          aBook.unitpriceht &&
-          aBook.taxe?.tva &&
+          aProduct.unitpriceht &&
+          aProduct.taxe?.tva &&
           (Math.ceil(
-            aBook.unitpriceht + (aBook.taxe.tva * aBook.unitpriceht) / 100
+            aProduct.unitpriceht + (aProduct.taxe.tva * aProduct.unitpriceht) / 100
           ) > this.selectedPriceRange[1] ||
             this.selectedPriceRange[1] == undefined)
         ) {
           this.maxPrice = Math.ceil(
-            aBook.unitpriceht + (aBook.taxe.tva * aBook.unitpriceht) / 100
+            aProduct.unitpriceht + (aProduct.taxe.tva * aProduct.unitpriceht) / 100
           );
           this.selectedPriceRange = [
             0,
             Math.ceil(
-              aBook.unitpriceht + (aBook.taxe.tva * aBook.unitpriceht) / 100
+              aProduct.unitpriceht + (aProduct.taxe.tva * aProduct.unitpriceht) / 100
             ),
           ];
         }
       });
     });
-    this.getBooks();
-    this.getAllBooks();
+    this.getProducts();
+    this.getAllProducts();
     this.getAllFormatsfunc();
     this.getAllEditorsfunc();
     this.getAllAuthorsfunc();
@@ -130,28 +130,28 @@ export class ShopComponent implements OnInit {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
-  getBooks() {
-    this.bs.getAllBooks(this.showBooksInStock).subscribe((res) => {
-      this.books = res;
+  getProducts() {
+    this.ps.getAllProducts(this.showProductsInStock).subscribe((res) => {
+      this.products = res;
     });
   }
-  getAllBooks(
+  getAllProducts(
     formatFilter: Array<Format> = [],
     categoryFilter: Array<Category> = [],
-    searchBook: string = '',
+    searchProduct: string = '',
     prices: Array<number> = []
   ) {
-    this.bs
-      .getAllBooksWithoutLimit(
+    this.ps
+      .getAllProductsWithoutLimit(
         formatFilter,
         categoryFilter,
-        searchBook,
+        searchProduct,
         prices,
-        this.showBooksInStock
+        this.showProductsInStock
       )
       .subscribe((res) => {
-        this.allBooks = res;
-        this.filteredBooks = res;
+        this.allProducts = res;
+        this.filteredProducts = res;
       });
   }
   getAllFormatsfunc() {
@@ -170,59 +170,59 @@ export class ShopComponent implements OnInit {
     });
   }
   getAllCategoriesfunc() {
-    this.ts.getAllCategories().subscribe((res) => {
+    this.cs.getAllCategories().subscribe((res) => {
       this.categories = res;
     });
   }
-  getAllBooksByPage(event: any) {
-    this.bs
-      .getAllBooksForPage(
+  getAllProductsByPage(event: any) {
+    this.ps
+      .getAllProductsForPage(
         event.page + 1,
         event.rows,
         this.selectedFormat,
         this.selectedCategory,
-        this.searchBook?.title ?? this.searchBook,
+        this.searchProduct?.title ?? this.searchProduct,
         this.selectedPriceRange,
-        this.showBooksInStock
+        this.showProductsInStock
       )
       .subscribe((res) => {
-        this.books = res;
+        this.products = res;
         this.pageRows = event.rows;
       });
   }
-  getBooksWithFormatAndCategoryAndPriceAndSearch() {
-    this.bs
-      .getAllBooksByFormatAndCategoryAndSearch(
+  getProductsWithFormatAndCategoryAndPriceAndSearch() {
+    this.ps
+      .getAllProductsByFormatAndCategoryAndSearch(
         this.selectedFormat,
         this.selectedCategory,
-        this.searchBook?.title ?? this.searchBook,
+        this.searchProduct?.title ?? this.searchProduct,
         this.selectedPriceRange,
         this.pageRows,
-        this.showBooksInStock
+        this.showProductsInStock
       )
       .subscribe((res) => {
-        this.books = res;
-        this.bs
-          .getAllBooksByFormatAndCategoryAndSearch(
+        this.products = res;
+        this.ps
+          .getAllProductsByFormatAndCategoryAndSearch(
             this.selectedFormat,
             this.selectedCategory,
-            this.searchBook?.title ?? this.searchBook,
+            this.searchProduct?.title ?? this.searchProduct,
             this.selectedPriceRange,
             10000,
-            this.showBooksInStock
+            this.showProductsInStock
           )
           .subscribe((el) => {
-            this.filteredBooks = el;
+            this.filteredProducts = el;
           });
       });
   }
-  addBookToCart(bookId: number | undefined) {
-    this.bookExistinCart = false;
-    if (bookId != undefined) {
-      this.bs.getOneBook(bookId).subscribe((res) => {
+  addProductToCart(productId: number | undefined) {
+    this.productExistinCart = false;
+    if (productId != undefined) {
+      this.ps.getOneProduct(productId).subscribe((res) => {
         this.cart.forEach((el) => {
           if (res.id == el.id) {
-            this.bookExistinCart = true;
+            this.productExistinCart = true;
 
             if (
               el.stock &&
@@ -234,9 +234,9 @@ export class ShopComponent implements OnInit {
                 message: this.translate.instant(
                   'izitoast.lack_of_stock_message',
                   {
-                    bookStock: res.stock,
-                    bookTitle: res.title,
-                    bookNumber: el.number_ordered + 1,
+                    productStock: res.stock,
+                    productTitle: res.title,
+                    productNumber: el.number_ordered + 1,
                   }
                 ),
                 position: 'topRight',
@@ -259,7 +259,7 @@ export class ShopComponent implements OnInit {
                   }
                 }
                 this.iziToast.success({
-                  message: this.translate.instant('izitoast.book_add_to_cart'),
+                  message: this.translate.instant('izitoast.product_add_to_cart'),
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -272,16 +272,16 @@ export class ShopComponent implements OnInit {
           }
         });
 
-        if (!this.bookExistinCart) {
+        if (!this.productExistinCart) {
           if (res.stock && 1 > res.stock) {
             this.iziToast.error({
               title: this.translate.instant('izitoast.lack_of_stock'),
               message: this.translate.instant(
                 'izitoast.lack_of_stock_message',
                 {
-                  bookStock: res.stock,
-                  bookTitle: res.title,
-                  bookNumber: 1,
+                  productStock: res.stock,
+                  productTitle: res.title,
+                  productNumber: 1,
                 }
               ),
               position: 'topRight',
@@ -304,7 +304,7 @@ export class ShopComponent implements OnInit {
 
             this.cart.push(res);
             this.iziToast.success({
-              message: this.translate.instant('izitoast.book_add_to_cart'),
+              message: this.translate.instant('izitoast.product_add_to_cart'),
               position: 'topRight',
             });
             this.storageCrypter.setItem(
@@ -333,18 +333,18 @@ export class ShopComponent implements OnInit {
     });
   }
 
-  filterBook(event: any) {
+  filterProduct(event: any) {
     let filtered: any[] = [];
     let query = event.query;
-    for (let i = 0; i < this.allBooks.length; i++) {
-      let book = this.allBooks[i];
+    for (let i = 0; i < this.allProducts.length; i++) {
+      let product = this.allProducts[i];
       if (
-        book.title &&
-        book.title.toLowerCase().indexOf(query.toLowerCase()) == 0
+        product.title &&
+        product.title.toLowerCase().indexOf(query.toLowerCase()) == 0
       ) {
-        filtered.push(book);
-      } else if (book.author) {
-        book.author.forEach((anAuthor) => {
+        filtered.push(product);
+      } else if (product.author) {
+        product.author.forEach((anAuthor) => {
           if (
             (anAuthor.firstname &&
               anAuthor.firstname.toLowerCase().indexOf(query.toLowerCase()) ==
@@ -352,27 +352,27 @@ export class ShopComponent implements OnInit {
             (anAuthor.lastname &&
               anAuthor.lastname.toLowerCase().indexOf(query.toLowerCase()) == 0)
           ) {
-            filtered.push(book);
+            filtered.push(product);
           }
         });
       }
     }
 
-    this.filteredBooks = filtered;
+    this.filteredProducts = filtered;
   }
 
-  updateShowBooksInStock() {
-    this.showBooksInStock = !this.showBooksInStock;
-    this.getBooksWithFormatAndCategoryAndPriceAndSearch();
+  updateShowProductsInStock() {
+    this.showProductsInStock = !this.showProductsInStock;
+    this.getProductsWithFormatAndCategoryAndPriceAndSearch();
   }
 
   clearAllFilter() {
     this.selectedFormat = [];
     this.selectedCategory = [];
     this.selectedPriceRange = [0, this.maxPrice];
-    this.showBooksInStock = true;
-    this.searchBook = null;
-    this.getBooksWithFormatAndCategoryAndPriceAndSearch();
+    this.showProductsInStock = true;
+    this.searchProduct = null;
+    this.getProductsWithFormatAndCategoryAndPriceAndSearch();
   }
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,

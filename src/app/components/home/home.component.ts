@@ -5,10 +5,10 @@ import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { PrimeNGConfig } from 'primeng/api';
 import { CarouselModule } from 'primeng/carousel';
-import { Book } from 'src/app/interfaces/book';
+import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { BookService } from 'src/app/services/book.service';
+import { ProductService } from 'src/app/services/product.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -18,12 +18,12 @@ import StorageCrypter from 'storage-crypter';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
-  cart: Array<Book> = [];
+  cart: Array<Product> = [];
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User | null = {};
-  bookBestSell: Array<Book> = [];
+  productBestSell: Array<Product> = [];
   responsiveOptions: any;
-  bookExistinCart: Boolean = false;
+  productExistinCart: Boolean = false;
   @ViewChild('bestSellCarousel') bestSellCarousel?: CarouselModule;
   carouselIsLoaded: boolean = false;
 
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private as: AuthService,
-    private bs: BookService,
+    private ps: ProductService,
     private authService: SocialAuthService,
     private router: Router,
     private iziToast: NgxIzitoastService,
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
       },
     ];
 
-    this.getBooksBestSell();
+    this.getProductsBestSell();
     try {
       this.connectedUser = JSON.parse(
         this.storageCrypter.getItem('user', 'session')
@@ -106,9 +106,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  getBooksBestSell() {
-    this.bs.getBooksBestSell().subscribe((res) => {
-      this.bookBestSell = res;
+  getProductsBestSell() {
+    this.ps.getProductsBestSell().subscribe((res) => {
+      this.productBestSell = res;
     });
   }
   tokenExpired(token: string) {
@@ -131,24 +131,24 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  nextBestBook() {
+  nextBestProduct() {
     (
       document.getElementsByClassName('p-carousel-next')[0] as HTMLElement
     ).click();
   }
 
-  prevBestBook() {
+  prevBestProduct() {
     (
       document.getElementsByClassName('p-carousel-prev')[0] as HTMLElement
     ).click();
   }
-  addBookToCart(bookId: number | undefined) {
-    this.bookExistinCart = false;
-    if (bookId != undefined) {
-      this.bs.getOneBook(bookId).subscribe((res) => {
+  addProductToCart(productId: number | undefined) {
+    this.productExistinCart = false;
+    if (productId != undefined) {
+      this.ps.getOneProduct(productId).subscribe((res) => {
         this.cart.forEach((el) => {
           if (res.id == el.id) {
-            this.bookExistinCart = true;
+            this.productExistinCart = true;
 
             if (
               el.stock &&
@@ -160,9 +160,9 @@ export class HomeComponent implements OnInit {
                 message: this.translate.instant(
                   'izitoast.lack_of_stock_message',
                   {
-                    bookStock: res.stock,
-                    bookTitle: res.title,
-                    bookNumber: el.number_ordered + 1,
+                    productStock: res.stock,
+                    productTitle: res.title,
+                    productNumber: el.number_ordered + 1,
                   }
                 ),
                 position: 'topRight',
@@ -184,7 +184,7 @@ export class HomeComponent implements OnInit {
                   }
                 }
                 this.iziToast.success({
-                  message: this.translate.instant('izitoast.book_add_to_cart'),
+                  message: this.translate.instant('izitoast.product_add_to_cart'),
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -197,16 +197,16 @@ export class HomeComponent implements OnInit {
           }
         });
 
-        if (!this.bookExistinCart) {
+        if (!this.productExistinCart) {
           if (res.stock && 1 > res.stock) {
             this.iziToast.error({
               title: this.translate.instant('izitoast.lack_of_stock'),
               message: this.translate.instant(
                 'izitoast.lack_of_stock_message',
                 {
-                  bookStock: res.stock,
-                  bookTitle: res.title,
-                  bookNumber: 1,
+                  productStock: res.stock,
+                  productTitle: res.title,
+                  productNumber: 1,
                 }
               ),
               position: 'topRight',
@@ -229,7 +229,7 @@ export class HomeComponent implements OnInit {
 
             this.cart.push(res);
             this.iziToast.success({
-              message: this.translate.instant('izitoast.book_add_to_cart'),
+              message: this.translate.instant('izitoast.product_add_to_cart'),
               position: 'topRight',
             });
             this.storageCrypter.setItem(

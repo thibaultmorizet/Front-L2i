@@ -1,10 +1,10 @@
-import { Book } from './book';
+import { Product } from './product';
 import { User } from './user';
 
 export interface Order {
   id?: number;
   user?: User;
-  booklist?: Array<Book>;
+  productlist?: Array<Product>;
   totalpricettc?: number;
   totalpriceht?: number;
   deliveryaddress?: string;

@@ -398,29 +398,29 @@
           <div class="order-general-product">
             <div
               class="order-product-container"
-              *ngFor="let aBook of anOrder.booklist"
+              *ngFor="let aProduct of anOrder.productlist"
             >
               <div>
-                <img src="{{ aBook.image }}" alt="" class="order-img-icon" />
+                <img src="{{ aProduct.image }}" alt="" class="order-img-icon" />
               </div>
               <div class="order-product-middle-info">
-                <div class="order-product-title">{{ aBook.title }}</div>
+                <div class="order-product-title">{{ aProduct.title }}</div>
                 <div class="order-product-quantity">
                   {{ "general.quantity" | translate }} :
-                  {{ aBook.number_ordered }}
+                  {{ aProduct.number_ordered }}
                 </div>
               </div>
               <div class="order-product-price">
                 <p>
                   {{
                     getUnitpricettcFromUnitpricehtAndTva(
-                      aBook.unitpriceht,
-                      aBook.taxe?.tva
+                      aProduct.unitpriceht,
+                      aProduct.taxe?.tva
                     )
                   }}
                   € (TTC)
                 </p>
-                <p class="text-small">{{ aBook.unitpriceht }} € (HT)</p>
+                <p class="text-small">{{ aProduct.unitpriceht }} € (HT)</p>
               </div>
             </div>
           </div>

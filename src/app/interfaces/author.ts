@@ -1,4 +1,4 @@
-import { Book } from './book';
+import { Product } from './product';
 
 export interface Author {
   id?: number;
@@ -6,5 +6,5 @@ export interface Author {
   lastname?: string;
   language?: string;
   name?: string;
-  books?: Array<Book>;
+  products?: Array<Product>;
 }

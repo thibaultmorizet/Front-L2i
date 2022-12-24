@@ -5,7 +5,7 @@
     <div class="container">
       <p-table
         #dt
-        [value]="allBooks"
+        [value]="allProducts"
         [rows]="12"
         [paginator]="true"
         [globalFilterFields]="['title']"
@@ -23,7 +23,7 @@
         [showCurrentPageReport]="true"
       >
         <ng-template pTemplate="caption">
-          <div class="manage-books">
+          <div class="manage-products">
             <h5 class="m-0">{{ "admin_home.stats" | translate }}</h5>
             <span class="p-input-icon-left">
               <i class="pi pi-search"></i>
@@ -65,26 +65,26 @@
             </th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-book>
+        <ng-template pTemplate="body" let-product>
           <tr>
             <td>
               <img
-                [src]="book.image"
-                [alt]="book.title"
+                [src]="product.image"
+                [alt]="product.title"
                 width="100"
                 class="img-icon"
               />
             </td>
-            <td>{{ book.title }}</td>
-            <td>{{ book.soldnumber ?? 0 }}</td>
-            <td>{{ book.visitnumber ?? 0 }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.soldnumber ?? 0 }}</td>
+            <td>{{ product.visitnumber ?? 0 }}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
           <div class="flex align-items-center justify-content-between">
             {{
-              "admin_books.total_books_message"
-                | translate : { bookLength: allBooks ? allBooks.length : 0 }
+              "admin_products.total_products_message"
+                | translate : { productLength: allProducts ? allProducts.length : 0 }
             }}
           </div>
         </ng-template>

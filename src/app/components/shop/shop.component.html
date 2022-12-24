@@ -6,22 +6,22 @@
       <div class="filter-list-search-bar">
         <div class="filter-search">
           <p-autoComplete
-            placeholder="{{ 'book.search' | translate }}"
-            [(ngModel)]="searchBook"
+            placeholder="{{ 'product.search' | translate }}"
+            [(ngModel)]="searchProduct"
             [showEmptyMessage]="true"
-            [suggestions]="filteredBooks"
-            (completeMethod)="filterBook($event)"
+            [suggestions]="filteredProducts"
+            (completeMethod)="filterProduct($event)"
             field="title"
             [minLength]="1"
-            (onSelect)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
-            (onBlur)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
+            (onSelect)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
+            (onBlur)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
           ></p-autoComplete>
           <button
             pButton
             pRipple
             type="button"
             class="btn btn-primary-color button-search"
-            (click)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
+            (click)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
           >
             <i class="fa fa-search"></i>
           </button>
@@ -31,25 +31,25 @@
             <p-multiSelect
               [options]="formats"
               [(ngModel)]="selectedFormat"
-              defaultLabel="{{ 'book.format' | translate }}"
+              defaultLabel="{{ 'product.format' | translate }}"
               optionLabel="name"
               display="chip"
-              (onChange)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
+              (onChange)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
             ></p-multiSelect>
           </div>
           <div>
             <p-multiSelect
               [options]="categories"
               [(ngModel)]="selectedCategory"
-              defaultLabel="{{ 'book.category' | translate }}"
+              defaultLabel="{{ 'product.category' | translate }}"
               optionLabel="name"
               display="chip"
-              (onChange)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
+              (onChange)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
             ></p-multiSelect>
           </div>
           <div>
             <p class="price-range-title">
-              {{ "book.price_range" | translate }} :
+              {{ "product.price_range" | translate }} :
               {{
                 selectedPriceRange[0] + " € - " + selectedPriceRange[1] + " €"
               }}
@@ -57,7 +57,7 @@
             <p-slider
               [(ngModel)]="selectedPriceRange"
               [range]="true"
-              (onSlideEnd)="getBooksWithFormatAndCategoryAndPriceAndSearch()"
+              (onSlideEnd)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
               [min]="0"
               [max]="maxPrice"
             ></p-slider>
@@ -68,18 +68,18 @@
               pRipple
               type="button"
               [ngClass]="{
-                'p-button-primary-color': showBooksInStock,
-                'btn-primary-color': showBooksInStock,
-                'p-button-outline-primary-color': !showBooksInStock,
-                'btn-outline-primary-color': !showBooksInStock
+                'p-button-primary-color': showProductsInStock,
+                'btn-primary-color': showProductsInStock,
+                'p-button-outline-primary-color': !showProductsInStock,
+                'btn-outline-primary-color': !showProductsInStock
               }"
-              (click)="updateShowBooksInStock()"
+              (click)="updateShowProductsInStock()"
             >
-              <span *ngIf="showBooksInStock">{{
-                "book.only_books_in_stock" | translate
+              <span *ngIf="showProductsInStock">{{
+                "product.only_products_in_stock" | translate
               }}</span>
-              <span *ngIf="!showBooksInStock">{{
-                "book.only_books_out_of_stock" | translate
+              <span *ngIf="!showProductsInStock">{{
+                "product.only_products_out_of_stock" | translate
               }}</span>
             </button>
           </div>
@@ -92,39 +92,39 @@
               class="p-button-raised p-button-just-text"
               (click)="clearAllFilter()"
             >
-              {{ "book.clear_all" | translate }}
+              {{ "product.clear_all" | translate }}
             </button>
           </div>
         </div>
       </div>
       <div class="shop-article-list">
-        <div class="shop-article" *ngFor="let aBook of books">
+        <div class="shop-article" *ngFor="let aProduct of products">
           <div class="shop-article-img">
-            <a [routerLink]="['/books/' + aBook.id]">
-              <img src="{{ aBook.image }}" alt="" class="img-icon"
+            <a [routerLink]="['/products/' + aProduct.id]">
+              <img src="{{ aProduct.image }}" alt="" class="img-icon"
             /></a>
-            <div class="out-of-stock-message" *ngIf="aBook.stock == 0">
+            <div class="out-of-stock-message" *ngIf="aProduct.stock == 0">
               {{ "general.out_of_stock" | translate }}
             </div>
           </div>
           <div
             class="shop-article-info-title"
-            [routerLink]="['/books/' + aBook.id]"
+            [routerLink]="['/products/' + aProduct.id]"
           >
-            {{ aBook.title }}
+            {{ aProduct.title }}
           </div>
 
           <div
             class="shop-article-add-to-cart-message"
-            (click)="addBookToCart(aBook.id)"
+            (click)="addProductToCart(aProduct.id)"
             pRipple
           >
             <i class="pi pi-shopping-cart"></i>
             <span
               >{{
                 getUnitpricettcFromUnitpricehtAndTva(
-                  aBook.unitpriceht,
-                  aBook.taxe?.tva
+                  aProduct.unitpriceht,
+                  aProduct.taxe?.tva
                 )
               }}
               €
@@ -134,9 +134,9 @@
       </div>
       <p-paginator
         [rows]="12"
-        [totalRecords]="filteredBooks.length"
+        [totalRecords]="filteredProducts.length"
         [rowsPerPageOptions]="[12, 18, 24]"
-        (onPageChange)="getAllBooksByPage($event)"
+        (onPageChange)="getAllProductsByPage($event)"
       ></p-paginator>
     </div>
   </main>

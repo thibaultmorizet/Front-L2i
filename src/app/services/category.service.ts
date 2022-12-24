@@ -5,7 +5,7 @@ import { Category } from '../interfaces/category';
 @Injectable({
   providedIn: 'root',
 })
-export class Categorieservice {
+export class Categoryservice {
   private url: string = 'https://thibaultmorizet.fr/ws/categories';
   private categories: Array<object> = [];
 

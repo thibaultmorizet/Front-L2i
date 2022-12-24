@@ -7,7 +7,7 @@
         <div>
           <p-carousel
             #bestSellCarousel
-            [value]="bookBestSell"
+            [value]="productBestSell"
             styleClass="custom-carousel"
             [numVisible]="1"
             [numScroll]="1"
@@ -27,35 +27,35 @@
               ></p-skeleton>
             </ng-template>
 
-            <ng-template let-oneBook pTemplate="item">
+            <ng-template let-oneProduct pTemplate="item">
               <div class="best-sell-container">
                 <div class="best-sell-img">
                   <img
-                    src="{{ oneBook.image }}"
-                    [alt]="oneBook.title"
+                    src="{{ oneProduct.image }}"
+                    [alt]="oneProduct.title"
                     class="img-best-sell pointer"
-                    [routerLink]="['/books/', oneBook.id]"
+                    [routerLink]="['/products/', oneProduct.id]"
                     (load)="carouselIsLoaded = true"
                   />
                 </div>
 
                 <span
                   class="best-sell-title pointer"
-                  [routerLink]="['/books/', oneBook.id]"
-                  >{{ oneBook.title }}</span
+                  [routerLink]="['/products/', oneProduct.id]"
+                  >{{ oneProduct.title }}</span
                 >
 
                 <div
                   class="best-sell-add-to-cart-message"
-                  (click)="addBookToCart(oneBook.id)"
+                  (click)="addProductToCart(oneProduct.id)"
                   pRipple
                 >
                   <i class="pi pi-shopping-cart"></i>
                   <span
                     >{{
                       getUnitpricettcFromUnitpricehtAndTva(
-                        oneBook.unitpriceht,
-                        oneBook.taxe?.tva
+                        oneProduct.unitpriceht,
+                        oneProduct.taxe?.tva
                       )
                     }}
                     €
@@ -71,7 +71,7 @@
             pRipple
             type="button"
             class="p-button-raised p-button-primary-color best-sell-button best-sell-button-prev"
-            (click)="prevBestBook()"
+            (click)="prevBestProduct()"
           >
             <i class="far fa-arrow-left"></i> {{ "home.prev" | translate }}
           </button>
@@ -80,7 +80,7 @@
             pRipple
             type="button"
             class="p-button-raised p-button-primary-color best-sell-button best-sell-button-next"
-            (click)="nextBestBook()"
+            (click)="nextBestProduct()"
           >
             {{ "home.next" | translate }} <i class="far fa-arrow-right"></i>
           </button>
