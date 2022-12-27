@@ -109,7 +109,11 @@ export class LoginComponent implements OnInit {
           position: 'topRight',
         });
       } else {
-        if (theUser[0].token == null || this.loginAfterRegister) {
+        if (
+          theUser[0].token == '' ||
+          theUser[0].token == null ||
+          this.loginAfterRegister
+        ) {
           this.errorEmail = null;
           this.as.login(this.userLogin).subscribe({
             next: (res) => {
@@ -202,7 +206,9 @@ export class LoginComponent implements OnInit {
               this.loginAfterRegister = false;
               this.authService.signOut();
               this.iziToast.success({
-                message: this.translate.instant('general.this_email_is_already_use'),
+                message: this.translate.instant(
+                  'general.this_email_is_already_use'
+                ),
                 position: 'topRight',
               });
             }
