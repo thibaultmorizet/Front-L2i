@@ -3,6 +3,7 @@ import { Author } from "./author";
 import { Editor } from "./editor";
 import { Format } from "./format";
 import { Taxe } from "./taxe";
+import { Comment } from "./comment";
 
 export interface Product {
     id?: number;
@@ -23,4 +24,5 @@ export interface Product {
     totalpriceht?: number;
     visitnumber?:number;
     soldnumber?:number;
+    comments?:Array<Comment>;
 }

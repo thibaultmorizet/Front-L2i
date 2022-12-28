@@ -123,7 +123,14 @@
   },
   "product_details": {
     "product_details": "Détails du produit",
-    "summary": "Résumé"
+    "summary": "Résumé",
+    "comments": "Commentaires",
+    "days_ago": "il y a {count} {count, plural, =1 {jour} other {jours}}",
+    "hours_ago": "il y a {count} {count, plural, =1 {heure} other {heures}}",
+    "minutes_ago": "il y a {count} {count, plural, =1 {minute} other {minutes}}",
+    "seconds_ago": "il y a {count} {count, plural, =1 {seconde} other {secondes}}",
+    "on_date_at_hour": "le {date} à {hours}"
+
   },
   "cart_details": {
     "add_billing_address": "Ajouter une adresse de facturation",

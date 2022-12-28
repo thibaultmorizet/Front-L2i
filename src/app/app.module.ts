@@ -59,7 +59,13 @@ import { LegalNoticesComponent } from './components/legal-notices/legal-notices.
 import { ContactComponent } from './components/contact/contact.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {
+  TranslateLoader,
+  TranslateCompiler,
+  TranslateModule,
+} from '@ngx-translate/core';
+import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
+
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminHeaderComponent } from './components/partial/admin-header/admin-header.component';
@@ -136,6 +142,10 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
+      },
+      compiler: {
+        provide: TranslateCompiler,
+        useClass: TranslateMessageFormatCompiler,
       },
     }),
     ToastModule,

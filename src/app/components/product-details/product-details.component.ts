@@ -46,7 +46,19 @@ export class ProductDetailsComponent implements OnInit {
     this.route.paramMap.subscribe((res) => {
       this.idProduct = +(res.get('id') ?? '0');
       this.ps.getOneProduct(this.idProduct).subscribe((b) => {
-        this.product = b;        
+        this.product = b;
+        if (this.product.comments) {
+          this.product.comments.sort((objA, objB) => {
+            if (objB.createdAt != undefined && objA.createdAt != undefined) {
+              let date1 = new Date(objA.createdAt);
+              let date2 = new Date(objB.createdAt);
+
+              return date2.getTime() - date1.getTime();
+            }
+            return 0;
+          });
+        }
+
         this.product.number_ordered = 1;
         if (this.product.visitnumber) {
           this.product.visitnumber += 1;
@@ -54,7 +66,9 @@ export class ProductDetailsComponent implements OnInit {
           this.product.visitnumber = 1;
         }
 
-        this.ps.updateProduct(this.product.id, this.product).subscribe(() => {});
+        this.ps
+          .updateProduct(this.product.id, this.product)
+          .subscribe(() => {});
       });
       try {
         this.connectedUser = JSON.parse(
@@ -104,7 +118,8 @@ export class ProductDetailsComponent implements OnInit {
                   {
                     productStock: res.stock,
                     productTitle: res.title,
-                    productNumber: el.number_ordered + productToOrder.number_ordered,
+                    productNumber:
+                      el.number_ordered + productToOrder.number_ordered,
                   }
                 ),
                 position: 'topRight',
@@ -132,7 +147,9 @@ export class ProductDetailsComponent implements OnInit {
                 }
 
                 this.iziToast.success({
-                  message: this.translate.instant('izitoast.product_add_to_cart'),
+                  message: this.translate.instant(
+                    'izitoast.product_add_to_cart'
+                  ),
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -224,4 +241,45 @@ export class ProductDetailsComponent implements OnInit {
       return null;
     }
   }
+
+  getCommentDate(createdAt: Date | undefined) {
+    if (typeof createdAt == 'string') {
+      const date = new Date(createdAt);
+      date.setHours(date.getHours() - 1);
+      const now = new Date();
+      const time = now.getTime() - date.getTime();
+      const msInDay = 24 * 60 * 60 * 1000;
+      const msInHour = 60 * 60 * 1000;
+      const msInMinute = 60 * 1000;
+      const msInSecond = 1000;
+
+      if (time / msInDay >= 7) {
+        return this.translate.instant('product_details.on_date_at_hour', {
+          date: date.toLocaleDateString(),
+          hours: date.getHours() + ':' + date.getMinutes(),
+        });
+      } else if (time / msInDay >= 1) {
+        return this.translate.instant('product_details.days_ago', {
+          count: (time / msInDay).toFixed(0),
+        });
+      } else if (time / msInHour >= 1) {
+        return this.translate.instant('product_details.hours_ago', {
+          count: (time / msInHour).toFixed(0),
+        });
+      } else if (time / msInMinute >= 1) {
+        return this.translate.instant('product_details.minutes_ago', {
+          count: (time / msInMinute).toFixed(0),
+        });
+      } else if (time / msInSecond >= 1) {
+        return this.translate.instant('product_details.secondes_ago', {
+          count: (time / msInSecond).toFixed(0),
+        });
+      } else {
+        return '';
+      }
+    } else {
+      return '';
+    }
+  }
+  deleteComment(id: number | undefined) {}
 }

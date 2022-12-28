@@ -123,7 +123,13 @@
   },
   "product_details": {
     "product_details": "Product details",
-    "summary": "Summary"
+    "summary": "Summary",
+    "comments": "Comments",
+    "days_ago": "{count} {count, plural, =1 {day} other {days}} ago",
+    "hours_ago": "{count} {count, plural, =1 {hour} other {hours}} ago",
+    "minutes_ago": "{count} {count, plural, =1 {minute} other {minutes}} ago",
+    "seconds_ago": "{count} {count, plural, =1 {second} other {seconds}} ago",
+    "on_date_at_hour": "on {date} at {hours}"
   },
   "cart_details": {
     "add_billing_address": "Add billing address",
