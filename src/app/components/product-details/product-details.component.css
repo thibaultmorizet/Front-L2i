@@ -185,7 +185,15 @@
 }
 
 .delete-comment-button:hover {
-    color: #dc3546ca!important;
+    color: #dc3546ca !important;
+}
+
+.delete-comment-button.disabled {
+    color: #dc3546b3;
+    font-weight: 700;
+    background: none !important;
+    border: none !important;
+    cursor:unset!important;
 }
 
 @media (min-width: 650px) {

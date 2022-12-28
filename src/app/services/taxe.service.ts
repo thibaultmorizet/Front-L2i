@@ -7,7 +7,6 @@ import { Taxe } from '../interfaces/taxe';
 })
 export class TaxeService {
   private url: string = 'https://thibaultmorizet.fr/ws/taxes';
-  private taxes: Array<object> = [];
 
   constructor(private http: HttpClient) {}
 
@@ -30,10 +29,6 @@ export class TaxeService {
 
   updateTaxe(id: number | undefined, taxe: Taxe) {
     return this.http.put<{ token: string }>(this.url + '/' + id, taxe);
-  }
-
-  createTaxe(taxe: Taxe) {
-    return this.http.post<Taxe>(this.url, taxe);
   }
 
   deleteTheTaxe(id: number | undefined) {

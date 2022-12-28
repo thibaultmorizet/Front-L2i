@@ -129,7 +129,10 @@
     "hours_ago": "{count} {count, plural, =1 {hour} other {hours}} ago",
     "minutes_ago": "{count} {count, plural, =1 {minute} other {minutes}} ago",
     "seconds_ago": "{count} {count, plural, =1 {second} other {seconds}} ago",
-    "on_date_at_hour": "on {date} at {hours}"
+    "on_date_at_hour": "on {date} at {hours}",
+    "you_can_t_delete_this_comment":"You can't delete this comment",
+    "comment_deleted": "Comment deleted"
+
   },
   "cart_details": {
     "add_billing_address": "Add billing address",

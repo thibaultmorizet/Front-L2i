@@ -129,8 +129,9 @@
     "hours_ago": "il y a {count} {count, plural, =1 {heure} other {heures}}",
     "minutes_ago": "il y a {count} {count, plural, =1 {minute} other {minutes}}",
     "seconds_ago": "il y a {count} {count, plural, =1 {seconde} other {secondes}}",
-    "on_date_at_hour": "le {date} à {hours}"
-
+    "on_date_at_hour": "le {date} à {hours}",
+    "you_can_t_delete_this_comment": "Vous ne pouvez pas supprimer ce commentaire",
+    "comment_deleted": "Commentaire supprimé"
   },
   "cart_details": {
     "add_billing_address": "Ajouter une adresse de facturation",

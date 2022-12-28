@@ -154,7 +154,6 @@ export class AdminProductsComponent implements OnInit {
     });
     this.product = { ...product };
     this.productDialog = true;
-    console.log(this.product);
   }
 
   deleteproduct(product: Product) {

@@ -8,6 +8,7 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
+import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: 'app-product-details',
@@ -26,6 +27,7 @@ export class ProductDetailsComponent implements OnInit {
   errorEmail: string | null = null;
   connectedUser: User | null = {};
   productDetailsImgCoverIsLoaded: boolean = false;
+  deleteCommentButtonDisable: boolean = false;
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -37,7 +39,8 @@ export class ProductDetailsComponent implements OnInit {
     private router: Router,
     private iziToast: NgxIzitoastService,
     private authService: SocialAuthService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private commentService: CommentService
   ) {}
 
   ngOnInit(): void {
@@ -281,5 +284,41 @@ export class ProductDetailsComponent implements OnInit {
       return '';
     }
   }
-  deleteComment(id: number | undefined) {}
+  deleteComment(id: number | undefined) {
+    this.deleteCommentButtonDisable = true;
+    this.commentService.getCommentById(id).subscribe((el) => {
+      if (typeof el[0] == 'object' && el[0].user) {
+        if (
+          parseInt(el[0].user.toString().substring(10)) ==
+          this.connectedUser?.id
+        ) {
+          this.commentService.deleteTheComment(el[0].id).subscribe((res) => {
+            if (this.product.comments) {
+              this.product.comments.forEach(function (element, index, object) {
+                if (element.id == el[0].id) {
+                  object.splice(index, 1);
+                }
+              });
+            }
+
+            this.iziToast.success({
+              message: this.translate.instant(
+                'product_details.comment_deleted'
+              ),
+              position: 'topRight',
+            });
+            this.deleteCommentButtonDisable = false;
+          });
+        } else {
+          this.iziToast.error({
+            message: this.translate.instant(
+              'product_details.you_can_t_delete_this_comment'
+            ),
+            position: 'topRight',
+          });
+          this.deleteCommentButtonDisable = false;
+        }
+      }
+    });
+  }
 }
