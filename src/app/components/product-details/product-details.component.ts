@@ -9,12 +9,15 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { TranslateService } from '@ngx-translate/core';
 import { CommentService } from 'src/app/services/comment.service';
+import { Comment } from 'src/app/interfaces/comment';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css', './../../../css/main.css'],
   encapsulation: ViewEncapsulation.None,
+  providers: [ConfirmationService],
 })
 export class ProductDetailsComponent implements OnInit {
   product: Product = {};
@@ -28,6 +31,7 @@ export class ProductDetailsComponent implements OnInit {
   connectedUser: User | null = {};
   productDetailsImgCoverIsLoaded: boolean = false;
   deleteCommentButtonDisable: boolean = false;
+  commentToSend: Comment = {};
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -40,7 +44,8 @@ export class ProductDetailsComponent implements OnInit {
     private iziToast: NgxIzitoastService,
     private authService: SocialAuthService,
     private translate: TranslateService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -248,7 +253,6 @@ export class ProductDetailsComponent implements OnInit {
   getCommentDate(createdAt: Date | undefined) {
     if (typeof createdAt == 'string') {
       const date = new Date(createdAt);
-      date.setHours(date.getHours() - 1);
       const now = new Date();
       const time = now.getTime() - date.getTime();
       const msInDay = 24 * 60 * 60 * 1000;
@@ -274,7 +278,7 @@ export class ProductDetailsComponent implements OnInit {
           count: (time / msInMinute).toFixed(0),
         });
       } else if (time / msInSecond >= 1) {
-        return this.translate.instant('product_details.secondes_ago', {
+        return this.translate.instant('product_details.seconds_ago', {
           count: (time / msInSecond).toFixed(0),
         });
       } else {
@@ -284,14 +288,23 @@ export class ProductDetailsComponent implements OnInit {
       return '';
     }
   }
+  confirmDeleteComment(id: number | undefined) {
+    this.confirmationService.confirm({
+      message: this.translate.instant(
+        'product_details.are_you_sure_that_you_want_delete_this_comment'
+      ),
+      header: this.translate.instant('product_details.delete_this_comment'),
+      dismissableMask: true,
+      accept: () => {
+        this.deleteComment(id);
+      },
+    });
+  }
   deleteComment(id: number | undefined) {
     this.deleteCommentButtonDisable = true;
     this.commentService.getCommentById(id).subscribe((el) => {
       if (typeof el[0] == 'object' && el[0].user) {
-        if (
-          parseInt(el[0].user.toString().substring(10)) ==
-          this.connectedUser?.id
-        ) {
+        if (el[0].user.id == this.connectedUser?.id) {
           this.commentService.deleteTheComment(el[0].id).subscribe((res) => {
             if (this.product.comments) {
               this.product.comments.forEach(function (element, index, object) {
@@ -300,7 +313,6 @@ export class ProductDetailsComponent implements OnInit {
                 }
               });
             }
-
             this.iziToast.success({
               message: this.translate.instant(
                 'product_details.comment_deleted'
@@ -320,5 +332,31 @@ export class ProductDetailsComponent implements OnInit {
         }
       }
     });
+  }
+
+  sendComment() {
+    if (this.commentToSend.text != '') {
+      if (this.connectedUser && this.product) {
+        this.commentToSend.user = this.connectedUser;
+        this.commentToSend.product = this.product;
+        this.commentToSend.createdAt = new Date();
+
+        this.commentService.setComment(this.commentToSend).subscribe((el) => {
+          if (typeof el == 'object') {
+            this.product.comments?.unshift(el);
+            this.iziToast.success({
+              message: this.translate.instant('product_details.comment_sent'),
+              position: 'topRight',
+            });
+            this.commentToSend = {};
+          } else {
+            this.iziToast.error({
+              message: this.translate.instant('general.error'),
+              position: 'topRight',
+            });
+          }
+        });
+      }
+    }
   }
 }

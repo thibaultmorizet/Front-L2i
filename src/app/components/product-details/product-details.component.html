@@ -13,7 +13,16 @@
         src="https://www.thibaultmorizet.fr/assets/background-images/productDetails2.png"
         alt="productDetails2Img"
       />
-
+      <p-confirmDialog
+        [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+        [style]="{ width: '50vw' }"
+        [baseZIndex]="10000"
+        rejectButtonStyleClass="p-button-outline-danger"
+        acceptButtonStyleClass="p-button-valid"
+        acceptLabel="{{ 'general.yes' | translate }}"
+        rejectLabel="{{ 'general.no' | translate }}"
+      >
+      </p-confirmDialog>
       <div class="product-details-container">
         <div class="product-general-details">
           <div class="product-details-image-and-title">
@@ -95,6 +104,89 @@
         </div>
         <p-divider class="product-details-divider"></p-divider>
         <p-tabView>
+          <p-tabPanel header="{{ 'product_details.comments' | translate }}">
+            <ul
+              class="product-details-comment-container list-none m-0"
+              *ngIf="product.comments?.length"
+            >
+              <li>
+                <form
+                  #commentForm="ngForm"
+                  role="comment"
+                  (ngSubmit)="sendComment()"
+                >
+                  <div
+                    class="d-flex justify-content-between mt-2 align-items-center"
+                  >
+                    <textarea
+                      [(ngModel)]="commentToSend.text"
+                      placeholder="{{
+                        'product_details.write_you_re_comment_here' | translate
+                      }}"
+                      id="comment"
+                      name="comment"
+                      type="text"
+                      rows="1"
+                      pInputTextarea
+                      class="form-control"
+                      [autoResize]="true"
+                    ></textarea>
+
+                    <button
+                      pButton
+                      pRipple
+                      type="submit"
+                      class="p-button-raised p-button-primary-color btn-primary-color send-comment-button"
+                      [disabled]="
+                        commentToSend.text == undefined ||
+                        commentToSend.text == ''
+                      "
+                      icon="pi pi-send"
+                    ></button>
+                  </div>
+                </form>
+                <p-divider class="product-details-divider"></p-divider>
+              </li>
+
+              <li
+                class="product-details-comment"
+                *ngFor="let aComment of product.comments"
+              >
+                <div class="product-details-comment-text-and-actions">
+                  <div class="product-details-comment-text mx-0 mt-0 mb-3">
+                    {{ aComment.text }}
+                  </div>
+                  <div
+                    class="product-details-comment-actions"
+                    *ngIf="
+                      connectedUser?.id &&
+                      aComment.user?.id == connectedUser?.id
+                    "
+                  >
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-trash"
+                      class="delete-comment-button"
+                      (click)="confirmDeleteComment(aComment.id)"
+                      [ngClass]="{ disabled: deleteCommentButtonDisable }"
+                    ></button>
+                  </div>
+                </div>
+                <div class="product-details-comment-user-and-date">
+                  <div class="product-details-comment-user">
+                    {{ aComment.user?.firstname }} {{ aComment.user?.lastname }}
+                  </div>
+
+                  <div class="product-details-comment-date">
+                    {{ getCommentDate(aComment.createdAt) }}
+                  </div>
+                </div>
+
+                <p-divider class="product-details-divider"></p-divider>
+              </li>
+            </ul>
+          </p-tabPanel>
           <p-tabPanel header="{{ 'product_details.summary' | translate }}">
             <p class="text-summary">{{ product.summary }}</p>
           </p-tabPanel>
@@ -138,51 +230,6 @@
                   </span>
                   <span>{{ product.year }}</span>
                 </span>
-              </li>
-            </ul>
-          </p-tabPanel>
-          <p-tabPanel header="{{ 'product_details.comments' | translate }}">
-            <ul
-              class="product-details-comment-container list-none m-0"
-              *ngIf="product.comments?.length"
-            >
-              <li>Add a comment</li>
-              <li
-                class="product-details-comment"
-                *ngFor="let aComment of product.comments"
-              >
-                <div class="product-details-comment-text-and-actions">
-                  <div class="product-details-comment-text mx-0 mt-0 mb-3">
-                    {{ aComment.text }}
-                  </div>
-                  <div
-                    class="product-details-comment-actions"
-                    *ngIf="
-                      connectedUser?.id &&
-                      aComment.user?.id == connectedUser?.id
-                    "
-                  >
-                    <button
-                      pButton
-                      pRipple
-                      icon="pi pi-trash"
-                      class="delete-comment-button"
-                      (click)="deleteComment(aComment.id)"
-                      [ngClass]="{ 'disabled': deleteCommentButtonDisable }"
-                    ></button>
-                  </div>
-                </div>
-                <div class="product-details-comment-user-and-date">
-                  <div class="product-details-comment-user">
-                    {{ aComment.user?.firstname }} {{ aComment.user?.lastname }}
-                  </div>
-
-                  <div class="product-details-comment-date">
-                    {{ getCommentDate(aComment.createdAt) }}
-                  </div>
-                </div>
-
-                <p-divider class="product-details-divider"></p-divider>
               </li>
             </ul>
           </p-tabPanel>

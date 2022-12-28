@@ -131,7 +131,11 @@
     "seconds_ago": "il y a {count} {count, plural, =1 {seconde} other {secondes}}",
     "on_date_at_hour": "le {date} à {hours}",
     "you_can_t_delete_this_comment": "Vous ne pouvez pas supprimer ce commentaire",
-    "comment_deleted": "Commentaire supprimé"
+    "comment_deleted": "Commentaire supprimé",
+    "write_you_re_comment_here": "Écrivez votre commentaire ici !",
+    "comment_sent": "Commentaire envoyé",
+    "are_you_sure_that_you_want_delete_this_comment": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
+    "delete_this_comment": "Supprimer ce commentaire"
   },
   "cart_details": {
     "add_billing_address": "Ajouter une adresse de facturation",
@@ -165,6 +169,7 @@
     "delivery_taxes": "Taxes de livraison",
     "editor": "Éditeur",
     "email": "Email",
+    "error": "Erreur",
     "free": "Gratuit",
     "legal_notices": "Mentions légales",
     "make_a_purchase": "Faire un achat",
@@ -195,7 +200,7 @@
     "authors": "Auteurs",
     "editors": "Éditeurs",
     "categories": "Catégories",
-    "view_prices": "Voir les prix {{prices}}"
+    "view_prices": "Voir les prix {prices}"
   },
   "header": {
     "home": "Accueil",

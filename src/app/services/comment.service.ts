@@ -18,8 +18,8 @@ export class CommentService {
       'https://thibaultmorizet.fr/ws/comments?id=' + id
     );
   }
-  setComment(comment: Comment) {
-    return this.http.post<{ token: string }>(this.url, comment);
+  setComment(comment: Comment) {   
+    return this.http.post<Comment>(this.url, comment);
   }
 
   updateComment(id: number | undefined, comment: Comment) {

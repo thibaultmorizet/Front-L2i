@@ -130,9 +130,12 @@
     "minutes_ago": "{count} {count, plural, =1 {minute} other {minutes}} ago",
     "seconds_ago": "{count} {count, plural, =1 {second} other {seconds}} ago",
     "on_date_at_hour": "on {date} at {hours}",
-    "you_can_t_delete_this_comment":"You can't delete this comment",
-    "comment_deleted": "Comment deleted"
-
+    "you_can_t_delete_this_comment": "You can't delete this comment",
+    "comment_deleted": "Comment deleted",
+    "write_you_re_comment_here": "Write you're comment here !",
+    "comment_sent": "Comment sent",
+    "are_you_sure_that_you_want_delete_this_comment": "Are you sure that you want delete this comment ?",
+    "delete_this_comment": "Delete this comment"
   },
   "cart_details": {
     "add_billing_address": "Add billing address",
@@ -144,10 +147,9 @@
     "remove": "Remove",
     "your_cart_is_empty": "Your cart is empty",
     "your_cart_total_is": "Your cart total is",
-    "use_the_same_address_for_the_delivery_address":"Use the same address for the delivery address",
+    "use_the_same_address_for_the_delivery_address": "Use the same address for the delivery address",
     "are_you_sure_that_you_want_use_the_same_address": "Are you sure that you want use the same address ?",
     "use_the_same_address": "Use the same address"
-
   },
   "contact": {
     "message": "Message",
@@ -167,6 +169,7 @@
     "delivery_taxes": "Delivery taxes",
     "editor": "Editor",
     "email": "Email",
+    "error": "Error",
     "free": "Free",
     "legal_notices": "Legal notices",
     "make_a_purchase": "Make a purchase",
@@ -197,7 +200,7 @@
     "authors": "Authors",
     "editors": "Editors",
     "categories": "Categories",
-    "view_prices": "View {{prices}} prices"
+    "view_prices": "View {prices} prices"
   },
   "header": {
     "home": "home",

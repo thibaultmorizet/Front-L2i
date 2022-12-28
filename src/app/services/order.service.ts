@@ -18,9 +18,8 @@ export class OrderService {
     return this.http.get<Array<Order>>(this.url + '?user.id=' + user_id);
   }
   setOrder(order: Order) {
-    return this.http.post<{ token: string }>(
-      'https://thibaultmorizet.fr/ws/orders',
-      order
-    );
+    console.log(order);
+    
+    return this.http.post<{ token: string }>(this.url, order);
   }
 }

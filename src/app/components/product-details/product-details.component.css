@@ -193,7 +193,12 @@
     font-weight: 700;
     background: none !important;
     border: none !important;
-    cursor:unset!important;
+    cursor: unset !important;
+}
+
+.send-comment-button {
+    height: 48px;
+    margin-left: 1rem;
 }
 
 @media (min-width: 650px) {
