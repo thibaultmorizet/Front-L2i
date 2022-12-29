@@ -135,7 +135,8 @@
     "write_you_re_comment_here": "Write you're comment here !",
     "comment_sent": "Comment sent",
     "are_you_sure_that_you_want_delete_this_comment": "Are you sure that you want delete this comment ?",
-    "delete_this_comment": "Delete this comment"
+    "delete_this_comment": "Delete this comment",
+    "log_in_to_write_a_comment": "Log in to write a comment"
   },
   "cart_details": {
     "add_billing_address": "Add billing address",

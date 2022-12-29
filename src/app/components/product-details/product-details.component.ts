@@ -336,7 +336,7 @@ export class ProductDetailsComponent implements OnInit {
 
   sendComment() {
     if (this.commentToSend.text != '') {
-      if (this.connectedUser && this.product) {
+      if (this.connectedUser && this.connectedUser.id && this.product) {
         this.commentToSend.user = this.connectedUser;
         this.commentToSend.product = this.product;
         this.commentToSend.createdAt = new Date();

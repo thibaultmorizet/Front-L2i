@@ -135,7 +135,8 @@
     "write_you_re_comment_here": "Écrivez votre commentaire ici !",
     "comment_sent": "Commentaire envoyé",
     "are_you_sure_that_you_want_delete_this_comment": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
-    "delete_this_comment": "Supprimer ce commentaire"
+    "delete_this_comment": "Supprimer ce commentaire",
+    "log_in_to_write_a_comment": "Connectez vous pour écrire un commentaire"
   },
   "cart_details": {
     "add_billing_address": "Ajouter une adresse de facturation",
