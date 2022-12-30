@@ -29,7 +29,9 @@ export class ProductService {
     return this.http.get<Array<Product>>(this.url + this.inStockString);
   }
   getOneProduct(id: number) {
-    return this.http.get<Product>('https://thibaultmorizet.fr/ws/products/' + id);
+    return this.http.get<Product>(
+      'https://thibaultmorizet.fr/ws/products/' + id
+    );
   }
   getAllProductsWithoutLimit(
     formats: Array<Format>,
@@ -96,7 +98,7 @@ export class ProductService {
     this.searchString = '';
     this.inStockString = '';
 
-    if (search.length > 0) {
+    if (search && search.length > 0) {
       this.searchString =
         '&title=' +
         search +
