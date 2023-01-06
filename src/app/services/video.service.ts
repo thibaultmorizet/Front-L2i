@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Brand } from '../interfaces/brand';
+import { Product } from '../interfaces/product';
 import { Video } from '../interfaces/video';
 
 @Injectable({
@@ -8,6 +9,9 @@ import { Video } from '../interfaces/video';
 })
 export class VideoService {
   private url: string = 'https://thibaultmorizet.fr/ws/videos';
+  private urlWithoutLimit: string =
+    'https://thibaultmorizet.fr/ws/videos?itemsPerPage=10000';
+
   private videos: Array<object> = [];
   private inStockString: string = '';
   private searchString: string = '';
@@ -122,5 +126,38 @@ export class VideoService {
         this.inStockString
     );
   }
+  getAllVideosWithoutLimit(
+    search: string,
+    prices: Array<number>,
+    inStock: boolean | null
+  ) {
+    this.searchString = '';
+    this.pricesString = '';
+    this.inStockString = '';
 
+    if (search.length > 0) {
+      this.searchString = '&title=' + search;
+    }
+
+    if (prices[0] && prices[1]) {
+      this.pricesString +=
+        '&unitpriceht[between]=' +
+        Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
+        '..' +
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100);
+    }
+    if (inStock == null) {
+      this.inStockString = '';
+    } else if (inStock) {
+      this.inStockString = '&stock%5Bgt%5D=0';
+    } else {
+      this.inStockString = '&stock%5Blte%5D=0';
+    }
+    return this.http.get<Array<Product>>(
+      this.urlWithoutLimit +
+        this.pricesString +
+        this.searchString +
+        this.inStockString
+    );
+  }
 }

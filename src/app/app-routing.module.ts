@@ -10,7 +10,8 @@ import { LegalNoticesComponent } from './components/legal-notices/legal-notices.
 import { ContactComponent } from './components/contact/contact.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
-import { AdminProductsComponent } from './components/admin-products/admin-products.component';
+import { AdminBooksComponent } from './components/admin-books/admin-books.component';
+import { AdminVideosComponent } from './components/admin-videos/admin-videos.component';
 import { AdminAccountComponent } from './components/admin-account/admin-account.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminAdminsComponent } from './components/admin-admins/admin-admins.component';
@@ -20,6 +21,7 @@ import { AdminEditorsComponent } from './components/admin-editors/admin-editors.
 import { AdminAuhtorsComponent } from './components/admin-auhtors/admin-auhtors.component';
 import { AdminCategoriesComponent } from './components/admin-categories/admin-categories.component';
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
+import { AdminBrandsComponent } from './components/admin-brands/admin-brands.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -34,13 +36,15 @@ const routes: Routes = [
   { path: 'forgotten-password', component: ForgottenPasswordComponent },
   { path: 'admin/home', component: AdminHomeComponent },
   { path: 'admin/login', component: AdminLoginComponent },
-  { path: 'admin/products', component: AdminProductsComponent },
+  { path: 'admin/books', component: AdminBooksComponent },
+  { path: 'admin/videos', component: AdminVideosComponent },
   { path: 'admin/account', component: AdminAccountComponent },
   { path: 'admin/users', component: AdminUsersComponent },
   { path: 'admin/admins', component: AdminAdminsComponent },
   { path: 'admin/formats', component: AdminFormatsComponent },
   { path: 'admin/editors', component: AdminEditorsComponent },
   { path: 'admin/authors', component: AdminAuhtorsComponent },
+  { path: 'admin/brands', component: AdminBrandsComponent },
   { path: 'admin/categories', component: AdminCategoriesComponent },
 
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },

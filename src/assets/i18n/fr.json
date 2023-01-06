@@ -4,7 +4,8 @@
     "login_sign_in": "Se connecter",
     "users": "Utilisateurs",
     "admins": "Admins",
-    "products": "Produits",
+    "books": "Livres",
+    "videos": "Vidéos",
     "my_account": "Mon compte"
   },
   "admin_home": {
@@ -33,16 +34,16 @@
   "admin_account": {
     "personnal_data": "Données personnelles"
   },
-  "admin_products": {
-    "manage_products": "Gestion des produits",
-    "total_products_message": "Au total, il y a {productLength} produits.",
-    "product_details": "Détails du produit",
-    "confirm_delete_product_message": "Voulez-vous vraiment supprimer le produit : {title} ?",
-    "confirm_group_delete_products_message": "Voulez-vous vraiment supprimer les produits sélectionnés ?",
-    "products_deleted": "Produits supprimés",
-    "product_updated": "Produit modifié",
-    "product_deleted": "Produit supprimé",
-    "product_created": "Produit créé",
+  "admin_books": {
+    "manage_books": "Gestion des livres",
+    "total_books_message": "Au total, il y a {bookLength} livres.",
+    "book_details": "Détails du livre",
+    "confirm_delete_book_message": "Voulez-vous vraiment supprimer le livre : {title} ?",
+    "confirm_group_delete_books_message": "Voulez-vous vraiment supprimer les livres sélectionnés ?",
+    "books_deleted": "Livres supprimés",
+    "book_updated": "Livre modifié",
+    "book_deleted": "Livre supprimé",
+    "book_created": "Livre créé",
     "image": "Image",
     "title": "Titre",
     "price_ttc": "Prix TTC",
@@ -55,7 +56,33 @@
     "select_an_editor": "Sélectionnez un éditeur",
     "select_a_taxe": "Sélectionnez une taxe",
     "select_a_format": "Sélectionnez un format",
-    "cover_products": "Couverture du produit"
+    "cover_books": "Couverture du livre"
+  },
+  "admin_videos": {
+    "manage_videos": "Gestion des vidéos",
+    "total_videos_message": "Au total, il y a {videoLength} vidéos.",
+    "video_details": "Détails du livre",
+    "confirm_delete_video_message": "Voulez-vous vraiment supprimer le livre : {title} ?",
+    "confirm_group_delete_videos_message": "Voulez-vous vraiment supprimer les vidéos sélectionnés ?",
+    "videos_deleted": "Vidéos supprimés",
+    "video_updated": "Vidéo modifié",
+    "video_deleted": "Vidéo supprimé",
+    "video_created": "Vidéo créé",
+    "image": "Image",
+    "title": "Titre",
+    "price_ttc": "Prix TTC",
+    "price_ht": "Prix HT",
+    "year": "Annnée",
+    "stock": "Stock",
+    "summary": "Résumé",
+    "select_a_taxe": "Sélectionnez une taxe",
+    "cover_videos": "Couverture de la vidéo",
+    "brand": "Marque",
+    "select_a_brand": "Sélectionnez une marque"
+
+  },
+  "admin_products": {
+    "total_products_message": "Au total, il y a {productLength} produits."
   },
   "admin_formats": {
     "manage_formats": "Gestion des formats",
@@ -82,6 +109,19 @@
     "editor_created": "Éditeur créé",
     "name": "Nom",
     "you_can_t_delete_an_editor_with_products": "Vous ne pouvez pas supprimer un éditeur avec des produits"
+  },
+  "admin_brands": {
+    "manage_brands": "Gestion des marques",
+    "total_brands_message": "Au total, il y a {brandLength} marques.",
+    "brand_details": "Détails de la marque",
+    "confirm_delete_brand_message": "Voulez-vous vraiment supprimer la marque : {name} ?",
+    "confirm_group_delete_brands_message": "Voulez-vous vraiment supprimer les marques sélectionnés ?",
+    "brands_deleted": "Marques supprimés",
+    "brand_updated": "Marque modifié",
+    "brand_deleted": "Marque supprimé",
+    "brand_created": "Marque créé",
+    "name": "Nom",
+    "you_can_t_delete_a_brand_with_products": "Vous ne pouvez pas supprimer une marque avec des vidéos"
   },
   "admin_authors": {
     "manage_authors": "Gestion des auteurs",
@@ -206,6 +246,7 @@
     "editors": "Éditeurs",
     "categories": "Catégories",
     "video": "Video",
+    "brands": "Marques",
     "view_prices": "Voir les prix {prices}"
   },
   "header": {

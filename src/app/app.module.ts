@@ -70,7 +70,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminHeaderComponent } from './components/partial/admin-header/admin-header.component';
 import { AdminFooterComponent } from './components/partial/admin-footer/admin-footer.component';
-import { AdminProductsComponent } from './components/admin-products/admin-products.component';
+import { AdminBooksComponent } from './components/admin-books/admin-books.component';
 import { AdminAccountComponent } from './components/admin-account/admin-account.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminAdminsComponent } from './components/admin-admins/admin-admins.component';
@@ -80,6 +80,8 @@ import { AdminEditorsComponent } from './components/admin-editors/admin-editors.
 import { AdminAuhtorsComponent } from './components/admin-auhtors/admin-auhtors.component';
 import { AdminCategoriesComponent } from './components/admin-categories/admin-categories.component';
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
+import { AdminVideosComponent } from './components/admin-videos/admin-videos.component';
+import { AdminBrandsComponent } from './components/admin-brands/admin-brands.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +100,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
     AdminLoginComponent,
     AdminHeaderComponent,
     AdminFooterComponent,
-    AdminProductsComponent,
+    AdminBooksComponent,
     AdminAccountComponent,
     AdminUsersComponent,
     AdminAdminsComponent,
@@ -108,6 +110,8 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
     AdminAuhtorsComponent,
     AdminCategoriesComponent,
     ForgottenPasswordComponent,
+    AdminVideosComponent,
+    AdminBrandsComponent,
   ],
   imports: [
     BrowserModule,

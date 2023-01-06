@@ -32,16 +32,26 @@
         <a
           *ngIf="connectedAdmin.id"
           class="home-link text-uppercase"
-          [routerLink]="['/admin/products']"
+          [routerLink]="['/admin/books']"
           [ngClass]="{
             active:
-              path === 'admin/products/' ||
+              path === 'admin/books/' ||
               path === 'admin/formats/' ||
               path === 'admin/editors/' ||
               path === 'admin/authors/' ||
               path === 'admin/categories/'
           }"
-          >{{ "admin_header.products" | translate }}</a
+          >{{ "admin_header.books" | translate }}</a
+        >
+        <a
+          *ngIf="connectedAdmin.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/admin/videos']"
+          [ngClass]="{
+            active:
+              path === 'admin/videos/' 
+          }"
+          >{{ "admin_header.videos" | translate }}</a
         >
         <a
           *ngIf="connectedAdmin.id"

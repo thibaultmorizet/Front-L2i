@@ -1,0 +1,502 @@
+<div class="general-content">
+  <app-admin-header></app-admin-header>
+
+  <main id="content">
+    <div class="update-subfield-div">
+      <div class="d-flex justify-content-end mt-2">
+        <button
+          pButton
+          pRipple
+          type="button"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          [routerLink]="['/admin/formats']"
+        >
+          {{ "general.formats" | translate }}
+        </button>
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <button
+          pButton
+          pRipple
+          type="button"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          [routerLink]="['/admin/editors']"
+        >
+          {{ "general.editors" | translate }}
+        </button>
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <button
+          pButton
+          pRipple
+          type="button"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          [routerLink]="['/admin/authors']"
+        >
+          {{ "general.authors" | translate }}
+        </button>
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <button
+          pButton
+          pRipple
+          type="button"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          [routerLink]="['/admin/categories']"
+        >
+          {{ "general.categories" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <p-toast></p-toast>
+
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.new' | translate }}"
+          icon="pi pi-plus"
+          class="p-button-success mr-2"
+          (click)="openNew()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.delete' | translate }}"
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteSelectedBooks()"
+          [disabled]="!selectedBooks || !selectedBooks.length"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="allBooks"
+      [rows]="12"
+      [paginator]="true"
+      [globalFilterFields]="[
+        'title',
+        'unitpricettc',
+        'unitpriceht',
+        'stock',
+        'isbn',
+        'image',
+        'format.name',
+        'editor.name',
+        'year'
+      ]"
+      [(selection)]="selectedBooks"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="{{
+        'general.showing_entries_message'
+          | translate
+            : {
+                first: '{first}',
+                last: '{last}',
+                totalRecords: '{totalRecords}'
+              }
+      }}"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="manage-books">
+          <h5 class="m-0">{{ "admin_books.manage_books" | translate }}</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="{{ 'general.search' | translate }}"
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="display: table-cell !important; width: 4rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th style="display: table-cell !important">
+            {{ "admin_books.image" | translate }}
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 15rem"
+            pSortableColumn="title"
+          >
+            {{ "admin_books.title" | translate }}
+            <p-sortIcon field="title"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important">
+            {{ "admin_books.price_ttc" | translate }}
+          </th>
+          <th
+            style="display: table-cell !important"
+            pSortableColumn="unitpriceht"
+          >
+            {{ "admin_books.price_ht" | translate }}
+            <p-sortIcon field="unitpriceht"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important" pSortableColumn="taxe.tva">
+            TVA
+            <p-sortIcon field="taxe.tva"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="format.name"
+          >
+            {{ "admin_books.format" | translate }}
+            <p-sortIcon field="format.name"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="editor.name"
+          >
+            {{ "admin_books.editor" | translate }}
+            <p-sortIcon field="editor.name"></p-sortIcon>
+          </th>
+
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="isbn"
+          >
+            ISBN <p-sortIcon field="isbn"></p-sortIcon>
+          </th>
+
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="year"
+          >
+            {{ "admin_books.year" | translate }}
+            <p-sortIcon field="year"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 10rem"
+            pSortableColumn="stock"
+          >
+            {{ "admin_books.stock" | translate }}
+            <p-sortIcon field="stock"></p-sortIcon>
+          </th>
+          <th style="display: table-cell !important">
+            {{ "general.authors" | translate }}
+          </th>
+          <th style="display: table-cell !important">
+            {{ "general.categories" | translate }}
+          </th>
+          <th style="display: table-cell !important"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-book>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="book"></p-tableCheckbox>
+          </td>
+          <td>
+            <img
+              [src]="book.image"
+              [alt]="book.title"
+              width="100"
+              class="img-icon"
+            />
+          </td>
+          <td>{{ book.title }}</td>
+          <td>
+            {{
+              getUnitpricettcFromUnitpricehtAndTva(
+                book.unitpriceht,
+                book.taxe?.tva
+              )
+            }}
+            €
+          </td>
+          <td>{{ book.unitpriceht }} €</td>
+          <td>{{ book.taxe.tva }} %</td>
+          <td>{{ book.format.name }}</td>
+          <td>{{ book.editor.name }}</td>
+
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.year }}</td>
+
+          <td>
+            <span
+              class="product-badge"
+              [ngClass]="{
+                'status-instock': book.stock > 50,
+                'status-lowstock': book.stock <= 50 && book.stock > 0,
+                'status-outofstock': book.stock <= 0
+              }"
+              >{{ book.stock }}</span
+            >
+          </td>
+          <td>
+            <span *ngFor="let anAuthor of book.author"
+              >{{ anAuthor.firstname }} {{ anAuthor.lastname }} <br
+            /></span>
+          </td>
+          <td>
+            <span *ngFor="let aCategory of book.category">{{ aCategory.name }} <br /></span>
+          </td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editBook(book)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteBook(book)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          {{
+            "admin_books.total_books_message"
+              | translate : { bookLength: allBooks ? allBooks.length : 0 }
+          }}
+        </div>
+      </ng-template>
+    </p-table>
+
+    <p-confirmDialog
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      [baseZIndex]="10000"
+      rejectButtonStyleClass="p-button-outline-danger"
+      acceptButtonStyleClass="p-button-valid"
+      acceptLabel="{{ 'general.yes' | translate }}"
+      rejectLabel="{{ 'general.no' | translate }}"
+    ></p-confirmDialog>
+
+    <p-dialog
+      [(visible)]="bookDialog"
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      header="{{ 'admin_books.book_details' | translate }}"
+      [modal]="true"
+      styleClass="p-fluid"
+      [dismissableMask]="true"
+    >
+      <ng-template pTemplate="content">
+        <div class="field">
+          <label for="title">{{ "admin_books.title" | translate }}</label>
+          <input
+            type="text"
+            pInputText
+            id="title"
+            [(ngModel)]="book.title"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !book.title"
+            >{{ "admin_books.title" | translate }}
+            {{ "general.is_required" | translate }}</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="summary">{{ "admin_books.summary" | translate }}</label>
+          <textarea
+            id="summary"
+            pInputTextarea
+            [(ngModel)]="book.summary"
+            required
+            rows="5"
+            cols="20"
+          ></textarea>
+          <small class="p-error" *ngIf="submitted && !book.summary"
+            >{{ "admin_books.summary" | translate }}
+            {{ "general.is_required" | translate }}</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="name">ISBN</label>
+          <input
+            type="text"
+            pInputText
+            id="isbn"
+            [(ngModel)]="book.isbn"
+            required
+            autofocus
+          />
+          <small class="p-error" *ngIf="submitted && !book.isbn"
+            >ISBN {{ "general.is_required" | translate }}</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="priceht">{{ "admin_books.price_ht" | translate }}</label>
+          <p-inputNumber
+            id="priceht"
+            [(ngModel)]="book.unitpriceht"
+            mode="currency"
+            currency="EUR"
+            locale="fr-FR"
+            [min]="0"
+            [required]="true"
+            [allowEmpty]="false"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="submitted && !book.unitpriceht"
+            >{{ "admin_books.price_ht" | translate }}
+            {{ "general.is_required" | translate }}</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="stock">{{ "admin_books.stock" | translate }}</label>
+          <p-inputNumber
+            id="stock"
+            [(ngModel)]="book.stock"
+            [min]="0"
+            [required]="true"
+            [allowEmpty]="false"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="submitted && !book.stock"
+            >{{ "admin_books.stock" | translate }}
+            {{ "general.is_required" | translate }}</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="year">{{ "admin_books.year" | translate }}</label>
+          <p-inputNumber
+            id="year"
+            [(ngModel)]="book.year"
+            [min]="1850"
+            mode="decimal"
+            [useGrouping]="false"
+            [required]="true"
+            [allowEmpty]="false"
+          ></p-inputNumber>
+          <small class="p-error" *ngIf="submitted && !book.year"
+            >{{ "admin_books.year" | translate }}
+            {{ "general.is_required" | translate }}</small
+          >
+        </div>
+
+        <div class="field">
+          <label for="taxe">TVA</label><br />
+          <p-dropdown
+            [options]="taxes"
+            [(ngModel)]="book.taxe"
+            optionLabel="tva"
+            placeholder="{{ 'admin_books.select_a_taxe' | translate }}"
+          >
+            <ng-template pTemplate="selectedItem">
+              <div *ngIf="book.taxe">
+                <div>{{ book.taxe.tva }} %</div>
+              </div>
+            </ng-template>
+            <ng-template let-taxe pTemplate="item">
+              <div>{{ taxe.tva }} %</div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div class="field">
+          <label for="editor">{{ "admin_books.editor" | translate }}</label
+          ><br />
+          <p-dropdown
+            [options]="editors"
+            [(ngModel)]="book.editor"
+            placeholder="{{ 'admin_books.select_an_editor' | translate }}"
+            optionLabel="name"
+          ></p-dropdown>
+        </div>
+
+        <div class="field">
+          <label for="format">{{ "admin_books.format" | translate }}</label
+          ><br />
+          <p-dropdown
+            [options]="formats"
+            [(ngModel)]="book.format"
+            placeholder="{{ 'admin_books.select_a_format' | translate }}"
+            optionLabel="name"
+          ></p-dropdown>
+        </div>
+
+        <div class="field">
+          <label for="author">{{ "general.authors" | translate }}</label
+          ><br />
+          <p-multiSelect
+            [options]="authors"
+            [(ngModel)]="book.author"
+            defaultLabel="{{ 'product.author' | translate }}"
+            optionLabel="name"
+            display="chip"
+          ></p-multiSelect>
+        </div>
+
+        <div class="field">
+          <label for="category">{{ "general.categories" | translate }}</label
+          ><br />
+          <p-multiSelect
+            [options]="categories"
+            [(ngModel)]="book.category"
+            defaultLabel="{{ 'product.category' | translate }}"
+            optionLabel="name"
+            display="chip"
+          ></p-multiSelect>
+        </div>
+
+        <div class="field">
+          <label for="coverBook">{{
+            "admin_books.cover_books" | translate
+          }}</label
+          ><br />
+          <input
+            #imageInput
+            type="file"
+            accept="image/*"
+            class="form-control mb-3 file-upload"
+            (change)="addImageToServer($event)"
+            name="coverImage"
+          />
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.cancel' | translate }}"
+          icon="pi pi-times"
+          class="p-button-text"
+          (click)="hideDialog()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="{{ 'general.save' | translate }}"
+          icon="pi pi-check"
+          class="p-button-text"
+          (click)="saveBook()"
+          [disabled]="
+            !book.title ||
+            !book.summary ||
+            !book.isbn ||
+            !book.unitpriceht ||
+            !book.year ||
+            !book.editor ||
+            !book.format ||
+            !book.author ||
+            !book.category 
+          "
+        ></button>
+      </ng-template>
+    </p-dialog>
+  </main>
+  <app-admin-footer></app-admin-footer>
+</div>

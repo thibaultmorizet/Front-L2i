@@ -9,44 +9,12 @@
           pRipple
           type="button"
           class="p-button-raised p-button-primary-color btn-primary-color"
-          [routerLink]="['/admin/formats']"
+          [routerLink]="['/admin/brands']"
         >
-          {{ "general.formats" | translate }}
+          {{ "general.brands" | translate }}
         </button>
       </div>
-      <div class="d-flex justify-content-end mt-2">
-        <button
-          pButton
-          pRipple
-          type="button"
-          class="p-button-raised p-button-primary-color btn-primary-color"
-          [routerLink]="['/admin/editors']"
-        >
-          {{ "general.editors" | translate }}
-        </button>
-      </div>
-      <div class="d-flex justify-content-end mt-2">
-        <button
-          pButton
-          pRipple
-          type="button"
-          class="p-button-raised p-button-primary-color btn-primary-color"
-          [routerLink]="['/admin/authors']"
-        >
-          {{ "general.authors" | translate }}
-        </button>
-      </div>
-      <div class="d-flex justify-content-end mt-2">
-        <button
-          pButton
-          pRipple
-          type="button"
-          class="p-button-raised p-button-primary-color btn-primary-color"
-          [routerLink]="['/admin/categories']"
-        >
-          {{ "general.categories" | translate }}
-        </button>
-      </div>
+     
     </div>
 
     <p-toast></p-toast>
@@ -67,15 +35,15 @@
           label="{{ 'general.delete' | translate }}"
           icon="pi pi-trash"
           class="p-button-danger"
-          (click)="deleteSelectedProducts()"
-          [disabled]="!selectedProducts || !selectedProducts.length"
+          (click)="deleteSelectedVideos()"
+          [disabled]="!selectedVideos || !selectedVideos.length"
         ></button>
       </ng-template>
     </p-toolbar>
 
     <p-table
       #dt
-      [value]="allProducts"
+      [value]="allVideos"
       [rows]="12"
       [paginator]="true"
       [globalFilterFields]="[
@@ -83,13 +51,11 @@
         'unitpricettc',
         'unitpriceht',
         'stock',
-        'isbn',
         'image',
-        'format.name',
-        'editor.name',
-        'year'
+        'year',
+        'brand'
       ]"
-      [(selection)]="selectedProducts"
+      [(selection)]="selectedVideos"
       [rowHover]="true"
       dataKey="id"
       currentPageReportTemplate="{{
@@ -104,8 +70,8 @@
       [showCurrentPageReport]="true"
     >
       <ng-template pTemplate="caption">
-        <div class="manage-products">
-          <h5 class="m-0">{{ "admin_products.manage_products" | translate }}</h5>
+        <div class="manage-videos">
+          <h5 class="m-0">{{ "admin_videos.manage_videos" | translate }}</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
@@ -123,23 +89,23 @@
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
           <th style="display: table-cell !important">
-            {{ "admin_products.image" | translate }}
+            {{ "admin_videos.image" | translate }}
           </th>
           <th
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="title"
           >
-            {{ "admin_products.title" | translate }}
+            {{ "admin_videos.title" | translate }}
             <p-sortIcon field="title"></p-sortIcon>
           </th>
           <th style="display: table-cell !important">
-            {{ "admin_products.price_ttc" | translate }}
+            {{ "admin_videos.price_ttc" | translate }}
           </th>
           <th
             style="display: table-cell !important"
             pSortableColumn="unitpriceht"
           >
-            {{ "admin_products.price_ht" | translate }}
+            {{ "admin_videos.price_ht" | translate }}
             <p-sortIcon field="unitpriceht"></p-sortIcon>
           </th>
           <th style="display: table-cell !important" pSortableColumn="taxe.tva">
@@ -148,113 +114,83 @@
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
-            pSortableColumn="format.name"
-          >
-            {{ "admin_products.format" | translate }}
-            <p-sortIcon field="format.name"></p-sortIcon>
-          </th>
-          <th
-            style="display: table-cell !important; min-width: 10rem"
-            pSortableColumn="editor.name"
-          >
-            {{ "admin_products.editor" | translate }}
-            <p-sortIcon field="editor.name"></p-sortIcon>
-          </th>
-
-          <th
-            style="display: table-cell !important; min-width: 10rem"
-            pSortableColumn="isbn"
-          >
-            ISBN <p-sortIcon field="isbn"></p-sortIcon>
-          </th>
-
-          <th
-            style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="year"
           >
-            {{ "admin_products.year" | translate }}
+            {{ "admin_videos.year" | translate }}
             <p-sortIcon field="year"></p-sortIcon>
           </th>
           <th
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="stock"
           >
-            {{ "admin_products.stock" | translate }}
+            {{ "admin_videos.stock" | translate }}
             <p-sortIcon field="stock"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important">
-            {{ "general.authors" | translate }}
-          </th>
-          <th style="display: table-cell !important">
-            {{ "general.categories" | translate }}
+          <th
+            style="display: table-cell !important; min-width: 15rem"
+            pSortableColumn="brand"
+          >
+            {{ "admin_videos.brand" | translate }}
+            <p-sortIcon field="brand"></p-sortIcon>
           </th>
           <th style="display: table-cell !important"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-product>
+      <ng-template pTemplate="body" let-video>
         <tr>
           <td>
-            <p-tableCheckbox [value]="product"></p-tableCheckbox>
+            <p-tableCheckbox [value]="video"></p-tableCheckbox>
           </td>
           <td>
             <img
-              [src]="product.image"
-              [alt]="product.title"
+              [src]="video.image"
+              [alt]="video.title"
               width="100"
               class="img-icon"
             />
           </td>
-          <td>{{ product.title }}</td>
+          <td>{{ video.title }}</td>
           <td>
             {{
               getUnitpricettcFromUnitpricehtAndTva(
-                product.unitpriceht,
-                product.taxe?.tva
+                video.unitpriceht,
+                video.taxe?.tva
               )
             }}
             €
           </td>
-          <td>{{ product.unitpriceht }} €</td>
-          <td>{{ product.taxe.tva }} %</td>
-          <td>{{ product.format.name }}</td>
-          <td>{{ product.editor.name }}</td>
+          <td>{{ video.unitpriceht }} €</td>
+          <td>{{ video.taxe.tva }} %</td>
 
-          <td>{{ product.isbn }}</td>
-          <td>{{ product.year }}</td>
+          <td>{{ video.year }}</td>
 
           <td>
             <span
               class="product-badge"
               [ngClass]="{
-                'status-instock': product.stock > 50,
-                'status-lowstock': product.stock <= 50 && product.stock > 0,
-                'status-outofstock': product.stock <= 0
+                'status-instock': video.stock > 50,
+                'status-lowstock': video.stock <= 50 && video.stock > 0,
+                'status-outofstock': video.stock <= 0
               }"
-              >{{ product.stock }}</span
+              >{{ video.stock }}</span
             >
           </td>
-          <td>
-            <span *ngFor="let anAuthor of product.author"
-              >{{ anAuthor.firstname }} {{ anAuthor.lastname }} <br
-            /></span>
-          </td>
-          <td>
-            <span *ngFor="let aCategory of product.category">{{ aCategory.name }} <br /></span>
-          </td>
+          <td>{{ video.brand.name }}</td>
+
           <td>
             <button
               pButton
               pRipple
               icon="pi pi-pencil"
               class="p-button-rounded p-button-success mr-2"
-              (click)="editProduct(product)"
+              (click)="editVideo(video)"
             ></button>
             <button
               pButton
               pRipple
               icon="pi pi-trash"
               class="p-button-rounded p-button-warning"
-              (click)="deleteproduct(product)"
+              (click)="deleteVideo(video)"
             ></button>
           </td>
         </tr>
@@ -262,8 +198,8 @@
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
           {{
-            "admin_products.total_products_message"
-              | translate : { productLength: allProducts ? allProducts.length : 0 }
+            "admin_videos.total_videos_message"
+              | translate : { videoLength: allVideos ? allVideos.length : 0 }
           }}
         </div>
       </ng-template>
@@ -280,67 +216,52 @@
     ></p-confirmDialog>
 
     <p-dialog
-      [(visible)]="productDialog"
+      [(visible)]="videoDialog"
       [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
       [style]="{ width: '50vw' }"
-      header="{{ 'admin_products.product_details' | translate }}"
+      header="{{ 'admin_videos.video_details' | translate }}"
       [modal]="true"
       styleClass="p-fluid"
       [dismissableMask]="true"
     >
       <ng-template pTemplate="content">
         <div class="field">
-          <label for="title">{{ "admin_products.title" | translate }}</label>
+          <label for="title">{{ "admin_videos.title" | translate }}</label>
           <input
             type="text"
             pInputText
             id="title"
-            [(ngModel)]="product.title"
+            [(ngModel)]="video.title"
             required
             autofocus
           />
-          <small class="p-error" *ngIf="submitted && !product.title"
-            >{{ "admin_products.title" | translate }}
+          <small class="p-error" *ngIf="submitted && !video.title"
+            >{{ "admin_videos.title" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="summary">{{ "admin_products.summary" | translate }}</label>
+          <label for="summary">{{ "admin_videos.summary" | translate }}</label>
           <textarea
             id="summary"
             pInputTextarea
-            [(ngModel)]="product.summary"
+            [(ngModel)]="video.summary"
             required
             rows="5"
             cols="20"
           ></textarea>
-          <small class="p-error" *ngIf="submitted && !product.summary"
-            >{{ "admin_products.summary" | translate }}
+          <small class="p-error" *ngIf="submitted && !video.summary"
+            >{{ "admin_videos.summary" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="name">ISBN</label>
-          <input
-            type="text"
-            pInputText
-            id="isbn"
-            [(ngModel)]="product.isbn"
-            required
-            autofocus
-          />
-          <small class="p-error" *ngIf="submitted && !product.isbn"
-            >ISBN {{ "general.is_required" | translate }}</small
-          >
-        </div>
-
-        <div class="field">
-          <label for="priceht">{{ "admin_products.price_ht" | translate }}</label>
+          <label for="priceht">{{ "admin_videos.price_ht" | translate }}</label>
           <p-inputNumber
             id="priceht"
-            [(ngModel)]="product.unitpriceht"
+            [(ngModel)]="video.unitpriceht"
             mode="currency"
             currency="EUR"
             locale="fr-FR"
@@ -348,40 +269,40 @@
             [required]="true"
             [allowEmpty]="false"
           ></p-inputNumber>
-          <small class="p-error" *ngIf="submitted && !product.unitpriceht"
-            >{{ "admin_products.price_ht" | translate }}
+          <small class="p-error" *ngIf="submitted && !video.unitpriceht"
+            >{{ "admin_videos.price_ht" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="stock">{{ "admin_products.stock" | translate }}</label>
+          <label for="stock">{{ "admin_videos.stock" | translate }}</label>
           <p-inputNumber
             id="stock"
-            [(ngModel)]="product.stock"
+            [(ngModel)]="video.stock"
             [min]="0"
             [required]="true"
             [allowEmpty]="false"
           ></p-inputNumber>
-          <small class="p-error" *ngIf="submitted && !product.stock"
-            >{{ "admin_products.stock" | translate }}
+          <small class="p-error" *ngIf="submitted && !video.stock"
+            >{{ "admin_videos.stock" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
 
         <div class="field">
-          <label for="year">{{ "admin_products.year" | translate }}</label>
+          <label for="year">{{ "admin_videos.year" | translate }}</label>
           <p-inputNumber
             id="year"
-            [(ngModel)]="product.year"
+            [(ngModel)]="video.year"
             [min]="1850"
             mode="decimal"
             [useGrouping]="false"
             [required]="true"
             [allowEmpty]="false"
           ></p-inputNumber>
-          <small class="p-error" *ngIf="submitted && !product.year"
-            >{{ "admin_products.year" | translate }}
+          <small class="p-error" *ngIf="submitted && !video.year"
+            >{{ "admin_videos.year" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
@@ -390,13 +311,13 @@
           <label for="taxe">TVA</label><br />
           <p-dropdown
             [options]="taxes"
-            [(ngModel)]="product.taxe"
+            [(ngModel)]="video.taxe"
             optionLabel="tva"
-            placeholder="{{ 'admin_products.select_a_taxe' | translate }}"
+            placeholder="{{ 'admin_videos.select_a_taxe' | translate }}"
           >
             <ng-template pTemplate="selectedItem">
-              <div *ngIf="product.taxe">
-                <div>{{ product.taxe.tva }} %</div>
+              <div *ngIf="video.taxe">
+                <div>{{ video.taxe.tva }} %</div>
               </div>
             </ng-template>
             <ng-template let-taxe pTemplate="item">
@@ -404,56 +325,20 @@
             </ng-template>
           </p-dropdown>
         </div>
-
         <div class="field">
-          <label for="editor">{{ "admin_products.editor" | translate }}</label
+          <label for="brand">{{ "admin_videos.brand" | translate }}</label
           ><br />
           <p-dropdown
-            [options]="editors"
-            [(ngModel)]="product.editor"
-            placeholder="{{ 'admin_products.select_an_editor' | translate }}"
+            [options]="brands"
+            [(ngModel)]="video.brand"
+            placeholder="{{ 'admin_videos.select_a_brand' | translate }}"
             optionLabel="name"
           ></p-dropdown>
         </div>
 
         <div class="field">
-          <label for="format">{{ "admin_products.format" | translate }}</label
-          ><br />
-          <p-dropdown
-            [options]="formats"
-            [(ngModel)]="product.format"
-            placeholder="{{ 'admin_products.select_a_format' | translate }}"
-            optionLabel="name"
-          ></p-dropdown>
-        </div>
-
-        <div class="field">
-          <label for="author">{{ "general.authors" | translate }}</label
-          ><br />
-          <p-multiSelect
-            [options]="authors"
-            [(ngModel)]="product.author"
-            defaultLabel="{{ 'product.author' | translate }}"
-            optionLabel="name"
-            display="chip"
-          ></p-multiSelect>
-        </div>
-
-        <div class="field">
-          <label for="category">{{ "general.categories" | translate }}</label
-          ><br />
-          <p-multiSelect
-            [options]="categories"
-            [(ngModel)]="product.category"
-            defaultLabel="{{ 'product.category' | translate }}"
-            optionLabel="name"
-            display="chip"
-          ></p-multiSelect>
-        </div>
-
-        <div class="field">
-          <label for="coverProduct">{{
-            "admin_products.cover_products" | translate
+          <label for="coverVideo">{{
+            "admin_videos.cover_videos" | translate
           }}</label
           ><br />
           <input
@@ -482,17 +367,9 @@
           label="{{ 'general.save' | translate }}"
           icon="pi pi-check"
           class="p-button-text"
-          (click)="saveProduct()"
+          (click)="saveVideo()"
           [disabled]="
-            !product.title ||
-            !product.summary ||
-            !product.isbn ||
-            !product.unitpriceht ||
-            !product.year ||
-            !product.editor ||
-            !product.format ||
-            !product.author ||
-            !product.category 
+            !video.title || !video.summary || !video.unitpriceht || !video.year
           "
         ></button>
       </ng-template>

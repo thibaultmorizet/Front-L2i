@@ -171,6 +171,7 @@
             class="shop-article-add-to-cart-message"
             (click)="addProductToCart(aProduct.id)"
             pRipple
+            *ngIf="aProduct.stock != 0"
           >
             <i class="pi pi-shopping-cart"></i>
             <span

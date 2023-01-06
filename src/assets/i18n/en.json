@@ -4,7 +4,8 @@
     "login_sign_in": "Login / Sign in",
     "users": "Users",
     "admins": "Admins",
-    "products": "Products",
+    "books": "Books",
+    "videos": "Videos",
     "my_account": "My account"
   },
   "admin_home": {
@@ -33,16 +34,16 @@
   "admin_account": {
     "personnal_data": "Personnal data"
   },
-  "admin_products": {
-    "manage_products": "Manage products",
-    "total_products_message": "In total there are {productLength} products.",
-    "product_details": "Product details",
-    "confirm_delete_product_message": "Are you sure you want to delete the product : {title} ?",
-    "confirm_group_delete_products_message": "Are you sure you want to delete the selected products ?",
-    "products_deleted": "Products deleted",
-    "product_updated": "Product updated",
-    "product_deleted": "Product deleted",
-    "product_created": "Product created",
+  "admin_books": {
+    "manage_books": "Manage books",
+    "total_books_message": "In total there are {bookLength} books.",
+    "book_details": "Book details",
+    "confirm_delete_book_message": "Are you sure you want to delete the book : {title} ?",
+    "confirm_group_delete_books_message": "Are you sure you want to delete the selected books ?",
+    "books_deleted": "Books deleted",
+    "book_updated": "Book updated",
+    "book_deleted": "Book deleted",
+    "book_created": "Book created",
     "image": "Image",
     "title": "Title",
     "price_ttc": "Price TTC",
@@ -55,7 +56,32 @@
     "select_an_editor": "Select an editor",
     "select_a_taxe": "Select a taxe",
     "select_a_format": "Select a format",
-    "cover_products": "Cover product"
+    "cover_books": "Cover book"
+  },
+  "admin_videos": {
+    "manage_videos": "Manage videos",
+    "total_videos_message": "In total there are {videoLength} videos.",
+    "video_details": "Video details",
+    "confirm_delete_video_message": "Are you sure you want to delete the video : {title} ?",
+    "confirm_group_delete_videos_message": "Are you sure you want to delete the selected videos ?",
+    "videos_deleted": "Videos deleted",
+    "video_updated": "Video updated",
+    "video_deleted": "Video deleted",
+    "video_created": "Video created",
+    "image": "Image",
+    "title": "Title",
+    "price_ttc": "Price TTC",
+    "price_ht": "Price HT",
+    "year": "Year",
+    "stock": "Stock",
+    "summary": "Summary",
+    "select_a_taxe": "Select a taxe",
+    "cover_videos": "Cover video",
+    "select_a_brand": "Select a brand",
+    "brand": "Brand"
+  },
+  "admin_products": {
+    "total_products_message": "In total there are {productLength} products."
   },
   "admin_formats": {
     "manage_formats": "Manage formats",
@@ -82,6 +108,19 @@
     "editor_created": "Editor created",
     "name": "Name",
     "you_can_t_delete_an_editor_with_products": "You can't delete an editor with products"
+  },
+  "admin_brands": {
+    "manage_brands": "Manage brands",
+    "total_brands_message": "In total there are {brandLength} brands.",
+    "brand_details": "Brand details",
+    "confirm_delete_brand_message": "Are you sure you want to delete the brand : {name} ?",
+    "confirm_group_delete_brands_message": "Are you sure you want to delete the selected brands ?",
+    "brands_deleted": "Brands deleted",
+    "brand_updated": "Brand updated",
+    "brand_deleted": "Brand deleted",
+    "brand_created": "Brand created",
+    "name": "Name",
+    "you_can_t_delete_a_brand_with_products": "You can't delete a brand with products"
   },
   "admin_authors": {
     "manage_authors": "Manage authors",
@@ -206,6 +245,7 @@
     "editors": "Editors",
     "categories": "Categories",
     "video": "Video",
+    "brands": "Brands",
     "view_prices": "View {prices} prices"
   },
   "header": {

@@ -23,21 +23,22 @@ import { FormatService } from 'src/app/services/format.service';
 import { TaxeService } from 'src/app/services/taxe.service';
 import { Categoryservice } from 'src/app/services/category.service';
 import StorageCrypter from 'storage-crypter';
+import { BookService } from 'src/app/services/book.service';
 
 @Component({
-  selector: 'app-admin-products',
-  templateUrl: './admin-products.component.html',
-  styleUrls: ['./admin-products.component.css'],
+  selector: 'app-admin-books',
+  templateUrl: './admin-books.component.html',
+  styleUrls: ['./admin-books.component.css'],
   encapsulation: ViewEncapsulation.None,
   providers: [ConfirmationService, MessageService],
 })
-export class AdminProductsComponent implements OnInit {
+export class AdminBooksComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   connectedAdmin: User | null = {};
-  productDialog: boolean = false;
-  allProducts: Product[] = [];
-  product: Product = {};
-  selectedProducts: Product[] = [];
+  bookDialog: boolean = false;
+  allBooks: Product[] = [];
+  book: Product = {};
+  selectedBooks: Product[] = [];
   submitted: boolean = false;
   formats: Array<Format> = [];
   editors: Array<Editor> = [];
@@ -49,6 +50,7 @@ export class AdminProductsComponent implements OnInit {
   constructor(
     private router: Router,
     private ps: ProductService,
+    private bs: BookService,
     private fs: FormatService,
     private es: EditorService,
     private taxeService: TaxeService,
@@ -79,11 +81,9 @@ export class AdminProductsComponent implements OnInit {
       }
     }
 
-    this.ps
-      .getAllProductsWithoutLimit('', [], null)
-      .subscribe((data) => {
-        this.allProducts = data;
-      });
+    this.bs.getAllBooksWithoutLimit('', [], null).subscribe((data) => {
+      this.allBooks = data;
+    });
 
     this.getAllFormatsfunc();
     this.getAllEditorsfunc();
@@ -111,78 +111,76 @@ export class AdminProductsComponent implements OnInit {
     });
   }
   openNew() {
-    this.product = {
+    this.book = {
       unitpriceht: 1,
       stock: 1,
       year: '1850',
     };
     this.submitted = false;
-    this.productDialog = true;
+    this.bookDialog = true;
   }
 
-  deleteSelectedProducts() {
+  deleteSelectedBooks() {
     this.confirmationService.confirm({
       message: this.translate.instant(
-        'admin_products.confirm_group_delete_products_message'
+        'admin_books.confirm_group_delete_books_message'
       ),
       header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        this.allProducts = this.allProducts.filter(
-          (val) => !this.selectedProducts.includes(val)
+        this.allBooks = this.allBooks.filter(
+          (val) => !this.selectedBooks.includes(val)
         );
-        this.selectedProducts.forEach((aProduct) => {
+        this.selectedBooks.forEach((aBook) => {
           let imageUrlToDelete = {
-            imageUrl: aProduct.image?.substring(
-              aProduct.image?.indexOf('assets')
+            imageUrl: aBook.image?.substring(
+              aBook.image?.indexOf('assets')
             ),
           };
 
           this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {});
 
-          this.ps.deleteTheProduct(aProduct.id).subscribe((el) => {});
+          this.ps.deleteTheProduct(aBook.id).subscribe((el) => {});
         });
-        this.selectedProducts = [];
+        this.selectedBooks = [];
         this.iziToast.success({
-          message: this.translate.instant('admin_products.products_deleted'),
+          message: this.translate.instant('admin_books.books_deleted'),
           position: 'topRight',
         });
       },
     });
   }
 
-  editProduct(product: Product) {
-    product.author?.forEach((anAuthor) => {
+  editBook(book: Product) {
+    book.author?.forEach((anAuthor) => {
       anAuthor.name = anAuthor.firstname + ' ' + anAuthor.lastname;
     });
-    this.product = { ...product };
-    this.productDialog = true;    
+    this.book = { ...book };
+    this.bookDialog = true;
   }
 
-  deleteproduct(product: Product) {
+  deleteBook(book: Product) {
     this.confirmationService.confirm({
       message: this.translate.instant(
-        'admin_products.confirm_delete_product_message',
-        { title: product.title }
+        'admin_books.confirm_delete_book_message',
+        { title: book.title }
       ),
       header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        this.allProducts = this.allProducts.filter(
-          (val) => val.id !== product.id
-        );
+        this.allBooks = this.allBooks.filter((val) => val.id !== book.id);
         let imageUrlToDelete = {
-          imageUrl: product.image?.substring(product.image?.indexOf('assets')),
+          imageUrl: book.image?.substring(book.image?.indexOf('assets')),
         };
 
         this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {});
-        this.ps.deleteTheProduct(product.id).subscribe((el) => {});
-        this.product = {};
+        this.ps.deleteTheProduct(book.id).subscribe((el) => {});
+        this.book = {};
 
         this.iziToast.success({
-          message: this.translate.instant('admin_products.product_deleted'),
+          message: this.translate.instant('admin_books.book_deleted'),
           position: 'topRight',
         });
       },
@@ -190,57 +188,57 @@ export class AdminProductsComponent implements OnInit {
   }
 
   hideDialog() {
-    this.productDialog = false;
+    this.bookDialog = false;
     this.submitted = false;
   }
 
-  saveProduct() {
+  saveBook() {
     this.submitted = true;
 
-    if (this.product.year) {
-      this.product.year = this.product.year.toString();
+    if (this.book.year) {
+      this.book.year = this.book.year.toString();
     }
-    if (this.product.id) {
+    if (this.book.id) {
       if (this.imageInfo.data) {
-        this.imageInfo.productId = this.product.id?.toString();
+        this.imageInfo.productId = this.book.id?.toString();
 
         if (this.imageInfo.url) {
-          this.product.image =
+          this.book.image =
             'https://www.thibaultmorizet.fr/assets/product-images/' +
-            this.product.id +
+            this.book.id +
             '.' +
             this.imageInfo.url.split('.').pop();
         } else {
-          this.product.image =
+          this.book.image =
             'https://www.thibaultmorizet.fr/assets/product-images/' +
-            this.product.id +
+            this.book.id +
             '.jpeg';
         }
         this.ps.addImage(this.imageInfo).subscribe();
       }
       this.ps
-        .updateProduct(this.product.id, this.product)
+        .updateProduct(this.book.id, this.book)
         .subscribe((result) => {
-          this.product = {};
+          this.book = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: this.translate.instant('admin_products.product_updated'),
+            message: this.translate.instant('admin_books.book_updated'),
             position: 'topRight',
           });
         });
     } else {
-      this.allProducts.push(this.product);
-      this.ps.createProduct(this.product).subscribe((res) => {
+      this.allBooks.push(this.book);
+      this.ps.createProduct(this.book).subscribe((res) => {
         if (this.imageInfo.data) {
           this.imageInfo.productId = res.id?.toString();
           if (this.imageInfo.url) {
-            this.product.image =
+            this.book.image =
               'https://www.thibaultmorizet.fr/assets/product-images/' +
               res.id +
               '.' +
               this.imageInfo.url.split('.').pop();
           } else {
-            this.product.image =
+            this.book.image =
               'https://www.thibaultmorizet.fr/assets/product-images/' +
               res.id +
               '.jpeg';
@@ -248,20 +246,20 @@ export class AdminProductsComponent implements OnInit {
 
           this.ps.addImage(this.imageInfo).subscribe();
         }
-        this.ps.updateProduct(res.id, this.product).subscribe((result) => {
-          this.product = {};
+        this.ps.updateProduct(res.id, this.book).subscribe((result) => {
+          this.book = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: this.translate.instant('admin_products.product_created'),
+            message: this.translate.instant('admin_books.book_created'),
             position: 'topRight',
           });
         });
       });
     }
 
-    this.allProducts = [...this.allProducts];
-    this.productDialog = false;
-    this.product = {};
+    this.allBooks = [...this.allBooks];
+    this.bookDialog = false;
+    this.book = {};
   }
   getAllFormatsfunc() {
     this.fs.getAllFormats().subscribe((res) => {
