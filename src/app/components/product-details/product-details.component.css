@@ -76,6 +76,10 @@
     width: 250px;
 }
 
+.product-details-divider-mw-100 {
+    width: 100%;
+}
+
 .p-tabview {
     width: 280px;
     padding: 1rem;

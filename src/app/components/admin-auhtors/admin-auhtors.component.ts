@@ -64,10 +64,10 @@ export class AdminAuhtorsComponent implements OnInit {
         this.allAuthors = this.allAuthors.filter(
           (val) =>
             !this.selectedAuthors.includes(val) ||
-            (val.products && val.products.length != 0)
+            (val.books && val.books.length != 0)
         );
         this.selectedAuthors.forEach((anAuthor) => {
-          if (anAuthor.products && anAuthor.products.length == 0) {
+          if (anAuthor.books && anAuthor.books.length == 0) {
             this.authorService
               .deleteTheAuthor(anAuthor.id)
               .subscribe((el) => {});
@@ -97,7 +97,7 @@ export class AdminAuhtorsComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        if (author.products && author.products.length == 0) {
+        if (author.books && author.books.length == 0) {
           this.allAuthors = this.allAuthors.filter(
             (val) => val.id !== author.id
           );

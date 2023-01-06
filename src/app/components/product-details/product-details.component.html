@@ -118,26 +118,38 @@
                   <span>{{ product.unitpriceht }} €</span>
                 </span>
               </li>
-              <li>
+              <li *ngIf="product.type == 'book'">
                 <span>
                   <span class="bold">ISBN : </span>
                   <span>{{ product.isbn }}</span>
                 </span>
               </li>
-              <li *ngFor="let anAuthor of product.author">
-                <span>
-                  <span class="bold"
-                    >{{ "general.author" | translate }} :
+              <span *ngIf="product.type == 'book'">
+                <li *ngFor="let anAuthor of product.author">
+                  <span>
+                    <span class="bold"
+                      >{{ "general.author" | translate }} :
+                    </span>
+                    <span
+                      >{{ anAuthor.lastname }} {{ anAuthor.firstname }}</span
+                    >
                   </span>
-                  <span>{{ anAuthor.lastname }} {{ anAuthor.firstname }}</span>
-                </span>
-              </li>
-              <li>
+                </li></span
+              >
+              <li *ngIf="product.type == 'book'">
                 <span>
                   <span class="bold"
                     >{{ "general.editor" | translate }} :
                   </span>
                   <span>{{ product.editor?.name }}</span>
+                </span>
+              </li>
+              <li *ngIf="product.type == 'video'">
+                <span>
+                  <span class="bold"
+                    >{{ "general.brand" | translate }} :
+                  </span>
+                  <span>{{ product.brand?.name }}</span>
                 </span>
               </li>
               <li>
@@ -207,7 +219,7 @@
                   }}"
                   [routerLink]="['/login']"
                 ></button>
-                <p-divider class="product-details-divider"></p-divider>
+                <p-divider class="product-details-divider-mw-100"></p-divider>
               </li>
               <li
                 class="product-details-comment"
@@ -248,62 +260,62 @@
               </li>
             </ul>
             <ul
-            class="product-details-comment-container list-none m-0"
-            *ngIf="!product.comments?.length"
-          >
-            <li *ngIf="connectedUser?.id">
-              <form
-                #commentForm="ngForm"
-                role="comment"
-                (ngSubmit)="sendComment()"
-              >
-                <div
-                  class="d-flex justify-content-between mt-2 align-items-center"
-                >
-                  <textarea
-                    [(ngModel)]="commentToSend.text"
-                    placeholder="{{
-                      'product_details.write_you_re_comment_here' | translate
-                    }}"
-                    id="comment"
-                    name="comment"
-                    type="text"
-                    rows="1"
-                    pInputTextarea
-                    class="form-control"
-                    [autoResize]="true"
-                  ></textarea>
-
-                  <button
-                    pButton
-                    pRipple
-                    type="submit"
-                    class="p-button-raised p-button-primary-color btn-primary-color send-comment-button"
-                    [disabled]="
-                      commentToSend.text == undefined ||
-                      commentToSend.text == ''
-                    "
-                    icon="pi pi-send"
-                  ></button>
-                </div>
-              </form>
-            </li>
-            <li
-              *ngIf="!connectedUser?.id"
-              class="d-flex flex-column align-items-center"
+              class="product-details-comment-container list-none m-0"
+              *ngIf="!product.comments?.length"
             >
-              <button
-                pButton
-                pRipple
-                type="button"
-                class="p-button-raised p-button-primary-color btn-primary-color"
-                label="{{
-                  'product_details.log_in_to_write_a_comment' | translate
-                }}"
-                [routerLink]="['/login']"
-              ></button>
-            </li>
-          </ul>
+              <li *ngIf="connectedUser?.id">
+                <form
+                  #commentForm="ngForm"
+                  role="comment"
+                  (ngSubmit)="sendComment()"
+                >
+                  <div
+                    class="d-flex justify-content-between mt-2 align-items-center"
+                  >
+                    <textarea
+                      [(ngModel)]="commentToSend.text"
+                      placeholder="{{
+                        'product_details.write_you_re_comment_here' | translate
+                      }}"
+                      id="comment"
+                      name="comment"
+                      type="text"
+                      rows="1"
+                      pInputTextarea
+                      class="form-control"
+                      [autoResize]="true"
+                    ></textarea>
+
+                    <button
+                      pButton
+                      pRipple
+                      type="submit"
+                      class="p-button-raised p-button-primary-color btn-primary-color send-comment-button"
+                      [disabled]="
+                        commentToSend.text == undefined ||
+                        commentToSend.text == ''
+                      "
+                      icon="pi pi-send"
+                    ></button>
+                  </div>
+                </form>
+              </li>
+              <li
+                *ngIf="!connectedUser?.id"
+                class="d-flex flex-column align-items-center"
+              >
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  class="p-button-raised p-button-primary-color btn-primary-color"
+                  label="{{
+                    'product_details.log_in_to_write_a_comment' | translate
+                  }}"
+                  [routerLink]="['/login']"
+                ></button>
+              </li>
+            </ul>
           </p-tabPanel>
         </p-tabView>
       </div>

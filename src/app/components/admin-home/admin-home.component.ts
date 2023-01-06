@@ -64,7 +64,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   getAllProducts() {
-    this.ps.getAllProductsWithoutLimit([], [], '', [], null).subscribe((res) => {
+    this.ps.getAllProductsWithoutLimit('', [], null).subscribe((res) => {
       this.allProducts = res;
     });
   }

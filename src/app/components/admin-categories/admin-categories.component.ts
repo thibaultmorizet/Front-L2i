@@ -64,10 +64,10 @@ export class AdminCategoriesComponent implements OnInit {
         this.allCategories = this.allCategories.filter(
           (val) =>
             !this.selectedCategories.includes(val) ||
-            (val.products && val.products.length != 0)
+            (val.books && val.books.length != 0)
         );
         this.selectedCategories.forEach((anCategory) => {
-          if (anCategory.products && anCategory.products.length == 0) {
+          if (anCategory.books && anCategory.books.length == 0) {
             this.cs.deleteTheCategory(anCategory.id).subscribe((el) => {});
           }
         });
@@ -95,7 +95,7 @@ export class AdminCategoriesComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        if (category.products && category.products.length == 0) {
+        if (category.books && category.books.length == 0) {
           this.allCategories = this.allCategories.filter((val) => val.id !== category.id);
           this.cs.deleteTheCategory(category.id).subscribe((el) => {});
           this.category = {};

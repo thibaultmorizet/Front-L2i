@@ -64,10 +64,10 @@ export class AdminEditorsComponent implements OnInit {
         this.allEditors = this.allEditors.filter(
           (val) =>
             !this.selectedEditors.includes(val) ||
-            (val.products && val.products.length != 0)
+            (val.books && val.books.length != 0)
         );
         this.selectedEditors.forEach((anEditor) => {
-          if (anEditor.products && anEditor.products.length == 0) {
+          if (anEditor.books && anEditor.books.length == 0) {
             this.es.deleteTheEditor(anEditor.id).subscribe((el) => {});
           }
         });
@@ -95,7 +95,7 @@ export class AdminEditorsComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        if (editor.products && editor.products.length == 0) {
+        if (editor.books && editor.books.length == 0) {
           this.allEditors = this.allEditors.filter(
             (val) => val.id !== editor.id
           );

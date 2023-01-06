@@ -18,6 +18,10 @@ import { Author } from 'src/app/interfaces/author';
 import { PrimeNGConfig } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { TaxeService } from 'src/app/services/taxe.service';
+import { Brand } from 'src/app/interfaces/brand';
+import { BrandService } from 'src/app/services/brand.service';
+import { BookService } from 'src/app/services/book.service';
+import { VideoService } from 'src/app/services/video.service';
 
 @Component({
   selector: 'app-shop',
@@ -30,7 +34,9 @@ export class ShopComponent implements OnInit {
   products: Array<Product> = [];
   allProducts: Array<Product> = [];
   formats: Array<Format> = [];
+  types: Array<String> = [];
   editors: Array<Editor> = [];
+  brands: Array<Brand> = [];
   authors: Array<Author> = [];
   categories: Array<Category> = [];
   user: User = {};
@@ -48,6 +54,8 @@ export class ShopComponent implements OnInit {
   pageRows: number = 12;
 
   selectedFormat: Array<Format> = [];
+  selectedBrand: Array<Brand> = [];
+  selectedType: Array<String> = [];
   selectedCategory: Array<Category> = [];
   selectedPriceRange: Array<number> = [0, 0];
   showProductsInStock: boolean = true;
@@ -61,6 +69,9 @@ export class ShopComponent implements OnInit {
     private ps: ProductService,
     private fs: FormatService,
     private es: EditorService,
+    private bookService: BookService,
+    private videoService: VideoService,
+    private brandService: BrandService,
     private taxeService: TaxeService,
     private authorService: AuthorService,
     private cs: Categoryservice,
@@ -75,23 +86,26 @@ export class ShopComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.translate.use(this.translate.getDefaultLang());
 
-    this.ps.getAllProductsWithoutLimit([], [], '', [], true).subscribe((res) => {
+    this.ps.getAllProductsWithoutLimit('', [], true).subscribe((res) => {
       res.forEach((aProduct) => {
         if (
           aProduct.unitpriceht &&
           aProduct.taxe?.tva &&
           (Math.ceil(
-            aProduct.unitpriceht + (aProduct.taxe.tva * aProduct.unitpriceht) / 100
+            aProduct.unitpriceht +
+              (aProduct.taxe.tva * aProduct.unitpriceht) / 100
           ) > this.selectedPriceRange[1] ||
             this.selectedPriceRange[1] == undefined)
         ) {
           this.maxPrice = Math.ceil(
-            aProduct.unitpriceht + (aProduct.taxe.tva * aProduct.unitpriceht) / 100
+            aProduct.unitpriceht +
+              (aProduct.taxe.tva * aProduct.unitpriceht) / 100
           );
           this.selectedPriceRange = [
             0,
             Math.ceil(
-              aProduct.unitpriceht + (aProduct.taxe.tva * aProduct.unitpriceht) / 100
+              aProduct.unitpriceht +
+                (aProduct.taxe.tva * aProduct.unitpriceht) / 100
             ),
           ];
         }
@@ -99,7 +113,11 @@ export class ShopComponent implements OnInit {
     });
     this.getProducts();
     this.getAllProducts();
+    setTimeout(() => {
+      this.getAllTypesfunc();
+    }, 100);
     this.getAllFormatsfunc();
+    this.getAllBrandsfunc();
     this.getAllEditorsfunc();
     this.getAllAuthorsfunc();
     this.getAllCategoriesfunc();
@@ -143,8 +161,6 @@ export class ShopComponent implements OnInit {
   ) {
     this.ps
       .getAllProductsWithoutLimit(
-        formatFilter,
-        categoryFilter,
         searchProduct,
         prices,
         this.showProductsInStock
@@ -154,9 +170,20 @@ export class ShopComponent implements OnInit {
         this.filteredProducts = res;
       });
   }
+  getAllTypesfunc() {
+    this.types.push(
+      this.translate.instant('general.book'),
+      this.translate.instant('general.video')
+    );
+  }
   getAllFormatsfunc() {
     this.fs.getAllFormats().subscribe((res) => {
       this.formats = res;
+    });
+  }
+  getAllBrandsfunc() {
+    this.brandService.getAllBrands().subscribe((res) => {
+      this.brands = res;
     });
   }
   getAllEditorsfunc() {
@@ -175,46 +202,127 @@ export class ShopComponent implements OnInit {
     });
   }
   getAllProductsByPage(event: any) {
-    this.ps
-      .getAllProductsForPage(
-        event.page + 1,
-        event.rows,
-        this.selectedFormat,
-        this.selectedCategory,
-        this.searchProduct?.title ?? this.searchProduct,
-        this.selectedPriceRange,
-        this.showProductsInStock
-      )
-      .subscribe((res) => {
-        this.products = res;
-        this.pageRows = event.rows;
-      });
+    if (this.selectedType[0] == undefined) {
+      this.ps
+        .getAllProductsForPage(
+          event.page + 1,
+          event.rows,
+          this.searchProduct?.title ?? this.searchProduct,
+          this.selectedPriceRange,
+          this.showProductsInStock
+        )
+        .subscribe((res) => {
+          this.products = res;
+          this.pageRows = event.rows;
+        });
+    } else if (
+      this.selectedType.includes('Livre') ||
+      this.selectedType.includes('Book')
+    ) {
+      this.bookService
+        .getAllBooksForPage(
+          event.page + 1,
+          event.rows,
+          this.selectedFormat,
+          this.selectedCategory,
+          this.searchProduct?.title ?? this.searchProduct,
+          this.selectedPriceRange,
+          this.showProductsInStock
+        )
+        .subscribe((res) => {
+          this.products = res;
+          this.pageRows = event.rows;
+        });
+    }else if (this.selectedType.includes('Video')) {
+      this.videoService
+        .getAllVideosForPage(
+          event.page + 1,
+          event.rows,
+          this.selectedBrand,
+          this.searchProduct?.title ?? this.searchProduct,
+          this.selectedPriceRange,
+          this.showProductsInStock
+        )
+        .subscribe((res) => {
+          this.products = res;
+          this.pageRows = event.rows;
+        });
+    }
   }
-  getProductsWithFormatAndCategoryAndPriceAndSearch() {
-    this.ps
-      .getAllProductsByFormatAndCategoryAndSearch(
-        this.selectedFormat,
-        this.selectedCategory,
-        this.searchProduct?.title ?? this.searchProduct,
-        this.selectedPriceRange,
-        this.pageRows,
-        this.showProductsInStock
-      )
-      .subscribe((res) => {
-        this.products = res;
-        this.ps
-          .getAllProductsByFormatAndCategoryAndSearch(
-            this.selectedFormat,
-            this.selectedCategory,
-            this.searchProduct?.title ?? this.searchProduct,
-            this.selectedPriceRange,
-            10000,
-            this.showProductsInStock
-          )
-          .subscribe((el) => {
-            this.filteredProducts = el;
-          });
-      });
+  getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch() {
+    if (this.selectedType[0] == undefined) {
+      this.ps
+        .getAllProductsBySearch(
+          this.searchProduct?.title ?? this.searchProduct,
+          this.selectedPriceRange,
+          this.pageRows,
+          this.showProductsInStock
+        )
+        .subscribe((res) => {
+          this.products = res;
+          this.ps
+            .getAllProductsBySearch(
+              this.searchProduct?.title ?? this.searchProduct,
+              this.selectedPriceRange,
+              10000,
+              this.showProductsInStock
+            )
+            .subscribe((el) => {
+              this.filteredProducts = el;
+            });
+        });
+    } else if (
+      this.selectedType.includes('Livre') ||
+      this.selectedType.includes('Book')
+    ) {
+      this.bookService
+        .getAllBooksBySearchAndParameters(
+          this.selectedFormat,
+          this.selectedCategory,
+          this.searchProduct?.title ?? this.searchProduct,
+          this.selectedPriceRange,
+          this.pageRows,
+          this.showProductsInStock
+        )
+        .subscribe((res) => {
+          this.products = res;
+          this.bookService
+            .getAllBooksBySearchAndParameters(
+              this.selectedFormat,
+              this.selectedCategory,
+              this.searchProduct?.title ?? this.searchProduct,
+              this.selectedPriceRange,
+              10000,
+              this.showProductsInStock
+            )
+            .subscribe((el) => {
+              this.filteredProducts = el;
+            });
+        });
+    } else if (this.selectedType.includes('Video')) {
+      this.videoService
+        .getAllVideosBySearchAndParameters(
+          this.selectedBrand,
+          this.searchProduct?.title ?? this.searchProduct,
+          this.selectedPriceRange,
+          this.pageRows,
+          this.showProductsInStock
+        )
+        .subscribe((res) => {
+          this.products = res;
+          this.videoService
+            .getAllVideosBySearchAndParameters(
+              this.selectedBrand,
+              this.searchProduct?.title ?? this.searchProduct,
+              this.selectedPriceRange,
+              10000,
+              this.showProductsInStock
+            )
+            .subscribe((el) => {
+              this.filteredProducts = el;
+            });
+        });
+    }
   }
   addProductToCart(productId: number | undefined) {
     this.productExistinCart = false;
@@ -259,7 +367,9 @@ export class ShopComponent implements OnInit {
                   }
                 }
                 this.iziToast.success({
-                  message: this.translate.instant('izitoast.product_add_to_cart'),
+                  message: this.translate.instant(
+                    'izitoast.product_add_to_cart'
+                  ),
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -363,16 +473,19 @@ export class ShopComponent implements OnInit {
 
   updateShowProductsInStock() {
     this.showProductsInStock = !this.showProductsInStock;
-    this.getProductsWithFormatAndCategoryAndPriceAndSearch();
+    this.getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch();
   }
 
   clearAllFilter() {
     this.selectedFormat = [];
+    this.selectedBrand = [];
+    this.selectedType = [];
     this.selectedCategory = [];
     this.selectedPriceRange = [0, this.maxPrice];
     this.showProductsInStock = true;
     this.searchProduct = null;
-    this.getProductsWithFormatAndCategoryAndPriceAndSearch();
+
+    this.getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch();
   }
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,

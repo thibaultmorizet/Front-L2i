@@ -16,9 +16,9 @@
   },
   "admin_users": {
     "manage_users": "Gestion des utilisateurs",
-    "total_users_message": "Au total, il y a {{userLength}} utilisateurs.",
+    "total_users_message": "Au total, il y a {userLength} utilisateurs.",
     "users_details": "Détails de l'utilisateur",
-    "confirm_delete_user_message": "Êtes-vous sûr de vouloir supprimer {{firstname}} {{lastname}} ?",
+    "confirm_delete_user_message": "Êtes-vous sûr de vouloir supprimer {firstname} {lastname} ?",
     "confirm_group_delete_users_message": "Voulez-vous vraiment supprimer les utilisateurs sélectionnés ?",
     "users_deleted": "Utilisateurs supprimés",
     "user_deleted": "Utilisateur supprimé",
@@ -26,7 +26,7 @@
   },
   "admin_admins": {
     "manage_admins": "Gestion des administrateurs",
-    "total_admins_message": "Au total, il y a {{userLength}} administrateurs.",
+    "total_admins_message": "Au total, il y a {userLength} administrateurs.",
     "admin_details": "Détails de l'administrateur",
     "admin_created": "Administrateur créé"
   },
@@ -35,9 +35,9 @@
   },
   "admin_products": {
     "manage_products": "Gestion des produits",
-    "total_products_message": "Au total, il y a {{productLength}} produits.",
+    "total_products_message": "Au total, il y a {productLength} produits.",
     "product_details": "Détails du produit",
-    "confirm_delete_product_message": "Voulez-vous vraiment supprimer le produit : {{title}} ?",
+    "confirm_delete_product_message": "Voulez-vous vraiment supprimer le produit : {title} ?",
     "confirm_group_delete_products_message": "Voulez-vous vraiment supprimer les produits sélectionnés ?",
     "products_deleted": "Produits supprimés",
     "product_updated": "Produit modifié",
@@ -59,9 +59,9 @@
   },
   "admin_formats": {
     "manage_formats": "Gestion des formats",
-    "total_formats_message": "Au total, il y a {{formatLength}} formats.",
+    "total_formats_message": "Au total, il y a {formatLength} formats.",
     "format_details": "Détails du format",
-    "confirm_delete_format_message": "Êtes-vous sûr de vouloir supprimer le format : {{name}} ?",
+    "confirm_delete_format_message": "Êtes-vous sûr de vouloir supprimer le format : {name} ?",
     "confirm_group_delete_formats_message": "Voulez-vous vraiment supprimer les formats sélectionnés ?",
     "formats_deleted": "Formats supprimés",
     "format_updated": "Format modifié",
@@ -72,9 +72,9 @@
   },
   "admin_editors": {
     "manage_editors": "Gestion des éditeurs",
-    "total_editors_message": "Au total, il y a {{editorLength}} éditeurs.",
+    "total_editors_message": "Au total, il y a {editorLength} éditeurs.",
     "editor_details": "Détails de l'éditeur",
-    "confirm_delete_editor_message": "Voulez-vous vraiment supprimer l'éditeur : {{name}} ?",
+    "confirm_delete_editor_message": "Voulez-vous vraiment supprimer l'éditeur : {name} ?",
     "confirm_group_delete_editors_message": "Voulez-vous vraiment supprimer les éditeurs sélectionnés ?",
     "editors_deleted": "Éditeurs supprimés",
     "editor_updated": "Éditeur modifié",
@@ -85,9 +85,9 @@
   },
   "admin_authors": {
     "manage_authors": "Gestion des auteurs",
-    "total_authors_message": "Au total, il y a {{authorLength}} auteurs.",
+    "total_authors_message": "Au total, il y a {authorLength} auteurs.",
     "author_details": "Détails de l'auteur",
-    "confirm_delete_author_message": "Êtes-vous sûr de vouloir supprimer l'auteur : {{firstname}} {{lastname}} ?",
+    "confirm_delete_author_message": "Êtes-vous sûr de vouloir supprimer l'auteur : {firstname} {lastname} ?",
     "confirm_group_delete_authors_message": "Voulez-vous vraiment supprimer les auteurs sélectionnés ?",
     "authors_deleted": "Auteurs supprimés",
     "author_updated": "Auteur modifié",
@@ -100,9 +100,9 @@
   },
   "admin_categories": {
     "manage_categories": "Gestion des catégories",
-    "total_categories_message": "Au total, il y a {{categoryLength}} catégories.",
+    "total_categories_message": "Au total, il y a categoryLength} catégories.",
     "category_details": "Détails de la catégorie",
-    "confirm_delete_category_message": "Êtes-vous sûr de vouloir supprimer la catégorie : {{name}} ?",
+    "confirm_delete_category_message": "Êtes-vous sûr de vouloir supprimer la catégorie : {name} ?",
     "confirm_group_delete_categories_message": "Voulez-vous vraiment supprimer les catégories sélectionnés ?",
     "categories_deleted": "Catégories supprimés",
     "category_updated": "Catégorie modifié",
@@ -119,7 +119,9 @@
     "price_range": "Échelle des prix",
     "search": "Chercher",
     "category": "Catégorie",
-    "author": "Auteur"
+    "author": "Auteur",
+    "type": "Type",
+    "brand": "Marque"
   },
   "product_details": {
     "product_details": "Détails du produit",
@@ -161,6 +163,8 @@
     "add_to_cart": "Ajouter au panier",
     "author": "Auteur",
     "billing_address": "Adresse de facturation",
+    "book": "Livre",
+    "brand": "Marque",
     "is_required": "est requis.",
     "check_out": "Valider",
     "city": "Ville",
@@ -188,7 +192,7 @@
     "firstname": "Prénom",
     "lastname": "Nom",
     "your_language": "Votre langue",
-    "showing_entries_message": "Affichage de {{first}} à {{last}} sur {{totalRecords}} entrées",
+    "showing_entries_message": "Affichage de {first} à {last} sur {totalRecords} entrées",
     "confirm": "Confirmer",
     "yes": "Oui",
     "no": "Non",
@@ -201,6 +205,7 @@
     "authors": "Auteurs",
     "editors": "Éditeurs",
     "categories": "Catégories",
+    "video": "Video",
     "view_prices": "Voir les prix {prices}"
   },
   "header": {
@@ -218,7 +223,7 @@
   "izitoast": {
     "product_add_to_cart": "Produit ajouté au panier",
     "lack_of_stock": "Manque de stocks",
-    "lack_of_stock_message": "Il reste {{productStock}} exemplaires du produit {{productTitle}} et vous en demandez {{productNumber}}",
+    "lack_of_stock_message": "Il reste {productStock} exemplaires du produit {productTitle} et vous en demandez {productNumber}",
     "login_before_confirm_check_out": "Connectez-vous avant de valider la commande",
     "modification_confirmed": "Modification confirmée",
     "successful_login": "Connexion réussie",

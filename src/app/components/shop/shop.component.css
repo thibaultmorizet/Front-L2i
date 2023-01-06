@@ -146,17 +146,22 @@
   color: #30336B;
   transition: all 0.3s;
 }
+
 .shop-article:hover .img-icon {
   transform: perspective(200px) translateZ(-20px);
   transition: transform .2s linear;
 }
+
+.select-type {
+  margin-left: 2rem;
+}
+
 @media (min-width: 400px) {
   .filter-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 2rem;
     grid-auto-rows: minmax(100px, auto);
-
   }
 
   .shop-article-list {
@@ -201,7 +206,15 @@
 
 @media (min-width: 1300px) {
   .filter-list {
+    grid-template-columns: 1fr 1fr 1fr .5fr .8fr;
+  }
+
+  .filter-list-book {
     grid-template-columns: 1fr 1fr 1fr 1fr .5fr;
+  }
+
+  .filter-list-video {
+    grid-template-columns: 1fr 1fr 1fr .5fr;
   }
 
   .shop-article-list {

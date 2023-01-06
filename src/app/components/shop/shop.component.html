@@ -13,38 +13,89 @@
             (completeMethod)="filterProduct($event)"
             field="title"
             [minLength]="1"
-            (onSelect)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
-            (onBlur)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
+            (onSelect)="
+              getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
+            "
+            (onBlur)="
+              getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
+            "
           ></p-autoComplete>
           <button
             pButton
             pRipple
             type="button"
             class="btn btn-primary-color button-search"
-            (click)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
+            (click)="
+              getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
+            "
           >
             <i class="fa fa-search"></i>
           </button>
+          <div class="select-type">
+            <p-multiSelect
+              [options]="types"
+              [(ngModel)]="selectedType"
+              defaultLabel="{{ 'product.type' | translate }}"
+              display="chip"
+              [selectionLimit]="1"
+              (onChange)="
+                getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
+              "
+            ></p-multiSelect>
+          </div>
         </div>
-        <div class="filter-list">
-          <div>
+        <div
+          class="filter-list"
+          [ngClass]="{
+            'filter-list-book':
+              selectedType.includes('Livre') || selectedType.includes('Book'),
+            'filter-list-video': selectedType.includes('Video')
+          }"
+        >
+          <div *ngIf="selectedType[0] == undefined"></div>
+
+          <div
+            *ngIf="
+              selectedType.includes('Livre') || selectedType.includes('Book')
+            "
+          >
             <p-multiSelect
               [options]="formats"
               [(ngModel)]="selectedFormat"
               defaultLabel="{{ 'product.format' | translate }}"
               optionLabel="name"
               display="chip"
-              (onChange)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
+              (onChange)="
+                getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
+              "
             ></p-multiSelect>
           </div>
-          <div>
+          <div
+            *ngIf="
+              selectedType.includes('Livre') || selectedType.includes('Book')
+            "
+          >
             <p-multiSelect
               [options]="categories"
               [(ngModel)]="selectedCategory"
               defaultLabel="{{ 'product.category' | translate }}"
               optionLabel="name"
               display="chip"
-              (onChange)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
+              (onChange)="
+                getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
+              "
+            ></p-multiSelect>
+          </div>
+          <div *ngIf="selectedType.includes('Video')">
+            <p-multiSelect
+              [options]="brands"
+              [(ngModel)]="selectedBrand"
+              defaultLabel="{{ 'product.brand' | translate }}"
+              optionLabel="name"
+              display="chip"
+              (onChange)="
+                getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
+              "
             ></p-multiSelect>
           </div>
           <div>
@@ -57,7 +108,9 @@
             <p-slider
               [(ngModel)]="selectedPriceRange"
               [range]="true"
-              (onSlideEnd)="getProductsWithFormatAndCategoryAndPriceAndSearch()"
+              (onSlideEnd)="
+                getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
+              "
               [min]="0"
               [max]="maxPrice"
             ></p-slider>

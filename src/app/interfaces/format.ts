@@ -1,7 +1,7 @@
-import { Product } from "./product";
+import { Book } from './book';
 
 export interface Format {
     id?: number;
     name?: string;
-    products?: Array<Product>;
+    books?: Array<Book>;
 }

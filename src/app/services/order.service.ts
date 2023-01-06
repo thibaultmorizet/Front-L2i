@@ -17,9 +17,7 @@ export class OrderService {
   getUserOrders(user_id: number) {
     return this.http.get<Array<Order>>(this.url + '?user.id=' + user_id);
   }
-  setOrder(order: Order) {
-    console.log(order);
-    
+  setOrder(order: Order) {    
     return this.http.post<{ token: string }>(this.url, order);
   }
 }

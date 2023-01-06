@@ -80,8 +80,10 @@ export class AdminProductsComponent implements OnInit {
     }
 
     this.ps
-      .getAllProductsWithoutLimit([], [], '', [], null)
-      .subscribe((data) => (this.allProducts = data));
+      .getAllProductsWithoutLimit('', [], null)
+      .subscribe((data) => {
+        this.allProducts = data;
+      });
 
     this.getAllFormatsfunc();
     this.getAllEditorsfunc();
@@ -132,7 +134,9 @@ export class AdminProductsComponent implements OnInit {
         );
         this.selectedProducts.forEach((aProduct) => {
           let imageUrlToDelete = {
-            imageUrl: aProduct.image?.substring(aProduct.image?.indexOf('assets')),
+            imageUrl: aProduct.image?.substring(
+              aProduct.image?.indexOf('assets')
+            ),
           };
 
           this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {});
@@ -153,7 +157,7 @@ export class AdminProductsComponent implements OnInit {
       anAuthor.name = anAuthor.firstname + ' ' + anAuthor.lastname;
     });
     this.product = { ...product };
-    this.productDialog = true;
+    this.productDialog = true;    
   }
 
   deleteproduct(product: Product) {
@@ -166,7 +170,9 @@ export class AdminProductsComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
-        this.allProducts = this.allProducts.filter((val) => val.id !== product.id);
+        this.allProducts = this.allProducts.filter(
+          (val) => val.id !== product.id
+        );
         let imageUrlToDelete = {
           imageUrl: product.image?.substring(product.image?.indexOf('assets')),
         };
@@ -206,18 +212,22 @@ export class AdminProductsComponent implements OnInit {
             this.imageInfo.url.split('.').pop();
         } else {
           this.product.image =
-            'https://www.thibaultmorizet.fr/assets/product-images/' + this.product.id + '.jpeg';
+            'https://www.thibaultmorizet.fr/assets/product-images/' +
+            this.product.id +
+            '.jpeg';
         }
         this.ps.addImage(this.imageInfo).subscribe();
       }
-      this.ps.updateProduct(this.product.id, this.product).subscribe((result) => {
-        this.product = {};
-        this.ngOnInit();
-        this.iziToast.success({
-          message: this.translate.instant('admin_products.product_updated'),
-          position: 'topRight',
+      this.ps
+        .updateProduct(this.product.id, this.product)
+        .subscribe((result) => {
+          this.product = {};
+          this.ngOnInit();
+          this.iziToast.success({
+            message: this.translate.instant('admin_products.product_updated'),
+            position: 'topRight',
+          });
         });
-      });
     } else {
       this.allProducts.push(this.product);
       this.ps.createProduct(this.product).subscribe((res) => {
@@ -231,7 +241,9 @@ export class AdminProductsComponent implements OnInit {
               this.imageInfo.url.split('.').pop();
           } else {
             this.product.image =
-              'https://www.thibaultmorizet.fr/assets/product-images/' + res.id + '.jpeg';
+              'https://www.thibaultmorizet.fr/assets/product-images/' +
+              res.id +
+              '.jpeg';
           }
 
           this.ps.addImage(this.imageInfo).subscribe();
@@ -254,7 +266,7 @@ export class AdminProductsComponent implements OnInit {
   getAllFormatsfunc() {
     this.fs.getAllFormats().subscribe((res) => {
       res.forEach((aFormat) => {
-        delete aFormat.products;
+        delete aFormat.books;
       });
       this.formats = res;
     });
@@ -262,7 +274,7 @@ export class AdminProductsComponent implements OnInit {
   getAllEditorsfunc() {
     this.es.getAllEditors().subscribe((res) => {
       res.forEach((anEditor) => {
-        delete anEditor.products;
+        delete anEditor.books;
       });
       this.editors = res;
     });
@@ -278,7 +290,7 @@ export class AdminProductsComponent implements OnInit {
   getAllAuthorsfunc() {
     this.authorService.getAllAuthors().subscribe((res) => {
       res.forEach((anAuthor) => {
-        delete anAuthor.products;
+        delete anAuthor.books;
         anAuthor.name = anAuthor.firstname + ' ' + anAuthor.lastname;
       });
       this.authors = res;
@@ -287,7 +299,7 @@ export class AdminProductsComponent implements OnInit {
   getAllCategoriesfunc() {
     this.cs.getAllCategories().subscribe((res) => {
       res.forEach((aCategory) => {
-        delete aCategory.products;
+        delete aCategory.books;
       });
       this.categories = res;
     });

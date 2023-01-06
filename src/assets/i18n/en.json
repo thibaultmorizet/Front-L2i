@@ -16,9 +16,9 @@
   },
   "admin_users": {
     "manage_users": "Manage users",
-    "total_users_message": "In total there are {{userLength}} users.",
+    "total_users_message": "In total there are {userLength} users.",
     "users_details": "User details",
-    "confirm_delete_user_message": "Are you sure you want to delete {{firstname}} {{lastname}} ?",
+    "confirm_delete_user_message": "Are you sure you want to delete {firstname} {lastname} ?",
     "confirm_group_delete_users_message": "Are you sure you want to delete the selected users ?",
     "users_deleted": "Users deleted",
     "user_deleted": "User deleted",
@@ -26,7 +26,7 @@
   },
   "admin_admins": {
     "manage_admins": "Manage admins",
-    "total_admins_message": "In total there are {{userLength}} admins.",
+    "total_admins_message": "In total there are {userLength} admins.",
     "admin_details": "Admin details",
     "admin_created": "Admin created"
   },
@@ -35,9 +35,9 @@
   },
   "admin_products": {
     "manage_products": "Manage products",
-    "total_products_message": "In total there are {{productLength}} products.",
+    "total_products_message": "In total there are {productLength} products.",
     "product_details": "Product details",
-    "confirm_delete_product_message": "Are you sure you want to delete the product : {{title}} ?",
+    "confirm_delete_product_message": "Are you sure you want to delete the product : {title} ?",
     "confirm_group_delete_products_message": "Are you sure you want to delete the selected products ?",
     "products_deleted": "Products deleted",
     "product_updated": "Product updated",
@@ -59,9 +59,9 @@
   },
   "admin_formats": {
     "manage_formats": "Manage formats",
-    "total_formats_message": "In total there are {{formatLength}} formats.",
+    "total_formats_message": "In total there are {formatLength} formats.",
     "format_details": "Format details",
-    "confirm_delete_format_message": "Are you sure you want to delete the format : {{name}} ?",
+    "confirm_delete_format_message": "Are you sure you want to delete the format : {name} ?",
     "confirm_group_delete_formats_message": "Are you sure you want to delete the selected formats ?",
     "formats_deleted": "Formats deleted",
     "format_updated": "Format updated",
@@ -72,9 +72,9 @@
   },
   "admin_editors": {
     "manage_editors": "Manage editors",
-    "total_editors_message": "In total there are {{editorLength}} editors.",
+    "total_editors_message": "In total there are {editorLength} editors.",
     "editor_details": "Editor details",
-    "confirm_delete_editor_message": "Are you sure you want to delete the editor : {{name}} ?",
+    "confirm_delete_editor_message": "Are you sure you want to delete the editor : {name} ?",
     "confirm_group_delete_editors_message": "Are you sure you want to delete the selected editors ?",
     "editors_deleted": "Editors deleted",
     "editor_updated": "Editor updated",
@@ -85,9 +85,9 @@
   },
   "admin_authors": {
     "manage_authors": "Manage authors",
-    "total_authors_message": "In total there are {{authorLength}} authors.",
+    "total_authors_message": "In total there are {authorLength} authors.",
     "author_details": "Author details",
-    "confirm_delete_author_message": "Are you sure you want to delete the author : {{firstname}} {{lastname}} ?",
+    "confirm_delete_author_message": "Are you sure you want to delete the author : {firstname} {lastname} ?",
     "confirm_group_delete_authors_message": "Are you sure you want to delete the selected authors ?",
     "authors_deleted": "Authors deleted",
     "author_updated": "Author updated",
@@ -100,9 +100,9 @@
   },
   "admin_categories": {
     "manage_categories": "Manage categories",
-    "total_categories_message": "In total there are {{categoryLength}} categories.",
+    "total_categories_message": "In total there are {categoryLength} categories.",
     "category_details": "Category details",
-    "confirm_delete_category_message": "Are you sure you want to delete the category : {{name}} ?",
+    "confirm_delete_category_message": "Are you sure you want to delete the category : {name} ?",
     "confirm_group_delete_categories_message": "Are you sure you want to delete the selected categories ?",
     "categories_deleted": "Categories deleted",
     "category_updated": "Category updated",
@@ -119,7 +119,9 @@
     "price_range": "Price Range",
     "search": "Search",
     "category": "Category",
-    "author": "Author"
+    "author": "Author",
+    "type": "Type",
+    "brand": "Brand"
   },
   "product_details": {
     "product_details": "Product details",
@@ -161,6 +163,8 @@
     "add_to_cart": "Add to cart",
     "author": "Author",
     "billing_address": "Billing address",
+    "book": "Book",
+    "brand": "Brand",
     "is_required": "is required.",
     "check_out": "Check out",
     "city": "City",
@@ -188,7 +192,7 @@
     "firstname": "Firstname",
     "lastname": "Lastname",
     "your_language": "Your language",
-    "showing_entries_message": "Showing {{first}} to {{last}} of {{totalRecords}} entries",
+    "showing_entries_message": "Showing {first} to {last} of {totalRecords} entries",
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
@@ -201,6 +205,7 @@
     "authors": "Authors",
     "editors": "Editors",
     "categories": "Categories",
+    "video": "Video",
     "view_prices": "View {prices} prices"
   },
   "header": {
@@ -218,7 +223,7 @@
   "izitoast": {
     "product_add_to_cart": "Product add to cart",
     "lack_of_stock": "Lack of stock",
-    "lack_of_stock_message": "There are {{productStock}} copies of the product {{productTitle}} left and you are requesting {{productNumber}}",
+    "lack_of_stock_message": "There are {productStock} copies of the product {productTitle} left and you are requesting {productNumber}",
     "login_before_confirm_check_out": "Login before confirm check out",
     "modification_confirmed": "Modification confirmed",
     "successful_login": "Successful login",

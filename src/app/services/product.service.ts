@@ -12,8 +12,6 @@ export class ProductService {
   private urlWithoutLimit: string =
     'https://thibaultmorizet.fr/ws/products?itemsPerPage=10000';
   private products: Array<object> = [];
-  private formatsString: string = '';
-  private categoriesString: string = '';
   private searchString: string = '';
   private pricesString: string = '';
   private inStockString: string = '';
@@ -34,14 +32,10 @@ export class ProductService {
     );
   }
   getAllProductsWithoutLimit(
-    formats: Array<Format>,
-    categories: Array<Category>,
     search: string,
     prices: Array<number>,
     inStock: boolean | null
   ) {
-    this.formatsString = '';
-    this.categoriesString = '';
     this.searchString = '';
     this.pricesString = '';
     this.inStockString = '';
@@ -55,12 +49,7 @@ export class ProductService {
         '&author.lastname=' +
         search;
     }
-    formats.forEach((el) => {
-      this.formatsString += '&format.name[]=' + el.name;
-    });
-    categories.forEach((el) => {
-      this.categoriesString += '&category.name[]=' + el.name;
-    });
+
     if (prices[0] && prices[1]) {
       this.pricesString +=
         '&unitpriceht[between]=' +
@@ -77,8 +66,6 @@ export class ProductService {
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
-        this.formatsString +
-        this.categoriesString +
         this.pricesString +
         this.searchString +
         this.inStockString
@@ -87,14 +74,10 @@ export class ProductService {
   getAllProductsForPage(
     page: number,
     productnumber: number,
-    formats: Array<Format>,
-    categories: Array<Category>,
     search: string,
     prices: Array<number>,
     inStock: boolean
   ) {
-    this.formatsString = '';
-    this.categoriesString = '';
     this.searchString = '';
     this.inStockString = '';
 
@@ -107,12 +90,6 @@ export class ProductService {
         '&author.lastname=' +
         search;
     }
-    formats.forEach((el) => {
-      this.formatsString += '&format.name[]=' + el.name;
-    });
-    categories.forEach((el) => {
-      this.categoriesString += '&category.name[]=' + el.name;
-    });
     if (prices[0] && prices[1]) {
       this.pricesString +=
         '&unitpriceht[between]=' +
@@ -130,24 +107,18 @@ export class ProductService {
         page +
         '&itemsPerPage=' +
         productnumber +
-        this.formatsString +
-        this.categoriesString +
         this.pricesString +
         this.searchString +
         this.inStockString
     );
   }
 
-  getAllProductsByFormatAndCategoryAndSearch(
-    formats: Array<Format>,
-    categories: Array<Category>,
+  getAllProductsBySearch(
     search: string,
     prices: Array<number>,
     productnumber: number,
     inStock: boolean
   ) {
-    this.formatsString = '';
-    this.categoriesString = '';
     this.searchString = '';
     this.pricesString = '';
     this.inStockString = '';
@@ -161,12 +132,6 @@ export class ProductService {
         '&author.lastname=' +
         search;
     }
-    formats.forEach((el) => {
-      this.formatsString += '&format.name[]=' + el.name;
-    });
-    categories.forEach((el) => {
-      this.categoriesString += '&category.name[]=' + el.name;
-    });
     if (typeof prices[0] == 'number' && typeof prices[1] == 'number') {
       this.pricesString +=
         '&unitpriceht[between]=' +
@@ -183,8 +148,6 @@ export class ProductService {
       'https://thibaultmorizet.fr/ws/products?' +
         'itemsPerPage=' +
         productnumber +
-        this.formatsString +
-        this.categoriesString +
         this.pricesString +
         this.searchString +
         this.inStockString

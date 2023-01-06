@@ -11,6 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { CommentService } from 'src/app/services/comment.service';
 import { Comment } from 'src/app/interfaces/comment';
 import { ConfirmationService } from 'primeng/api';
+import { BookService } from 'src/app/services/book.service';
+import { VideoService } from 'src/app/services/video.service';
 
 @Component({
   selector: 'app-product-details',
@@ -38,6 +40,8 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private ps: ProductService,
+    private bs: BookService,
+    private vs: VideoService,
     private as: AuthService,
     private route: ActivatedRoute,
     private router: Router,
@@ -54,30 +58,69 @@ export class ProductDetailsComponent implements OnInit {
     this.route.paramMap.subscribe((res) => {
       this.idProduct = +(res.get('id') ?? '0');
       this.ps.getOneProduct(this.idProduct).subscribe((b) => {
-        this.product = b;
-        if (this.product.comments) {
-          this.product.comments.sort((objA, objB) => {
-            if (objB.createdAt != undefined && objA.createdAt != undefined) {
-              let date1 = new Date(objA.createdAt);
-              let date2 = new Date(objB.createdAt);
+        if (b.brand) {
+          this.vs.getOneVideo(this.idProduct).subscribe((result) => {
+            this.product = result;
+            this.product.type = 'video';
+            if (this.product.comments) {
+              this.product.comments.sort((objA, objB) => {
+                if (
+                  objB.createdAt != undefined &&
+                  objA.createdAt != undefined
+                ) {
+                  let date1 = new Date(objA.createdAt);
+                  let date2 = new Date(objB.createdAt);
 
-              return date2.getTime() - date1.getTime();
+                  return date2.getTime() - date1.getTime();
+                }
+                return 0;
+              });
             }
-            return 0;
+
+            this.product.number_ordered = 1;
+            if (this.product.visitnumber) {
+              this.product.visitnumber += 1;
+            } else {
+              this.product.visitnumber = 1;
+            }
+
+            this.ps
+              .updateProduct(this.product.id, this.product)
+              .subscribe(() => {});
+          });
+        } else {
+          this.bs.getOneBook(this.idProduct).subscribe((result) => {
+            this.product = result;
+            this.product.type = 'book';
+            if (this.product.comments) {
+              this.product.comments.sort((objA, objB) => {
+                if (
+                  objB.createdAt != undefined &&
+                  objA.createdAt != undefined
+                ) {
+                  let date1 = new Date(objA.createdAt);
+                  let date2 = new Date(objB.createdAt);
+
+                  return date2.getTime() - date1.getTime();
+                }
+                return 0;
+              });
+            }
+
+            this.product.number_ordered = 1;
+            if (this.product.visitnumber) {
+              this.product.visitnumber += 1;
+            } else {
+              this.product.visitnumber = 1;
+            }
+
+            this.ps
+              .updateProduct(this.product.id, this.product)
+              .subscribe(() => {});
           });
         }
-
-        this.product.number_ordered = 1;
-        if (this.product.visitnumber) {
-          this.product.visitnumber += 1;
-        } else {
-          this.product.visitnumber = 1;
-        }
-
-        this.ps
-          .updateProduct(this.product.id, this.product)
-          .subscribe(() => {});
       });
+
       try {
         this.connectedUser = JSON.parse(
           this.storageCrypter.getItem('user', 'session')
@@ -238,7 +281,7 @@ export class ProductDetailsComponent implements OnInit {
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,
     tva: number | undefined
-  ) {
+  ) {    
     if (unitpriceht != undefined) {
       if (tva != undefined) {
         return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
