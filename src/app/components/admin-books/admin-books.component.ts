@@ -113,6 +113,7 @@ export class AdminBooksComponent implements OnInit {
   openNew() {
     this.book = {
       unitpriceht: 1,
+      type: 'book',
       stock: 1,
       year: '1850',
     };
@@ -134,14 +135,12 @@ export class AdminBooksComponent implements OnInit {
         );
         this.selectedBooks.forEach((aBook) => {
           let imageUrlToDelete = {
-            imageUrl: aBook.image?.substring(
-              aBook.image?.indexOf('assets')
-            ),
+            imageUrl: aBook.image?.substring(aBook.image?.indexOf('assets')),
           };
 
           this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {});
 
-          this.ps.deleteTheProduct(aBook.id).subscribe((el) => {});
+          this.bs.deleteTheBook(aBook.id).subscribe((el) => {});
         });
         this.selectedBooks = [];
         this.iziToast.success({
@@ -153,6 +152,7 @@ export class AdminBooksComponent implements OnInit {
   }
 
   editBook(book: Product) {
+    book.type = 'book';
     book.author?.forEach((anAuthor) => {
       anAuthor.name = anAuthor.firstname + ' ' + anAuthor.lastname;
     });
@@ -176,7 +176,7 @@ export class AdminBooksComponent implements OnInit {
         };
 
         this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {});
-        this.ps.deleteTheProduct(book.id).subscribe((el) => {});
+        this.bs.deleteTheBook(book.id).subscribe((el) => {});
         this.book = {};
 
         this.iziToast.success({
@@ -216,19 +216,17 @@ export class AdminBooksComponent implements OnInit {
         }
         this.ps.addImage(this.imageInfo).subscribe();
       }
-      this.ps
-        .updateProduct(this.book.id, this.book)
-        .subscribe((result) => {
-          this.book = {};
-          this.ngOnInit();
-          this.iziToast.success({
-            message: this.translate.instant('admin_books.book_updated'),
-            position: 'topRight',
-          });
+      this.bs.updateBook(this.book.id, this.book).subscribe((result) => {
+        this.book = {};
+        this.ngOnInit();
+        this.iziToast.success({
+          message: this.translate.instant('admin_books.book_updated'),
+          position: 'topRight',
         });
+      });
     } else {
       this.allBooks.push(this.book);
-      this.ps.createProduct(this.book).subscribe((res) => {
+      this.bs.createBook(this.book).subscribe((res) => {
         if (this.imageInfo.data) {
           this.imageInfo.productId = res.id?.toString();
           if (this.imageInfo.url) {
@@ -246,7 +244,7 @@ export class AdminBooksComponent implements OnInit {
 
           this.ps.addImage(this.imageInfo).subscribe();
         }
-        this.ps.updateProduct(res.id, this.book).subscribe((result) => {
+        this.bs.updateBook(res.id, this.book).subscribe((result) => {
           this.book = {};
           this.ngOnInit();
           this.iziToast.success({

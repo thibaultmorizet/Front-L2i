@@ -160,4 +160,15 @@ export class VideoService {
         this.inStockString
     );
   }
+
+  createVideo(video: Video) {
+    return this.http.post<Video>(this.url, video);
+  }
+  updateVideo(id: number | undefined, video: Video) {
+    return this.http.put<{ token: string }>(this.url + '/' + id, video);
+  }
+  deleteTheVideo(id: number | undefined) {
+    return this.http.delete<{ token: string }>(this.url + '/' + id);
+  }
+
 }

@@ -132,7 +132,7 @@ export class AdminVideosComponent implements OnInit {
 
           this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {});
 
-          this.ps.deleteTheProduct(aVideo.id).subscribe((el) => {});
+          this.vs.deleteTheVideo(aVideo.id).subscribe((el) => {});
         });
         this.selectedVideos = [];
         this.iziToast.success({
@@ -167,7 +167,7 @@ export class AdminVideosComponent implements OnInit {
         };
 
         this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {});
-        this.ps.deleteTheProduct(video.id).subscribe((el) => {});
+        this.vs.deleteTheVideo(video.id).subscribe((el) => {});
         this.video = {};
 
         this.iziToast.success({
@@ -207,7 +207,7 @@ export class AdminVideosComponent implements OnInit {
         }
         this.ps.addImage(this.imageInfo).subscribe();
       }
-      this.ps.updateProduct(this.video.id, this.video).subscribe((result) => {
+      this.vs.updateVideo(this.video.id, this.video).subscribe((result) => {
         this.video = {};
         this.ngOnInit();
         this.iziToast.success({
@@ -217,7 +217,7 @@ export class AdminVideosComponent implements OnInit {
       });
     } else {
       this.allVideos.push(this.video);
-      this.ps.createProduct(this.video).subscribe((res) => {
+      this.vs.createVideo(this.video).subscribe((res) => {
         if (this.imageInfo.data) {
           this.imageInfo.productId = res.id?.toString();
           if (this.imageInfo.url) {
@@ -235,7 +235,7 @@ export class AdminVideosComponent implements OnInit {
 
           this.ps.addImage(this.imageInfo).subscribe();
         }
-        this.ps.updateProduct(res.id, this.video).subscribe((result) => {
+        this.vs.updateVideo(res.id, this.video).subscribe((result) => {
           this.video = {};
           this.ngOnInit();
           this.iziToast.success({

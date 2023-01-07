@@ -181,4 +181,13 @@ export class BookService {
         this.inStockString
     );
   }
+  createBook(book: Book) {
+    return this.http.post<Book>(this.url, book);
+  }
+  updateBook(id: number | undefined, book: Book) {
+    return this.http.put<{ token: string }>(this.url + '/' + id, book);
+  }
+  deleteTheBook(id: number | undefined) {
+    return this.http.delete<{ token: string }>(this.url + '/' + id);
+  }
 }

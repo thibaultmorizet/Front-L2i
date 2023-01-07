@@ -159,6 +159,8 @@ export class ProductService {
   }
 
   createProduct(product: Product) {
+    console.log(product);
+    
     return this.http.post<Product>(this.url, product);
   }
 
