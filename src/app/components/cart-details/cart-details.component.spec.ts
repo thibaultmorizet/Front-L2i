@@ -12,6 +12,7 @@ import { NgxIziToastModule } from 'ngx-izitoast';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { FooterComponent } from '../partial/footer/footer.component';
 import { HeaderComponent } from '../partial/header/header.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { CartDetailsComponent } from './cart-details.component';
 
@@ -21,14 +22,13 @@ describe('CartDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CartDetailsComponent,
-        HeaderComponent,
-        FooterComponent,],
+      declarations: [CartDetailsComponent, HeaderComponent, FooterComponent],
       imports: [
         NgxIziToastModule,
         HttpClientModule,
         RouterTestingModule,
         SocialLoginModule,
+        ConfirmDialogModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,

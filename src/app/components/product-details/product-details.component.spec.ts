@@ -12,6 +12,7 @@ import { NgxIziToastModule } from 'ngx-izitoast';
 import { DividerModule } from 'primeng/divider';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TabViewModule } from 'primeng/tabview';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { FooterComponent } from '../partial/footer/footer.component';
 import { HeaderComponent } from '../partial/header/header.component';
@@ -41,6 +42,7 @@ describe('ProductDetailsComponent', () => {
         SkeletonModule,
         DividerModule,
         TabViewModule,
+        ConfirmDialogModule,
       ],
       providers: [
         {
