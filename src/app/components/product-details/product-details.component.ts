@@ -92,20 +92,6 @@ export class ProductDetailsComponent implements OnInit {
           this.bs.getOneBook(this.idProduct).subscribe((result) => {
             this.product = result;
             this.product.type = 'book';
-            if (this.product.comments) {
-              this.product.comments.sort((objA, objB) => {
-                if (
-                  objB.createdAt != undefined &&
-                  objA.createdAt != undefined
-                ) {
-                  let date1 = new Date(objA.createdAt);
-                  let date2 = new Date(objB.createdAt);
-
-                  return date2.getTime() - date1.getTime();
-                }
-                return 0;
-              });
-            }
 
             this.product.number_ordered = 1;
             if (this.product.visitnumber) {
@@ -116,7 +102,33 @@ export class ProductDetailsComponent implements OnInit {
 
             this.ps
               .updateProduct(this.product.id, this.product)
-              .subscribe(() => {});
+              .subscribe(() => {
+                if (this.product.comments) {
+                  this.product.comments.forEach((aComment) => {
+                    if (
+                      aComment.commentstatut?.id == 3 ||
+                      (aComment.commentstatut?.id == 1 &&
+                        this.connectedUser?.id != aComment.user?.id)
+                    ) {
+                      this.product.comments?.splice(
+                        this.product.comments.indexOf(aComment)
+                      );
+                    }
+                  });
+                  this.product.comments.sort((objA, objB) => {
+                    if (
+                      objB.createdAt != undefined &&
+                      objA.createdAt != undefined
+                    ) {
+                      let date1 = new Date(objA.createdAt);
+                      let date2 = new Date(objB.createdAt);
+
+                      return date2.getTime() - date1.getTime();
+                    }
+                    return 0;
+                  });
+                }
+              });
           });
         }
       });
@@ -281,7 +293,7 @@ export class ProductDetailsComponent implements OnInit {
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,
     tva: number | undefined
-  ) {    
+  ) {
     if (unitpriceht != undefined) {
       if (tva != undefined) {
         return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
@@ -380,12 +392,17 @@ export class ProductDetailsComponent implements OnInit {
   sendComment() {
     if (this.commentToSend.text != '') {
       if (this.connectedUser && this.connectedUser.id && this.product) {
+        this.commentToSend.commentstatut = {
+          id: 1,
+        };
         this.commentToSend.user = this.connectedUser;
         this.commentToSend.product = this.product;
         this.commentToSend.createdAt = new Date();
 
         this.commentService.setComment(this.commentToSend).subscribe((el) => {
           if (typeof el == 'object') {
+            console.log(el);
+
             this.product.comments?.unshift(el);
             this.iziToast.success({
               message: this.translate.instant('product_details.comment_sent'),

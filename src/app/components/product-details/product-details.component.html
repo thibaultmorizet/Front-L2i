@@ -146,9 +146,7 @@
               </li>
               <li *ngIf="product.type == 'video'">
                 <span>
-                  <span class="bold"
-                    >{{ "general.brand" | translate }} :
-                  </span>
+                  <span class="bold">{{ "general.brand" | translate }} : </span>
                   <span>{{ product.brand?.name }}</span>
                 </span>
               </li>
@@ -250,7 +248,9 @@
                   <div class="product-details-comment-user">
                     {{ aComment.user?.firstname }} {{ aComment.user?.lastname }}
                   </div>
-
+                  <div class="product-details-comment-statut" *ngIf="aComment.commentstatut?.id==1">
+                    {{ aComment.commentstatut?.name }}
+                  </div>
                   <div class="product-details-comment-date">
                     {{ getCommentDate(aComment.createdAt) }}
                   </div>

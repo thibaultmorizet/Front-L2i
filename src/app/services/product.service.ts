@@ -158,9 +158,7 @@ export class ProductService {
     return this.http.put<{ token: string }>(this.url + '/' + id, product);
   }
 
-  createProduct(product: Product) {
-    console.log(product);
-    
+  createProduct(product: Product) {    
     return this.http.post<Product>(this.url, product);
   }
 

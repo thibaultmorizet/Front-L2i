@@ -169,10 +169,15 @@
     font-size: 1rem;
 }
 
-.product-details-comment-date {
+.product-details-comment-date, .product-details-comment-statut {
     font-size: .9rem;
     font-weight: 700;
     color: #7e7e7e;
+    text-align: center;
+}
+
+.product-details-comment-statut {
+    margin: 0 1rem;
 }
 
 .product-details-comment-container {
@@ -203,6 +208,12 @@
 .send-comment-button {
     height: 48px;
     margin-left: 1rem;
+}
+
+@media (min-width: 400px) {
+    .p-tabview {
+        width: 360px;
+    }
 }
 
 @media (min-width: 650px) {
