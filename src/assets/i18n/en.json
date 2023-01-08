@@ -6,7 +6,8 @@
     "admins": "Admins",
     "books": "Books",
     "videos": "Videos",
-    "my_account": "My account"
+    "my_account": "My account",
+    "moderators": "Moderators"
   },
   "admin_home": {
     "stats": "Statistics",
@@ -24,6 +25,16 @@
     "users_deleted": "Users deleted",
     "user_deleted": "User deleted",
     "user_created": "User created"
+  },
+  "admin_moderators": {
+    "manage_moderators": "Manage moderators",
+    "total_moderators_message": "In total there are {moderatorLength} moderators.",
+    "moderators_details": "Moderator details",
+    "confirm_delete_moderator_message": "Are you sure you want to delete {firstname} {lastname} ?",
+    "confirm_group_delete_moderators_message": "Are you sure you want to delete the selected moderators ?",
+    "moderators_deleted": "Moderators deleted",
+    "moderator_deleted": "Moderator deleted",
+    "moderator_created": "Moderator created"
   },
   "admin_admins": {
     "manage_admins": "Manage admins",

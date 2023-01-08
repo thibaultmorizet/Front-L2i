@@ -51,7 +51,7 @@ export class AdminUsersComponent implements OnInit {
     } catch (error) {
       this.router.navigateByUrl('/admin/login');
     }
-    this.us.getAllNotAdminsUsers().then((data) => {
+    this.us.getAllNotAdminsAndNotModeratorsUsers().then((data) => {
       this.allUsers = data;
     });
     this.submitted = false;

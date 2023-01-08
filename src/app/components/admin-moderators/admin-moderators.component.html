@@ -1,0 +1,224 @@
+<div class="general-content">
+    <app-admin-header></app-admin-header>
+  
+    <main id="content">
+      <p-toast></p-toast>
+  
+      <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+          <button
+            pButton
+            pRipple
+            label="{{ 'general.new' | translate }}"
+            icon="pi pi-plus"
+            class="p-button-success mr-2"
+            (click)="openNew()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            label="{{ 'general.delete' | translate }}"
+            icon="pi pi-trash"
+            class="p-button-danger"
+            (click)="deleteSelectedModerators()"
+            [disabled]="!selectedModerators || !selectedModerators.length"
+          ></button>
+        </ng-template>
+      </p-toolbar>
+  
+      <p-table
+        #dt
+        [value]="allModerators"
+        [rows]="12"
+        [paginator]="true"
+        [globalFilterFields]="[
+          'firstname',
+          'lastname',
+          'email'
+        ]"
+        [(selection)]="selectedModerators"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="{{
+          'general.showing_entries_message'
+            | translate
+              : {
+                  first: '{first}',
+                  last: '{last}',
+                  totalRecords: '{totalRecords}'
+                }
+        }}"
+        [showCurrentPageReport]="true"
+      >
+        <ng-template pTemplate="caption">
+          <div class="manage-moderators">
+            <h5 class="m-0">{{ "admin_moderators.manage_moderators" | translate }}</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="{{ 'general.search' | translate }}"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="display: table-cell !important; width: 4rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th
+              style="display: table-cell !important; min-width: 15rem"
+              pSortableColumn="firstname"
+            >
+              {{ "general.firstname" | translate }}
+              <p-sortIcon field="firstname"></p-sortIcon>
+            </th>
+            <th style="display: table-cell !important" pSortableColumn="lastname">
+              {{ "general.lastname" | translate }}
+              <p-sortIcon field="lastname"></p-sortIcon>
+            </th>
+            <th style="display: table-cell !important" pSortableColumn="email">
+              {{ "general.email" | translate }}
+              <p-sortIcon field="email"></p-sortIcon>
+            </th>
+            <th style="display: table-cell !important"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-moderator>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="moderator"></p-tableCheckbox>
+            </td>
+            <td>{{ moderator.firstname }}</td>
+            <td>{{ moderator.lastname }}</td>
+            <td>{{ moderator.email }}</td>  
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-success mr-2"
+                (click)="editModerator(moderator)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-warning"
+                (click)="deleteModerator(moderator)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            {{
+              "admin_moderators.total_moderators_message"
+                | translate : { moderatorLength: allModerators ? allModerators.length : 0 }
+            }}
+          </div>
+        </ng-template>
+      </p-table>
+  
+      <p-confirmDialog
+        [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+        [style]="{ width: '50vw' }"
+        [baseZIndex]="10000"
+        rejectButtonStyleClass="p-button-outline-danger"
+        acceptButtonStyleClass="p-button-valid"
+        acceptLabel="{{ 'general.yes' | translate }}"
+        rejectLabel="{{ 'general.no' | translate }}"
+      ></p-confirmDialog>
+  
+      <p-dialog
+        [(visible)]="moderatorDialog"
+        [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+        [style]="{ width: '50vw' }"
+        header="{{ 'admin_moderators.moderators_details' | translate }}"
+        [modal]="true"
+        styleClass="p-fluid"
+        [dismissableMask]="true"
+      >
+        <ng-template pTemplate="content">
+          <div class="field">
+            <label for="firstname">{{ "general.firstname" | translate }} *</label>
+            <input
+              type="text"
+              pInputText
+              id="firstname"
+              [(ngModel)]="moderator.firstname"
+              required
+              autofocus
+            />
+            <small class="p-error" *ngIf="submitted && !moderator.firstname"
+              >{{ "general.firstname" | translate }}
+              {{ "general.is_required" | translate }}</small
+            >
+          </div>
+  
+          <div class="field">
+            <label for="lastname">{{ "general.lastname" | translate }} *</label>
+            <input
+              type="text"
+              pInputText
+              id="lastname"
+              [(ngModel)]="moderator.lastname"
+              required
+            />
+            <small class="p-error" *ngIf="submitted && !moderator.lastname"
+              >{{ "general.lastname" | translate }}
+              {{ "general.is_required" | translate }}</small
+            >
+          </div>
+  
+          <div class="field">
+            <label for="email">{{ "general.email" | translate }} *</label>
+            <input
+              type="text"
+              pInputText
+              id="email"
+              [(ngModel)]="moderator.email"
+              required
+            />
+            <small class="p-error" *ngIf="submitted && !moderator.email"
+              >{{ "general.email" | translate }}
+              {{ "general.is_required" | translate }}</small
+            >
+          </div>
+  
+          <br />
+  
+
+        </ng-template>
+  
+        <ng-template pTemplate="footer">
+          <button
+            pButton
+            pRipple
+            label="{{ 'general.cancel' | translate }}"
+            icon="pi pi-times"
+            class="p-button-text"
+            (click)="hideDialog()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            label="{{ 'general.save' | translate }}"
+            icon="pi pi-check"
+            class="p-button-text"
+            (click)="saveModerator()"
+            [disabled]="
+              !moderator.firstname ||
+              !moderator.lastname ||
+              !moderator.email 
+            "
+          ></button>
+        </ng-template>
+      </p-dialog>
+    </main>
+    <app-admin-footer></app-admin-footer>
+  </div>
+  

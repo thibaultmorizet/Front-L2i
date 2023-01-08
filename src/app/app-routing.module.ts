@@ -22,6 +22,7 @@ import { AdminAuhtorsComponent } from './components/admin-auhtors/admin-auhtors.
 import { AdminCategoriesComponent } from './components/admin-categories/admin-categories.component';
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 import { AdminBrandsComponent } from './components/admin-brands/admin-brands.component';
+import { AdminModeratorsComponent } from './components/admin-moderators/admin-moderators.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'admin/account', component: AdminAccountComponent },
   { path: 'admin/users', component: AdminUsersComponent },
   { path: 'admin/admins', component: AdminAdminsComponent },
+  { path: 'admin/moderators', component: AdminModeratorsComponent },
   { path: 'admin/formats', component: AdminFormatsComponent },
   { path: 'admin/editors', component: AdminEditorsComponent },
   { path: 'admin/authors', component: AdminAuhtorsComponent },

@@ -6,7 +6,8 @@
     "admins": "Admins",
     "books": "Livres",
     "videos": "Vidéos",
-    "my_account": "Mon compte"
+    "my_account": "Mon compte",
+    "moderators": "Modérateurs"
   },
   "admin_home": {
     "stats": "Statistiques",
@@ -24,6 +25,16 @@
     "users_deleted": "Utilisateurs supprimés",
     "user_deleted": "Utilisateur supprimé",
     "user_created": "Utilisateur créé"
+  },
+  "admin_moderators": {
+    "manage_moderators": "Gestion des modérateurs",
+    "total_moderators_message": "Au total, il y a {moderatorLength} modérateurs.",
+    "moderators_details": "Détails de le modérateur",
+    "confirm_delete_moderator_message": "Êtes-vous sûr de vouloir supprimer {firstname} {lastname} ?",
+    "confirm_group_delete_moderators_message": "Voulez-vous vraiment supprimer les modérateurs sélectionnés ?",
+    "moderators_deleted": "Modérateurs supprimés",
+    "moderator_deleted": "Modérateur supprimé",
+    "moderator_created": "Modérateur créé"
   },
   "admin_admins": {
     "manage_admins": "Gestion des administrateurs",
@@ -79,7 +90,6 @@
     "cover_videos": "Couverture de la vidéo",
     "brand": "Marque",
     "select_a_brand": "Sélectionnez une marque"
-
   },
   "admin_products": {
     "total_products_message": "Au total, il y a {productLength} produits."

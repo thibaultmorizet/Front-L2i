@@ -82,6 +82,7 @@ import { AdminCategoriesComponent } from './components/admin-categories/admin-ca
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 import { AdminVideosComponent } from './components/admin-videos/admin-videos.component';
 import { AdminBrandsComponent } from './components/admin-brands/admin-brands.component';
+import { AdminModeratorsComponent } from './components/admin-moderators/admin-moderators.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +113,7 @@ import { AdminBrandsComponent } from './components/admin-brands/admin-brands.com
     ForgottenPasswordComponent,
     AdminVideosComponent,
     AdminBrandsComponent,
+    AdminModeratorsComponent,
   ],
   imports: [
     BrowserModule,
