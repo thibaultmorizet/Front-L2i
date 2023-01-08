@@ -249,7 +249,7 @@
                     {{ aComment.user?.firstname }} {{ aComment.user?.lastname }}
                   </div>
                   <div class="product-details-comment-statut" *ngIf="aComment.commentstatut?.id==1">
-                    {{ aComment.commentstatut?.name }}
+                    {{  aComment.commentstatut?.name ??'' | translate }}
                   </div>
                   <div class="product-details-comment-date">
                     {{ getCommentDate(aComment.createdAt) }}

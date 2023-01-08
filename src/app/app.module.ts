@@ -23,7 +23,7 @@ import {
   FacebookLoginProvider,
 } from 'angularx-social-login';
 import { MyAccountComponent } from './components/my-account/my-account.component';
-import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { AdminHomeComponent } from './components/admin-management/admin-home/admin-home.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
@@ -67,22 +67,22 @@ import {
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
 
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminLoginComponent } from './components/admin-management/admin-login/admin-login.component';
 import { AdminHeaderComponent } from './components/partial/admin-header/admin-header.component';
 import { AdminFooterComponent } from './components/partial/admin-footer/admin-footer.component';
-import { AdminBooksComponent } from './components/admin-books/admin-books.component';
-import { AdminAccountComponent } from './components/admin-account/admin-account.component';
-import { AdminUsersComponent } from './components/admin-users/admin-users.component';
-import { AdminAdminsComponent } from './components/admin-admins/admin-admins.component';
+import { AdminBooksComponent } from './components/admin-management/books-management/admin-books/admin-books.component';
+import { AdminAccountComponent } from './components/admin-management/admin-account/admin-account.component';
+import { AdminUsersComponent } from './components/admin-management/users-management/admin-users/admin-users.component';
+import { AdminAdminsComponent } from './components/admin-management/users-management/admin-admins/admin-admins.component';
 import { LoginComponent } from './components/login/login.component';
-import { AdminFormatsComponent } from './components/admin-formats/admin-formats.component';
-import { AdminEditorsComponent } from './components/admin-editors/admin-editors.component';
-import { AdminAuhtorsComponent } from './components/admin-auhtors/admin-auhtors.component';
-import { AdminCategoriesComponent } from './components/admin-categories/admin-categories.component';
+import { AdminFormatsComponent } from './components/admin-management/books-management/admin-formats/admin-formats.component';
+import { AdminEditorsComponent } from './components/admin-management/books-management/admin-editors/admin-editors.component';
+import { AdminAuhtorsComponent } from './components/admin-management/books-management/admin-auhtors/admin-auhtors.component';
+import { AdminCategoriesComponent } from './components/admin-management/books-management/admin-categories/admin-categories.component';
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
-import { AdminVideosComponent } from './components/admin-videos/admin-videos.component';
-import { AdminBrandsComponent } from './components/admin-brands/admin-brands.component';
-import { AdminModeratorsComponent } from './components/admin-moderators/admin-moderators.component';
+import { AdminVideosComponent } from './components/admin-management/videos-management/admin-videos/admin-videos.component';
+import { AdminBrandsComponent } from './components/admin-management/videos-management/admin-brands/admin-brands.component';
+import { AdminModeratorsComponent } from './components/admin-management/users-management/admin-moderators/admin-moderators.component';
 
 @NgModule({
   declarations: [

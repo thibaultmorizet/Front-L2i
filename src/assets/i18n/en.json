@@ -1,40 +1,6 @@
 {
-  "admin_header": {
-    "home": "Home",
-    "login_sign_in": "Login / Sign in",
-    "users": "Users",
-    "admins": "Admins",
-    "books": "Books",
-    "videos": "Videos",
-    "my_account": "My account",
-    "moderators": "Moderators"
-  },
-  "admin_home": {
-    "stats": "Statistics",
-    "image": "Image",
-    "title": "Title",
-    "sold_number": "Sold number",
-    "visit_number": "Visit number"
-  },
-  "admin_users": {
-    "manage_users": "Manage users",
-    "total_users_message": "In total there are {userLength} users.",
-    "users_details": "User details",
-    "confirm_delete_user_message": "Are you sure you want to delete {firstname} {lastname} ?",
-    "confirm_group_delete_users_message": "Are you sure you want to delete the selected users ?",
-    "users_deleted": "Users deleted",
-    "user_deleted": "User deleted",
-    "user_created": "User created"
-  },
-  "admin_moderators": {
-    "manage_moderators": "Manage moderators",
-    "total_moderators_message": "In total there are {moderatorLength} moderators.",
-    "moderators_details": "Moderator details",
-    "confirm_delete_moderator_message": "Are you sure you want to delete {firstname} {lastname} ?",
-    "confirm_group_delete_moderators_message": "Are you sure you want to delete the selected moderators ?",
-    "moderators_deleted": "Moderators deleted",
-    "moderator_deleted": "Moderator deleted",
-    "moderator_created": "Moderator created"
+  "admin_account": {
+    "personnal_data": "Personnal data"
   },
   "admin_admins": {
     "manage_admins": "Manage admins",
@@ -42,8 +8,20 @@
     "admin_details": "Admin details",
     "admin_created": "Admin created"
   },
-  "admin_account": {
-    "personnal_data": "Personnal data"
+  "admin_authors": {
+    "manage_authors": "Manage authors",
+    "total_authors_message": "In total there are {authorLength} authors.",
+    "author_details": "Author details",
+    "confirm_delete_author_message": "Are you sure you want to delete the author : {firstname} {lastname} ?",
+    "confirm_group_delete_authors_message": "Are you sure you want to delete the selected authors ?",
+    "authors_deleted": "Authors deleted",
+    "author_updated": "Author updated",
+    "author_deleted": "Author deleted",
+    "author_created": "Author created",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "language": "Language",
+    "you_can_t_delete_an_author_with_products": "You can't delete an author with products"
   },
   "admin_books": {
     "manage_books": "Manage books",
@@ -69,6 +47,98 @@
     "select_a_format": "Select a format",
     "cover_books": "Cover book"
   },
+  "admin_brands": {
+    "manage_brands": "Manage brands",
+    "total_brands_message": "In total there are {brandLength} brands.",
+    "brand_details": "Brand details",
+    "confirm_delete_brand_message": "Are you sure you want to delete the brand : {name} ?",
+    "confirm_group_delete_brands_message": "Are you sure you want to delete the selected brands ?",
+    "brands_deleted": "Brands deleted",
+    "brand_updated": "Brand updated",
+    "brand_deleted": "Brand deleted",
+    "brand_created": "Brand created",
+    "name": "Name",
+    "you_can_t_delete_a_brand_with_products": "You can't delete a brand with products"
+  },
+  "admin_categories": {
+    "manage_categories": "Manage categories",
+    "total_categories_message": "In total there are {categoryLength} categories.",
+    "category_details": "Category details",
+    "confirm_delete_category_message": "Are you sure you want to delete the category : {name} ?",
+    "confirm_group_delete_categories_message": "Are you sure you want to delete the selected categories ?",
+    "categories_deleted": "Categories deleted",
+    "category_updated": "Category updated",
+    "category_deleted": "Category deleted",
+    "category_created": "Category created",
+    "name": "Name",
+    "you_can_t_delete_a_category_with_products": "You can't delete a category with products"
+  },
+  "admin_editors": {
+    "manage_editors": "Manage editors",
+    "total_editors_message": "In total there are {editorLength} editors.",
+    "editor_details": "Editor details",
+    "confirm_delete_editor_message": "Are you sure you want to delete the editor : {name} ?",
+    "confirm_group_delete_editors_message": "Are you sure you want to delete the selected editors ?",
+    "editors_deleted": "Editors deleted",
+    "editor_updated": "Editor updated",
+    "editor_deleted": "Editor deleted",
+    "editor_created": "Editor created",
+    "name": "Name",
+    "you_can_t_delete_an_editor_with_products": "You can't delete an editor with products"
+  },
+  "admin_formats": {
+    "manage_formats": "Manage formats",
+    "total_formats_message": "In total there are {formatLength} formats.",
+    "format_details": "Format details",
+    "confirm_delete_format_message": "Are you sure you want to delete the format : {name} ?",
+    "confirm_group_delete_formats_message": "Are you sure you want to delete the selected formats ?",
+    "formats_deleted": "Formats deleted",
+    "format_updated": "Format updated",
+    "format_deleted": "Format deleted",
+    "format_created": "Format created",
+    "name": "Name",
+    "you_can_t_delete_a_format_with_products": "You can't delete a Format with products"
+  },
+  "admin_header": {
+    "home": "Home",
+    "login_sign_in": "Login / Sign in",
+    "users": "Users",
+    "admins": "Admins",
+    "books": "Books",
+    "videos": "Videos",
+    "my_account": "My account",
+    "moderators": "Moderators"
+  },
+  "admin_home": {
+    "stats": "Statistics",
+    "image": "Image",
+    "title": "Title",
+    "sold_number": "Sold number",
+    "visit_number": "Visit number"
+  },
+  "admin_moderators": {
+    "manage_moderators": "Manage moderators",
+    "total_moderators_message": "In total there are {moderatorLength} moderators.",
+    "moderators_details": "Moderator details",
+    "confirm_delete_moderator_message": "Are you sure you want to delete {firstname} {lastname} ?",
+    "confirm_group_delete_moderators_message": "Are you sure you want to delete the selected moderators ?",
+    "moderators_deleted": "Moderators deleted",
+    "moderator_deleted": "Moderator deleted",
+    "moderator_created": "Moderator created"
+  },
+  "admin_products": {
+    "total_products_message": "In total there are {productLength} products."
+  },
+  "admin_users": {
+    "manage_users": "Manage users",
+    "total_users_message": "In total there are {userLength} users.",
+    "users_details": "User details",
+    "confirm_delete_user_message": "Are you sure you want to delete {firstname} {lastname} ?",
+    "confirm_group_delete_users_message": "Are you sure you want to delete the selected users ?",
+    "users_deleted": "Users deleted",
+    "user_deleted": "User deleted",
+    "user_created": "User created"
+  },
   "admin_videos": {
     "manage_videos": "Manage videos",
     "total_videos_message": "In total there are {videoLength} videos.",
@@ -91,105 +161,6 @@
     "select_a_brand": "Select a brand",
     "brand": "Brand"
   },
-  "admin_products": {
-    "total_products_message": "In total there are {productLength} products."
-  },
-  "admin_formats": {
-    "manage_formats": "Manage formats",
-    "total_formats_message": "In total there are {formatLength} formats.",
-    "format_details": "Format details",
-    "confirm_delete_format_message": "Are you sure you want to delete the format : {name} ?",
-    "confirm_group_delete_formats_message": "Are you sure you want to delete the selected formats ?",
-    "formats_deleted": "Formats deleted",
-    "format_updated": "Format updated",
-    "format_deleted": "Format deleted",
-    "format_created": "Format created",
-    "name": "Name",
-    "you_can_t_delete_a_format_with_products": "You can't delete a Format with products"
-  },
-  "admin_editors": {
-    "manage_editors": "Manage editors",
-    "total_editors_message": "In total there are {editorLength} editors.",
-    "editor_details": "Editor details",
-    "confirm_delete_editor_message": "Are you sure you want to delete the editor : {name} ?",
-    "confirm_group_delete_editors_message": "Are you sure you want to delete the selected editors ?",
-    "editors_deleted": "Editors deleted",
-    "editor_updated": "Editor updated",
-    "editor_deleted": "Editor deleted",
-    "editor_created": "Editor created",
-    "name": "Name",
-    "you_can_t_delete_an_editor_with_products": "You can't delete an editor with products"
-  },
-  "admin_brands": {
-    "manage_brands": "Manage brands",
-    "total_brands_message": "In total there are {brandLength} brands.",
-    "brand_details": "Brand details",
-    "confirm_delete_brand_message": "Are you sure you want to delete the brand : {name} ?",
-    "confirm_group_delete_brands_message": "Are you sure you want to delete the selected brands ?",
-    "brands_deleted": "Brands deleted",
-    "brand_updated": "Brand updated",
-    "brand_deleted": "Brand deleted",
-    "brand_created": "Brand created",
-    "name": "Name",
-    "you_can_t_delete_a_brand_with_products": "You can't delete a brand with products"
-  },
-  "admin_authors": {
-    "manage_authors": "Manage authors",
-    "total_authors_message": "In total there are {authorLength} authors.",
-    "author_details": "Author details",
-    "confirm_delete_author_message": "Are you sure you want to delete the author : {firstname} {lastname} ?",
-    "confirm_group_delete_authors_message": "Are you sure you want to delete the selected authors ?",
-    "authors_deleted": "Authors deleted",
-    "author_updated": "Author updated",
-    "author_deleted": "Author deleted",
-    "author_created": "Author created",
-    "firstname": "Firstname",
-    "lastname": "Lastname",
-    "language": "Language",
-    "you_can_t_delete_an_author_with_products": "You can't delete an author with products"
-  },
-  "admin_categories": {
-    "manage_categories": "Manage categories",
-    "total_categories_message": "In total there are {categoryLength} categories.",
-    "category_details": "Category details",
-    "confirm_delete_category_message": "Are you sure you want to delete the category : {name} ?",
-    "confirm_group_delete_categories_message": "Are you sure you want to delete the selected categories ?",
-    "categories_deleted": "Categories deleted",
-    "category_updated": "Category updated",
-    "category_deleted": "Category deleted",
-    "category_created": "Category created",
-    "name": "Name",
-    "you_can_t_delete_a_category_with_products": "You can't delete a category with products"
-  },
-  "product": {
-    "clear_all": "Clear All",
-    "format": "Format",
-    "only_products_in_stock": "Only products in stock",
-    "only_products_out_of_stock": "Only products out of stock",
-    "price_range": "Price Range",
-    "search": "Search",
-    "category": "Category",
-    "author": "Author",
-    "type": "Type",
-    "brand": "Brand"
-  },
-  "product_details": {
-    "product_details": "Product details",
-    "summary": "Summary",
-    "comments": "Comments",
-    "days_ago": "{count} {count, plural, =1 {day} other {days}} ago",
-    "hours_ago": "{count} {count, plural, =1 {hour} other {hours}} ago",
-    "minutes_ago": "{count} {count, plural, =1 {minute} other {minutes}} ago",
-    "seconds_ago": "{count} {count, plural, =1 {second} other {seconds}} ago",
-    "on_date_at_hour": "on {date} at {hours}",
-    "you_can_t_delete_this_comment": "You can't delete this comment",
-    "comment_deleted": "Comment deleted",
-    "write_you_re_comment_here": "Write you're comment here !",
-    "comment_sent": "Comment sent",
-    "are_you_sure_that_you_want_delete_this_comment": "Are you sure that you want delete this comment ?",
-    "delete_this_comment": "Delete this comment",
-    "log_in_to_write_a_comment": "Log in to write a comment"
-  },
   "cart_details": {
     "add_billing_address": "Add billing address",
     "add_delivery_address": "Add delivery address",
@@ -203,6 +174,11 @@
     "use_the_same_address_for_the_delivery_address": "Use the same address for the delivery address",
     "are_you_sure_that_you_want_use_the_same_address": "Are you sure that you want use the same address ?",
     "use_the_same_address": "Use the same address"
+  },
+  "commentstatut_name": {
+    "being_validated": "Being validated",
+    "accepted": "Accepted",
+    "rejected": "Rejected"
   },
   "contact": {
     "message": "Message",
@@ -283,21 +259,6 @@
     "your_order_is_validate": "Your order is validate",
     "mail_sent": "Mail sent"
   },
-  "my_account": {
-    "are_you_sure_that_you_want_delete_your_account": "Are you sure that you want delete your account ?",
-    "confirm_your_new_password": "Confirm your new password",
-    "confirm_your_password": "Confirm your password",
-    "delete_my_account": "Delete my account",
-    "insert_your_new_password": "Insert your new password",
-    "logout": "Logout",
-    "order_date": "Order date",
-    "order_number": "Order number",
-    "password": "Password",
-    "user_personnal_data": "User personnal data",
-    "view_personnal_data": "View personnal data",
-    "view_pervious_orders": "View pervious orders",
-    "you_havn_t_any_orders": "You havn't any orders"
-  },
   "login": {
     "confirm_your_password": "Confirm your password",
     "login": "Login",
@@ -313,8 +274,51 @@
     "i_remember_my_password": "I remember my password",
     "send_new_password": "Send new password"
   },
-
+  "my_account": {
+    "are_you_sure_that_you_want_delete_your_account": "Are you sure that you want delete your account ?",
+    "confirm_your_new_password": "Confirm your new password",
+    "confirm_your_password": "Confirm your password",
+    "delete_my_account": "Delete my account",
+    "insert_your_new_password": "Insert your new password",
+    "logout": "Logout",
+    "order_date": "Order date",
+    "order_number": "Order number",
+    "password": "Password",
+    "user_personnal_data": "User personnal data",
+    "view_personnal_data": "View personnal data",
+    "view_pervious_orders": "View pervious orders",
+    "you_havn_t_any_orders": "You havn't any orders"
+  },
   "page_not_found": {
     "back_to_homepage": "back to Homepage"
+  },
+  "product": {
+    "clear_all": "Clear All",
+    "format": "Format",
+    "only_products_in_stock": "Only products in stock",
+    "only_products_out_of_stock": "Only products out of stock",
+    "price_range": "Price Range",
+    "search": "Search",
+    "category": "Category",
+    "author": "Author",
+    "type": "Type",
+    "brand": "Brand"
+  },
+  "product_details": {
+    "product_details": "Product details",
+    "summary": "Summary",
+    "comments": "Comments",
+    "days_ago": "{count} {count, plural, =1 {day} other {days}} ago",
+    "hours_ago": "{count} {count, plural, =1 {hour} other {hours}} ago",
+    "minutes_ago": "{count} {count, plural, =1 {minute} other {minutes}} ago",
+    "seconds_ago": "{count} {count, plural, =1 {second} other {seconds}} ago",
+    "on_date_at_hour": "on {date} at {hours}",
+    "you_can_t_delete_this_comment": "You can't delete this comment",
+    "comment_deleted": "Comment deleted",
+    "write_you_re_comment_here": "Write you're comment here !",
+    "comment_sent": "Comment sent",
+    "are_you_sure_that_you_want_delete_this_comment": "Are you sure that you want delete this comment ?",
+    "delete_this_comment": "Delete this comment",
+    "log_in_to_write_a_comment": "Log in to write a comment"
   }
 }

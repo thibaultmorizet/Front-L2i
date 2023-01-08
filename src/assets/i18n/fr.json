@@ -1,40 +1,6 @@
 {
-  "admin_header": {
-    "home": "Accueil",
-    "login_sign_in": "Se connecter",
-    "users": "Utilisateurs",
-    "admins": "Admins",
-    "books": "Livres",
-    "videos": "Vidéos",
-    "my_account": "Mon compte",
-    "moderators": "Modérateurs"
-  },
-  "admin_home": {
-    "stats": "Statistiques",
-    "image": "Image",
-    "title": "Titre",
-    "sold_number": "Nombre de ventes",
-    "visit_number": "Nombre de visites"
-  },
-  "admin_users": {
-    "manage_users": "Gestion des utilisateurs",
-    "total_users_message": "Au total, il y a {userLength} utilisateurs.",
-    "users_details": "Détails de l'utilisateur",
-    "confirm_delete_user_message": "Êtes-vous sûr de vouloir supprimer {firstname} {lastname} ?",
-    "confirm_group_delete_users_message": "Voulez-vous vraiment supprimer les utilisateurs sélectionnés ?",
-    "users_deleted": "Utilisateurs supprimés",
-    "user_deleted": "Utilisateur supprimé",
-    "user_created": "Utilisateur créé"
-  },
-  "admin_moderators": {
-    "manage_moderators": "Gestion des modérateurs",
-    "total_moderators_message": "Au total, il y a {moderatorLength} modérateurs.",
-    "moderators_details": "Détails de le modérateur",
-    "confirm_delete_moderator_message": "Êtes-vous sûr de vouloir supprimer {firstname} {lastname} ?",
-    "confirm_group_delete_moderators_message": "Voulez-vous vraiment supprimer les modérateurs sélectionnés ?",
-    "moderators_deleted": "Modérateurs supprimés",
-    "moderator_deleted": "Modérateur supprimé",
-    "moderator_created": "Modérateur créé"
+  "admin_account": {
+    "personnal_data": "Données personnelles"
   },
   "admin_admins": {
     "manage_admins": "Gestion des administrateurs",
@@ -42,8 +8,20 @@
     "admin_details": "Détails de l'administrateur",
     "admin_created": "Administrateur créé"
   },
-  "admin_account": {
-    "personnal_data": "Données personnelles"
+  "admin_authors": {
+    "manage_authors": "Gestion des auteurs",
+    "total_authors_message": "Au total, il y a {authorLength} auteurs.",
+    "author_details": "Détails de l'auteur",
+    "confirm_delete_author_message": "Êtes-vous sûr de vouloir supprimer l'auteur : {firstname} {lastname} ?",
+    "confirm_group_delete_authors_message": "Voulez-vous vraiment supprimer les auteurs sélectionnés ?",
+    "authors_deleted": "Auteurs supprimés",
+    "author_updated": "Auteur modifié",
+    "author_deleted": "Auteur supprimé",
+    "author_created": "Auteur créé",
+    "firstname": "Prénom",
+    "lastname": "Nom",
+    "language": "Langue",
+    "you_can_t_delete_an_author_with_products": "Vous ne pouvez pas supprimer un auteur avec des produits"
   },
   "admin_books": {
     "manage_books": "Gestion des livres",
@@ -69,6 +47,98 @@
     "select_a_format": "Sélectionnez un format",
     "cover_books": "Couverture du livre"
   },
+  "admin_brands": {
+    "manage_brands": "Gestion des marques",
+    "total_brands_message": "Au total, il y a {brandLength} marques.",
+    "brand_details": "Détails de la marque",
+    "confirm_delete_brand_message": "Voulez-vous vraiment supprimer la marque : {name} ?",
+    "confirm_group_delete_brands_message": "Voulez-vous vraiment supprimer les marques sélectionnés ?",
+    "brands_deleted": "Marques supprimés",
+    "brand_updated": "Marque modifié",
+    "brand_deleted": "Marque supprimé",
+    "brand_created": "Marque créé",
+    "name": "Nom",
+    "you_can_t_delete_a_brand_with_products": "Vous ne pouvez pas supprimer une marque avec des vidéos"
+  },
+  "admin_categories": {
+    "manage_categories": "Gestion des catégories",
+    "total_categories_message": "Au total, il y a categoryLength} catégories.",
+    "category_details": "Détails de la catégorie",
+    "confirm_delete_category_message": "Êtes-vous sûr de vouloir supprimer la catégorie : {name} ?",
+    "confirm_group_delete_categories_message": "Voulez-vous vraiment supprimer les catégories sélectionnés ?",
+    "categories_deleted": "Catégories supprimés",
+    "category_updated": "Catégorie modifié",
+    "category_deleted": "Catégorie supprimé",
+    "category_created": "Genre créé",
+    "name": "Nom",
+    "you_can_t_delete_a_category_with_products": "Vous ne pouvez pas supprimer une catégorie avec des produits"
+  },
+  "admin_editors": {
+    "manage_editors": "Gestion des éditeurs",
+    "total_editors_message": "Au total, il y a {editorLength} éditeurs.",
+    "editor_details": "Détails de l'éditeur",
+    "confirm_delete_editor_message": "Voulez-vous vraiment supprimer l'éditeur : {name} ?",
+    "confirm_group_delete_editors_message": "Voulez-vous vraiment supprimer les éditeurs sélectionnés ?",
+    "editors_deleted": "Éditeurs supprimés",
+    "editor_updated": "Éditeur modifié",
+    "editor_deleted": "Éditeur supprimé",
+    "editor_created": "Éditeur créé",
+    "name": "Nom",
+    "you_can_t_delete_an_editor_with_products": "Vous ne pouvez pas supprimer un éditeur avec des produits"
+  },
+  "admin_formats": {
+    "manage_formats": "Gestion des formats",
+    "total_formats_message": "Au total, il y a {formatLength} formats.",
+    "format_details": "Détails du format",
+    "confirm_delete_format_message": "Êtes-vous sûr de vouloir supprimer le format : {name} ?",
+    "confirm_group_delete_formats_message": "Voulez-vous vraiment supprimer les formats sélectionnés ?",
+    "formats_deleted": "Formats supprimés",
+    "format_updated": "Format modifié",
+    "format_deleted": "Format supprimé",
+    "format_created": "Format créé",
+    "name": "Nom",
+    "you_can_t_delete_a_format_with_products": "Vous ne pouvez pas supprimer un format avec des produits"
+  },
+  "admin_header": {
+    "home": "Accueil",
+    "login_sign_in": "Se connecter",
+    "users": "Utilisateurs",
+    "admins": "Admins",
+    "books": "Livres",
+    "videos": "Vidéos",
+    "my_account": "Mon compte",
+    "moderators": "Modérateurs"
+  },
+  "admin_home": {
+    "stats": "Statistiques",
+    "image": "Image",
+    "title": "Titre",
+    "sold_number": "Nombre de ventes",
+    "visit_number": "Nombre de visites"
+  },
+  "admin_moderators": {
+    "manage_moderators": "Gestion des modérateurs",
+    "total_moderators_message": "Au total, il y a {moderatorLength} modérateurs.",
+    "moderators_details": "Détails de le modérateur",
+    "confirm_delete_moderator_message": "Êtes-vous sûr de vouloir supprimer {firstname} {lastname} ?",
+    "confirm_group_delete_moderators_message": "Voulez-vous vraiment supprimer les modérateurs sélectionnés ?",
+    "moderators_deleted": "Modérateurs supprimés",
+    "moderator_deleted": "Modérateur supprimé",
+    "moderator_created": "Modérateur créé"
+  },
+  "admin_products": {
+    "total_products_message": "Au total, il y a {productLength} produits."
+  },
+  "admin_users": {
+    "manage_users": "Gestion des utilisateurs",
+    "total_users_message": "Au total, il y a {userLength} utilisateurs.",
+    "users_details": "Détails de l'utilisateur",
+    "confirm_delete_user_message": "Êtes-vous sûr de vouloir supprimer {firstname} {lastname} ?",
+    "confirm_group_delete_users_message": "Voulez-vous vraiment supprimer les utilisateurs sélectionnés ?",
+    "users_deleted": "Utilisateurs supprimés",
+    "user_deleted": "Utilisateur supprimé",
+    "user_created": "Utilisateur créé"
+  },
   "admin_videos": {
     "manage_videos": "Gestion des vidéos",
     "total_videos_message": "Au total, il y a {videoLength} vidéos.",
@@ -91,105 +161,6 @@
     "brand": "Marque",
     "select_a_brand": "Sélectionnez une marque"
   },
-  "admin_products": {
-    "total_products_message": "Au total, il y a {productLength} produits."
-  },
-  "admin_formats": {
-    "manage_formats": "Gestion des formats",
-    "total_formats_message": "Au total, il y a {formatLength} formats.",
-    "format_details": "Détails du format",
-    "confirm_delete_format_message": "Êtes-vous sûr de vouloir supprimer le format : {name} ?",
-    "confirm_group_delete_formats_message": "Voulez-vous vraiment supprimer les formats sélectionnés ?",
-    "formats_deleted": "Formats supprimés",
-    "format_updated": "Format modifié",
-    "format_deleted": "Format supprimé",
-    "format_created": "Format créé",
-    "name": "Nom",
-    "you_can_t_delete_a_format_with_products": "Vous ne pouvez pas supprimer un format avec des produits"
-  },
-  "admin_editors": {
-    "manage_editors": "Gestion des éditeurs",
-    "total_editors_message": "Au total, il y a {editorLength} éditeurs.",
-    "editor_details": "Détails de l'éditeur",
-    "confirm_delete_editor_message": "Voulez-vous vraiment supprimer l'éditeur : {name} ?",
-    "confirm_group_delete_editors_message": "Voulez-vous vraiment supprimer les éditeurs sélectionnés ?",
-    "editors_deleted": "Éditeurs supprimés",
-    "editor_updated": "Éditeur modifié",
-    "editor_deleted": "Éditeur supprimé",
-    "editor_created": "Éditeur créé",
-    "name": "Nom",
-    "you_can_t_delete_an_editor_with_products": "Vous ne pouvez pas supprimer un éditeur avec des produits"
-  },
-  "admin_brands": {
-    "manage_brands": "Gestion des marques",
-    "total_brands_message": "Au total, il y a {brandLength} marques.",
-    "brand_details": "Détails de la marque",
-    "confirm_delete_brand_message": "Voulez-vous vraiment supprimer la marque : {name} ?",
-    "confirm_group_delete_brands_message": "Voulez-vous vraiment supprimer les marques sélectionnés ?",
-    "brands_deleted": "Marques supprimés",
-    "brand_updated": "Marque modifié",
-    "brand_deleted": "Marque supprimé",
-    "brand_created": "Marque créé",
-    "name": "Nom",
-    "you_can_t_delete_a_brand_with_products": "Vous ne pouvez pas supprimer une marque avec des vidéos"
-  },
-  "admin_authors": {
-    "manage_authors": "Gestion des auteurs",
-    "total_authors_message": "Au total, il y a {authorLength} auteurs.",
-    "author_details": "Détails de l'auteur",
-    "confirm_delete_author_message": "Êtes-vous sûr de vouloir supprimer l'auteur : {firstname} {lastname} ?",
-    "confirm_group_delete_authors_message": "Voulez-vous vraiment supprimer les auteurs sélectionnés ?",
-    "authors_deleted": "Auteurs supprimés",
-    "author_updated": "Auteur modifié",
-    "author_deleted": "Auteur supprimé",
-    "author_created": "Auteur créé",
-    "firstname": "Prénom",
-    "lastname": "Nom",
-    "language": "Langue",
-    "you_can_t_delete_an_author_with_products": "Vous ne pouvez pas supprimer un auteur avec des produits"
-  },
-  "admin_categories": {
-    "manage_categories": "Gestion des catégories",
-    "total_categories_message": "Au total, il y a categoryLength} catégories.",
-    "category_details": "Détails de la catégorie",
-    "confirm_delete_category_message": "Êtes-vous sûr de vouloir supprimer la catégorie : {name} ?",
-    "confirm_group_delete_categories_message": "Voulez-vous vraiment supprimer les catégories sélectionnés ?",
-    "categories_deleted": "Catégories supprimés",
-    "category_updated": "Catégorie modifié",
-    "category_deleted": "Catégorie supprimé",
-    "category_created": "Genre créé",
-    "name": "Nom",
-    "you_can_t_delete_a_category_with_products": "Vous ne pouvez pas supprimer une catégorie avec des produits"
-  },
-  "product": {
-    "clear_all": "Tout effacer",
-    "format": "Format",
-    "only_products_in_stock": "Seulement les produits en stock",
-    "only_products_out_of_stock": "Seulement les produits en rupture de stock",
-    "price_range": "Échelle des prix",
-    "search": "Chercher",
-    "category": "Catégorie",
-    "author": "Auteur",
-    "type": "Type",
-    "brand": "Marque"
-  },
-  "product_details": {
-    "product_details": "Détails du produit",
-    "summary": "Résumé",
-    "comments": "Commentaires",
-    "days_ago": "il y a {count} {count, plural, =1 {jour} other {jours}}",
-    "hours_ago": "il y a {count} {count, plural, =1 {heure} other {heures}}",
-    "minutes_ago": "il y a {count} {count, plural, =1 {minute} other {minutes}}",
-    "seconds_ago": "il y a {count} {count, plural, =1 {seconde} other {secondes}}",
-    "on_date_at_hour": "le {date} à {hours}",
-    "you_can_t_delete_this_comment": "Vous ne pouvez pas supprimer ce commentaire",
-    "comment_deleted": "Commentaire supprimé",
-    "write_you_re_comment_here": "Écrivez votre commentaire ici !",
-    "comment_sent": "Commentaire envoyé",
-    "are_you_sure_that_you_want_delete_this_comment": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
-    "delete_this_comment": "Supprimer ce commentaire",
-    "log_in_to_write_a_comment": "Connectez vous pour écrire un commentaire"
-  },
   "cart_details": {
     "add_billing_address": "Ajouter une adresse de facturation",
     "add_delivery_address": "Ajouter une adresse de livraison",
@@ -203,6 +174,11 @@
     "use_the_same_address_for_the_delivery_address": "Utiliser la même adresse pour l'adresse de livraison",
     "are_you_sure_that_you_want_use_the_same_address": "Êtes-vous sûr de vouloir utiliser la même adresse ?",
     "use_the_same_address": "Utiliser la même adresse"
+  },
+  "commentstatut_name": {
+    "being_validated": "En cours de validation",
+    "accepted": "Accepté",
+    "rejected": "Rejeté"
   },
   "contact": {
     "message": "Message",
@@ -283,21 +259,6 @@
     "your_order_is_validate": "Votre commande est validée",
     "mail_sent": "Mail envoyé"
   },
-  "my_account": {
-    "are_you_sure_that_you_want_delete_your_account": "Êtes-vous sûr de vouloir supprimer votre compte ?",
-    "confirm_your_new_password": "Confirmez votre nouveau mot de passe",
-    "confirm_your_password": "Confirmer votre mot de passe",
-    "delete_my_account": "Supprimer mon compte",
-    "insert_your_new_password": "Insérez votre nouveau mot de passe",
-    "logout": "Se déconnecter",
-    "order_date": "Date de commande",
-    "order_number": "Numéro de commande",
-    "password": "Mot de passe",
-    "user_personnal_data": "Données personnelles de l'utilisateur",
-    "view_personnal_data": "Voir les données personnelles",
-    "view_pervious_orders": "Voir les commandes précédentes",
-    "you_havn_t_any_orders": "Vous n'avez pas de commandes"
-  },
   "login": {
     "confirm_your_password": "Confirmer votre mot de passe",
     "login": "Connexion",
@@ -313,7 +274,51 @@
     "i_remember_my_password": "Je me souviens de mon mot de passe",
     "send_new_password": "Envoyer un nouveau mot de passe"
   },
+  "my_account": {
+    "are_you_sure_that_you_want_delete_your_account": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+    "confirm_your_new_password": "Confirmez votre nouveau mot de passe",
+    "confirm_your_password": "Confirmer votre mot de passe",
+    "delete_my_account": "Supprimer mon compte",
+    "insert_your_new_password": "Insérez votre nouveau mot de passe",
+    "logout": "Se déconnecter",
+    "order_date": "Date de commande",
+    "order_number": "Numéro de commande",
+    "password": "Mot de passe",
+    "user_personnal_data": "Données personnelles de l'utilisateur",
+    "view_personnal_data": "Voir les données personnelles",
+    "view_pervious_orders": "Voir les commandes précédentes",
+    "you_havn_t_any_orders": "Vous n'avez pas de commandes"
+  },
   "page_not_found": {
     "back_to_homepage": "Retourner sur la page d'accueil"
+  },
+  "product": {
+    "clear_all": "Tout effacer",
+    "format": "Format",
+    "only_products_in_stock": "Seulement les produits en stock",
+    "only_products_out_of_stock": "Seulement les produits en rupture de stock",
+    "price_range": "Échelle des prix",
+    "search": "Chercher",
+    "category": "Catégorie",
+    "author": "Auteur",
+    "type": "Type",
+    "brand": "Marque"
+  },
+  "product_details": {
+    "product_details": "Détails du produit",
+    "summary": "Résumé",
+    "comments": "Commentaires",
+    "days_ago": "il y a {count} {count, plural, =1 {jour} other {jours}}",
+    "hours_ago": "il y a {count} {count, plural, =1 {heure} other {heures}}",
+    "minutes_ago": "il y a {count} {count, plural, =1 {minute} other {minutes}}",
+    "seconds_ago": "il y a {count} {count, plural, =1 {seconde} other {secondes}}",
+    "on_date_at_hour": "le {date} à {hours}",
+    "you_can_t_delete_this_comment": "Vous ne pouvez pas supprimer ce commentaire",
+    "comment_deleted": "Commentaire supprimé",
+    "write_you_re_comment_here": "Écrivez votre commentaire ici !",
+    "comment_sent": "Commentaire envoyé",
+    "are_you_sure_that_you_want_delete_this_comment": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
+    "delete_this_comment": "Supprimer ce commentaire",
+    "log_in_to_write_a_comment": "Connectez vous pour écrire un commentaire"
   }
 }

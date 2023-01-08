@@ -11,8 +11,8 @@ import {
 import { NgxIziToastModule } from 'ngx-izitoast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { AdminFooterComponent } from '../partial/admin-footer/admin-footer.component';
-import { AdminHeaderComponent } from '../partial/admin-header/admin-header.component';
+import { AdminFooterComponent } from '../../partial/admin-footer/admin-footer.component';
+import { AdminHeaderComponent } from '../../partial/admin-header/admin-header.component';
 
 import { AdminAccountComponent } from './admin-account.component';
 
