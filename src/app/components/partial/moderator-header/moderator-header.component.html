@@ -1,0 +1,35 @@
+<header>
+  <div id="top">
+    <nav class="navbar">
+      <div class="container">
+        <a class="navbar-brand"
+          ><img
+            src="https://www.thibaultmorizet.fr/assets/logo/logo-l2i.png"
+            alt="logo-l2i"
+            width="40"
+        /></a>
+        <a
+          *ngIf="connectedModerator.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/moderator/home']"
+          [ngClass]="{ active: path === 'moderator/home/' }"
+          >{{ "moderator_header.home" | translate }}</a
+        >
+        <a
+          *ngIf="connectedModerator.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/moderator/account']"
+          [ngClass]="{ active: path === 'moderator/account/' }"
+          >{{ "moderator_header.my_account" | translate }}</a
+        >
+        <a
+          *ngIf="!connectedModerator.id"
+          class="home-link text-uppercase"
+          [routerLink]="['/moderator/login']"
+          [ngClass]="{ active: path === 'moderator/login/' }"
+          >{{ "moderator_header.login_sign_in" | translate }}</a
+        >
+      </div>
+    </nav>
+  </div>
+</header>

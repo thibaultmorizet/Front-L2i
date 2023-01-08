@@ -1,0 +1,65 @@
+.moderator-login-container {
+    padding: 2em 1em;
+    background-color: rgba(255, 255, 255, .6);
+    backdrop-filter: blur(2px);
+    border-radius: 20px;
+    max-width: 500px;
+    min-width: 290px;
+    box-shadow: -1px 2px 15px -6px rgba(0, 0, 0, 0.75);
+    padding-bottom: 0;
+}
+
+.container:has(.moderator-login-container) {
+    display: flex;
+    justify-content: center;
+}
+
+.p-inputtext {
+    padding: .375rem .75rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.field input#password {
+    width: 100%;
+    padding-right: 30px;
+    position: relative;
+}
+
+.field input#passwordConfirm {
+    width: 100%;
+    padding-right: 30px;
+    position: relative;
+}
+
+.toogle-password-clear {
+    position: absolute;
+    right: 8px;
+    top: 11px;
+    cursor: pointer;
+    font-size: .8rem;
+}
+
+.form-control:disabled {
+    opacity: 1 !important;
+}
+
+@media (min-width: 650px) {
+    .moderator-login-container {
+        padding: 2em 2em;
+        min-width: 350px;
+    }
+
+}
+
+
+@media (min-width: 1800px) {
+    .moderator-login-container {
+        padding: 2.5em 2.5em;
+        min-width: 400px;
+    }
+}

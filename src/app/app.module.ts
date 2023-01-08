@@ -69,7 +69,9 @@ import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-comp
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminLoginComponent } from './components/admin-management/admin-login/admin-login.component';
 import { AdminHeaderComponent } from './components/partial/admin-header/admin-header.component';
+import { ModeratorHeaderComponent } from './components/partial/moderator-header/moderator-header.component';
 import { AdminFooterComponent } from './components/partial/admin-footer/admin-footer.component';
+import { ModeratorFooterComponent } from './components/partial/moderator-footer/moderator-footer.component';
 import { AdminBooksComponent } from './components/admin-management/books-management/admin-books/admin-books.component';
 import { AdminAccountComponent } from './components/admin-management/admin-account/admin-account.component';
 import { AdminUsersComponent } from './components/admin-management/users-management/admin-users/admin-users.component';
@@ -83,6 +85,9 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
 import { AdminVideosComponent } from './components/admin-management/videos-management/admin-videos/admin-videos.component';
 import { AdminBrandsComponent } from './components/admin-management/videos-management/admin-brands/admin-brands.component';
 import { AdminModeratorsComponent } from './components/admin-management/users-management/admin-moderators/admin-moderators.component';
+import { ModeratorAccountComponent } from './components/moderator-management/moderator-account/moderator-account.component';
+import { ModeratorHomeComponent } from './components/moderator-management/moderator-home/moderator-home.component';
+import { ModeratorLoginComponent } from './components/moderator-management/moderator-login/moderator-login.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +119,11 @@ import { AdminModeratorsComponent } from './components/admin-management/users-ma
     AdminVideosComponent,
     AdminBrandsComponent,
     AdminModeratorsComponent,
+    ModeratorAccountComponent,
+    ModeratorHomeComponent,
+    ModeratorLoginComponent,
+    ModeratorHeaderComponent,
+    ModeratorFooterComponent,
   ],
   imports: [
     BrowserModule,

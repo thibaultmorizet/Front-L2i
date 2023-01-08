@@ -88,7 +88,9 @@ export class LoginComponent implements OnInit {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('moderatorUser', 'session');
     this.storageCrypter.removeItem('adminUser', 'session');
+    this.storageCrypter.removeItem('moUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
     this.authService.signOut();
     this.connectedUser = {};
@@ -103,9 +105,11 @@ export class LoginComponent implements OnInit {
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
-      } else if (theUser[0].roles?.includes('ROLE_ADMIN')) {
+      } else if (theUser[0].roles?.includes('ROLE_ADMIN')||theUser[0].roles?.includes('ROLE_MODERATOR')) {
         this.iziToast.error({
-          message: "you can't connect here as admin",
+          message: this.translate.instant(
+            'izitoast.you_can_t_connect_here_as_admin_or_moderator'
+          ),
           position: 'topRight',
         });
       } else {

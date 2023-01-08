@@ -94,6 +94,7 @@ export class AdminVideosComponent implements OnInit {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('moderatorUser', 'session');
     this.storageCrypter.removeItem('adminUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
     this.connectedAdmin = null;

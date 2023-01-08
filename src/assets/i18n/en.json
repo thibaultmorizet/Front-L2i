@@ -257,7 +257,10 @@
     "successful_registration": "Successful registration",
     "you_re_logout": "you're logout",
     "your_order_is_validate": "Your order is validate",
-    "mail_sent": "Mail sent"
+    "mail_sent": "Mail sent",
+    "you_can_t_connect_here_as_admin_or_moderator": "you can't connect here as admin or moderator",
+    "you_can_t_connect_here_as_user_or_moderator": "you can't connect here as user or moderator",
+    "you_can_t_connect_here_as_user_or_admin": "you can't connect here as user or admin"
   },
   "login": {
     "confirm_your_password": "Confirm your password",
@@ -273,6 +276,14 @@
     "forgotten_password": "Forgotten password",
     "i_remember_my_password": "I remember my password",
     "send_new_password": "Send new password"
+  },
+  "moderator_account": {
+    "personnal_data": "Personnal data"
+  },
+  "moderator_header": {
+    "home": "Home",
+    "login_sign_in": "Login / Sign in",
+    "my_account": "My account"
   },
   "my_account": {
     "are_you_sure_that_you_want_delete_your_account": "Are you sure that you want delete your account ?",

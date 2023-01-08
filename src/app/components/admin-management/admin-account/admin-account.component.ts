@@ -12,7 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-admin-account',
   templateUrl: './admin-account.component.html',
-  styleUrls: ['./admin-account.component.css', './../../../css/main.css'],
+  styleUrls: ['./admin-account.component.css', './../../../../css/main.css'],
   encapsulation: ViewEncapsulation.None,
   providers: [ConfirmationService],
 })
@@ -112,6 +112,7 @@ export class AdminAccountComponent implements OnInit {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
+    this.storageCrypter.removeItem('moderatorUser', 'session');
     this.storageCrypter.removeItem('adminUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
     this.connectedAdmin = {};

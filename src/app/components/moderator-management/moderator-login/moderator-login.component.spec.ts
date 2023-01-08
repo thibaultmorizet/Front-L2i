@@ -1,6 +1,3 @@
-
-
-
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
@@ -8,25 +5,20 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SocialLoginModule } from 'angularx-social-login';
 import { NgxIziToastModule } from 'ngx-izitoast';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
-import { ToolbarModule } from 'primeng/toolbar';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { AdminFooterComponent } from '../../../partial/admin-footer/admin-footer.component';
-import { AdminHeaderComponent } from '../../../partial/admin-header/admin-header.component';
+import { AdminFooterComponent } from '../../partial/admin-footer/admin-footer.component';
+import { AdminHeaderComponent } from '../../partial/admin-header/admin-header.component';
 
-import { AdminModeratorsComponent } from './admin-moderators.component';
+import { ModeratorLoginComponent } from './moderator-login.component';
 
-describe('AdminModeratorsComponent', () => {
-  let component: AdminModeratorsComponent;
-  let fixture: ComponentFixture<AdminModeratorsComponent>;
+describe('ModeratorLoginComponent', () => {
+  let component: ModeratorLoginComponent;
+  let fixture: ComponentFixture<ModeratorLoginComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AdminModeratorsComponent,
+        ModeratorLoginComponent,
         AdminHeaderComponent,
         AdminFooterComponent,
       ],
@@ -43,15 +35,10 @@ describe('AdminModeratorsComponent', () => {
           },
         }),
         FormsModule,
-        TableModule,
-        ConfirmDialogModule,
-        DialogModule,
-        ToolbarModule,
-        ToastModule,
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AdminModeratorsComponent);
+    fixture = TestBed.createComponent(ModeratorLoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

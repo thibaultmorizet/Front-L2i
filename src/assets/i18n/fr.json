@@ -257,7 +257,10 @@
     "successful_registration": "Inscription réussie",
     "you_re_logout": "vous êtes déconnecté",
     "your_order_is_validate": "Votre commande est validée",
-    "mail_sent": "Mail envoyé"
+    "mail_sent": "Mail envoyé",
+    "you_can_t_connect_here_as_admin_or_moderator": "Vous ne pouvez pas vous connecter ici en tant qu'admin ou modérateur",
+    "you_can_t_connect_here_as_user_or_moderator": "Vous ne pouvez pas vous connecter ici en tant qu'utilisateur ou modérateur",
+    "you_can_t_connect_here_as_user_or_admin": "Vous ne pouvez pas vous connecter ici en tant qu'utilisateur ou admin"
   },
   "login": {
     "confirm_your_password": "Confirmer votre mot de passe",
@@ -273,6 +276,14 @@
     "forgotten_password": "Mot de passe oublié",
     "i_remember_my_password": "Je me souviens de mon mot de passe",
     "send_new_password": "Envoyer un nouveau mot de passe"
+  },
+  "moderator_account": {
+    "personnal_data": "Données personnelles"
+  },
+  "moderator_header": {
+    "home": "Accueil",
+    "login_sign_in": "Se connecter",
+    "my_account": "Mon compte"
   },
   "my_account": {
     "are_you_sure_that_you_want_delete_your_account": "Êtes-vous sûr de vouloir supprimer votre compte ?",

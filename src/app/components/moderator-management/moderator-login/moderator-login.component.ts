@@ -8,19 +8,19 @@ import { AuthService } from 'src/app/services/auth.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
-  selector: 'app-admin-login',
-  templateUrl: './admin-login.component.html',
-  styleUrls: ['./admin-login.component.css', './../../../../css/main.css'],
+  selector: 'app-moderator-login',
+  templateUrl: './moderator-login.component.html',
+  styleUrls: ['./moderator-login.component.css', './../../../../css/main.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AdminLoginComponent implements OnInit {
+export class ModeratorLoginComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   passwordIsClear: boolean = false;
   passwordType: string = 'password';
-  adminLogin: User = {};
+  moderatorLogin: User = {};
   errorPassword: string | null = null;
   errorEmail: string | null = null;
-  connectedAdmin: User = {};
+  connectedModerator: User = {};
 
   constructor(
     private router: Router,
@@ -39,18 +39,18 @@ export class AdminLoginComponent implements OnInit {
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.storageCrypter.removeItem('moderatorUser', 'session');
-    this.storageCrypter.removeItem('adminUser', 'session');
+    this.storageCrypter.removeItem('moderatorUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
 
     try {
-      this.connectedAdmin = JSON.parse(
-        this.storageCrypter.getItem('adminUser', 'session')
+      this.connectedModerator = JSON.parse(
+        this.storageCrypter.getItem('moderatorUser', 'session')
       );
     } catch (error) {
-      this.connectedAdmin = {};
+      this.connectedModerator = {};
     }
-    if (this.connectedAdmin.id) {
-      this.router.navigateByUrl('/admin/home');
+    if (this.connectedModerator.id) {
+      this.router.navigateByUrl('/moderator/home');
     }
   }
 
@@ -64,47 +64,47 @@ export class AdminLoginComponent implements OnInit {
   }
 
   login() {
-    this.as.getTheUser(this.adminLogin.email).subscribe((theUser) => {
+    this.as.getTheUser(this.moderatorLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
-      } else if (!theUser[0].roles?.includes('ROLE_ADMIN')) {
+      } else if (!theUser[0].roles?.includes('ROLE_MODERATOR')) {
         this.iziToast.error({
           message: this.translate.instant(
-            'izitoast.you_can_t_connect_here_as_user_or_moderator'
+            'izitoast.you_can_t_connect_here_as_user_or_admin'
           ),
           position: 'topRight',
         });
       } else {
         this.errorEmail = null;
-        this.as.login(this.adminLogin).subscribe({
+        this.as.login(this.moderatorLogin).subscribe({
           next: (res) => {
             if (res.token != null) {
               this.storageCrypter.setItem('jeton', res.token, 'local');
 
               this.storageCrypter.setItem(
-                'adminUser',
+                'moderatorUser',
                 JSON.stringify(theUser[0]),
                 'session'
               );
 
-              this.connectedAdmin = theUser[0];
+              this.connectedModerator = theUser[0];
               this.errorPassword = null;
               try {
                 this.translate.setDefaultLang(
-                  this.connectedAdmin.language != undefined
-                    ? this.connectedAdmin.language
+                  this.connectedModerator.language != undefined
+                    ? this.connectedModerator.language
                     : ''
                 );
               } catch (error) {
                 this.translate.setDefaultLang('en');
               }
-              this.adminLogin = {};
+              this.moderatorLogin = {};
               this.iziToast.success({
                 message: this.translate.instant('izitoast.successful_login'),
                 position: 'topRight',
               });
               setTimeout(() => {
-                this.router.navigateByUrl('/admin/home');
+                this.router.navigateByUrl('/moderator/home');
               }, 250);
             }
           },
