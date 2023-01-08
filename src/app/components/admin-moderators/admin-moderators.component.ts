@@ -159,7 +159,7 @@ export class AdminModeratorsComponent implements OnInit {
           let mailInfo = {
             userMail: moderator.email,
             subject: 'Votre nouveau mot de passe',
-            html: 'activation.twig.html',
+            html: 'activationModerator.twig.html',
             password: '',
           };
           let opt, choose;

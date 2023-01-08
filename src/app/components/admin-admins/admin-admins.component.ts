@@ -85,7 +85,7 @@ export class AdminAdminsComponent implements OnInit {
           let mailInfo = {
             userMail: user.email,
             subject: 'Votre nouveau mot de passe',
-            html: 'activation.twig.html',
+            html: 'activationAdmin.twig.html',
             password: '',
           };
           let opt, choose;
