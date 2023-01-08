@@ -89,6 +89,7 @@ import { ModeratorAccountComponent } from './components/moderator-management/mod
 import { ModeratorHomeComponent } from './components/moderator-management/moderator-home/moderator-home.component';
 import { ModeratorLoginComponent } from './components/moderator-management/moderator-login/moderator-login.component';
 import { ModeratorCommentsComponent } from './components/moderator-management/moderator-comments/moderator-comments.component';
+import { AdminCommentsComponent } from './components/admin-management/admin-comments/admin-comments.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +127,7 @@ import { ModeratorCommentsComponent } from './components/moderator-management/mo
     ModeratorHeaderComponent,
     ModeratorFooterComponent,
     ModeratorCommentsComponent,
+    AdminCommentsComponent,
   ],
   imports: [
     BrowserModule,

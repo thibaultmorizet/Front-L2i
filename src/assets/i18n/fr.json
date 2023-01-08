@@ -107,7 +107,8 @@
     "books": "Livres",
     "videos": "Vidéos",
     "my_account": "Mon compte",
-    "moderators": "Modérateurs"
+    "moderators": "Modérateurs",
+    "comments": "Commentaires"
   },
   "admin_home": {
     "stats": "Statistiques",
@@ -280,7 +281,7 @@
   "moderator_account": {
     "personnal_data": "Données personnelles"
   },
-  "moderator_comments": {
+  "comments": {
     "manage_being_validated_comments": "Gestion des commentaires en cours de validation",
     "manage_validated_comments": "Gestion des commentaires validés",
     "manage_rejected_comments": "Gestion des commentaires rejetés",

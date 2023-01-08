@@ -27,6 +27,7 @@ import { ForgottenPasswordComponent } from './components/forgotten-password/forg
 import { AdminBrandsComponent } from './components/admin-management/videos-management/admin-brands/admin-brands.component';
 import { AdminModeratorsComponent } from './components/admin-management/users-management/admin-moderators/admin-moderators.component';
 import { ModeratorCommentsComponent } from './components/moderator-management/moderator-comments/moderator-comments.component';
+import { AdminCommentsComponent } from './components/admin-management/admin-comments/admin-comments.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -58,6 +59,9 @@ const routes: Routes = [
   { path: 'moderator/comments/1', component: ModeratorCommentsComponent },
   { path: 'moderator/comments/2', component: ModeratorCommentsComponent },
   { path: 'moderator/comments/3', component: ModeratorCommentsComponent },
+  { path: 'admin/comments/1', component: AdminCommentsComponent },
+  { path: 'admin/comments/2', component: AdminCommentsComponent },
+  { path: 'admin/comments/3', component: AdminCommentsComponent },
 
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];

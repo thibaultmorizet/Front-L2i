@@ -1,5 +1,5 @@
 <div class="general-content">
-  <app-moderator-header></app-moderator-header>
+  <app-admin-header></app-admin-header>
 
   <main id="content">
     <div class="update-subfield-div">
@@ -10,7 +10,7 @@
           pRipple
           type="button"
           class="p-button-raised p-button-primary-color btn-primary-color"
-          [routerLink]="['/moderator/comments/1']"
+          [routerLink]="['/admin/comments/1']"
         >
           {{ "comments.being_validated_comments" | translate }}
         </button>
@@ -21,7 +21,7 @@
           pRipple
           type="button"
           class="p-button-raised p-button-primary-color btn-primary-color"
-          [routerLink]="['/moderator/comments/2']"
+          [routerLink]="['/admin/comments/2']"
         >
           {{ "comments.validated_comments" | translate }}
         </button>
@@ -32,7 +32,7 @@
           pRipple
           type="button"
           class="p-button-raised p-button-primary-color btn-primary-color"
-          [routerLink]="['/moderator/comments/3']"
+          [routerLink]="['/admin/comments/3']"
         >
           {{ "comments.rejected_comments" | translate }}
         </button>
@@ -141,7 +141,7 @@
           <td>{{ comment.text }}</td>
           <td>{{ getCommentDate(comment.createdAt) }}</td>
 
-          <td [ngClass]="{ 'moderator-comments-actions': commentsStatut == 1 }">
+          <td [ngClass]="{ 'admin-comments-actions': commentsStatut == 1 }">
             <button
               pButton
               pRipple
@@ -209,5 +209,5 @@
       rejectLabel="{{ 'general.no' | translate }}"
     ></p-confirmDialog>
   </main>
-  <app-moderator-footer></app-moderator-footer>
+  <app-admin-footer></app-admin-footer>
 </div>

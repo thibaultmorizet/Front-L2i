@@ -39,6 +39,18 @@
         <a
           *ngIf="connectedAdmin.id"
           class="home-link text-uppercase"
+          [routerLink]="['/admin/comments/1']"
+          [ngClass]="{
+            active:
+              path === 'admin/comments/1/' ||
+              path === 'admin/comments/2/' ||
+              path === 'admin/comments/3/'
+          }"
+          >{{ "admin_header.comments" | translate }}</a
+        >
+        <a
+          *ngIf="connectedAdmin.id"
+          class="home-link text-uppercase"
           [routerLink]="['/admin/books']"
           [ngClass]="{
             active:

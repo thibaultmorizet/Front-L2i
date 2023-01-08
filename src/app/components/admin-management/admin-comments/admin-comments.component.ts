@@ -13,15 +13,15 @@ import StorageCrypter from 'storage-crypter';
 import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
-  selector: 'app-moderator-comments',
-  templateUrl: './moderator-comments.component.html',
-  styleUrls: ['./moderator-comments.component.css'],
+  selector: 'app-admin-comments',
+  templateUrl: './admin-comments.component.html',
+  styleUrls: ['./admin-comments.component.css'],
   encapsulation: ViewEncapsulation.None,
   providers: [ConfirmationService, MessageService],
 })
-export class ModeratorCommentsComponent implements OnInit {
+export class AdminCommentsComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
-  connectedModerator: User | null = {};
+  connectedAdmin: User | null = {};
   allComments: Comment[] = [];
   commentsStatut: number = 1;
 
@@ -40,17 +40,17 @@ export class ModeratorCommentsComponent implements OnInit {
     this.translate.use(this.translate.getDefaultLang());
 
     try {
-      this.connectedModerator = JSON.parse(
-        this.storageCrypter.getItem('moderatorUser', 'session')
+      this.connectedAdmin = JSON.parse(
+        this.storageCrypter.getItem('adminUser', 'session')
       );
     } catch (error) {
-      this.connectedModerator = null;
-      this.router.navigateByUrl('/moderator/login');
+      this.connectedAdmin = null;
+      this.router.navigateByUrl('/admin/login');
     }
 
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-        this.moderatorLogout();
+        this.adminLogout();
       }
     }
     this.activatedRoute.url.subscribe((el) => {
@@ -79,15 +79,15 @@ export class ModeratorCommentsComponent implements OnInit {
     return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 
-  moderatorLogout() {
+  adminLogout() {
     this.storageCrypter.removeItem('jeton', 'local');
     this.storageCrypter.removeItem('cart', 'local');
     this.storageCrypter.removeItem('user', 'session');
     this.storageCrypter.removeItem('adminUser', 'session');
     this.storageCrypter.removeItem('moderatorUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
-    this.connectedModerator = null;
-    this.router.navigateByUrl('/moderator/login');
+    this.connectedAdmin = null;
+    this.router.navigateByUrl('/admin/login');
     this.iziToast.success({
       message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
