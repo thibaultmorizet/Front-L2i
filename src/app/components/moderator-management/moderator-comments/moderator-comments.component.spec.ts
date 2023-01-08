@@ -1,33 +1,32 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import {
-  FacebookLoginProvider,
-  SocialAuthServiceConfig,
-  SocialLoginModule,
-} from 'angularx-social-login';
+import { SocialLoginModule } from 'angularx-social-login';
 import { NgxIziToastModule } from 'ngx-izitoast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { AdminFooterComponent } from '../../partial/admin-footer/admin-footer.component';
 import { AdminHeaderComponent } from '../../partial/admin-header/admin-header.component';
-import { ModeratorAccountComponent } from './moderator-account.component';
 
-describe('ModeratorAccountComponent', () => {
-  let component: ModeratorAccountComponent;
-  let fixture: ComponentFixture<ModeratorAccountComponent>;
+import { ModeratorCommentsComponent } from './moderator-comments.component';
+
+describe('ModeratorCommentsComponent', () => {
+  let component: ModeratorCommentsComponent;
+  let fixture: ComponentFixture<ModeratorCommentsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        ModeratorAccountComponent,
+        ModeratorCommentsComponent,
         AdminHeaderComponent,
         AdminFooterComponent,
       ],
       imports: [
-        ConfirmDialogModule,
         NgxIziToastModule,
         HttpClientModule,
         RouterTestingModule,
@@ -39,28 +38,15 @@ describe('ModeratorAccountComponent', () => {
             deps: [HttpClient],
           },
         }),
-        FormsModule,
-      ],
-      providers: [
-        {
-          provide: 'SocialAuthServiceConfig',
-          useValue: {
-            autoLogin: false,
-            providers: [
-              {
-                id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider('496421065692400'),
-              },
-            ],
-            onError: (err) => {
-              console.error(err);
-            },
-          } as SocialAuthServiceConfig,
-        },
+        TableModule,
+        ConfirmDialogModule,
+        DialogModule,
+        ToolbarModule,
+        ToastModule,
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ModeratorAccountComponent);
+    fixture = TestBed.createComponent(ModeratorCommentsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

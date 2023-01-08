@@ -18,6 +18,18 @@
         <a
           *ngIf="connectedModerator.id"
           class="home-link text-uppercase"
+          [routerLink]="['/moderator/comments/1']"
+          [ngClass]="{
+            active:
+              path === 'moderator/comments/1/' ||
+              path === 'moderator/comments/2/' ||
+              path === 'moderator/comments/3/'
+          }"
+          >{{ "moderator_header.comments" | translate }}</a
+        >
+        <a
+          *ngIf="connectedModerator.id"
+          class="home-link text-uppercase"
           [routerLink]="['/moderator/account']"
           [ngClass]="{ active: path === 'moderator/account/' }"
           >{{ "moderator_header.my_account" | translate }}</a

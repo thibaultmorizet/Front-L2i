@@ -1,0 +1,213 @@
+<div class="general-content">
+  <app-moderator-header></app-moderator-header>
+
+  <main id="content">
+    <div class="update-subfield-div">
+      <div class="placement-div"></div>
+      <div class="d-flex justify-content-end mt-2" *ngIf="commentsStatut != 1">
+        <button
+          pButton
+          pRipple
+          type="button"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          [routerLink]="['/moderator/comments/1']"
+        >
+          {{ "moderator_comments.being_validated_comments" | translate }}
+        </button>
+      </div>
+      <div class="d-flex justify-content-end mt-2" *ngIf="commentsStatut != 2">
+        <button
+          pButton
+          pRipple
+          type="button"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          [routerLink]="['/moderator/comments/2']"
+        >
+          {{ "moderator_comments.validated_comments" | translate }}
+        </button>
+      </div>
+      <div class="d-flex justify-content-end mt-2" *ngIf="commentsStatut != 3">
+        <button
+          pButton
+          pRipple
+          type="button"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          [routerLink]="['/moderator/comments/3']"
+        >
+          {{ "moderator_comments.rejected_comments" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <p-toast></p-toast>
+
+    <p-table
+      #dt
+      [value]="allComments"
+      [rows]="12"
+      [paginator]="true"
+      [globalFilterFields]="[
+        'product.title',
+        'user.firstname',
+        'user.lastname',
+        'text'
+      ]"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="{{
+        'general.showing_entries_message'
+          | translate
+            : {
+                first: '{first}',
+                last: '{last}',
+                totalRecords: '{totalRecords}'
+              }
+      }}"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="manage-comments">
+          <h5 class="m-0" *ngIf="commentsStatut == 1">
+            {{
+              "moderator_comments.manage_being_validated_comments" | translate
+            }}
+          </h5>
+          <h5 class="m-0" *ngIf="commentsStatut == 2">
+            {{ "moderator_comments.manage_validated_comments" | translate }}
+          </h5>
+          <h5 class="m-0" *ngIf="commentsStatut == 3">
+            {{ "moderator_comments.manage_rejected_comments" | translate }}
+          </h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="{{ 'general.search' | translate }}"
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="display: table-cell !important">
+            {{ "moderator_comments.image" | translate }}
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 15rem"
+            pSortableColumn="product.title"
+          >
+            {{ "moderator_comments.title" | translate }}
+            <p-sortIcon field="product.title"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 15rem"
+            pSortableColumn="user.firstname"
+          >
+            {{ "moderator_comments.user" | translate }}
+            <p-sortIcon field="user.firstname"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 15rem"
+            pSortableColumn="text"
+          >
+            {{ "moderator_comments.comment" | translate }}
+            <p-sortIcon field="text"></p-sortIcon>
+          </th>
+          <th
+            style="display: table-cell !important; min-width: 15rem"
+            pSortableColumn="createdAt"
+          >
+            {{ "moderator_comments.date" | translate }}
+            <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
+
+          <th style="display: table-cell !important"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-comment>
+        <tr>
+          <td>
+            <img
+              [src]="comment.product.image"
+              [alt]="comment.product.title"
+              width="100"
+              class="img-icon"
+            />
+          </td>
+          <td>{{ comment.product.title }}</td>
+          <td>{{ comment.user.firstname }} {{ comment.user.lastname }}</td>
+          <td>{{ comment.text }}</td>
+          <td>{{ getCommentDate(comment.createdAt) }}</td>
+
+          <td [ngClass]="{ 'moderator-comments-actions': commentsStatut == 1 }">
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="{{
+                'moderator_comments.validate_the_comment' | translate
+              }}"
+              class="p-button-outlined p-button-success"
+              *ngIf="commentsStatut == 1 || commentsStatut == 3"
+              (click)="validateComment(comment)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="{{ 'moderator_comments.reject_the_comment' | translate }}"
+              class="p-button-outlined p-button-danger"
+              *ngIf="commentsStatut == 1 || commentsStatut == 2"
+              (click)="rejectComment(comment)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div
+          class="flex align-items-center justify-content-between"
+          *ngIf="commentsStatut == 1"
+        >
+          {{
+            "moderator_comments.total_being_validated_comments_message"
+              | translate
+                : { commentLength: allComments ? allComments.length : 0 }
+          }}
+        </div>
+        <div
+          class="flex align-items-center justify-content-between"
+          *ngIf="commentsStatut == 2"
+        >
+          {{
+            "moderator_comments.total_validated_comments_message"
+              | translate
+                : { commentLength: allComments ? allComments.length : 0 }
+          }}
+        </div>
+        <div
+          class="flex align-items-center justify-content-between"
+          *ngIf="commentsStatut == 3"
+        >
+          {{
+            "moderator_comments.total_rejected_comments_message"
+              | translate
+                : { commentLength: allComments ? allComments.length : 0 }
+          }}
+        </div>
+      </ng-template>
+    </p-table>
+
+    <p-confirmDialog
+      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+      [style]="{ width: '50vw' }"
+      [baseZIndex]="10000"
+      rejectButtonStyleClass="p-button-outline-danger"
+      acceptButtonStyleClass="p-button-valid"
+      acceptLabel="{{ 'general.yes' | translate }}"
+      rejectLabel="{{ 'general.no' | translate }}"
+    ></p-confirmDialog>
+  </main>
+  <app-moderator-footer></app-moderator-footer>
+</div>

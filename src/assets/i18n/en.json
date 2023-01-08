@@ -280,10 +280,35 @@
   "moderator_account": {
     "personnal_data": "Personnal data"
   },
+  "moderator_comments": {
+    "manage_being_validated_comments": "Manage being validated comments",
+    "manage_validated_comments": "Manage validated comments",
+    "manage_rejected_comments": "Manage rejected comments",
+    "total_being_validated_comments_message": "In total there are {commentLength} being validated comments.",
+    "total_validated_comments_message": "In total there are {commentLength} validated comments.",
+    "total_rejected_comments_message": "In total there are {commentLength} rejected comments.",
+    "being_validated_comments": "Being validated comments",
+    "validated_comments": "Validated comments",
+    "rejected_comments": "Rejected comments",
+    "validate_the_comment": "Validate the comment",
+    "reject_the_comment": "Reject the comment",
+    "comment_validated": "Comment validated",
+    "comment_rejected": "Comment rejected",
+    "comment_not_validated": "Comment not validated",
+    "comment_not_rejected": "Comment not rejected",
+    "confirm_reject_comment": "Are you sure you want to reject the comment : {text} ",
+    "confirm_validate_comment": "Are you sure you want to validate the comment : {text} ",
+    "image": "Image",
+    "title": "Title",
+    "comment": "Comment",
+    "user": "User",
+    "date": "Date"
+  },
   "moderator_header": {
     "home": "Home",
     "login_sign_in": "Login / Sign in",
-    "my_account": "My account"
+    "my_account": "My account",
+    "comments": "Comments"
   },
   "my_account": {
     "are_you_sure_that_you_want_delete_your_account": "Are you sure that you want delete your account ?",
@@ -323,7 +348,7 @@
     "hours_ago": "{count} {count, plural, =1 {hour} other {hours}} ago",
     "minutes_ago": "{count} {count, plural, =1 {minute} other {minutes}} ago",
     "seconds_ago": "{count} {count, plural, =1 {second} other {seconds}} ago",
-    "on_date_at_hour": "on {date} at {hours}",
+    "on_date_at_hour": "On {date} at {hours}",
     "you_can_t_delete_this_comment": "You can't delete this comment",
     "comment_deleted": "Comment deleted",
     "write_you_re_comment_here": "Write you're comment here !",

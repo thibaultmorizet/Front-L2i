@@ -18,7 +18,7 @@ export class CommentService {
       'https://thibaultmorizet.fr/ws/comments?id=' + id
     );
   }
-  setComment(comment: Comment) {   
+  setComment(comment: Comment) {
     return this.http.post<Comment>(this.url, comment);
   }
 
@@ -28,5 +28,11 @@ export class CommentService {
 
   deleteTheComment(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
+  }
+
+  getAllCommentsByStatut(statutId: number | undefined) {
+    return this.http.get<Array<Comment>>(
+      this.url + '?commentstatut.id=' + statutId
+    );
   }
 }

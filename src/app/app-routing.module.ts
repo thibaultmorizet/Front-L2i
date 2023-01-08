@@ -26,6 +26,7 @@ import { AdminCategoriesComponent } from './components/admin-management/books-ma
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 import { AdminBrandsComponent } from './components/admin-management/videos-management/admin-brands/admin-brands.component';
 import { AdminModeratorsComponent } from './components/admin-management/users-management/admin-moderators/admin-moderators.component';
+import { ModeratorCommentsComponent } from './components/moderator-management/moderator-comments/moderator-comments.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -54,6 +55,9 @@ const routes: Routes = [
   { path: 'moderator/home', component: ModeratorHomeComponent },
   { path: 'moderator/login', component: ModeratorLoginComponent },
   { path: 'moderator/account', component: ModeratorAccountComponent },
+  { path: 'moderator/comments/1', component: ModeratorCommentsComponent },
+  { path: 'moderator/comments/2', component: ModeratorCommentsComponent },
+  { path: 'moderator/comments/3', component: ModeratorCommentsComponent },
 
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];

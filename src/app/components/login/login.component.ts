@@ -90,7 +90,6 @@ export class LoginComponent implements OnInit {
     this.storageCrypter.removeItem('user', 'session');
     this.storageCrypter.removeItem('moderatorUser', 'session');
     this.storageCrypter.removeItem('adminUser', 'session');
-    this.storageCrypter.removeItem('moUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
     this.authService.signOut();
     this.connectedUser = {};

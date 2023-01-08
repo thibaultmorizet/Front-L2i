@@ -1,1 +1,198 @@
-<p>moderator-account works!</p>
+<div class="general-content">
+    <app-moderator-header></app-moderator-header>
+  
+    <main id="content">
+      <div class="container">
+        <img
+          id="personnalDateImg"
+          src="https://www.thibaultmorizet.fr/assets/background-images/personalData.png"
+          alt="personnalDataImg"
+        />
+  
+        <div>
+          <p-confirmDialog
+            [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+            [style]="{ width: '50vw' }"
+            [baseZIndex]="10000"
+            rejectButtonStyleClass="p-button-outline-danger"
+            acceptButtonStyleClass="p-button-valid"
+            acceptLabel="{{ 'general.yes' | translate }}"
+            rejectLabel="{{ 'general.no' | translate }}"
+          >
+          </p-confirmDialog>
+          <div id="personnalData" class="my-3">
+            <div
+              *ngIf="forceToUpdatePassword"
+              class="force-to-update-password-div"
+            >
+              {{ "general.please_change_your_password" | translate }}
+            </div>
+  
+            <div class="subtitle">
+              {{ "moderator_account.personnal_data" | translate }}
+            </div>
+            <form
+              #personnalDataForm="ngForm"
+              role="personnalData"
+              (ngSubmit)="setNewPersonnalData()"
+            >
+              <div class="input-group">
+                <div class="field mb-3">
+                  <input
+                    id="firstname"
+                    name="firstname"
+                    placeholder="{{ connectedModerator.firstname }}"
+                    type="text"
+                    pInputText
+                    value="{{ connectedModerator.firstname }}"
+                    [(ngModel)]="newModeratorData.firstname"
+                    required
+                  />
+                </div>
+              </div>
+  
+              <div class="input-group">
+                <div class="field mb-3">
+                  <input
+                    id="lastname"
+                    name="lastname"
+                    placeholder="{{ connectedModerator.lastname }}"
+                    type="text"
+                    pInputText
+                    value="{{ connectedModerator.lastname }}"
+                    [(ngModel)]="newModeratorData.lastname"
+                    required
+                  />
+                </div>
+              </div>
+  
+              <div class="input-group">
+                <div class="field mb-3">
+                  <input
+                    id="email"
+                    name="email"
+                    placeholder="{{ connectedModerator.email }}"
+                    type="email"
+                    pInputText
+                    value="{{ connectedModerator.email }}"
+                    [(ngModel)]="newModeratorData.email"
+                    class="form-control"
+                    disabled
+                  />
+                </div>
+              </div>
+  
+              <div class="input-group">
+                <div class="field mb-3">
+                  <div>
+                    <input
+                      id="password"
+                      name="password"
+                      [type]="passwordType"
+                      placeholder="{{
+                        'my_account.insert_your_new_password' | translate
+                      }}"
+                      pInputText
+                      [(ngModel)]="newModeratorData.password"
+                      class="form-control"
+                      [ngClass]="{ 'ng-invalid': errorPassword }"
+                      (keyup)="checkUpdatePasswordPattern()"
+                    />
+                    <span
+                      class="toogle-password-clear"
+                      (click)="tooglePasswordClear()"
+                      ><i
+                        class="fa-regular"
+                        [ngClass]="{
+                          'fa-eye-slash': !passwordIsClear,
+                          'fa-eye': passwordIsClear
+                        }"
+                      ></i
+                    ></span>
+                  </div>
+                  <small
+                    class="p-error"
+                    [ngClass]="{ 'd-none': !errorPassword }"
+                    >{{ errorPassword }}</small
+                  >
+                </div>
+              </div>
+  
+              <div class="input-group">
+                <div class="field mb-3">
+                  <div>
+                    <input
+                      id="passwordConfirm"
+                      name="passwordConfirm"
+                      [type]="passwordType"
+                      placeholder="{{
+                        'my_account.confirm_your_new_password' | translate
+                      }}"
+                      pInputText
+                      [(ngModel)]="newModeratorData.passwordConfirm"
+                      [ngClass]="{ 'ng-invalid': errorPasswordConfirm }"
+                      (keyup)="checkUpdatePasswordConfirmPattern()"
+                    />
+                    <span
+                      class="toogle-password-clear"
+                      (click)="tooglePasswordClear()"
+                      ><i
+                        class="fa-regular"
+                        [ngClass]="{
+                          'fa-eye-slash': !passwordIsClear,
+                          'fa-eye': passwordIsClear
+                        }"
+                      ></i
+                    ></span>
+                  </div>
+                  <small
+                    class="p-error"
+                    [ngClass]="{ 'd-none': !errorPasswordConfirm }"
+                    >{{ errorPasswordConfirm }}</small
+                  >
+                </div>
+              </div>
+  
+              <div class="d-flex justify-content-end mt-2">
+                <button
+                  pButton
+                  pRipple
+                  type="submit"
+                  class="p-button-raised p-button-primary-color btn-primary-color"
+                  [disabled]="
+                    !personnalDataForm.valid ||
+                    errorEmail ||
+                    errorFirstname ||
+                    errorLastname ||
+                    errorPassword ||
+                    errorPasswordConfirm
+                  "
+                >
+                  {{ "general.save_the_changes" | translate }}
+                </button>
+              </div>
+            </form>
+            <div class="w-100 d-flex justify-content-around">
+              <button
+                type="button"
+                (click)="confirmDeleteAccount()"
+                class="btn btn-danger mt-3"
+              >
+                {{ "my_account.delete_my_account" | translate }}
+              </button>
+  
+              <button
+                type="button"
+                (click)="logout()"
+                class="btn btn-outline-danger mt-3"
+              >
+                {{ "my_account.logout" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <app-moderator-footer></app-moderator-footer>
+  </div>
+  

@@ -122,7 +122,6 @@ export class HomeComponent implements OnInit {
     this.storageCrypter.removeItem('user', 'session');
     this.storageCrypter.removeItem('moderatorUser', 'session');
     this.storageCrypter.removeItem('adminUser', 'session');
-    this.storageCrypter.removeItem('moderatorUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
     this.authService.signOut();
     this.connectedUser = null;

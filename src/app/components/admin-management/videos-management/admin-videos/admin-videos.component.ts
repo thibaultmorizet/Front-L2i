@@ -50,8 +50,6 @@ export class AdminVideosComponent implements OnInit {
     private vs: VideoService,
     private brandService: BrandService,
     private taxeService: TaxeService,
-    private cs: Categoryservice,
-    private authorService: AuthorService,
     private primengConfig: PrimeNGConfig,
     private confirmationService: ConfirmationService,
     private iziToast: NgxIzitoastService,

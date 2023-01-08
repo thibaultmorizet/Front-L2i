@@ -280,10 +280,35 @@
   "moderator_account": {
     "personnal_data": "Données personnelles"
   },
+  "moderator_comments": {
+    "manage_being_validated_comments": "Gestion des commentaires en cours de validation",
+    "manage_validated_comments": "Gestion des commentaires validés",
+    "manage_rejected_comments": "Gestion des commentaires rejetés",
+    "total_being_validated_comments_message": "Au total, il y a {commentLength} commentaires en cours de validation.",
+    "total_validated_comments_message": "Au total, il y a {commentLength} commentaires validés.",
+    "total_rejected_comments_message": "Au total, il y a {commentLength} commentaires rejetés.",
+    "being_validated_comments": "Commentaires en cours de validation",
+    "validated_comments": "Commentaires validés",
+    "rejected_comments": "Commentaires rejetés",
+    "validate_the_comment": "Valider le commentaire",
+    "reject_the_comment": "Rejeter le commentaire",
+    "comment_validated": "Commentaire validé",
+    "comment_rejected": "Commentaire rejeté",
+    "comment_not_validated": "Commentaire non validé",
+    "comment_not_rejected": "Commentaire non rejeté",
+    "confirm_reject_comment": "Voulez-vous vraiment rejeter le commentaire : {text} ",
+    "confirm_validate_comment": "Voulez-vous vraiment valider le commentaire : {text} ",
+    "image": "Image",
+    "title": "Titre",
+    "comment": "Commentaire",
+    "user": "Utilisateur",
+    "date": "Date"
+  },
   "moderator_header": {
     "home": "Accueil",
     "login_sign_in": "Se connecter",
-    "my_account": "Mon compte"
+    "my_account": "Mon compte",
+    "comments": "Commentaires"
   },
   "my_account": {
     "are_you_sure_that_you_want_delete_your_account": "Êtes-vous sûr de vouloir supprimer votre compte ?",
@@ -323,7 +348,7 @@
     "hours_ago": "il y a {count} {count, plural, =1 {heure} other {heures}}",
     "minutes_ago": "il y a {count} {count, plural, =1 {minute} other {minutes}}",
     "seconds_ago": "il y a {count} {count, plural, =1 {seconde} other {secondes}}",
-    "on_date_at_hour": "le {date} à {hours}",
+    "on_date_at_hour": "Le {date} à {hours}",
     "you_can_t_delete_this_comment": "Vous ne pouvez pas supprimer ce commentaire",
     "comment_deleted": "Commentaire supprimé",
     "write_you_re_comment_here": "Écrivez votre commentaire ici !",

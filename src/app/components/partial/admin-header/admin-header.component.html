@@ -55,7 +55,7 @@
           class="home-link text-uppercase"
           [routerLink]="['/admin/videos']"
           [ngClass]="{
-            active: path === 'admin/videos/'
+            active: path === 'admin/videos/' || path === 'admin/brands/'
           }"
           >{{ "admin_header.videos" | translate }}</a
         >

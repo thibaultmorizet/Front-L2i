@@ -1,0 +1,84 @@
+.subtitle {
+    font-size: 1.2rem;
+    font-family: "Quicksand", Arial, sans-serif;
+    padding: 1rem;
+    text-align: center;
+}
+
+.container:has(#personnalData) {
+    display: flex;
+    justify-content: space-around;
+}
+
+.container:has(#personnalData)>div {
+   display: flex;
+   align-items: center;
+}
+
+#personnalData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#personnalDateImg {
+    display: none;
+}
+
+.p-inputtext {
+    padding: .375rem .75rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.field input#password {
+    width: 100%;
+    padding-right: 30px;
+    position: relative;
+}
+
+.field input#passwordConfirm {
+    width: 100%;
+    padding-right: 30px;
+    position: relative;
+}
+
+.toogle-password-clear {
+    position: absolute;
+    right: 8px;
+    top: 11px;
+    cursor: pointer;
+    font-size: .8rem;
+}
+
+.form-control:disabled {
+    opacity: 1 !important;
+}
+
+
+@media (min-width: 650px) {
+    .subtitle {
+        width: 300px;
+    }
+}
+
+@media (min-width: 1000px) {
+    #personnalDateImg {
+        display: block;
+        max-width: 500px;
+    }
+}
+
+@media (min-width: 1800px) {
+    #personnalDateImg {
+        max-width: 700px;
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+    }
+}
