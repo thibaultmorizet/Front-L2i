@@ -128,6 +128,10 @@ export class LoginComponent implements OnInit {
     console.log(1, this.userLogin.password);
 
     this.us.getTheUser(this.userLogin.email).subscribe((theUser) => {
+      console.log(0, this.userLogin.email);
+      console.log(1, this.userLogin.password);
+      console.log(2, theUser);
+      console.log(3, this.userLogin);
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
       } else if (
@@ -142,9 +146,6 @@ export class LoginComponent implements OnInit {
         });
       } else {
         this.errorEmail = null;
-        console.log(0, this.userLogin.email);
-        console.log(1, this.userLogin.password);
-        console.log(2, this.userLogin);
 
         this.as.login(this.userLogin).subscribe({
           next: (res) => {
