@@ -130,13 +130,14 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           if (res.token != null) {
             this.storageCrypter.setItem('jeton', res.token, 'local');
+            console.log(this.userLogin);
             this.us.getTheUser(this.userLogin.email).subscribe((theUser) => {
+              console.log(theUser[0]);
               this.storageCrypter.setItem(
                 'user',
                 JSON.stringify(theUser[0]),
                 'session'
               );
-              console.log(theUser);
 
               this.connectedUser = theUser[0];
 
