@@ -136,22 +136,22 @@ export class LoginComponent implements OnInit {
                 JSON.stringify(theUser[0]),
                 'session'
               );
+              console.log(theUser);
 
               this.connectedUser = theUser[0];
+
+              this.errorPassword = null;
+
+              try {
+                this.translate.setDefaultLang(
+                  this.connectedUser.language != undefined
+                    ? this.connectedUser.language
+                    : ''
+                );
+              } catch (error) {
+                this.translate.setDefaultLang('en');
+              }
             });
-            this.errorPassword = null;
-            console.log(this.translate);
-            console.log(this.connectedUser.language);
-            
-            try {
-              this.translate.setDefaultLang(
-                this.connectedUser.language != undefined
-                  ? this.connectedUser.language
-                  : ''
-              );
-            } catch (error) {
-              this.translate.setDefaultLang('en');
-            }
             this.userLogin = {};
             this.storageCrypter.removeItem('googleLoginEmail', 'session');
             this.storageCrypter.removeItem('googleLoginPassword', 'session');
