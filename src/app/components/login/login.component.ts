@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+declare var google: any;
+import { Component, OnInit, ViewEncapsulation, NgZone } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,6 +16,7 @@ import { AddressService } from 'src/app/services/address.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
+import { accounts } from 'google-one-tap';
 
 @Component({
   selector: 'app-login',
@@ -49,7 +51,8 @@ export class LoginComponent implements OnInit {
     private as: AuthService,
     private authService: SocialAuthService,
     private primengConfig: PrimeNGConfig,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -77,8 +80,30 @@ export class LoginComponent implements OnInit {
       this.socialUser = user;
       this.isLoggedin = user != null;
     });
+
+    const gAccounts: accounts = google.accounts;
+
+    gAccounts.id.initialize({
+      client_id:
+        '191085854417-q1nheuh4v1hgspdo64vs87hn3ovajlh3.apps.googleusercontent.com',
+      ux_mode: 'popup',
+      cancel_on_tap_outside: true,
+      callback: ({ credential }) => {
+        this.ngZone.run(() => {
+          this._loginWithGoogle(credential);
+        });
+      },
+    });
+
+    gAccounts.id.renderButton(document.getElementById('gbtn') as HTMLElement, {
+      size: 'large',
+      width: 320,
+    });
   }
 
+  _loginWithGoogle(token: string) {
+    console.log('connection success');
+  }
   tokenExpired(token: string) {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
     return Math.floor(new Date().getTime() / 1000) >= expiry;
@@ -104,7 +129,10 @@ export class LoginComponent implements OnInit {
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
-      } else if (theUser[0].roles?.includes('ROLE_ADMIN')||theUser[0].roles?.includes('ROLE_MODERATOR')) {
+      } else if (
+        theUser[0].roles?.includes('ROLE_ADMIN') ||
+        theUser[0].roles?.includes('ROLE_MODERATOR')
+      ) {
         this.iziToast.error({
           message: this.translate.instant(
             'izitoast.you_can_t_connect_here_as_admin_or_moderator'

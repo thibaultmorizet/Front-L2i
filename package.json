@@ -32,6 +32,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "@popperjs/core": "^2.11.6",
+    "@types/google-one-tap": "^1.2.2",
     "angularx-social-login": "^4.1.0",
     "bootstrap": "^5.2.2",
     "chart.js": "^4.0.1",
