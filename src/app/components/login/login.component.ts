@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit {
       cancel_on_tap_outside: true,
       callback: ({ credential }) => {
         this.ngZone.run(() => {
-          this._loginWithGoogle(credential);
+          this.signInWithGoogle(credential);
         });
       },
     });
@@ -214,11 +214,39 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-  signInWithGoogle(): void {
-    /*  this.authService
-      .signIn(GoogleLoginProvider.PROVIDER_ID)
-      .then((data) => console.log(data));
-    console.log(this.authService); */
+  signInWithGoogle(token: string): void {
+    let decode_token :any= jwt_decode(token);
+    this.us.getTheUser(decode_token.email).subscribe((el) => {
+      this.loginAfterRegister = true;
+
+      if (el[0] != undefined) {
+        if (el[0].token == decode_token.sub) {
+          this.userLogin.email = el[0].email;
+          this.userLogin.password = el[0].token;
+          this.userLogin.passwordConfirm = el[0].token;
+          this.login();
+          this.userLogin = {};
+        } else {
+          this.loginAfterRegister = false;
+          this.iziToast.success({
+            message: this.translate.instant(
+              'general.this_email_is_already_use'
+            ),
+            position: 'topRight',
+          });
+        }
+      } else {
+        this.userInscription = {};
+        this.userInscription.email = decode_token.email;
+        this.userInscription.lastname = decode_token.family_name;
+        this.userInscription.firstname = decode_token.given_name;
+        this.userInscription.password = decode_token.sub;
+        this.userInscription.token = decode_token.sub;
+        this.userLogin.email = decode_token.email;
+        this.userLogin.password = decode_token.sub;
+        this.register();
+      }
+    });
   }
 
   signInWithFB(): void {
