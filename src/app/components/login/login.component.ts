@@ -141,6 +141,7 @@ export class LoginComponent implements OnInit {
             });
             this.errorPassword = null;
             console.log(this.translate);
+            console.log(this.connectedUser.language);
             
             try {
               this.translate.setDefaultLang(
