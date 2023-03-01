@@ -200,9 +200,7 @@ console.log(theUser[0],this.loginAfterRegister);
     });
     this.loginAfterRegister = false;
   }
-  register() {
-    console.log(this.userInscription);
-    
+  register() {    
     this.as.getTheUser(this.userInscription.email).subscribe((res) => {
       if (res[0] == undefined) {
         this.errorEmail = '';
@@ -238,6 +236,8 @@ console.log(theUser[0],this.loginAfterRegister);
           this.userLogin.email = el[0].email;
           this.userLogin.password = el[0].token;
           this.userLogin.passwordConfirm = el[0].token;
+          console.log(this.loginAfterRegister);
+          
           this.login();
           this.userLogin = {};
         } else {
