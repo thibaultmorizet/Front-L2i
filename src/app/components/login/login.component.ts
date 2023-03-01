@@ -102,9 +102,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  _loginWithGoogle(token: string) {
-    console.log(jwt_decode(token));
-  }
+
   tokenExpired(token: string) {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
     return Math.floor(new Date().getTime() / 1000) >= expiry;
@@ -127,6 +125,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    console.log(this.userLogin);
+
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
@@ -189,6 +189,8 @@ export class LoginComponent implements OnInit {
     this.loginAfterRegister = false;
   }
   register() {
+    console.log(this.userInscription);
+    
     this.as.getTheUser(this.userInscription.email).subscribe((res) => {
       if (res[0] == undefined) {
         this.errorEmail = '';
