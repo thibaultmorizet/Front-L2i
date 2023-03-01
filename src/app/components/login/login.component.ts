@@ -104,8 +104,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
 
     gAccounts.id.renderButton(document.getElementById('gbtn') as HTMLElement, {
-      size: 'large',
-      width: 300,
+      size: 'medium',
+      width: 180,
     });
   }
   tokenExpired(token: string) {
