@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   errorFirstname: string | null = null;
   errorPasswordConfirm: string | null = null;
   loginAfterRegister: boolean = false;
+  connectWithGoogle: boolean = false;
   userLogin: User = {};
   isLoginPage: boolean = true;
   userInscription: User = {};
@@ -88,6 +89,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.isLoggedin = user != null;
     });
   }
+
   ngAfterViewInit(): void {
     const gAccounts: accounts = google.accounts;
 
@@ -104,7 +106,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
 
     gAccounts.id.renderButton(document.getElementById('gbtn') as HTMLElement, {
-      size: 'medium',
+      size: 'large',
       width: 180,
     });
   }
@@ -130,64 +132,89 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login() {
-    this.us.getTheUser(this.userLogin.email).subscribe((theUser) => {
-      if (theUser[0] == undefined) {
-        this.errorEmail = 'We did not find an account with this email address';
-      } else if (
-        theUser[0].roles?.includes('ROLE_ADMIN') ||
-        theUser[0].roles?.includes('ROLE_MODERATOR')
-      ) {
-        this.iziToast.error({
-          message: this.translate.instant(
-            'izitoast.you_can_t_connect_here_as_admin_or_moderator'
-          ),
-          position: 'topRight',
-        });
-      } else {
-        this.errorEmail = null;
+    if (this.connectWithGoogle) {
+      this.as.login(this.userLogin).subscribe({
+        next: (res) => {
+          if (res.token != null) {
+            this.storageCrypter.setItem('jeton', res.token, 'local');
 
-        this.as.login(this.userLogin).subscribe({
-          next: (res) => {
-            if (res.token != null) {
-              this.storageCrypter.setItem('jeton', res.token, 'local');
+            this.errorPassword = null;
 
-              this.storageCrypter.setItem(
-                'user',
-                JSON.stringify(theUser[0]),
-                'session'
-              );
+            this.userLogin = {};
+            this.iziToast.success({
+              message: this.translate.instant('izitoast.successful_login'),
+              position: 'topRight',
+            });
 
-              this.connectedUser = theUser[0];
-              this.errorPassword = null;
-              try {
-                this.translate.setDefaultLang(
-                  this.connectedUser.language != undefined
-                    ? this.connectedUser.language
-                    : ''
+            setTimeout(() => {
+              this.router.navigateByUrl('/home');
+            }, 250);
+          }
+        },
+        error: (res) => {
+          this.errorPassword = 'Incorrect password';
+        },
+      });
+    } else {
+      this.us.getTheUser(this.userLogin.email).subscribe((theUser) => {
+        if (theUser[0] == undefined) {
+          this.errorEmail =
+            'We did not find an account with this email address';
+        } else if (
+          theUser[0].roles?.includes('ROLE_ADMIN') ||
+          theUser[0].roles?.includes('ROLE_MODERATOR')
+        ) {
+          this.iziToast.error({
+            message: this.translate.instant(
+              'izitoast.you_can_t_connect_here_as_admin_or_moderator'
+            ),
+            position: 'topRight',
+          });
+        } else {
+          this.errorEmail = null;
+
+          this.as.login(this.userLogin).subscribe({
+            next: (res) => {
+              if (res.token != null) {
+                this.storageCrypter.setItem('jeton', res.token, 'local');
+
+                this.storageCrypter.setItem(
+                  'user',
+                  JSON.stringify(theUser[0]),
+                  'session'
                 );
-              } catch (error) {
-                this.translate.setDefaultLang('en');
-              }
-              this.userLogin = {};
-              this.storageCrypter.removeItem('googleLoginEmail', 'session');
-              this.storageCrypter.removeItem('googleLoginPassword', 'session');
-              this.iziToast.success({
-                message: this.translate.instant('izitoast.successful_login'),
-                position: 'topRight',
-              });
 
-              setTimeout(() => {
-                this.router.navigateByUrl('/home');
-              }, 250);
-            }
-          },
-          error: (res) => {
-            this.errorPassword = 'Incorrect password';
-          },
-        });
-      }
-    });
+                this.connectedUser = theUser[0];
+                this.errorPassword = null;
+                try {
+                  this.translate.setDefaultLang(
+                    this.connectedUser.language != undefined
+                      ? this.connectedUser.language
+                      : ''
+                  );
+                } catch (error) {
+                  this.translate.setDefaultLang('en');
+                }
+                this.userLogin = {};
+                this.iziToast.success({
+                  message: this.translate.instant('izitoast.successful_login'),
+                  position: 'topRight',
+                });
+
+                setTimeout(() => {
+                  this.router.navigateByUrl('/home');
+                }, 250);
+              }
+            },
+            error: (res) => {
+              this.errorPassword = 'Incorrect password';
+            },
+          });
+        }
+      });
+    }
     this.loginAfterRegister = false;
+    this.connectWithGoogle = false;
   }
   register() {
     this.us.getTheUser(this.userInscription.email).subscribe((res) => {
@@ -220,17 +247,38 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     this.us.getTheUser(decode_token.email).subscribe((el) => {
       this.loginAfterRegister = true;
+      this.connectWithGoogle = true;
 
       if (el[0] != undefined) {
         if (el[0].token == decode_token.sub) {
           this.userLogin.email = el[0].email;
           this.userLogin.password = el[0].token;
           this.userLogin.passwordConfirm = el[0].token;
+          this.us.getTheUser(this.userLogin.email).subscribe((theUser) => {
 
+            this.storageCrypter.setItem(
+              'user',
+              JSON.stringify(theUser[0]),
+              'session'
+            );
+
+            this.connectedUser = theUser[0];
+            
+            try {
+              this.translate.setDefaultLang(
+                this.connectedUser.language != undefined
+                  ? this.connectedUser.language
+                  : ''
+              );
+            } catch (error) {
+              this.translate.setDefaultLang('en');
+            }
+          });
           this.login();
           this.userLogin = {};
         } else {
           this.loginAfterRegister = false;
+          this.connectWithGoogle = false;
           this.iziToast.success({
             message: this.translate.instant(
               'general.this_email_is_already_use'
