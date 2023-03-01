@@ -128,6 +128,7 @@ export class LoginComponent implements OnInit {
 
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
       console.log(2, theUser);
+      console.log(2, theUser[0]);
 
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
