@@ -71,24 +71,14 @@
           </div>
         </form>
         <div>
-      
-
-
-
-          <div id="g_id_onload"
-               data-client_id="191085854417-q1nheuh4v1hgspdo64vs87hn3ovajlh3.apps.googleusercontent.com"
-               data-ux_mode="redirect"
-               data-login_uri="https://www.example.com/your_login_endpoint">
-          </div>
+          <div
+            id="g_id_onload"
+            data-client_id="191085854417-q1nheuh4v1hgspdo64vs87hn3ovajlh3.apps.googleusercontent.com"
+            data-callback="handleCredentialResponse"
+          ></div>
           <div class="g_id_signin" data-type="standard"></div>
 
-
-
-
-
-
-
-<!--           <button
+          <!--           <button
             type="button"
             (click)="signInWithGoogle()"
             class="btn btn-google mt-3"
@@ -110,7 +100,7 @@
             class="text-center text-underline pointer"
             [routerLink]="['/forgotten-password']"
           >
-          {{ "login.forgotten_password" | translate }}
+            {{ "login.forgotten_password" | translate }}
           </p>
           <p
             class="text-center text-underline pointer"
