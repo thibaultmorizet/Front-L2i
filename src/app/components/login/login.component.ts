@@ -127,13 +127,15 @@ export class LoginComponent implements OnInit {
     console.log(1, this.userLogin);
 
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
-      console.log(2, theUser[0]);
+      console.log(0, this.userLogin);
 
-      if (theUser[0] == undefined) {
+      console.log(2, theUser);
+
+      if (theUser == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
       } else if (
-        theUser[0].roles?.includes('ROLE_ADMIN') ||
-        theUser[0].roles?.includes('ROLE_MODERATOR')
+        theUser.roles?.includes('ROLE_ADMIN') ||
+        theUser.roles?.includes('ROLE_MODERATOR')
       ) {
         this.iziToast.error({
           message: this.translate.instant(
@@ -154,11 +156,11 @@ export class LoginComponent implements OnInit {
 
               this.storageCrypter.setItem(
                 'user',
-                JSON.stringify(theUser[0]),
+                JSON.stringify(theUser),
                 'session'
               );
 
-              this.connectedUser = theUser[0];
+              this.connectedUser = theUser;
               this.errorPassword = null;
               try {
                 this.translate.setDefaultLang(
@@ -193,7 +195,7 @@ export class LoginComponent implements OnInit {
   }
   register() {
     this.as.getTheUser(this.userInscription.email).subscribe((res) => {
-      if (res[0] == undefined) {
+      if (res == undefined) {
         this.errorEmail = '';
         this.userInscription.language = 'en';
         this.us.register(this.userInscription).subscribe((resRegister) => {
@@ -222,11 +224,11 @@ export class LoginComponent implements OnInit {
     this.us.getTheUser(decode_token.email).subscribe((el) => {
       this.loginAfterRegister = true;
 
-      if (el[0] != undefined) {
-        if (el[0].token == decode_token.sub) {
-          this.userLogin.email = el[0].email;
-          this.userLogin.password = el[0].token;
-          this.userLogin.passwordConfirm = el[0].token;
+      if (el != undefined) {
+        if (el.token == decode_token.sub) {
+          this.userLogin.email = el.email;
+          this.userLogin.password = el.token;
+          this.userLogin.passwordConfirm = el.token;
 
           this.login();
           this.userLogin = {};
@@ -259,11 +261,11 @@ export class LoginComponent implements OnInit {
         this.us.getTheUser(this.socialUser.email).subscribe((el) => {
           this.loginAfterRegister = true;
 
-          if (el[0] != undefined) {
-            if (el[0].token == data.id) {
-              this.userLogin.email = el[0].email;
-              this.userLogin.password = el[0].token;
-              this.userLogin.passwordConfirm = el[0].token;
+          if (el != undefined) {
+            if (el.token == data.id) {
+              this.userLogin.email = el.email;
+              this.userLogin.password = el.token;
+              this.userLogin.passwordConfirm = el.token;
               this.login();
               this.userLogin = {};
             } else {

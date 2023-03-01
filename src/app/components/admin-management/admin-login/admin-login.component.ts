@@ -65,9 +65,9 @@ export class AdminLoginComponent implements OnInit {
 
   login() {
     this.as.getTheUser(this.adminLogin.email).subscribe((theUser) => {
-      if (theUser[0] == undefined) {
+      if (theUser == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
-      } else if (!theUser[0].roles?.includes('ROLE_ADMIN')) {
+      } else if (!theUser.roles?.includes('ROLE_ADMIN')) {
         this.iziToast.error({
           message: this.translate.instant(
             'izitoast.you_can_t_connect_here_as_user_or_moderator'
@@ -83,11 +83,11 @@ export class AdminLoginComponent implements OnInit {
 
               this.storageCrypter.setItem(
                 'adminUser',
-                JSON.stringify(theUser[0]),
+                JSON.stringify(theUser),
                 'session'
               );
 
-              this.connectedAdmin = theUser[0];
+              this.connectedAdmin = theUser;
               this.errorPassword = null;
               try {
                 this.translate.setDefaultLang(

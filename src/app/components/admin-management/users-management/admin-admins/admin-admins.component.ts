@@ -67,7 +67,7 @@ export class AdminAdminsComponent implements OnInit {
 
     if (!user.id) {
       this.us.getTheUser(user.email).subscribe((res) => {
-        if (res[0] == undefined) {
+        if (res == undefined) {
           const alpha = 'abcdefghijklmnopqrstuvwxyz';
           const calpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
           const num = '1234567890';

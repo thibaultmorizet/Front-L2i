@@ -131,8 +131,8 @@ export class AdminUsersComponent implements OnInit {
     if (user.id) {
       this.us.getTheUser(user.email).subscribe((res) => {
         if (
-          res[0] == undefined ||
-          (res[0] != undefined && res[0].id == user.id)
+          res == undefined ||
+          (res != undefined && res.id == user.id)
         ) {
           this.us.updateUser(user.id, user).subscribe((result) => {
             if (
@@ -187,7 +187,7 @@ export class AdminUsersComponent implements OnInit {
       });
     } else {
       this.us.getTheUser(user.email).subscribe((res) => {
-        if (res[0] == undefined) {
+        if (res == undefined) {
           const alpha = 'abcdefghijklmnopqrstuvwxyz';
           const calpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
           const num = '1234567890';
@@ -234,7 +234,7 @@ export class AdminUsersComponent implements OnInit {
                   .createAddress(updateBillingAddress)
                   .subscribe((updateBillingAddressResult) => {
                     user.billingAddress = updateBillingAddressResult;
-                    this.us.updateUser(userRes[0].id, user).subscribe();
+                    this.us.updateUser(userRes.id, user).subscribe();
                   });
               }
               if (
@@ -247,7 +247,7 @@ export class AdminUsersComponent implements OnInit {
                   .createAddress(updateDeliveryAddress)
                   .subscribe((updateDeliveryAddressResult) => {
                     user.deliveryAddress = updateDeliveryAddressResult;
-                    this.us.updateUser(userRes[0].id, user).subscribe();
+                    this.us.updateUser(userRes.id, user).subscribe();
                   });
               }
               this.allUsers.push(user);

@@ -45,7 +45,7 @@ export class ForgottenPasswordComponent implements OnInit {
 
   sendNewPassword() {
     this.us.getTheUser(this.emailToReset).subscribe((user) => {
-      if (user[0] == undefined) {
+      if (user == undefined) {
         this.iziToast.warning({
           message: "This account doesn't exist",
           position: 'topRight',
@@ -80,10 +80,10 @@ export class ForgottenPasswordComponent implements OnInit {
           options.splice(opt, 1);
         }
         mailInfo.password = pass;
-        user[0].password = pass;
+        user.password = pass;
         this.as.sendNewPassword(mailInfo).subscribe((el) => {
-          user[0].forceToUpdatePassword = true;
-          this.us.updateUser(user[0].id, user[0]).subscribe();
+          user.forceToUpdatePassword = true;
+          this.us.updateUser(user.id, user).subscribe();
           this.emailToReset = '';
           this.iziToast.success({
             message:
