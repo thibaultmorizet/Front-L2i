@@ -124,9 +124,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-
     this.us.getTheUser(this.userLogin.email).subscribe((theUser) => {
-
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
       } else if (
@@ -157,49 +155,54 @@ export class LoginComponent implements OnInit {
             );
           } catch (error) {}
         }
-        console.log(2, this.userLogin);
+        setTimeout(() => {
+          console.log(2, this.userLogin);
 
-        this.as.login(this.userLogin).subscribe({
-          next: (res) => {
-            console.log(3, res);
+          this.as.login(this.userLogin).subscribe({
+            next: (res) => {
+              console.log(3, res);
 
-            if (res.token != null) {
-              this.storageCrypter.setItem('jeton', res.token, 'local');
+              if (res.token != null) {
+                this.storageCrypter.setItem('jeton', res.token, 'local');
 
-              this.storageCrypter.setItem(
-                'user',
-                JSON.stringify(theUser[0]),
-                'session'
-              );
-
-              this.connectedUser = theUser[0];
-              this.errorPassword = null;
-              try {
-                this.translate.setDefaultLang(
-                  this.connectedUser.language != undefined
-                    ? this.connectedUser.language
-                    : ''
+                this.storageCrypter.setItem(
+                  'user',
+                  JSON.stringify(theUser[0]),
+                  'session'
                 );
-              } catch (error) {
-                this.translate.setDefaultLang('en');
-              }
-              this.userLogin = {};
-              this.storageCrypter.removeItem('googleLoginEmail', 'session');
-              this.storageCrypter.removeItem('googleLoginPassword', 'session');
-              this.iziToast.success({
-                message: this.translate.instant('izitoast.successful_login'),
-                position: 'topRight',
-              });
 
-              setTimeout(() => {
-                this.router.navigateByUrl('/home');
-              }, 250);
-            }
-          },
-          error: (res) => {
-            this.errorPassword = 'Incorrect password';
-          },
-        });
+                this.connectedUser = theUser[0];
+                this.errorPassword = null;
+                try {
+                  this.translate.setDefaultLang(
+                    this.connectedUser.language != undefined
+                      ? this.connectedUser.language
+                      : ''
+                  );
+                } catch (error) {
+                  this.translate.setDefaultLang('en');
+                }
+                this.userLogin = {};
+                this.storageCrypter.removeItem('googleLoginEmail', 'session');
+                this.storageCrypter.removeItem(
+                  'googleLoginPassword',
+                  'session'
+                );
+                this.iziToast.success({
+                  message: this.translate.instant('izitoast.successful_login'),
+                  position: 'topRight',
+                });
+
+                setTimeout(() => {
+                  this.router.navigateByUrl('/home');
+                }, 250);
+              }
+            },
+            error: (res) => {
+              this.errorPassword = 'Incorrect password';
+            },
+          });
+        }, 1000);
       }
     });
     this.loginAfterRegister = false;
