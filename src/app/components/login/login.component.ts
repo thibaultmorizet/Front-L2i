@@ -145,6 +145,7 @@ console.log(1);
         });
       } else {
         console.log(3);
+console.log(theUser[0],this.loginAfterRegister);
 
         if (
           theUser[0].token == '' ||
