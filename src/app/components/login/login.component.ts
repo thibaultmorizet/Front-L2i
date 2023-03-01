@@ -126,8 +126,11 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log(this.userLogin);
+console.log(1);
 
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
+      console.log(2);
+
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
       } else if (
@@ -141,6 +144,8 @@ export class LoginComponent implements OnInit {
           position: 'topRight',
         });
       } else {
+        console.log(3);
+
         if (
           theUser[0].token == '' ||
           theUser[0].token == null ||
@@ -149,6 +154,8 @@ export class LoginComponent implements OnInit {
           this.errorEmail = null;
           this.as.login(this.userLogin).subscribe({
             next: (res) => {
+              console.log(4);
+
               if (res.token != null) {
                 this.storageCrypter.setItem('jeton', res.token, 'local');
 
@@ -174,7 +181,11 @@ export class LoginComponent implements OnInit {
                   message: this.translate.instant('izitoast.successful_login'),
                   position: 'topRight',
                 });
+                console.log(5);
+
                 setTimeout(() => {
+                  console.log(6);
+
                   this.router.navigateByUrl('/home');
                 }, 250);
               }
