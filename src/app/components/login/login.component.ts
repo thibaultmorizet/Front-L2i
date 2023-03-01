@@ -102,7 +102,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
   tokenExpired(token: string) {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
     return Math.floor(new Date().getTime() / 1000) >= expiry;
@@ -125,10 +124,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(1,this.loginAfterRegister);
 
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
-      console.log(2,this.loginAfterRegister);
 
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
@@ -143,62 +140,55 @@ export class LoginComponent implements OnInit {
           position: 'topRight',
         });
       } else {
-        console.log(3,this.loginAfterRegister);
 
-        if (
-          theUser[0].token == '' ||
-          theUser[0].token == null ||
-          this.loginAfterRegister
-        ) {
-          this.errorEmail = null;
-          this.as.login(this.userLogin).subscribe({
-            next: (res) => {
-              console.log(4);
+        this.errorEmail = null;
+        this.as.login(this.userLogin).subscribe({
+          next: (res) => {
+            console.log(4);
 
-              if (res.token != null) {
-                this.storageCrypter.setItem('jeton', res.token, 'local');
+            if (res.token != null) {
+              this.storageCrypter.setItem('jeton', res.token, 'local');
 
-                this.storageCrypter.setItem(
-                  'user',
-                  JSON.stringify(theUser[0]),
-                  'session'
+              this.storageCrypter.setItem(
+                'user',
+                JSON.stringify(theUser[0]),
+                'session'
+              );
+
+              this.connectedUser = theUser[0];
+              this.errorPassword = null;
+              try {
+                this.translate.setDefaultLang(
+                  this.connectedUser.language != undefined
+                    ? this.connectedUser.language
+                    : ''
                 );
-
-                this.connectedUser = theUser[0];
-                this.errorPassword = null;
-                try {
-                  this.translate.setDefaultLang(
-                    this.connectedUser.language != undefined
-                      ? this.connectedUser.language
-                      : ''
-                  );
-                } catch (error) {
-                  this.translate.setDefaultLang('en');
-                }
-                this.userLogin = {};
-                this.iziToast.success({
-                  message: this.translate.instant('izitoast.successful_login'),
-                  position: 'topRight',
-                });
-                console.log(5);
-
-                setTimeout(() => {
-                  console.log(6);
-
-                  this.router.navigateByUrl('/home');
-                }, 250);
+              } catch (error) {
+                this.translate.setDefaultLang('en');
               }
-            },
-            error: (res) => {
-              this.errorPassword = 'Incorrect password';
-            },
-          });
-        }
+              this.userLogin = {};
+              this.iziToast.success({
+                message: this.translate.instant('izitoast.successful_login'),
+                position: 'topRight',
+              });
+              console.log(5);
+
+              setTimeout(() => {
+                console.log(6);
+
+                this.router.navigateByUrl('/home');
+              }, 250);
+            }
+          },
+          error: (res) => {
+            this.errorPassword = 'Incorrect password';
+          },
+        });
       }
     });
     this.loginAfterRegister = false;
   }
-  register() {    
+  register() {
     this.as.getTheUser(this.userInscription.email).subscribe((res) => {
       if (res[0] == undefined) {
         this.errorEmail = '';
@@ -225,7 +215,7 @@ export class LoginComponent implements OnInit {
     });
   }
   signInWithGoogle(token: string): void {
-    let decode_token :any= jwt_decode(token);
+    let decode_token: any = jwt_decode(token);
     this.us.getTheUser(decode_token.email).subscribe((el) => {
       this.loginAfterRegister = true;
 
@@ -234,8 +224,7 @@ export class LoginComponent implements OnInit {
           this.userLogin.email = el[0].email;
           this.userLogin.password = el[0].token;
           this.userLogin.passwordConfirm = el[0].token;
-          console.log(0,this.loginAfterRegister);
-          
+
           this.login();
           this.userLogin = {};
         } else {
