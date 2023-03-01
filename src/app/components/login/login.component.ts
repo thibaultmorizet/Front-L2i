@@ -32,7 +32,7 @@ import jwt_decode from 'jwt-decode';
   encapsulation: ViewEncapsulation.None,
   providers: [ConfirmationService],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   storageCrypter = new StorageCrypter('Secret');
   cart: Array<Product> = [];
   connectedUser: User = {};
