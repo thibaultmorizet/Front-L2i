@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 import { accounts } from 'google-one-tap';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -102,7 +103,7 @@ export class LoginComponent implements OnInit {
   }
 
   _loginWithGoogle(token: string) {
-    console.log(token);
+    console.log(jwt_decode(token));
   }
   tokenExpired(token: string) {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
