@@ -146,10 +146,23 @@ export class LoginComponent implements OnInit {
       } else {
         this.errorEmail = null;
         console.log(3, this.userLogin);
-
+        if (this.userLogin.email == undefined) {
+          try {
+            this.userLogin.email = JSON.parse(
+              this.storageCrypter.getItem('googleLoginEmail', 'session')
+            );
+          } catch (error) {}
+        }
+        if (this.userLogin.password == undefined) {
+          try {
+            this.userLogin.password = JSON.parse(
+              this.storageCrypter.getItem('googleLoginPassword', 'session')
+            );
+          } catch (error) {}
+        }
         this.as.login(this.userLogin).subscribe({
           next: (res) => {
-            console.log(4,res);
+            console.log(4, res);
 
             if (res.token != null) {
               this.storageCrypter.setItem('jeton', res.token, 'local');
@@ -172,6 +185,8 @@ export class LoginComponent implements OnInit {
                 this.translate.setDefaultLang('en');
               }
               this.userLogin = {};
+              this.storageCrypter.removeItem('googleLoginEmail', 'session');
+              this.storageCrypter.removeItem('googleLoginPassword', 'session');
               this.iziToast.success({
                 message: this.translate.instant('izitoast.successful_login'),
                 position: 'topRight',
@@ -195,7 +210,6 @@ export class LoginComponent implements OnInit {
   }
   register() {
     this.us.getTheUser(this.userInscription.email).subscribe((res) => {
-
       if (res[0] == undefined) {
         this.errorEmail = '';
         this.userInscription.language = 'en';
@@ -222,7 +236,7 @@ export class LoginComponent implements OnInit {
   }
   signInWithGoogle(token: string): void {
     let decode_token: any = jwt_decode(token);
-    
+
     this.us.getTheUser(decode_token.email).subscribe((el) => {
       this.loginAfterRegister = true;
 
@@ -250,8 +264,17 @@ export class LoginComponent implements OnInit {
         this.userInscription.firstname = decode_token.given_name;
         this.userInscription.password = decode_token.sub;
         this.userInscription.token = decode_token.sub;
-        this.userLogin.email = decode_token.email;
-        this.userLogin.password = decode_token.sub;
+        this.storageCrypter.setItem(
+          'googleLoginEmail',
+          decode_token.email,
+          'session'
+        );
+        this.storageCrypter.setItem(
+          'googleLoginPassword',
+          decode_token.sub,
+          'session'
+        );
+
         this.register();
       }
     });
