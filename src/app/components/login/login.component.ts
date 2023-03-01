@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
   }
 
   _loginWithGoogle(token: string) {
-    console.log('connection success');
+    console.log(token);
   }
   tokenExpired(token: string) {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
