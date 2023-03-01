@@ -65,9 +65,9 @@ export class ModeratorLoginComponent implements OnInit {
 
   login() {
     this.as.getTheUser(this.moderatorLogin.email).subscribe((theUser) => {
-      if (theUser == undefined) {
+      if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
-      } else if (!theUser.roles?.includes('ROLE_MODERATOR')) {
+      } else if (!theUser[0].roles?.includes('ROLE_MODERATOR')) {
         this.iziToast.error({
           message: this.translate.instant(
             'izitoast.you_can_t_connect_here_as_user_or_admin'
@@ -83,11 +83,11 @@ export class ModeratorLoginComponent implements OnInit {
 
               this.storageCrypter.setItem(
                 'moderatorUser',
-                JSON.stringify(theUser),
+                JSON.stringify(theUser[0]),
                 'session'
               );
 
-              this.connectedModerator = theUser;
+              this.connectedModerator = theUser[0];
               this.errorPassword = null;
               try {
                 this.translate.setDefaultLang(

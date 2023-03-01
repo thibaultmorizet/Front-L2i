@@ -120,8 +120,8 @@ export class AdminModeratorsComponent implements OnInit {
     if (moderator.id) {
       this.us.getTheUser(moderator.email).subscribe((res) => {
         if (
-          res == undefined ||
-          (res != undefined && res.id == moderator.id)
+          res[0] == undefined ||
+          (res[0] != undefined && res[0].id == moderator.id)
         ) {
           this.us.updateUser(moderator.id, moderator).subscribe((result) => {
             this.ngOnInit();
@@ -141,7 +141,7 @@ export class AdminModeratorsComponent implements OnInit {
       });
     } else {
       this.us.getTheUser(moderator.email).subscribe((res) => {
-        if (res == undefined) {
+        if (res[0] == undefined) {
           const alpha = 'abcdefghijklmnopqrstuvwxyz';
           const calpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
           const num = '1234567890';

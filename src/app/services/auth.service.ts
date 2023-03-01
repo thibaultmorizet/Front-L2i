@@ -14,7 +14,7 @@ export class AuthService {
   }
 
   getTheUser(email: String | undefined) {
-    return this.http.get<User>(
+    return this.http.get<Array<User>>(
       'https://thibaultmorizet.fr/ws/users?email=' + email
     );
   }

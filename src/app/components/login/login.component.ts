@@ -129,13 +129,13 @@ export class LoginComponent implements OnInit {
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
       console.log(0, this.userLogin);
 
-      console.log(2, theUser);
+      console.log(2, theUser[0]);
 
-      if (theUser == undefined) {
+      if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
       } else if (
-        theUser.roles?.includes('ROLE_ADMIN') ||
-        theUser.roles?.includes('ROLE_MODERATOR')
+        theUser[0].roles?.includes('ROLE_ADMIN') ||
+        theUser[0].roles?.includes('ROLE_MODERATOR')
       ) {
         this.iziToast.error({
           message: this.translate.instant(
@@ -156,11 +156,11 @@ export class LoginComponent implements OnInit {
 
               this.storageCrypter.setItem(
                 'user',
-                JSON.stringify(theUser),
+                JSON.stringify(theUser[0]),
                 'session'
               );
 
-              this.connectedUser = theUser;
+              this.connectedUser = theUser[0];
               this.errorPassword = null;
               try {
                 this.translate.setDefaultLang(
@@ -196,7 +196,7 @@ export class LoginComponent implements OnInit {
   register() {
     this.as.getTheUser(this.userInscription.email).subscribe((res) => {
 
-      if (res == undefined) {
+      if (res[0] == undefined) {
         this.errorEmail = '';
         this.userInscription.language = 'en';
         this.us.register(this.userInscription).subscribe((resRegister) => {
@@ -226,13 +226,13 @@ export class LoginComponent implements OnInit {
     
     this.us.getTheUser(decode_token.email).subscribe((el) => {
       this.loginAfterRegister = true;
-console.log(9,el);
+console.log(9,el[0]);
 
-      if (el != undefined) {
-        if (el.token == decode_token.sub) {
-          this.userLogin.email = el.email;
-          this.userLogin.password = el.token;
-          this.userLogin.passwordConfirm = el.token;
+      if (el[0] != undefined) {
+        if (el[0].token == decode_token.sub) {
+          this.userLogin.email = el[0].email;
+          this.userLogin.password = el[0].token;
+          this.userLogin.passwordConfirm = el[0].token;
 
           this.login();
           this.userLogin = {};
@@ -265,11 +265,11 @@ console.log(9,el);
         this.us.getTheUser(this.socialUser.email).subscribe((el) => {
           this.loginAfterRegister = true;
 
-          if (el != undefined) {
-            if (el.token == data.id) {
-              this.userLogin.email = el.email;
-              this.userLogin.password = el.token;
-              this.userLogin.passwordConfirm = el.token;
+          if (el[0] != undefined) {
+            if (el[0].token == data.id) {
+              this.userLogin.email = el[0].email;
+              this.userLogin.password = el[0].token;
+              this.userLogin.passwordConfirm = el[0].token;
               this.login();
               this.userLogin = {};
             } else {
