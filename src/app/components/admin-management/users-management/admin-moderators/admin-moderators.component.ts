@@ -178,7 +178,7 @@ export class AdminModeratorsComponent implements OnInit {
           mailInfo.password = pass;
           this.as.sendNewPassword(mailInfo).subscribe((el) => {});
           this.us.register(moderator).subscribe((result) => {
-            this.as.getTheUser(moderator.email).subscribe((moderatorRes) => {
+            this.us.getTheUser(moderator.email).subscribe((moderatorRes) => {
               this.allModerators.push(moderator);
 
               this.ngOnInit();

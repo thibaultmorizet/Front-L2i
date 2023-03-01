@@ -13,11 +13,6 @@ export class AuthService {
     return this.http.post<{ token: string }>(this.url, user);
   }
 
-  getTheUser(email: String | undefined) {
-    return this.http.get<Array<User>>(
-      'https://thibaultmorizet.fr/ws/users?email=' + email
-    );
-  }
   sendNewPassword(mailInfo: object) {
     return this.http.post<{ token: string }>(
       'https://thibaultmorizet.fr/mail',

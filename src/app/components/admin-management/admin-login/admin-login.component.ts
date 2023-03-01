@@ -5,6 +5,7 @@ import { NgxIzitoastService } from 'ngx-izitoast';
 import { PrimeNGConfig } from 'primeng/api';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -26,6 +27,7 @@ export class AdminLoginComponent implements OnInit {
     private router: Router,
     private iziToast: NgxIzitoastService,
     private as: AuthService,
+    private us: UserService,
     private translate: TranslateService,
     private primengConfig: PrimeNGConfig
   ) {}
@@ -64,7 +66,7 @@ export class AdminLoginComponent implements OnInit {
   }
 
   login() {
-    this.as.getTheUser(this.adminLogin.email).subscribe((theUser) => {
+    this.us.getTheUser(this.adminLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
       } else if (!theUser[0].roles?.includes('ROLE_ADMIN')) {

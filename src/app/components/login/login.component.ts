@@ -126,7 +126,7 @@ export class LoginComponent implements OnInit {
   login() {
     console.log(1, this.userLogin);
 
-    this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
+    this.us.getTheUser(this.userLogin.email).subscribe((theUser) => {
       console.log(0, this.userLogin);
 
       console.log(2, theUser[0]);
@@ -194,7 +194,7 @@ export class LoginComponent implements OnInit {
     this.loginAfterRegister = false;
   }
   register() {
-    this.as.getTheUser(this.userInscription.email).subscribe((res) => {
+    this.us.getTheUser(this.userInscription.email).subscribe((res) => {
 
       if (res[0] == undefined) {
         this.errorEmail = '';

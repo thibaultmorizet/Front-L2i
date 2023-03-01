@@ -104,7 +104,7 @@ export class AdminAdminsComponent implements OnInit {
           mailInfo.password = pass;
           this.as.sendNewPassword(mailInfo).subscribe((el) => {});
           this.us.register(user).subscribe((result) => {
-            this.as.getTheUser(user.email).subscribe((userRes) => {
+            this.us.getTheUser(user.email).subscribe((userRes) => {
               this.allUsers.push(user);
 
               this.ngOnInit();
