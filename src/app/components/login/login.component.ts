@@ -195,6 +195,7 @@ export class LoginComponent implements OnInit {
   }
   register() {
     this.as.getTheUser(this.userInscription.email).subscribe((res) => {
+
       if (res == undefined) {
         this.errorEmail = '';
         this.userInscription.language = 'en';
@@ -221,8 +222,11 @@ export class LoginComponent implements OnInit {
   }
   signInWithGoogle(token: string): void {
     let decode_token: any = jwt_decode(token);
+    console.log(8,decode_token.email);
+    
     this.us.getTheUser(decode_token.email).subscribe((el) => {
       this.loginAfterRegister = true;
+console.log(9,el);
 
       if (el != undefined) {
         if (el.token == decode_token.sub) {
