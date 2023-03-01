@@ -125,9 +125,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.loginAfterRegister);
+    console.log(1,this.loginAfterRegister);
 
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
+      console.log(2,this.loginAfterRegister);
 
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
@@ -142,7 +143,7 @@ export class LoginComponent implements OnInit {
           position: 'topRight',
         });
       } else {
-        console.log(this.loginAfterRegister);
+        console.log(3,this.loginAfterRegister);
 
         if (
           theUser[0].token == '' ||
@@ -233,7 +234,7 @@ export class LoginComponent implements OnInit {
           this.userLogin.email = el[0].email;
           this.userLogin.password = el[0].token;
           this.userLogin.passwordConfirm = el[0].token;
-          console.log(this.loginAfterRegister);
+          console.log(0,this.loginAfterRegister);
           
           this.login();
           this.userLogin = {};
