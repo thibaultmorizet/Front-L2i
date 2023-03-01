@@ -127,7 +127,6 @@ export class LoginComponent implements OnInit {
     console.log(1, this.userLogin);
 
     this.as.getTheUser(this.userLogin.email).subscribe((theUser) => {
-      console.log(2, theUser);
       console.log(2, theUser[0]);
 
       if (theUser[0] == undefined) {
@@ -144,9 +143,11 @@ export class LoginComponent implements OnInit {
         });
       } else {
         this.errorEmail = null;
+        console.log(3, this.userLogin);
+
         this.as.login(this.userLogin).subscribe({
           next: (res) => {
-            console.log(4);
+            console.log(4,res);
 
             if (res.token != null) {
               this.storageCrypter.setItem('jeton', res.token, 'local');
