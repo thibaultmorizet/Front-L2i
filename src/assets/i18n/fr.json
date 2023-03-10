@@ -62,7 +62,7 @@
   },
   "admin_categories": {
     "manage_categories": "Gestion des catégories",
-    "total_categories_message": "Au total, il y a categoryLength} catégories.",
+    "total_categories_message": "Au total, il y a {categoryLength} catégories.",
     "category_details": "Détails de la catégorie",
     "confirm_delete_category_message": "Êtes-vous sûr de vouloir supprimer la catégorie : {name} ?",
     "confirm_group_delete_categories_message": "Voulez-vous vraiment supprimer les catégories sélectionnés ?",
