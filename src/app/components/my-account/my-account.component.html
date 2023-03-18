@@ -390,7 +390,7 @@
               <div>{{ "my_account.order_date" | translate }}</div>
               <div class="order-date">{{ getOrderDate(anOrder.date) }}</div>
             </div>
-            <div class="order-info-extract-to-pdf" (click)="downloadAsPDF();">
+            <div class="order-info-extract-to-invoice" (click)="downloadAsPDF(anOrder);">
               <i class="fa-regular fa-2x fa-file-pdf"></i>
             </div>
             <div class="order-info-id">

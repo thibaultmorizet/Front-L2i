@@ -404,7 +404,9 @@ export class MyAccountComponent implements OnInit {
     }
   }
 
-  downloadAsPDF() {
-  
+  downloadAsPDF(order: Order) {
+    this.os.getInvoice(order).subscribe((el) => {
+      console.log(el);
+    });
   }
 }

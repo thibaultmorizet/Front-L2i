@@ -17,7 +17,13 @@ export class OrderService {
   getUserOrders(user_id: number) {
     return this.http.get<Array<Order>>(this.url + '?user.id=' + user_id);
   }
-  setOrder(order: Order) {    
+  setOrder(order: Order) {
     return this.http.post<{ token: string }>(this.url, order);
+  }
+  getInvoice(order: Order) {
+    return this.http.post<{ token: string }>(
+      'https://thibaultmorizet.fr/generate_invoice',
+      order
+    );
   }
 }
