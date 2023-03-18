@@ -31,7 +31,7 @@ export class OrderService {
     return this.http.post<{ token: string }>(
       'https://thibaultmorizet.fr/generate_invoice',
       order,
-      { headers: headers }
+      { headers: headers, withCredentials: true }
     );
   }
 }
