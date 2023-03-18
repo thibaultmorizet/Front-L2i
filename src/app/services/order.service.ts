@@ -24,14 +24,13 @@ export class OrderService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': 'https://l2i-project.vercel.app',
-      'Access-Control-Allow-Methods': '*',
-      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Credentials': 'true',
     });
 
     return this.http.post<{ token: string }>(
       'https://thibaultmorizet.fr/generate_invoice',
       order,
-      { headers: headers, withCredentials: true }
+      { headers: headers }
     );
   }
 }
