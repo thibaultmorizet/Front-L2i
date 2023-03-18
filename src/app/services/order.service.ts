@@ -25,6 +25,8 @@ export class OrderService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': 'https://l2i-project.vercel.app',
       'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Method': '*',
     });
 
     return this.http.post<{ token: string }>(
