@@ -403,4 +403,8 @@ export class MyAccountComponent implements OnInit {
       return null;
     }
   }
+
+  downloadAsPDF() {
+  
+  }
 }

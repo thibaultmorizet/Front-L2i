@@ -19,7 +19,6 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 import {
   SocialLoginModule,
   SocialAuthServiceConfig,
-  GoogleLoginProvider,
   FacebookLoginProvider,
 } from 'angularx-social-login';
 import { MyAccountComponent } from './components/my-account/my-account.component';
