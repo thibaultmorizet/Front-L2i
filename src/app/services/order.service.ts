@@ -21,7 +21,10 @@ export class OrderService {
     return this.http.post<{ token: string }>(this.url, order);
   }
   getInvoice(order: Order) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
 
     return this.http.post<{ token: string }>(
       'https://thibaultmorizet.fr/generate_invoice',
