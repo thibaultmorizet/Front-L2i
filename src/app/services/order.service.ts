@@ -24,9 +24,8 @@ export class OrderService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'DELETE, POST, GET, OPTIONS',
-      'Access-Control-Allow-Headers':
-        'Content-Type, Authorization, X-Requested-With',
+      'Access-Control-Allow-Methods': '*',
+      'Access-Control-Allow-Headers': '*',
     });
 
     return this.http.post<{ token: string }>(
