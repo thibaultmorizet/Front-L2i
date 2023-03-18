@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Order } from '../interfaces/order';
 
@@ -21,9 +21,12 @@ export class OrderService {
     return this.http.post<{ token: string }>(this.url, order);
   }
   getInvoice(order: Order) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
     return this.http.post<{ token: string }>(
       'https://thibaultmorizet.fr/generate_invoice',
-      order
+      order,
+      { headers: headers }
     );
   }
 }
