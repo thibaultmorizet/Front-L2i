@@ -27,8 +27,7 @@ export class OrderService {
       "Access-Control-Allow-Credentials": "true",
       "Access-Control-Allow-Headers": "*",
       "Access-Control-Allow-Methods": "*",
-      "Access-Control-Max-Age": "*",
-      "Connection" : "keep-alive"
+      "Access-Control-Allow-Private-Network":"true"
     });
 
     return this.http.post<{ token: string }>(
