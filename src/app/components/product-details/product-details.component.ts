@@ -244,34 +244,34 @@ export class ProductDetailsComponent implements OnInit {
               ),
               position: 'topRight',
             });
-          } else {
-            res.number_ordered = productToOrder.number_ordered;
-
-            if (res.unitpriceht && res.number_ordered) {
-              res.totalpriceht = parseFloat(
-                (res.number_ordered * res.unitpriceht).toFixed(2)
-              );
-              if (res.taxe?.tva) {
-                res.totalpricettc = parseFloat(
-                  (
-                    res.number_ordered *
-                    (res.unitpriceht + (res.taxe.tva * res.unitpriceht) / 100)
-                  ).toFixed(2)
-                );
-              }
-            }
-
-            this.cart.push(res);
-            this.iziToast.success({
-              message: this.translate.instant('izitoast.product_add_to_cart'),
-              position: 'topRight',
-            });
-            this.storageCrypter.setItem(
-              'cart',
-              JSON.stringify(this.cart),
-              'local'
-            );
+            return;
           }
+          res.number_ordered = productToOrder.number_ordered;
+
+          if (res.unitpriceht && res.number_ordered) {
+            res.totalpriceht = parseFloat(
+              (res.number_ordered * res.unitpriceht).toFixed(2)
+            );
+            if (res.taxe?.tva) {
+              res.totalpricettc = parseFloat(
+                (
+                  res.number_ordered *
+                  (res.unitpriceht + (res.taxe.tva * res.unitpriceht) / 100)
+                ).toFixed(2)
+              );
+            }
+          }
+
+          this.cart.push(res);
+          this.iziToast.success({
+            message: this.translate.instant('izitoast.product_add_to_cart'),
+            position: 'topRight',
+          });
+          this.storageCrypter.setItem(
+            'cart',
+            JSON.stringify(this.cart),
+            'local'
+          );
         }
       });
     }
@@ -299,12 +299,10 @@ export class ProductDetailsComponent implements OnInit {
     if (unitpriceht != undefined) {
       if (tva != undefined) {
         return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
-      } else {
-        return unitpriceht.toFixed(2);
       }
-    } else {
-      return null;
+      return unitpriceht.toFixed(2);
     }
+    return null;
   }
 
   getCommentDate(createdAt: Date | undefined) {
@@ -322,28 +320,30 @@ export class ProductDetailsComponent implements OnInit {
           date: date.toLocaleDateString(),
           hours: date.getHours() + ':' + date.getMinutes(),
         });
-      } else if (time / msInDay >= 1) {
+      }
+      if (time / msInDay >= 1) {
         return this.translate.instant('product_details.days_ago', {
           count: (time / msInDay).toFixed(0),
         });
-      } else if (time / msInHour >= 1) {
+      }
+      if (time / msInHour >= 1) {
         return this.translate.instant('product_details.hours_ago', {
           count: (time / msInHour).toFixed(0),
         });
-      } else if (time / msInMinute >= 1) {
+      }
+      if (time / msInMinute >= 1) {
         return this.translate.instant('product_details.minutes_ago', {
           count: (time / msInMinute).toFixed(0),
         });
-      } else if (time / msInSecond >= 1) {
+      }
+      if (time / msInSecond >= 1) {
         return this.translate.instant('product_details.seconds_ago', {
           count: (time / msInSecond).toFixed(0),
         });
-      } else {
-        return '';
       }
-    } else {
       return '';
     }
+    return '';
   }
   confirmDeleteComment(id: number | undefined) {
     this.confirmationService.confirm({
@@ -378,15 +378,15 @@ export class ProductDetailsComponent implements OnInit {
             });
             this.deleteCommentButtonDisable = false;
           });
-        } else {
-          this.iziToast.error({
-            message: this.translate.instant(
-              'product_details.you_can_t_delete_this_comment'
-            ),
-            position: 'topRight',
-          });
-          this.deleteCommentButtonDisable = false;
+          return;
         }
+        this.iziToast.error({
+          message: this.translate.instant(
+            'product_details.you_can_t_delete_this_comment'
+          ),
+          position: 'topRight',
+        });
+        this.deleteCommentButtonDisable = false;
       }
     });
   }
@@ -403,20 +403,18 @@ export class ProductDetailsComponent implements OnInit {
 
         this.commentService.setComment(this.commentToSend).subscribe((el) => {
           if (typeof el == 'object') {
-            console.log(el);
-
             this.product.comments?.unshift(el);
             this.iziToast.success({
               message: this.translate.instant('product_details.comment_sent'),
               position: 'topRight',
             });
             this.commentToSend = {};
-          } else {
-            this.iziToast.error({
-              message: this.translate.instant('general.error'),
-              position: 'topRight',
-            });
+            return;
           }
+          this.iziToast.error({
+            message: this.translate.instant('general.error'),
+            position: 'topRight',
+          });
         });
       }
     }

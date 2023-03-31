@@ -60,10 +60,11 @@ export class ModeratorAccountComponent implements OnInit {
     } catch (error) {
       this.connectedModerator = {};
     }
-    if (this.connectedModerator?.id && this.connectedModerator.forceToUpdatePassword) {
+    if (
+      this.connectedModerator?.id &&
+      this.connectedModerator.forceToUpdatePassword
+    ) {
       this.forceToUpdatePassword = true;
-    } else {
-      this.forceToUpdatePassword = false;
     }
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
@@ -83,7 +84,9 @@ export class ModeratorAccountComponent implements OnInit {
         delete this.newModeratorData.password;
         delete this.newModeratorData.passwordConfirm;
       }
-      if (this.newModeratorData.password == this.newModeratorData.passwordConfirm) {
+      if (
+        this.newModeratorData.password == this.newModeratorData.passwordConfirm
+      ) {
         this.errorPassword = null;
         this.newModeratorData.forceToUpdatePassword = false;
         this.us
@@ -105,9 +108,9 @@ export class ModeratorAccountComponent implements OnInit {
               'session'
             );
           });
-      } else {
-        this.errorPassword = 'The passwords must be identical';
+        return;
       }
+      this.errorPassword = 'The passwords must be identical';
     }
   }
 
@@ -128,11 +131,11 @@ export class ModeratorAccountComponent implements OnInit {
 
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
-    if (this.passwordIsClear) {
+    if (this.passwordIsClear === true) {
       this.passwordType = 'text';
-    } else {
-      this.passwordType = 'password';
+      return;
     }
+    this.passwordType = 'password';
   }
 
   checkUpdatePasswordPattern() {
@@ -145,19 +148,21 @@ export class ModeratorAccountComponent implements OnInit {
     if (passwordPattern.status == 'INVALID') {
       this.errorPassword =
         'The password must contain at least 8 characters, one capital letter, one lowercase letter, one special character and one numeric character';
-    } else {
-      this.errorPassword = null;
+      return;
     }
+    this.errorPassword = null;
   }
 
   checkUpdatePasswordConfirmPattern() {
-    if (this.newModeratorData.password != this.newModeratorData.passwordConfirm) {
+    if (
+      this.newModeratorData.password != this.newModeratorData.passwordConfirm
+    ) {
       this.errorPassword = 'The passwords must be identical';
       this.errorPasswordConfirm = 'The passwords must be identical';
-    } else {
-      this.errorPasswordConfirm = null;
-      this.checkUpdatePasswordPattern();
+      return;
     }
+    this.errorPasswordConfirm = null;
+    this.checkUpdatePasswordPattern();
   }
   confirmDeleteAccount() {
     this.confirmationService.confirm({

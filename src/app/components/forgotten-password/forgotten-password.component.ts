@@ -50,49 +50,40 @@ export class ForgottenPasswordComponent implements OnInit {
           message: "This account doesn't exist",
           position: 'topRight',
         });
-      } else {
-        const alpha = 'abcdefghijklmnopqrstuvwxyz';
-        const calpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const num = '1234567890';
-        const specials = ',.!@#$%^&*';
-        const options = [
-          alpha,
-          alpha,
-          alpha,
-          calpha,
-          calpha,
-          num,
-          num,
-          specials,
-        ];
-        let mailInfo = {
-          userMail: this.emailToReset,
-          subject: 'Votre nouveau mot de passe',
-          html: 'reset_password.twig.html',
-          password: '',
-        };
-        let opt, choose;
-        let pass = '';
-        for (let i = 0; i < 8; i++) {
-          opt = Math.floor(Math.random() * options.length);
-          choose = Math.floor(Math.random() * options[opt].length);
-          pass = pass + options[opt][choose];
-          options.splice(opt, 1);
-        }
-        mailInfo.password = pass;
-        user[0].password = pass;
-        this.as.sendNewPassword(mailInfo).subscribe((el) => {
-          user[0].forceToUpdatePassword = true;
-          this.us.updateUser(user[0].id, user[0]).subscribe();
-          this.emailToReset = '';
-          this.iziToast.success({
-            message:
-              'Your new password has just been sent to you by email, check your spam.',
-            position: 'topRight',
-          });
-          this.router.navigateByUrl('/login');
-        });
+        return;
       }
+      const alpha = 'abcdefghijklmnopqrstuvwxyz';
+      const calpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const num = '1234567890';
+      const specials = ',.!@#$%^&*';
+      const options = [alpha, alpha, alpha, calpha, calpha, num, num, specials];
+      let mailInfo = {
+        userMail: this.emailToReset,
+        subject: 'Votre nouveau mot de passe',
+        html: 'reset_password.twig.html',
+        password: '',
+      };
+      let opt, choose;
+      let pass = '';
+      for (let i = 0; i < 8; i++) {
+        opt = Math.floor(Math.random() * options.length);
+        choose = Math.floor(Math.random() * options[opt].length);
+        pass = pass + options[opt][choose];
+        options.splice(opt, 1);
+      }
+      mailInfo.password = pass;
+      user[0].password = pass;
+      this.as.sendNewPassword(mailInfo).subscribe((el) => {
+        user[0].forceToUpdatePassword = true;
+        this.us.updateUser(user[0].id, user[0]).subscribe();
+        this.emailToReset = '';
+        this.iziToast.success({
+          message:
+            'Your new password has just been sent to you by email, check your spam.',
+          position: 'topRight',
+        });
+        this.router.navigateByUrl('/login');
+      });
     });
   }
 }

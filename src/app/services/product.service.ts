@@ -21,7 +21,8 @@ export class ProductService {
   getAllProducts(inStock: boolean) {
     if (inStock) {
       this.inStockString = '?stock%5Bgt%5D=0';
-    } else {
+    }
+    if (!inStock) {
       this.inStockString = '?stock%5Blte%5D=0';
     }
     return this.http.get<Array<Product>>(this.url + this.inStockString);
@@ -59,10 +60,14 @@ export class ProductService {
     }
     if (inStock == null) {
       this.inStockString = '';
-    } else if (inStock) {
-      this.inStockString = '&stock%5Bgt%5D=0';
-    } else {
-      this.inStockString = '&stock%5Blte%5D=0';
+    }
+    if (inStock != null) {
+      if (inStock) {
+        this.inStockString = '&stock%5Bgt%5D=0';
+      }
+      if (!inStock) {
+        this.inStockString = '&stock%5Blte%5D=0';
+      }
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
@@ -99,7 +104,8 @@ export class ProductService {
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
-    } else {
+    }
+    if (!inStock) {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Product>>(
@@ -141,7 +147,8 @@ export class ProductService {
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
-    } else {
+    }
+    if (!inStock) {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Product>>(
@@ -158,7 +165,7 @@ export class ProductService {
     return this.http.put<{ token: string }>(this.url + '/' + id, product);
   }
 
-  createProduct(product: Product) {    
+  createProduct(product: Product) {
     return this.http.post<Product>(this.url, product);
   }
 
@@ -171,9 +178,8 @@ export class ProductService {
   updateProductStock(id: number | undefined, product: Product) {
     if (product.stock && product.stock >= 0) {
       return this.http.put<{ token: string }>(this.url + '/' + id, product);
-    } else {
-      return false;
     }
+    return false;
   }
 
   deleteTheProduct(id: number | undefined) {

@@ -185,7 +185,9 @@ export class HomeComponent implements OnInit {
                   }
                 }
                 this.iziToast.success({
-                  message: this.translate.instant('izitoast.product_add_to_cart'),
+                  message: this.translate.instant(
+                    'izitoast.product_add_to_cart'
+                  ),
                   position: 'topRight',
                 });
                 this.storageCrypter.setItem(
@@ -212,33 +214,33 @@ export class HomeComponent implements OnInit {
               ),
               position: 'topRight',
             });
-          } else {
-            res.number_ordered = 1;
-            if (res.unitpriceht) {
-              res.totalpriceht = parseFloat(
-                (res.number_ordered * res.unitpriceht).toFixed(2)
-              );
-              if (res.taxe?.tva) {
-                res.totalpricettc = parseFloat(
-                  (
-                    res.number_ordered *
-                    (res.unitpriceht + (res.taxe.tva * res.unitpriceht) / 100)
-                  ).toFixed(2)
-                );
-              }
-            }
-
-            this.cart.push(res);
-            this.iziToast.success({
-              message: this.translate.instant('izitoast.product_add_to_cart'),
-              position: 'topRight',
-            });
-            this.storageCrypter.setItem(
-              'cart',
-              JSON.stringify(this.cart),
-              'local'
-            );
+            return;
           }
+          res.number_ordered = 1;
+          if (res.unitpriceht) {
+            res.totalpriceht = parseFloat(
+              (res.number_ordered * res.unitpriceht).toFixed(2)
+            );
+            if (res.taxe?.tva) {
+              res.totalpricettc = parseFloat(
+                (
+                  res.number_ordered *
+                  (res.unitpriceht + (res.taxe.tva * res.unitpriceht) / 100)
+                ).toFixed(2)
+              );
+            }
+          }
+
+          this.cart.push(res);
+          this.iziToast.success({
+            message: this.translate.instant('izitoast.product_add_to_cart'),
+            position: 'topRight',
+          });
+          this.storageCrypter.setItem(
+            'cart',
+            JSON.stringify(this.cart),
+            'local'
+          );
         }
       });
     }
@@ -250,11 +252,9 @@ export class HomeComponent implements OnInit {
     if (unitpriceht != undefined) {
       if (tva != undefined) {
         return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
-      } else {
-        return unitpriceht.toFixed(2);
       }
-    } else {
-      return null;
+      return unitpriceht.toFixed(2);
     }
+    return null;
   }
 }

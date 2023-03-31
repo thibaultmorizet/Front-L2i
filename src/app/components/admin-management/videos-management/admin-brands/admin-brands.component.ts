@@ -18,7 +18,6 @@ import StorageCrypter from 'storage-crypter';
   encapsulation: ViewEncapsulation.None,
   providers: [ConfirmationService, MessageService],
 })
-
 export class AdminBrandsComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   brandDialog: boolean = false;
@@ -97,23 +96,21 @@ export class AdminBrandsComponent implements OnInit {
       dismissableMask: true,
       accept: () => {
         if (brand.videos && brand.videos.length == 0) {
-          this.allBrands = this.allBrands.filter(
-            (val) => val.id !== brand.id
-          );
+          this.allBrands = this.allBrands.filter((val) => val.id !== brand.id);
           this.brandService.deleteTheBrand(brand.id).subscribe((el) => {});
           this.brand = {};
           this.iziToast.success({
             message: this.translate.instant('admin_brands.brand_deleted'),
             position: 'topRight',
           });
-        } else {
-          this.iziToast.warning({
-            message: this.translate.instant(
-              'admin_brands.you_can_t_delete_a_brand_with_products'
-            ),
-            position: 'topRight',
-          });
+          return;
         }
+        this.iziToast.warning({
+          message: this.translate.instant(
+            'admin_brands.you_can_t_delete_a_brand_with_products'
+          ),
+          position: 'topRight',
+        });
       },
     });
   }
@@ -127,25 +124,29 @@ export class AdminBrandsComponent implements OnInit {
     this.submitted = true;
 
     if (this.brand.id) {
-      this.brandService.updateBrand(this.brand.id, this.brand).subscribe((result) => {
-        this.brand = {};
-        this.ngOnInit();
-        this.iziToast.success({
-          message: this.translate.instant('admin_brands.brand_updated'),
-          position: 'topRight',
-        });
-      });
-    } else {
-      this.allBrands.push(this.brand);
-      this.brandService.createBrand(this.brand).subscribe((res) => {
-        this.brandService.updateBrand(res.id, this.brand).subscribe((result) => {
+      this.brandService
+        .updateBrand(this.brand.id, this.brand)
+        .subscribe((result) => {
           this.brand = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: this.translate.instant('admin_brands.brand_created'),
+            message: this.translate.instant('admin_brands.brand_updated'),
             position: 'topRight',
           });
         });
+    } else {
+      this.allBrands.push(this.brand);
+      this.brandService.createBrand(this.brand).subscribe((res) => {
+        this.brandService
+          .updateBrand(res.id, this.brand)
+          .subscribe((result) => {
+            this.brand = {};
+            this.ngOnInit();
+            this.iziToast.success({
+              message: this.translate.instant('admin_brands.brand_created'),
+              position: 'topRight',
+            });
+          });
       });
     }
 

@@ -58,63 +58,66 @@ export class AdminLoginComponent implements OnInit {
 
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
-    if (this.passwordIsClear) {
+    if (this.passwordIsClear === true) {
       this.passwordType = 'text';
-    } else {
-      this.passwordType = 'password';
+      return;
     }
+    this.passwordType = 'password';
   }
 
   login() {
     this.us.getTheUser(this.adminLogin.email).subscribe((theUser) => {
       if (theUser[0] == undefined) {
         this.errorEmail = 'We did not find an account with this email address';
-      } else if (!theUser[0].roles?.includes('ROLE_ADMIN')) {
+        return;
+      }
+      if (!theUser[0].roles?.includes('ROLE_ADMIN')) {
         this.iziToast.error({
           message: this.translate.instant(
             'izitoast.you_can_t_connect_here_as_user_or_moderator'
           ),
           position: 'topRight',
         });
-      } else {
-        this.errorEmail = null;
-        this.as.login(this.adminLogin).subscribe({
-          next: (res) => {
-            if (res.token != null) {
-              this.storageCrypter.setItem('jeton', res.token, 'local');
-
-              this.storageCrypter.setItem(
-                'adminUser',
-                JSON.stringify(theUser[0]),
-                'session'
-              );
-
-              this.connectedAdmin = theUser[0];
-              this.errorPassword = null;
-              try {
-                this.translate.setDefaultLang(
-                  this.connectedAdmin.language != undefined
-                    ? this.connectedAdmin.language
-                    : ''
-                );
-              } catch (error) {
-                this.translate.setDefaultLang('en');
-              }
-              this.adminLogin = {};
-              this.iziToast.success({
-                message: this.translate.instant('izitoast.successful_login'),
-                position: 'topRight',
-              });
-              setTimeout(() => {
-                this.router.navigateByUrl('/admin/home');
-              }, 250);
-            }
-          },
-          error: (res) => {
-            this.errorPassword = 'Incorrect password';
-          },
-        });
+        return;
       }
+
+      this.errorEmail = null;
+      this.as.login(this.adminLogin).subscribe({
+        next: (res) => {
+          if (res.token != null) {
+            this.storageCrypter.setItem('jeton', res.token, 'local');
+
+            this.storageCrypter.setItem(
+              'adminUser',
+              JSON.stringify(theUser[0]),
+              'session'
+            );
+
+            this.connectedAdmin = theUser[0];
+            this.errorPassword = null;
+            try {
+              this.translate.setDefaultLang(
+                this.connectedAdmin.language != undefined
+                  ? this.connectedAdmin.language
+                  : ''
+              );
+            } catch (error) {
+              this.translate.setDefaultLang('en');
+            }
+            this.adminLogin = {};
+            this.iziToast.success({
+              message: this.translate.instant('izitoast.successful_login'),
+              position: 'topRight',
+            });
+            setTimeout(() => {
+              this.router.navigateByUrl('/admin/home');
+            }, 250);
+          }
+        },
+        error: (res) => {
+          this.errorPassword = 'Incorrect password';
+        },
+      });
     });
   }
 }

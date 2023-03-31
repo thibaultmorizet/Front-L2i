@@ -343,11 +343,9 @@ export class AdminBooksComponent implements OnInit {
     if (unitpriceht != undefined) {
       if (tva != undefined) {
         return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
-      } else {
-        return unitpriceht.toFixed(2);
       }
-    } else {
-      return null;
+      return unitpriceht.toFixed(2);
     }
+    return null;
   }
 }

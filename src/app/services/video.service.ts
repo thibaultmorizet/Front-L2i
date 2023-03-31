@@ -23,7 +23,8 @@ export class VideoService {
   getAllVideos(inStock: boolean) {
     if (inStock) {
       this.inStockString = '?stock%5Bgt%5D=0';
-    } else {
+    }
+    if (!inStock) {
       this.inStockString = '?stock%5Blte%5D=0';
     }
     return this.http.get<Array<Video>>(this.url + this.inStockString);
@@ -65,7 +66,8 @@ export class VideoService {
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
-    } else {
+    }
+    if (!inStock) {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Video>>(
@@ -112,7 +114,8 @@ export class VideoService {
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
-    } else {
+    }
+    if (!inStock) {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Video>>(
@@ -148,10 +151,14 @@ export class VideoService {
     }
     if (inStock == null) {
       this.inStockString = '';
-    } else if (inStock) {
-      this.inStockString = '&stock%5Bgt%5D=0';
-    } else {
-      this.inStockString = '&stock%5Blte%5D=0';
+    }
+    if (inStock != null) {
+      if (inStock) {
+        this.inStockString = '&stock%5Bgt%5D=0';
+      }
+      if (!inStock) {
+        this.inStockString = '&stock%5Blte%5D=0';
+      }
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
@@ -170,5 +177,4 @@ export class VideoService {
   deleteTheVideo(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
   }
-
 }

@@ -73,7 +73,9 @@ export class AdminCategoriesComponent implements OnInit {
         });
         this.selectedCategories = [];
         this.iziToast.success({
-          message: this.translate.instant('admin_categories.categories_deleted'),
+          message: this.translate.instant(
+            'admin_categories.categories_deleted'
+          ),
           position: 'topRight',
         });
       },
@@ -96,21 +98,26 @@ export class AdminCategoriesComponent implements OnInit {
       dismissableMask: true,
       accept: () => {
         if (category.books && category.books.length == 0) {
-          this.allCategories = this.allCategories.filter((val) => val.id !== category.id);
+          this.allCategories = this.allCategories.filter(
+            (val) => val.id !== category.id
+          );
           this.cs.deleteTheCategory(category.id).subscribe((el) => {});
           this.category = {};
           this.iziToast.success({
-            message: this.translate.instant('admin_categories.category_deleted'),
-            position: 'topRight',
-          });
-        } else {
-          this.iziToast.warning({
             message: this.translate.instant(
-              'admin_categories.you_can_t_delete_a_category_with_products'
+              'admin_categories.category_deleted'
             ),
             position: 'topRight',
           });
+          return;
         }
+
+        this.iziToast.warning({
+          message: this.translate.instant(
+            'admin_categories.you_can_t_delete_a_category_with_products'
+          ),
+          position: 'topRight',
+        });
       },
     });
   }
@@ -124,14 +131,18 @@ export class AdminCategoriesComponent implements OnInit {
     this.submitted = true;
 
     if (this.category.id) {
-      this.cs.updateCategory(this.category.id, this.category).subscribe((result) => {
-        this.category = {};
-        this.ngOnInit();
-        this.iziToast.success({
-          message: this.translate.instant('admin_categories.category_updated'),
-          position: 'topRight',
+      this.cs
+        .updateCategory(this.category.id, this.category)
+        .subscribe((result) => {
+          this.category = {};
+          this.ngOnInit();
+          this.iziToast.success({
+            message: this.translate.instant(
+              'admin_categories.category_updated'
+            ),
+            position: 'topRight',
+          });
         });
-      });
     } else {
       this.allCategories.push(this.category);
       this.cs.createCategory(this.category).subscribe((res) => {
@@ -139,7 +150,9 @@ export class AdminCategoriesComponent implements OnInit {
           this.category = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: this.translate.instant('admin_categories.category_created'),
+            message: this.translate.instant(
+              'admin_categories.category_created'
+            ),
             position: 'topRight',
           });
         });

@@ -91,7 +91,7 @@ export class AdminAuhtorsComponent implements OnInit {
     this.confirmationService.confirm({
       message: this.translate.instant(
         'admin_authors.confirm_delete_author_message',
-        { firstname: author.firstname,lastname: author.lastname }
+        { firstname: author.firstname, lastname: author.lastname }
       ),
       header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
@@ -107,14 +107,14 @@ export class AdminAuhtorsComponent implements OnInit {
             message: this.translate.instant('admin_authors.author_deleted'),
             position: 'topRight',
           });
-        } else {
-          this.iziToast.warning({
-            message: this.translate.instant(
-              'admin_authors.you_can_t_delete_a_author_with_products'
-            ),
-            position: 'topRight',
-          });
+          return;
         }
+        this.iziToast.warning({
+          message: this.translate.instant(
+            'admin_authors.you_can_t_delete_a_author_with_products'
+          ),
+          position: 'topRight',
+        });
       },
     });
   }

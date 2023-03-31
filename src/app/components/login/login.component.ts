@@ -227,19 +227,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
           if (this.loginAfterRegister) {
             this.login();
-          } else {
-            this.iziToast.success({
-              message: this.translate.instant(
-                'izitoast.successful_registration'
-              ),
-              position: 'topRight',
-            });
-            this.router.navigateByUrl('/home');
+            return;
           }
+          this.iziToast.success({
+            message: this.translate.instant('izitoast.successful_registration'),
+            position: 'topRight',
+          });
+          this.router.navigateByUrl('/home');
         });
-      } else {
-        this.errorEmail = 'This email has already been registered';
+        return;
       }
+      this.errorEmail = 'This email has already been registered';
     });
   }
   signInWithGoogle(token: string): void {
@@ -255,7 +253,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.userLogin.password = el[0].token;
           this.userLogin.passwordConfirm = el[0].token;
           this.us.getTheUser(this.userLogin.email).subscribe((theUser) => {
-
             this.storageCrypter.setItem(
               'user',
               JSON.stringify(theUser[0]),
@@ -263,7 +260,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             );
 
             this.connectedUser = theUser[0];
-            
+
             try {
               this.translate.setDefaultLang(
                 this.connectedUser.language != undefined
@@ -276,29 +273,28 @@ export class LoginComponent implements OnInit, AfterViewInit {
           });
           this.login();
           this.userLogin = {};
-        } else {
-          this.loginAfterRegister = false;
-          this.connectWithGoogle = false;
-          this.iziToast.success({
-            message: this.translate.instant(
-              'general.this_email_is_already_use'
-            ),
-            position: 'topRight',
-          });
+          return;
         }
-      } else {
-        this.userInscription = {};
-        this.userInscription.email = decode_token.email;
-        this.userInscription.lastname = decode_token.family_name;
-        this.userInscription.firstname = decode_token.given_name;
-        this.userInscription.password = decode_token.sub;
-        this.userInscription.token = decode_token.sub;
+        this.loginAfterRegister = false;
+        this.connectWithGoogle = false;
+        this.iziToast.success({
+          message: this.translate.instant('general.this_email_is_already_use'),
+          position: 'topRight',
+        });
 
-        this.userLogin.email = decode_token.email;
-        this.userLogin.password = decode_token.sub;
-
-        this.register();
+        return;
       }
+      this.userInscription = {};
+      this.userInscription.email = decode_token.email;
+      this.userInscription.lastname = decode_token.family_name;
+      this.userInscription.firstname = decode_token.given_name;
+      this.userInscription.password = decode_token.sub;
+      this.userInscription.token = decode_token.sub;
+
+      this.userLogin.email = decode_token.email;
+      this.userLogin.password = decode_token.sub;
+
+      this.register();
     });
   }
 
@@ -315,27 +311,27 @@ export class LoginComponent implements OnInit, AfterViewInit {
               this.userLogin.passwordConfirm = el[0].token;
               this.login();
               this.userLogin = {};
-            } else {
-              this.loginAfterRegister = false;
-              this.authService.signOut();
-              this.iziToast.success({
-                message: this.translate.instant(
-                  'general.this_email_is_already_use'
-                ),
-                position: 'topRight',
-              });
+              return;
             }
-          } else {
-            this.userInscription = {};
-            this.userInscription.email = this.socialUser.email;
-            this.userInscription.lastname = this.socialUser.lastName;
-            this.userInscription.firstname = this.socialUser.firstName;
-            this.userInscription.password = this.socialUser.id;
-            this.userInscription.token = this.socialUser.id;
-            this.userLogin.email = this.socialUser.email;
-            this.userLogin.password = this.socialUser.id;
-            this.register();
+            this.loginAfterRegister = false;
+            this.authService.signOut();
+            this.iziToast.success({
+              message: this.translate.instant(
+                'general.this_email_is_already_use'
+              ),
+              position: 'topRight',
+            });
+            return;
           }
+          this.userInscription = {};
+          this.userInscription.email = this.socialUser.email;
+          this.userInscription.lastname = this.socialUser.lastName;
+          this.userInscription.firstname = this.socialUser.firstName;
+          this.userInscription.password = this.socialUser.id;
+          this.userInscription.token = this.socialUser.id;
+          this.userLogin.email = this.socialUser.email;
+          this.userLogin.password = this.socialUser.id;
+          this.register();
         });
       }
     });
@@ -352,11 +348,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
-    if (this.passwordIsClear) {
+    if (this.passwordIsClear === true) {
       this.passwordType = 'text';
-    } else {
-      this.passwordType = 'password';
+      return;
     }
+    this.passwordType = 'password';
   }
   checkLastnamePattern() {
     let lastnamePattern = new FormControl(
@@ -366,9 +362,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (lastnamePattern.status == 'INVALID') {
       this.errorLastname =
         'The lastname must contain at least three characters';
-    } else {
-      this.errorLastname = null;
+      return;
     }
+    this.errorLastname = null;
   }
 
   checkFirstnamePattern() {
@@ -379,9 +375,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (firstnamePattern.status == 'INVALID') {
       this.errorFirstname =
         'The firstname must contain at least three characters';
-    } else {
-      this.errorFirstname = null;
+      return;
     }
+    this.errorFirstname = null;
   }
 
   checkEmailPattern() {
@@ -391,9 +387,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     );
     if (emailPattern.status == 'INVALID') {
       this.errorEmail = "The Email isn't valid";
-    } else {
-      this.errorEmail = null;
+      return;
     }
+    this.errorEmail = null;
   }
 
   checkPasswordPattern() {
@@ -406,18 +402,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (passwordPattern.status == 'INVALID') {
       this.errorPassword =
         'The password must contain at least 8 characters, one capital letter, one lowercase letter, one special character and one numeric character';
-    } else {
-      this.errorPassword = null;
+      return;
     }
+    this.errorPassword = null;
   }
 
   checkPasswordConfirmPattern() {
     if (this.userInscription.password != this.userInscription.passwordConfirm) {
       this.errorPassword = 'The passwords must be identical';
       this.errorPasswordConfirm = 'The passwords must be identical';
-    } else {
-      this.errorPasswordConfirm = null;
-      this.checkPasswordPattern();
+      return;
     }
+    this.errorPasswordConfirm = null;
+    this.checkPasswordPattern();
   }
 }

@@ -102,19 +102,15 @@ export class ModeratorCommentsComponent implements OnInit {
         date: date.toLocaleDateString(),
         hours: date.getHours() + ':' + date.getMinutes(),
       });
-    } else {
-      return '';
     }
+    return '';
   }
   rejectComment(comment: Comment) {
     if (comment.id && comment.commentstatut) {
       this.confirmationService.confirm({
-        message: this.translate.instant(
-          'comments.confirm_reject_comment',
-          {
-            text: comment.text,
-          }
-        ),
+        message: this.translate.instant('comments.confirm_reject_comment', {
+          text: comment.text,
+        }),
         header: this.translate.instant('general.confirm'),
         icon: 'pi pi-exclamation-triangle',
         dismissableMask: true,
@@ -125,32 +121,25 @@ export class ModeratorCommentsComponent implements OnInit {
             .subscribe((el) => {
               this.allComments.splice(this.allComments.indexOf(comment), 1);
               this.iziToast.success({
-                message: this.translate.instant(
-                  'comments.comment_rejected'
-                ),
+                message: this.translate.instant('comments.comment_rejected'),
                 position: 'topRight',
               });
             });
         },
       });
-    } else {
-      this.iziToast.error({
-        message: this.translate.instant(
-          'comments.comment_not_rejected'
-        ),
-        position: 'topRight',
-      });
+      return;
     }
+    this.iziToast.error({
+      message: this.translate.instant('comments.comment_not_rejected'),
+      position: 'topRight',
+    });
   }
   validateComment(comment: Comment) {
     if (comment.id && comment.commentstatut) {
       this.confirmationService.confirm({
-        message: this.translate.instant(
-          'comments.confirm_validate_comment',
-          {
-            text: comment.text,
-          }
-        ),
+        message: this.translate.instant('comments.confirm_validate_comment', {
+          text: comment.text,
+        }),
         header: this.translate.instant('general.confirm'),
         icon: 'pi pi-exclamation-triangle',
         dismissableMask: true,
@@ -161,21 +150,17 @@ export class ModeratorCommentsComponent implements OnInit {
             .subscribe((el) => {
               this.allComments.splice(this.allComments.indexOf(comment), 1);
               this.iziToast.success({
-                message: this.translate.instant(
-                  'comments.comment_validated'
-                ),
+                message: this.translate.instant('comments.comment_validated'),
                 position: 'topRight',
               });
             });
         },
       });
-    } else {
-      this.iziToast.error({
-        message: this.translate.instant(
-          'comments.comment_not_validated'
-        ),
-        position: 'topRight',
-      });
+      return;
     }
+    this.iziToast.error({
+      message: this.translate.instant('comments.comment_not_validated'),
+      position: 'topRight',
+    });
   }
 }

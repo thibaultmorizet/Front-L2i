@@ -12,7 +12,8 @@ import StorageCrypter from 'storage-crypter';
 })
 export class AdminFooterComponent implements OnInit {
   path: string = '';
-  flagimg: string = 'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
+  flagimg: string =
+    'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
   language: string = 'en';
   storageCrypter = new StorageCrypter('Secret');
   connectedAdmin: User = {};
@@ -43,7 +44,8 @@ export class AdminFooterComponent implements OnInit {
       if (this.language == '') {
         this.language = 'en';
         this.translate.setDefaultLang('en');
-      } else {
+      }
+      if (this.language != '') {
         this.translate.setDefaultLang(this.language);
       }
     }
@@ -56,15 +58,16 @@ export class AdminFooterComponent implements OnInit {
   }
   setLanguage() {
     if (this.language == 'fr') {
-      this.flagimg = 'https://www.thibaultmorizet.fr/assets/flag/frenchFlag.png';
+      this.flagimg =
+        'https://www.thibaultmorizet.fr/assets/flag/frenchFlag.png';
       this.translate.setDefaultLang(this.language);
       this.translate.use(this.language);
-    } else {
-      this.language = 'en';
-      this.flagimg = 'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
-      this.translate.setDefaultLang(this.language);
-      this.translate.use(this.language);
+      return;
     }
+    this.language = 'en';
+    this.flagimg = 'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
+    this.translate.setDefaultLang(this.language);
+    this.translate.use(this.language);
   }
   changeLanguage() {
     if (this.language == 'en') {
@@ -73,7 +76,8 @@ export class AdminFooterComponent implements OnInit {
       if (this.connectedAdmin.id != undefined) {
         this.connectedAdmin.language = this.language;
       }
-    } else {
+    }
+    if (this.language == 'fr') {
       this.language = 'en';
 
       this.setLanguage();
@@ -92,8 +96,8 @@ export class AdminFooterComponent implements OnInit {
             'session'
           );
         });
-    } else {
-      this.storageCrypter.setItem('language', this.language, 'session');
+      return;
     }
+    this.storageCrypter.setItem('language', this.language, 'session');
   }
 }

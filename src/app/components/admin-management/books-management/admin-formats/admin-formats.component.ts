@@ -105,14 +105,14 @@ export class AdminFormatsComponent implements OnInit {
             message: this.translate.instant('admin_formats.format_deleted'),
             position: 'topRight',
           });
-        } else {
-          this.iziToast.warning({
-            message: this.translate.instant(
-              'admin_formats.you_can_t_delete_a_format_with_products'
-            ),
-            position: 'topRight',
-          });
+          return;
         }
+        this.iziToast.warning({
+          message: this.translate.instant(
+            'admin_formats.you_can_t_delete_a_format_with_products'
+          ),
+          position: 'topRight',
+        });
       },
     });
   }

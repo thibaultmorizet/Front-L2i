@@ -12,7 +12,8 @@ import StorageCrypter from 'storage-crypter';
 })
 export class ModeratorFooterComponent implements OnInit {
   path: string = '';
-  flagimg: string = 'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
+  flagimg: string =
+    'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
   language: string = 'en';
   storageCrypter = new StorageCrypter('Secret');
   connectedModerator: User = {};
@@ -33,7 +34,8 @@ export class ModeratorFooterComponent implements OnInit {
     }
     try {
       this.translate.setDefaultLang(
-        JSON.parse(this.storageCrypter.getItem('moderatorUser', 'session')).language
+        JSON.parse(this.storageCrypter.getItem('moderatorUser', 'session'))
+          .language
       );
       this.language = this.translate.getDefaultLang();
     } catch (error) {
@@ -43,7 +45,8 @@ export class ModeratorFooterComponent implements OnInit {
       if (this.language == '') {
         this.language = 'en';
         this.translate.setDefaultLang('en');
-      } else {
+      }
+      if (this.language != '') {
         this.translate.setDefaultLang(this.language);
       }
     }
@@ -56,15 +59,16 @@ export class ModeratorFooterComponent implements OnInit {
   }
   setLanguage() {
     if (this.language == 'fr') {
-      this.flagimg = 'https://www.thibaultmorizet.fr/assets/flag/frenchFlag.png';
+      this.flagimg =
+        'https://www.thibaultmorizet.fr/assets/flag/frenchFlag.png';
       this.translate.setDefaultLang(this.language);
       this.translate.use(this.language);
-    } else {
-      this.language = 'en';
-      this.flagimg = 'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
-      this.translate.setDefaultLang(this.language);
-      this.translate.use(this.language);
+      return;
     }
+    this.language = 'en';
+    this.flagimg = 'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
+    this.translate.setDefaultLang(this.language);
+    this.translate.use(this.language);
   }
   changeLanguage() {
     if (this.language == 'en') {
@@ -73,7 +77,8 @@ export class ModeratorFooterComponent implements OnInit {
       if (this.connectedModerator.id != undefined) {
         this.connectedModerator.language = this.language;
       }
-    } else {
+    }
+    if (this.language == 'fr') {
       this.language = 'en';
 
       this.setLanguage();
@@ -92,8 +97,8 @@ export class ModeratorFooterComponent implements OnInit {
             'session'
           );
         });
-    } else {
-      this.storageCrypter.setItem('language', this.language, 'session');
+      return;
     }
+    this.storageCrypter.setItem('language', this.language, 'session');
   }
 }

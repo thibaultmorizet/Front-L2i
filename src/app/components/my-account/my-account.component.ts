@@ -72,9 +72,7 @@ export class MyAccountComponent implements OnInit {
     }
     if (this.connectedUser?.id && this.connectedUser.forceToUpdatePassword) {
       this.forceToUpdatePassword = true;
-    } else {
-      this.forceToUpdatePassword = false;
-    }
+    } 
     if (this.connectedUser.id) {
       try {
         if (
@@ -161,9 +159,9 @@ export class MyAccountComponent implements OnInit {
               'session'
             );
           });
-      } else {
-        this.errorPassword = 'The passwords must be identical';
+        return;
       }
+      this.errorPassword = 'The passwords must be identical';
     }
   }
 
@@ -185,29 +183,29 @@ export class MyAccountComponent implements OnInit {
             position: 'topRight',
           });
         });
-    } else {
-      this.addressService
-        .createAddress(this.newAddressBilling)
-        .subscribe((res) => {
-          this.connectedUser.billingAddress = res;
-
-          this.storageCrypter.setItem(
-            'user',
-            JSON.stringify(this.connectedUser),
-            'session'
-          );
-          this.us
-            .updateUser(this.connectedUser?.id, this.connectedUser)
-            .subscribe((res) => {
-              this.iziToast.success({
-                message: this.translate.instant(
-                  'izitoast.modification_confirmed'
-                ),
-                position: 'topRight',
-              });
-            });
-        });
+      return;
     }
+    this.addressService
+      .createAddress(this.newAddressBilling)
+      .subscribe((res) => {
+        this.connectedUser.billingAddress = res;
+
+        this.storageCrypter.setItem(
+          'user',
+          JSON.stringify(this.connectedUser),
+          'session'
+        );
+        this.us
+          .updateUser(this.connectedUser?.id, this.connectedUser)
+          .subscribe((res) => {
+            this.iziToast.success({
+              message: this.translate.instant(
+                'izitoast.modification_confirmed'
+              ),
+              position: 'topRight',
+            });
+          });
+      });
   }
 
   setNewAddressDelivery() {
@@ -228,29 +226,29 @@ export class MyAccountComponent implements OnInit {
             position: 'topRight',
           });
         });
-    } else {
-      this.addressService
-        .createAddress(this.newAddressDelivery)
-        .subscribe((res) => {
-          this.connectedUser.deliveryAddress = res;
-
-          this.storageCrypter.setItem(
-            'user',
-            JSON.stringify(this.connectedUser),
-            'session'
-          );
-          this.us
-            .updateUser(this.connectedUser?.id, this.connectedUser)
-            .subscribe((res) => {
-              this.iziToast.success({
-                message: this.translate.instant(
-                  'izitoast.modification_confirmed'
-                ),
-                position: 'topRight',
-              });
-            });
-        });
+      return;
     }
+    this.addressService
+      .createAddress(this.newAddressDelivery)
+      .subscribe((res) => {
+        this.connectedUser.deliveryAddress = res;
+
+        this.storageCrypter.setItem(
+          'user',
+          JSON.stringify(this.connectedUser),
+          'session'
+        );
+        this.us
+          .updateUser(this.connectedUser?.id, this.connectedUser)
+          .subscribe((res) => {
+            this.iziToast.success({
+              message: this.translate.instant(
+                'izitoast.modification_confirmed'
+              ),
+              position: 'topRight',
+            });
+          });
+      });
   }
 
   logout() {
@@ -272,9 +270,9 @@ export class MyAccountComponent implements OnInit {
     this.passwordIsClear = !this.passwordIsClear;
     if (this.passwordIsClear) {
       this.passwordType = 'text';
-    } else {
-      this.passwordType = 'password';
+      return;
     }
+    this.passwordType = 'password';
   }
 
   checkUpdatePasswordPattern() {
@@ -287,19 +285,19 @@ export class MyAccountComponent implements OnInit {
     if (passwordPattern.status == 'INVALID') {
       this.errorPassword =
         'The password must contain at least 8 characters, one capital letter, one lowercase letter, one special character and one numeric character';
-    } else {
-      this.errorPassword = null;
+      return;
     }
+    this.errorPassword = null;
   }
 
   checkUpdatePasswordConfirmPattern() {
     if (this.newUserData.password != this.newUserData.passwordConfirm) {
       this.errorPassword = 'The passwords must be identical';
       this.errorPasswordConfirm = 'The passwords must be identical';
-    } else {
-      this.errorPasswordConfirm = null;
-      this.checkUpdatePasswordPattern();
+      return;
     }
+    this.errorPasswordConfirm = null;
+    this.checkUpdatePasswordPattern();
   }
   confirmDeleteAccount() {
     this.confirmationService.confirm({
@@ -332,9 +330,8 @@ export class MyAccountComponent implements OnInit {
     if (address) {
       address = address.replace(', ', '<br>');
       return address.replace(', ', '<br>');
-    } else {
-      return false;
     }
+    return false;
   }
   getOrderDate(orderDate: Date | undefined) {
     const englishMonthNames = [
@@ -376,18 +373,16 @@ export class MyAccountComponent implements OnInit {
           ' ' +
           orderDate.getFullYear()
         );
-      } else {
-        return (
-          orderDate.getDate() +
-          ' ' +
-          englishMonthNames[orderDate.getMonth()] +
-          ' ' +
-          orderDate.getFullYear()
-        );
       }
-    } else {
-      return false;
+      return (
+        orderDate.getDate() +
+        ' ' +
+        englishMonthNames[orderDate.getMonth()] +
+        ' ' +
+        orderDate.getFullYear()
+      );
     }
+    return false;
   }
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,
@@ -396,12 +391,10 @@ export class MyAccountComponent implements OnInit {
     if (unitpriceht != undefined) {
       if (tva != undefined) {
         return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
-      } else {
-        return unitpriceht.toFixed(2);
       }
-    } else {
-      return null;
+      return unitpriceht.toFixed(2);
     }
+    return null;
   }
 
   downloadAsPDF(order: Order) {

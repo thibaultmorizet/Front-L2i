@@ -59,9 +59,8 @@ export class AdminAccountComponent implements OnInit {
     }
     if (this.connectedAdmin?.id && this.connectedAdmin.forceToUpdatePassword) {
       this.forceToUpdatePassword = true;
-    } else {
-      this.forceToUpdatePassword = false;
     }
+
     if (this.storageCrypter.getItem('jeton', 'local')) {
       if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
         this.logout();
@@ -80,31 +79,29 @@ export class AdminAccountComponent implements OnInit {
         delete this.newAdminData.password;
         delete this.newAdminData.passwordConfirm;
       }
-      if (this.newAdminData.password == this.newAdminData.passwordConfirm) {
-        this.errorPassword = null;
-        this.newAdminData.forceToUpdatePassword = false;
-        this.us
-          .updateUser(this.newAdminData.id, this.newAdminData)
-          .subscribe((res) => {
-            this.forceToUpdatePassword = false;
-            this.iziToast.success({
-              message: this.translate.instant(
-                'izitoast.modification_confirmed'
-              ),
-              position: 'topRight',
-            });
-            delete this.newAdminData.password;
-            delete this.newAdminData.passwordConfirm;
-            this.connectedAdmin = this.newAdminData;
-            this.storageCrypter.setItem(
-              'adminUser',
-              JSON.stringify(this.connectedAdmin),
-              'session'
-            );
-          });
-      } else {
+      if (this.newAdminData.password != this.newAdminData.passwordConfirm) {
         this.errorPassword = 'The passwords must be identical';
+        return;
       }
+      this.errorPassword = null;
+      this.newAdminData.forceToUpdatePassword = false;
+      this.us
+        .updateUser(this.newAdminData.id, this.newAdminData)
+        .subscribe((res) => {
+          this.forceToUpdatePassword = false;
+          this.iziToast.success({
+            message: this.translate.instant('izitoast.modification_confirmed'),
+            position: 'topRight',
+          });
+          delete this.newAdminData.password;
+          delete this.newAdminData.passwordConfirm;
+          this.connectedAdmin = this.newAdminData;
+          this.storageCrypter.setItem(
+            'adminUser',
+            JSON.stringify(this.connectedAdmin),
+            'session'
+          );
+        });
     }
   }
 
@@ -125,11 +122,11 @@ export class AdminAccountComponent implements OnInit {
 
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
-    if (this.passwordIsClear) {
+    if (this.passwordIsClear === true) {
       this.passwordType = 'text';
-    } else {
-      this.passwordType = 'password';
+      return;
     }
+    this.passwordType = 'password';
   }
 
   checkUpdatePasswordPattern() {
@@ -142,19 +139,19 @@ export class AdminAccountComponent implements OnInit {
     if (passwordPattern.status == 'INVALID') {
       this.errorPassword =
         'The password must contain at least 8 characters, one capital letter, one lowercase letter, one special character and one numeric character';
-    } else {
-      this.errorPassword = null;
+      return;
     }
+    this.errorPassword = null;
   }
 
   checkUpdatePasswordConfirmPattern() {
     if (this.newAdminData.password != this.newAdminData.passwordConfirm) {
       this.errorPassword = 'The passwords must be identical';
       this.errorPasswordConfirm = 'The passwords must be identical';
-    } else {
-      this.errorPasswordConfirm = null;
-      this.checkUpdatePasswordPattern();
+      return;
     }
+    this.errorPasswordConfirm = null;
+    this.checkUpdatePasswordPattern();
   }
   confirmDeleteAccount() {
     this.confirmationService.confirm({

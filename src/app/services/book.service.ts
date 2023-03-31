@@ -25,7 +25,8 @@ export class BookService {
   getAllBooks(inStock: boolean) {
     if (inStock) {
       this.inStockString = '?stock%5Bgt%5D=0';
-    } else {
+    }
+    if (!inStock) {
       this.inStockString = '?stock%5Blte%5D=0';
     }
     return this.http.get<Array<Book>>(this.url + this.inStockString);
@@ -72,7 +73,8 @@ export class BookService {
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
-    } else {
+    }
+    if (!inStock) {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Book>>(
@@ -125,7 +127,8 @@ export class BookService {
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
-    } else {
+    }
+    if (!inStock) {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Book>>(
@@ -169,10 +172,14 @@ export class BookService {
     }
     if (inStock == null) {
       this.inStockString = '';
-    } else if (inStock) {
-      this.inStockString = '&stock%5Bgt%5D=0';
-    } else {
-      this.inStockString = '&stock%5Blte%5D=0';
+    }
+    if (inStock != null) {
+      if (inStock) {
+        this.inStockString = '&stock%5Bgt%5D=0';
+      }
+      if (!inStock) {
+        this.inStockString = '&stock%5Blte%5D=0';
+      }
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +

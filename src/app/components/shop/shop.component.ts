@@ -215,7 +215,8 @@ export class ShopComponent implements OnInit {
           this.products = res;
           this.pageRows = event.rows;
         });
-    } else if (
+    }
+    if (
       this.selectedType.includes('Livre') ||
       this.selectedType.includes('Book')
     ) {
@@ -233,7 +234,8 @@ export class ShopComponent implements OnInit {
           this.products = res;
           this.pageRows = event.rows;
         });
-    }else if (this.selectedType.includes('Video')) {
+    }
+    if (this.selectedType.includes('Video')) {
       this.videoService
         .getAllVideosForPage(
           event.page + 1,
@@ -271,7 +273,8 @@ export class ShopComponent implements OnInit {
               this.filteredProducts = el;
             });
         });
-    } else if (
+    }
+    if (
       this.selectedType.includes('Livre') ||
       this.selectedType.includes('Book')
     ) {
@@ -299,7 +302,8 @@ export class ShopComponent implements OnInit {
               this.filteredProducts = el;
             });
         });
-    } else if (this.selectedType.includes('Video')) {
+    }
+    if (this.selectedType.includes('Video')) {
       this.videoService
         .getAllVideosBySearchAndParameters(
           this.selectedBrand,
@@ -349,6 +353,7 @@ export class ShopComponent implements OnInit {
                 ),
                 position: 'topRight',
               });
+              
             } else {
               if (el.number_ordered != undefined) {
                 el.number_ordered = el.number_ordered + 1;
@@ -396,33 +401,33 @@ export class ShopComponent implements OnInit {
               ),
               position: 'topRight',
             });
-          } else {
-            res.number_ordered = 1;
-            if (res.unitpriceht) {
-              res.totalpriceht = parseFloat(
-                (res.number_ordered * res.unitpriceht).toFixed(2)
-              );
-              if (res.taxe?.tva) {
-                res.totalpricettc = parseFloat(
-                  (
-                    res.number_ordered *
-                    (res.unitpriceht + (res.taxe.tva * res.unitpriceht) / 100)
-                  ).toFixed(2)
-                );
-              }
-            }
-
-            this.cart.push(res);
-            this.iziToast.success({
-              message: this.translate.instant('izitoast.product_add_to_cart'),
-              position: 'topRight',
-            });
-            this.storageCrypter.setItem(
-              'cart',
-              JSON.stringify(this.cart),
-              'local'
-            );
+            return;
           }
+          res.number_ordered = 1;
+          if (res.unitpriceht) {
+            res.totalpriceht = parseFloat(
+              (res.number_ordered * res.unitpriceht).toFixed(2)
+            );
+            if (res.taxe?.tva) {
+              res.totalpricettc = parseFloat(
+                (
+                  res.number_ordered *
+                  (res.unitpriceht + (res.taxe.tva * res.unitpriceht) / 100)
+                ).toFixed(2)
+              );
+            }
+          }
+
+          this.cart.push(res);
+          this.iziToast.success({
+            message: this.translate.instant('izitoast.product_add_to_cart'),
+            position: 'topRight',
+          });
+          this.storageCrypter.setItem(
+            'cart',
+            JSON.stringify(this.cart),
+            'local'
+          );
         }
       });
     }
@@ -495,11 +500,9 @@ export class ShopComponent implements OnInit {
     if (unitpriceht != undefined) {
       if (tva != undefined) {
         return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
-      } else {
-        return unitpriceht.toFixed(2);
       }
-    } else {
-      return null;
+      return unitpriceht.toFixed(2);
     }
+    return null;
   }
 }

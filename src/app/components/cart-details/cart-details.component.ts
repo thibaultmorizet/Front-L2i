@@ -264,41 +264,41 @@ export class CartDetailsComponent implements OnInit {
         frenchMonthNames[deliveryDate.getMonth()] +
         ' ' +
         deliveryDate.getDate();
-    } else {
-      this.deliveryDate =
-        ' ' +
-        englishMonthNames[deliveryDate.getMonth()] +
-        ' ' +
-        deliveryDate.getDate();
+      return;
     }
+    this.deliveryDate =
+      ' ' +
+      englishMonthNames[deliveryDate.getMonth()] +
+      ' ' +
+      deliveryDate.getDate();
   }
 
   showModalDeliveryAddress() {
     if (this.connectedUser.id) {
       this.displayModalDeliveryAddress = true;
-    } else {
-      this.iziToast.warning({
-        message: this.translate.instant(
-          'izitoast.login_before_confirm_check_out'
-        ),
-        position: 'topRight',
-      });
-      this.router.navigateByUrl('/login');
+      return;
     }
+    this.iziToast.warning({
+      message: this.translate.instant(
+        'izitoast.login_before_confirm_check_out'
+      ),
+      position: 'topRight',
+    });
+    this.router.navigateByUrl('/login');
   }
 
   showModalBillingAddress() {
     if (this.connectedUser.id) {
       this.displayModalBillingAddress = true;
-    } else {
-      this.iziToast.warning({
-        message: this.translate.instant(
-          'izitoast.login_before_confirm_check_out'
-        ),
-        position: 'topRight',
-      });
-      this.router.navigateByUrl('/login');
+      return;
     }
+    this.iziToast.warning({
+      message: this.translate.instant(
+        'izitoast.login_before_confirm_check_out'
+      ),
+      position: 'topRight',
+    });
+    this.router.navigateByUrl('/login');
   }
 
   setNewAddressBilling() {
@@ -324,34 +324,34 @@ export class CartDetailsComponent implements OnInit {
             )[0] as HTMLElement
           ).click();
         });
-    } else {
-      this.addressService
-        .createAddress(this.newAddressBilling)
-        .subscribe((res) => {
-          this.connectedUser.billingAddress = res;
-
-          this.storageCrypter.setItem(
-            'user',
-            JSON.stringify(this.connectedUser),
-            'session'
-          );
-          this.us
-            .updateUser(this.connectedUser?.id, this.connectedUser)
-            .subscribe((res) => {
-              this.iziToast.success({
-                message: this.translate.instant(
-                  'izitoast.modification_confirmed'
-                ),
-                position: 'topRight',
-              });
-              (
-                document.getElementsByClassName(
-                  'billing-modal-close'
-                )[0] as HTMLElement
-              ).click();
-            });
-        });
+      return;
     }
+    this.addressService
+      .createAddress(this.newAddressBilling)
+      .subscribe((res) => {
+        this.connectedUser.billingAddress = res;
+
+        this.storageCrypter.setItem(
+          'user',
+          JSON.stringify(this.connectedUser),
+          'session'
+        );
+        this.us
+          .updateUser(this.connectedUser?.id, this.connectedUser)
+          .subscribe((res) => {
+            this.iziToast.success({
+              message: this.translate.instant(
+                'izitoast.modification_confirmed'
+              ),
+              position: 'topRight',
+            });
+            (
+              document.getElementsByClassName(
+                'billing-modal-close'
+              )[0] as HTMLElement
+            ).click();
+          });
+      });
   }
 
   setNewAddressDelivery() {
@@ -377,34 +377,34 @@ export class CartDetailsComponent implements OnInit {
             )[0] as HTMLElement
           ).click();
         });
-    } else {
-      this.addressService
-        .createAddress(this.newAddressDelivery)
-        .subscribe((res) => {
-          this.connectedUser.deliveryAddress = res;
-
-          this.storageCrypter.setItem(
-            'user',
-            JSON.stringify(this.connectedUser),
-            'session'
-          );
-          this.us
-            .updateUser(this.connectedUser?.id, this.connectedUser)
-            .subscribe((res) => {
-              this.iziToast.success({
-                message: this.translate.instant(
-                  'izitoast.modification_confirmed'
-                ),
-                position: 'topRight',
-              });
-              (
-                document.getElementsByClassName(
-                  'delivery-modal-close'
-                )[0] as HTMLElement
-              ).click();
-            });
-        });
+      return;
     }
+    this.addressService
+      .createAddress(this.newAddressDelivery)
+      .subscribe((res) => {
+        this.connectedUser.deliveryAddress = res;
+
+        this.storageCrypter.setItem(
+          'user',
+          JSON.stringify(this.connectedUser),
+          'session'
+        );
+        this.us
+          .updateUser(this.connectedUser?.id, this.connectedUser)
+          .subscribe((res) => {
+            this.iziToast.success({
+              message: this.translate.instant(
+                'izitoast.modification_confirmed'
+              ),
+              position: 'topRight',
+            });
+            (
+              document.getElementsByClassName(
+                'delivery-modal-close'
+              )[0] as HTMLElement
+            ).click();
+          });
+      });
   }
 
   checkOut() {
@@ -436,11 +436,17 @@ export class CartDetailsComponent implements OnInit {
       if (!this.errorStock) {
         this.cart.forEach((aProduct) => {
           if (aProduct.id) {
-            if (aProduct.stock && aProduct.number_ordered && aProduct.soldnumber) {
+            if (
+              aProduct.stock &&
+              aProduct.number_ordered &&
+              aProduct.soldnumber
+            ) {
               aProduct.stock -= aProduct.number_ordered;
               aProduct.soldnumber += aProduct.number_ordered;
 
-              this.ps.updateProduct(aProduct.id, aProduct).subscribe((el) => {});
+              this.ps
+                .updateProduct(aProduct.id, aProduct)
+                .subscribe((el) => {});
             }
           }
         });
@@ -476,16 +482,17 @@ export class CartDetailsComponent implements OnInit {
         });
         this.router.navigateByUrl('/home');
       }
-    } else {
-      this.iziToast.warning({
-        message: this.translate.instant(
-          'izitoast.login_before_confirm_check_out'
-        ),
-        position: 'topRight',
-      });
-      this.router.navigateByUrl('/login');
+      return;
     }
+    this.iziToast.warning({
+      message: this.translate.instant(
+        'izitoast.login_before_confirm_check_out'
+      ),
+      position: 'topRight',
+    });
+    this.router.navigateByUrl('/login');
   }
+
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,
     tva: number | undefined
@@ -493,12 +500,10 @@ export class CartDetailsComponent implements OnInit {
     if (unitpriceht != undefined) {
       if (tva != undefined) {
         return (unitpriceht + (tva * unitpriceht) / 100).toFixed(2);
-      } else {
-        return unitpriceht.toFixed(2);
       }
-    } else {
-      return null;
+      return unitpriceht.toFixed(2);
     }
+    return null;
   }
   confirmUseSameAddress() {
     this.confirmationService.confirm({
