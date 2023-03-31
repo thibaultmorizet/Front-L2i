@@ -23,10 +23,10 @@ export class OrderService {
   getInvoice(order: Order) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'DELETE, POST, PUT, GET, OPTIONS',
-      'Access-Control-Allow-Headers':
-        'Content-Type, Authorization, X-Requested-With',
+      'Access-Control-Allow-Origin': 'https://l2i-project.vercel.app',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': '*',
     });
 
     return this.http.post<{ token: string }>(
