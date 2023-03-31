@@ -14,16 +14,19 @@ export class OrderService {
   getAllOrders() {
     return this.http.get<Array<Order>>(this.url);
   }
+
   getUserOrders(user_id: number) {
     return this.http.get<Array<Order>>(this.url + '?user.id=' + user_id);
   }
+
   setOrder(order: Order) {
     return this.http.post<{ token: string }>(this.url, order);
   }
+
   getInvoice(order: Order) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'https://l2i-project.vercel.app',
+      'Access-Control-Allow-Origin': '*',
       // 'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Methods': '*',
