@@ -405,6 +405,16 @@ export class MyAccountComponent implements OnInit {
   }
 
   downloadAsPDF(order: Order) {
-    this.os.getInvoice(order).subscribe((el) => {});
+    if (order.invoicepath !== undefined) {
+      window.open(order.invoicepath, '_blank');
+      return;
+    }
+    this.os.createInvoice(order).subscribe((el) => {
+      order.invoicepath = el.invoice_path;
+      this.os.updateOrder(order.id, order).subscribe((res) => {
+        window.open(res.invoicepath, '_blank');
+        return;
+      });
+    });
   }
 }

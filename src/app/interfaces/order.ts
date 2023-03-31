@@ -10,4 +10,5 @@ export interface Order {
   deliveryaddress?: string;
   billingaddress?: string;
   date?: Date;
+  invoicepath?: string
 }

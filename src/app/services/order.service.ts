@@ -14,14 +14,21 @@ export class OrderService {
   getAllOrders() {
     return this.http.get<Array<Order>>(this.url);
   }
+
   getUserOrders(user_id: number) {
     return this.http.get<Array<Order>>(this.url + '?user.id=' + user_id);
   }
+
   setOrder(order: Order) {
     return this.http.post<{ token: string }>(this.url, order);
   }
-  getInvoice(order: Order) {
-    return this.http.post<{ token: string }>(
+
+  updateOrder(id: number | undefined, order: Order) {
+    return this.http.put<Order>(this.url + '/' + id, order);
+  }
+
+  createInvoice(order: Order) {
+    return this.http.post<any>(
       'https://thibaultmorizet.fr/generate_invoice',
       order
     );
