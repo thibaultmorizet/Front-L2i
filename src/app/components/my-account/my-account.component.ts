@@ -72,7 +72,7 @@ export class MyAccountComponent implements OnInit {
     }
     if (this.connectedUser?.id && this.connectedUser.forceToUpdatePassword) {
       this.forceToUpdatePassword = true;
-    } 
+    }
     if (this.connectedUser.id) {
       try {
         if (
@@ -398,15 +398,26 @@ export class MyAccountComponent implements OnInit {
   }
 
   downloadAsPDF(order: Order) {
-    if (order.invoicepath !== undefined) {
-      window.open(order.invoicepath, '_blank');
+    if (order.invoicepath === undefined) {
+      this.os.createInvoice(order).subscribe((el) => {
+        order.invoicepath = el.invoice_path;
+        this.os.updateOrder(order.id, order).subscribe((res) => {
+          window.open(res.invoicepath, '_blank');
+        });
+      });
       return;
     }
-    this.os.createInvoice(order).subscribe((el) => {
-      order.invoicepath = el.invoice_path;
-      this.os.updateOrder(order.id, order).subscribe((res) => {
-        window.open(res.invoicepath, '_blank');
+
+    this.os.invoiceIsExist(order.invoicepath).subscribe((el) => {
+      if (el.success === true) {
+        window.open(order.invoicepath, '_blank');
         return;
+      }
+      this.os.createInvoice(order).subscribe((el) => {
+        order.invoicepath = el.invoice_path;
+        this.os.updateOrder(order.id, order).subscribe((res) => {
+          window.open(res.invoicepath, '_blank');
+        });
       });
     });
   }

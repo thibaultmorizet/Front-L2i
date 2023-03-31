@@ -33,4 +33,11 @@ export class OrderService {
       order
     );
   }
+
+  invoiceIsExist(invoice_path: string) {
+    return this.http.post<any>(
+      'https://thibaultmorizet.fr/invoice_is_exist',
+      { "invoice_path": invoice_path }
+    );
+  }
 }
