@@ -21,19 +21,9 @@ export class OrderService {
     return this.http.post<{ token: string }>(this.url, order);
   }
   getInvoice(order: Order) {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "https://l2i-project.vercel.app",
-      "Access-Control-Allow-Credentials": "true",
-      "Access-Control-Allow-Headers": "*",
-      "Access-Control-Allow-Methods": "*",
-      "Access-Control-Allow-Private-Network":"true"
-    });
-
     return this.http.post<{ token: string }>(
       'https://thibaultmorizet.fr/generate_invoice',
-      order,
-      { headers: headers }
+      order
     );
   }
 }
