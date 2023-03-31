@@ -28,6 +28,7 @@ export class OrderService {
       "Access-Control-Allow-Headers": "*",
       "Access-Control-Allow-Methods": "*",
       "Access-Control-Max-Age": "*",
+      "Connection" : "keep-alive"
     });
 
     return this.http.post<{ token: string }>(
