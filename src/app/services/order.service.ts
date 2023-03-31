@@ -24,7 +24,7 @@ export class OrderService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': 'https://l2i-project.vercel.app',
-      'Access-Control-Allow-Credentials': 'true',
+      // 'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Methods': '*',
     });
