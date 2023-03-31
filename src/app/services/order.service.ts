@@ -25,11 +25,11 @@ export class OrderService {
 
   getInvoice(order: Order) {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      // 'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Methods': '*',
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      // "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Methods": "*",
     });
 
     return this.http.post<{ token: string }>(
