@@ -111,6 +111,7 @@ export class AdminBooksComponent implements OnInit {
       position: 'topRight',
     });
   }
+  
   openNew() {
     this.book = {
       unitpriceht: 1,
@@ -217,42 +218,67 @@ export class AdminBooksComponent implements OnInit {
         }
         this.ps.addImage(this.imageInfo).subscribe();
       }
-      this.bs.updateBook(this.book.id, this.book).subscribe((result) => {
-        this.book = {};
-        this.ngOnInit();
-        this.iziToast.success({
-          message: this.translate.instant('admin_books.book_updated'),
-          position: 'topRight',
-        });
-      });
-    } else {
-      this.allBooks.push(this.book);
-      this.bs.createBook(this.book).subscribe((res) => {
-        if (this.imageInfo.data) {
-          this.imageInfo.productId = res.id?.toString();
-          if (this.imageInfo.url) {
-            this.book.image =
-              'https://www.thibaultmorizet.fr/assets/product-images/' +
-              res.id +
-              '.' +
-              this.imageInfo.url.split('.').pop();
-          } else {
-            this.book.image =
-              'https://www.thibaultmorizet.fr/assets/product-images/' +
-              res.id +
-              '.jpeg';
-          }
-
-          this.ps.addImage(this.imageInfo).subscribe();
-        }
-        this.bs.updateBook(res.id, this.book).subscribe((result) => {
+      this.bs.updateBook(this.book.id, this.book).subscribe({
+        next: (result) => {
           this.book = {};
           this.ngOnInit();
           this.iziToast.success({
-            message: this.translate.instant('admin_books.book_created'),
+            message: this.translate.instant('admin_books.book_updated'),
             position: 'topRight',
           });
-        });
+        },
+        error: (res) => {
+          this.iziToast.error({
+            message: res.error.detail,
+            position: 'topRight',
+          });
+        },
+      });
+    } else {
+      this.allBooks.push(this.book);
+
+      this.bs.createBook(this.book).subscribe({
+        next: (res) => {
+          if (this.imageInfo.data) {
+            this.imageInfo.productId = res.id?.toString();
+            if (this.imageInfo.url) {
+              this.book.image =
+                'https://www.thibaultmorizet.fr/assets/product-images/' +
+                res.id +
+                '.' +
+                this.imageInfo.url.split('.').pop();
+            } else {
+              this.book.image =
+                'https://www.thibaultmorizet.fr/assets/product-images/' +
+                res.id +
+                '.jpeg';
+            }
+
+            this.ps.addImage(this.imageInfo).subscribe();
+          }
+          this.bs.updateBook(res.id, this.book).subscribe({
+            next: (result) => {
+              this.book = {};
+              this.ngOnInit();
+              this.iziToast.success({
+                message: this.translate.instant('admin_books.book_updated'),
+                position: 'topRight',
+              });
+            },
+            error: (res) => {
+              this.iziToast.error({
+                message: res.error.detail,
+                position: 'topRight',
+              });
+            },
+          });
+        },
+        error: (res) => {
+          this.iziToast.error({
+            message: res.error.detail,
+            position: 'topRight',
+          });
+        },
       });
     }
 
@@ -260,6 +286,7 @@ export class AdminBooksComponent implements OnInit {
     this.bookDialog = false;
     this.book = {};
   }
+
   getAllFormatsfunc() {
     this.fs.getAllFormats().subscribe((res) => {
       res.forEach((aFormat) => {
@@ -268,6 +295,7 @@ export class AdminBooksComponent implements OnInit {
       this.formats = res;
     });
   }
+
   getAllEditorsfunc() {
     this.es.getAllEditors().subscribe((res) => {
       res.forEach((anEditor) => {
@@ -276,6 +304,7 @@ export class AdminBooksComponent implements OnInit {
       this.editors = res;
     });
   }
+
   getAllTaxesfunc() {
     this.taxeService.getAllTaxes().subscribe((res) => {
       res.forEach((aTaxe) => {
@@ -284,6 +313,7 @@ export class AdminBooksComponent implements OnInit {
       this.taxes = res;
     });
   }
+
   getAllAuthorsfunc() {
     this.authorService.getAllAuthors().subscribe((res) => {
       res.forEach((anAuthor) => {
@@ -293,6 +323,7 @@ export class AdminBooksComponent implements OnInit {
       this.authors = res;
     });
   }
+
   getAllCategoriesfunc() {
     this.cs.getAllCategories().subscribe((res) => {
       res.forEach((aCategory) => {
