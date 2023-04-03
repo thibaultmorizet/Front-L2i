@@ -68,7 +68,7 @@ export class MyAccountComponent implements OnInit {
       delete this.newUserData.orders;
     } catch (error) {
       this.connectedUser = {};
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/home').then();
     }
     if (this.connectedUser?.id && this.connectedUser.forceToUpdatePassword) {
       this.forceToUpdatePassword = true;
@@ -142,7 +142,7 @@ export class MyAccountComponent implements OnInit {
         this.newUserData.forceToUpdatePassword = false;
         this.us
           .updateUser(this.newUserData.id, this.newUserData)
-          .subscribe((res) => {
+          .subscribe(() => {
             this.forceToUpdatePassword = false;
             this.iziToast.success({
               message: this.translate.instant(
@@ -169,7 +169,7 @@ export class MyAccountComponent implements OnInit {
     if (this.newAddressBilling.id != undefined) {
       this.addressService
         .updateAddress(this.newAddressBilling.id, this.newAddressBilling)
-        .subscribe((res) => {
+        .subscribe(() => {
           this.connectedUser.billingAddress = this.newAddressBilling;
 
           this.storageCrypter.setItem(
@@ -197,7 +197,7 @@ export class MyAccountComponent implements OnInit {
         );
         this.us
           .updateUser(this.connectedUser?.id, this.connectedUser)
-          .subscribe((res) => {
+          .subscribe(() => {
             this.iziToast.success({
               message: this.translate.instant(
                 'izitoast.modification_confirmed'
@@ -212,7 +212,7 @@ export class MyAccountComponent implements OnInit {
     if (this.newAddressDelivery.id != undefined) {
       this.addressService
         .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
-        .subscribe((res) => {
+        .subscribe(() => {
           this.connectedUser.deliveryAddress = this.newAddressDelivery;
 
           this.storageCrypter.setItem(
@@ -240,7 +240,7 @@ export class MyAccountComponent implements OnInit {
         );
         this.us
           .updateUser(this.connectedUser?.id, this.connectedUser)
-          .subscribe((res) => {
+          .subscribe(() => {
             this.iziToast.success({
               message: this.translate.instant(
                 'izitoast.modification_confirmed'
@@ -263,7 +263,7 @@ export class MyAccountComponent implements OnInit {
       message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
     });
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/home').then();
   }
 
   tooglePasswordClear() {
@@ -318,11 +318,11 @@ export class MyAccountComponent implements OnInit {
       );
       this.addressService
         .deleteTheAddress(this.connectedUser.billingAddress?.id)
-        .subscribe((el) => {});
+        .subscribe(() => {});
       this.addressService
         .deleteTheAddress(this.connectedUser.deliveryAddress?.id)
-        .subscribe((el) => {});
-      this.us.deleteTheUser(this.connectedUser.id).subscribe((el) => {});
+        .subscribe(() => {});
+      this.us.deleteTheUser(this.connectedUser.id).subscribe(() => {});
       this.logout();
     } catch {}
   }
