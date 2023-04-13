@@ -48,10 +48,10 @@
             <div class="product-details-price">
               <p class="price">
                 {{
-                  getUnitpricettcFromUnitpricehtAndTva(
-                    product.unitpriceht,
-                    product.taxe?.tva
-                  )
+                getUnitpricettcFromUnitpricehtAndTva(
+                  product.unitpriceht,
+                  product.taxe?.tva
+                )
                 }}
                 € (TTC)
               </p>
@@ -109,11 +109,12 @@
           </p-tabPanel>
           <p-tabPanel
             header="{{ 'product_details.product_details' | translate }}"
-            ><ul>
+          >
+            <ul>
               <li>
                 <span>
                   <span class="bold"
-                    >{{ "general.price" | translate }} (HT) :
+                  >{{ "general.price" | translate }} (HT) :
                   </span>
                   <span>{{ product.unitpriceht }} €</span>
                 </span>
@@ -124,22 +125,20 @@
                   <span>{{ product.isbn }}</span>
                 </span>
               </li>
-              <span *ngIf="product.type == 'book'">
-                <li *ngFor="let anAuthor of product.author">
+              <li *ngFor="let anAuthor of product.author">
                   <span>
                     <span class="bold"
-                      >{{ "general.author" | translate }} :
+                    >{{ "general.author" | translate }} :
                     </span>
                     <span
-                      >{{ anAuthor.lastname }} {{ anAuthor.firstname }}</span
+                    >{{ anAuthor.lastname }} {{ anAuthor.firstname }}</span
                     >
                   </span>
-                </li></span
-              >
+              </li>
               <li *ngIf="product.type == 'book'">
                 <span>
                   <span class="bold"
-                    >{{ "general.editor" | translate }} :
+                  >{{ "general.editor" | translate }} :
                   </span>
                   <span>{{ product.editor?.name }}</span>
                 </span>
@@ -153,7 +152,7 @@
               <li>
                 <span>
                   <span class="bold"
-                    >{{ "general.year_of_publication" | translate }} :
+                  >{{ "general.year_of_publication" | translate }} :
                   </span>
                   <span>{{ product.year }}</span>
                 </span>
@@ -249,7 +248,7 @@
                     {{ aComment.user?.firstname }} {{ aComment.user?.lastname }}
                   </div>
                   <div class="product-details-comment-statut" *ngIf="aComment.commentstatut?.id==1">
-                    {{  aComment.commentstatut?.name ??'' | translate }}
+                    {{  aComment.commentstatut?.name ?? '' | translate }}
                   </div>
                   <div class="product-details-comment-date">
                     {{ getCommentDate(aComment.createdAt) }}
