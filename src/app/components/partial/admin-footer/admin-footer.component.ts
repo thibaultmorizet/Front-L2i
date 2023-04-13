@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { User } from 'src/app/interfaces/user';
-import { UserService } from 'src/app/services/user.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {User} from 'src/app/interfaces/user';
+import {UserService} from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -22,7 +22,8 @@ export class AdminFooterComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
     private us: UserService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     try {
@@ -56,6 +57,7 @@ export class AdminFooterComponent implements OnInit {
       this.path = el[0].path;
     });
   }
+
   setLanguage() {
     if (this.language == 'fr') {
       this.flagimg =
@@ -69,6 +71,7 @@ export class AdminFooterComponent implements OnInit {
     this.translate.setDefaultLang(this.language);
     this.translate.use(this.language);
   }
+
   changeLanguage() {
     if (this.language == 'en') {
       this.language = 'fr';
@@ -76,8 +79,7 @@ export class AdminFooterComponent implements OnInit {
       if (this.connectedAdmin.id != undefined) {
         this.connectedAdmin.language = this.language;
       }
-    }
-    if (this.language == 'fr') {
+    } else {
       this.language = 'en';
 
       this.setLanguage();
