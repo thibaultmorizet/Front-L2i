@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import { NgxIzitoastService } from 'ngx-izitoast';
-import { PrimeNGConfig } from 'primeng/api';
-import { CarouselModule } from 'primeng/carousel';
-import { Product } from 'src/app/interfaces/product';
-import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth.service';
-import { ProductService } from 'src/app/services/product.service';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {SocialAuthService, SocialUser} from 'angularx-social-login';
+import {NgxIzitoastService} from 'ngx-izitoast';
+import {PrimeNGConfig} from 'primeng/api';
+import {CarouselModule} from 'primeng/carousel';
+import {Product} from 'src/app/interfaces/product';
+import {User} from 'src/app/interfaces/user';
+import {AuthService} from 'src/app/services/auth.service';
+import {ProductService} from 'src/app/services/product.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -38,7 +38,8 @@ export class HomeComponent implements OnInit {
     private iziToast: NgxIzitoastService,
     private primengConfig: PrimeNGConfig,
     private translate: TranslateService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -97,13 +98,6 @@ export class HomeComponent implements OnInit {
         this.logout();
       }
     }
-    if (document.getElementsByClassName('p-carousel-indicators')[0]) {
-      (
-        document.getElementsByClassName(
-          'p-carousel-indicators'
-        )[0] as HTMLElement
-      ).click();
-    }
   }
 
   getProductsBestSell() {
@@ -111,6 +105,7 @@ export class HomeComponent implements OnInit {
       this.productBestSell = res;
     });
   }
+
   tokenExpired(token: string) {
     const expiry = JSON.parse(atob(token.split('.')[1])).exp;
     return Math.floor(new Date().getTime() / 1000) >= expiry;
@@ -143,6 +138,7 @@ export class HomeComponent implements OnInit {
       document.getElementsByClassName('p-carousel-prev')[0] as HTMLElement
     ).click();
   }
+
   addProductToCart(productId: number | undefined) {
     this.productExistinCart = false;
     if (productId != undefined) {
@@ -245,6 +241,7 @@ export class HomeComponent implements OnInit {
       });
     }
   }
+
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,
     tva: number | undefined
@@ -256,5 +253,14 @@ export class HomeComponent implements OnInit {
       return unitpriceht.toFixed(2);
     }
     return null;
+  }
+
+  carouselIsLoadedFunc() {
+    if (!this.carouselIsLoaded) {
+      this.carouselIsLoaded = true;
+      this.nextBestProduct()
+      this.prevBestProduct()
+      this.nextBestProduct()
+    }
   }
 }

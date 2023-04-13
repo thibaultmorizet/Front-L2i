@@ -35,7 +35,7 @@
                     [alt]="oneProduct.title"
                     class="img-best-sell pointer"
                     [routerLink]="['/products/', oneProduct.id]"
-                    (load)="carouselIsLoaded = true"
+                    (load)="carouselIsLoadedFunc()"
                   />
                 </div>
 
