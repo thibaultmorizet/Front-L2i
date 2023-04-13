@@ -13,12 +13,12 @@ import StorageCrypter from 'storage-crypter';
 
 @Component({
   selector: 'app-admin-auhtors',
-  templateUrl: './admin-auhtors.component.html',
-  styleUrls: ['./admin-auhtors.component.css'],
+  templateUrl: './admin-authors.component.html',
+  styleUrls: ['./admin-authors.component.css'],
   encapsulation: ViewEncapsulation.None,
   providers: [ConfirmationService, MessageService],
 })
-export class AdminAuhtorsComponent implements OnInit {
+export class AdminAuthorsComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   authorDialog: boolean = false;
   author: Author = {};
@@ -70,7 +70,7 @@ export class AdminAuhtorsComponent implements OnInit {
           if (anAuthor.books && anAuthor.books.length == 0) {
             this.authorService
               .deleteTheAuthor(anAuthor.id)
-              .subscribe((el) => {});
+              .subscribe(() => {});
           }
         });
         this.selectedAuthors = [];
@@ -101,7 +101,7 @@ export class AdminAuhtorsComponent implements OnInit {
           this.allAuthors = this.allAuthors.filter(
             (val) => val.id !== author.id
           );
-          this.authorService.deleteTheAuthor(author.id).subscribe((el) => {});
+          this.authorService.deleteTheAuthor(author.id).subscribe(() => {});
           this.author = {};
           this.iziToast.success({
             message: this.translate.instant('admin_authors.author_deleted'),
@@ -130,7 +130,7 @@ export class AdminAuhtorsComponent implements OnInit {
     if (this.author.id) {
       this.authorService
         .updateAuthor(this.author.id, this.author)
-        .subscribe((result) => {
+        .subscribe(() => {
           this.author = {};
           this.ngOnInit();
           this.iziToast.success({
@@ -143,7 +143,7 @@ export class AdminAuhtorsComponent implements OnInit {
       this.authorService.createAuthor(this.author).subscribe((res) => {
         this.authorService
           .updateAuthor(res.id, this.author)
-          .subscribe((result) => {
+          .subscribe(() => {
             this.author = {};
             this.ngOnInit();
             this.iziToast.success({

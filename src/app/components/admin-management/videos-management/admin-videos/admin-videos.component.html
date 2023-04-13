@@ -14,7 +14,17 @@
           {{ "general.brands" | translate }}
         </button>
       </div>
-     
+      <div class="d-flex justify-content-end mt-2">
+        <button
+          pButton
+          pRipple
+          type="button"
+          class="p-button-raised p-button-primary-color btn-primary-color"
+          [routerLink]="['/admin/authors']"
+        >
+          {{ "general.authors" | translate }}
+        </button>
+      </div>
     </div>
 
     <p-toast></p-toast>
@@ -308,7 +318,7 @@
         </div>
 
         <div class="field">
-          <label for="taxe">TVA</label><br />
+          <label>TVA</label><br />
           <p-dropdown
             [options]="taxes"
             [(ngModel)]="video.taxe"
@@ -326,7 +336,7 @@
           </p-dropdown>
         </div>
         <div class="field">
-          <label for="brand">{{ "admin_videos.brand" | translate }}</label
+          <label>{{ "admin_videos.brand" | translate }}</label
           ><br />
           <p-dropdown
             [options]="brands"
@@ -337,7 +347,7 @@
         </div>
 
         <div class="field">
-          <label for="coverVideo">{{
+          <label>{{
             "admin_videos.cover_videos" | translate
           }}</label
           ><br />

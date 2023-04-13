@@ -21,7 +21,7 @@ import { AdminAdminsComponent } from './components/admin-management/users-manage
 import { LoginComponent } from './components/login/login.component';
 import { AdminFormatsComponent } from './components/admin-management/books-management/admin-formats/admin-formats.component';
 import { AdminEditorsComponent } from './components/admin-management/books-management/admin-editors/admin-editors.component';
-import { AdminAuhtorsComponent } from './components/admin-management/books-management/admin-auhtors/admin-auhtors.component';
+import { AdminAuthorsComponent } from './components/admin-management/admin-authors/admin-authors.component';
 import { AdminCategoriesComponent } from './components/admin-management/books-management/admin-categories/admin-categories.component';
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 import { AdminBrandsComponent } from './components/admin-management/videos-management/admin-brands/admin-brands.component';
@@ -50,7 +50,7 @@ const routes: Routes = [
   { path: 'admin/moderators', component: AdminModeratorsComponent },
   { path: 'admin/formats', component: AdminFormatsComponent },
   { path: 'admin/editors', component: AdminEditorsComponent },
-  { path: 'admin/authors', component: AdminAuhtorsComponent },
+  { path: 'admin/authors', component: AdminAuthorsComponent },
   { path: 'admin/brands', component: AdminBrandsComponent },
   { path: 'admin/categories', component: AdminCategoriesComponent },
   { path: 'moderator/home', component: ModeratorHomeComponent },

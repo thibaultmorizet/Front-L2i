@@ -11,19 +11,19 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { AdminFooterComponent } from '../../../partial/admin-footer/admin-footer.component';
-import { AdminHeaderComponent } from '../../../partial/admin-header/admin-header.component';
+import { AdminFooterComponent } from '../../partial/admin-footer/admin-footer.component';
+import { AdminHeaderComponent } from '../../partial/admin-header/admin-header.component';
 
-import { AdminAuhtorsComponent } from './admin-auhtors.component';
+import { AdminAuthorsComponent } from './admin-authors.component';
 
 describe('AdminAuhtorsComponent', () => {
-  let component: AdminAuhtorsComponent;
-  let fixture: ComponentFixture<AdminAuhtorsComponent>;
+  let component: AdminAuthorsComponent;
+  let fixture: ComponentFixture<AdminAuthorsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AdminAuhtorsComponent,
+        AdminAuthorsComponent,
         AdminHeaderComponent,
         AdminFooterComponent,
       ],
@@ -48,7 +48,7 @@ describe('AdminAuhtorsComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AdminAuhtorsComponent);
+    fixture = TestBed.createComponent(AdminAuthorsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
