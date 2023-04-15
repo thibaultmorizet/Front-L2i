@@ -148,10 +148,12 @@ export class BookService {
 
   getAllBooksWithoutLimit(
     search: string,
+    categories: Array<Category>,
     prices: Array<number>,
     inStock: boolean | null
   ) {
     this.searchString = '';
+    this.categoriesString = '';
     this.pricesString = '';
     this.inStockString = '';
 
@@ -164,7 +166,9 @@ export class BookService {
         '&author.lastname=' +
         search;
     }
-
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
+    });
     if (prices[0] && prices[1]) {
       this.pricesString +=
         '&unitpriceht[between]=' +
@@ -187,6 +191,7 @@ export class BookService {
       this.urlWithoutLimit +
       this.pricesString +
       this.searchString +
+      this.categoriesString +
       this.inStockString
     );
   }

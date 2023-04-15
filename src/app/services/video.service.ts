@@ -148,17 +148,27 @@ export class VideoService {
 
   getAllVideosWithoutLimit(
     search: string,
+    categories: Array<Category>,
     prices: Array<number>,
     inStock: boolean | null
   ) {
     this.searchString = '';
+    this.categoriesString = '';
     this.pricesString = '';
     this.inStockString = '';
 
     if (search.length > 0) {
-      this.searchString = '&title=' + search;
+      this.searchString =
+        '&title=' +
+        search +
+        '&author.firstname=' +
+        search +
+        '&author.lastname=' +
+        search;
     }
-
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
+    });
     if (prices[0] && prices[1]) {
       this.pricesString +=
         '&unitpriceht[between]=' +
@@ -181,6 +191,7 @@ export class VideoService {
       this.urlWithoutLimit +
       this.pricesString +
       this.searchString +
+      this.categoriesString +
       this.inStockString
     );
   }

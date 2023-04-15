@@ -257,6 +257,7 @@ export class ShopComponent implements OnInit {
       this.ps
         .getAllProductsBySearch(
           this.searchProduct?.title ?? this.searchProduct,
+          this.selectedCategory,
           this.selectedPriceRange,
           this.pageRows,
           this.showProductsInStock
@@ -266,6 +267,7 @@ export class ShopComponent implements OnInit {
           this.ps
             .getAllProductsBySearch(
               this.searchProduct?.title ?? this.searchProduct,
+              this.selectedCategory,
               this.selectedPriceRange,
               10000,
               this.showProductsInStock

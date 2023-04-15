@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Product } from '../interfaces/product';
-import { Format } from '../interfaces/format';
-import { Category } from '../interfaces/category';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Product} from '../interfaces/product';
+import {Format} from '../interfaces/format';
+import {Category} from '../interfaces/category';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +15,10 @@ export class ProductService {
   private searchString: string = '';
   private pricesString: string = '';
   private inStockString: string = '';
+  private categoriesString: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAllProducts(inStock: boolean) {
     if (inStock) {
@@ -27,17 +29,21 @@ export class ProductService {
     }
     return this.http.get<Array<Product>>(this.url + this.inStockString);
   }
+
   getOneProduct(id: number) {
     return this.http.get<Product>(
       'https://thibaultmorizet.fr/ws/products/' + id
     );
   }
+
   getAllProductsWithoutLimit(
     search: string,
+    categories: Array<Category>,
     prices: Array<number>,
     inStock: boolean | null
   ) {
     this.searchString = '';
+    this.categoriesString = '';
     this.pricesString = '';
     this.inStockString = '';
 
@@ -50,7 +56,9 @@ export class ProductService {
         '&author.lastname=' +
         search;
     }
-
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
+    });
     if (prices[0] && prices[1]) {
       this.pricesString +=
         '&unitpriceht[between]=' +
@@ -71,19 +79,23 @@ export class ProductService {
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
-        this.pricesString +
-        this.searchString +
-        this.inStockString
+      this.pricesString +
+      this.searchString +
+      this.categoriesString +
+      this.inStockString
     );
   }
+
   getAllProductsForPage(
     page: number,
     productnumber: number,
     search: string,
+    categories: Array<Category>,
     prices: Array<number>,
     inStock: boolean
   ) {
     this.searchString = '';
+    this.categoriesString = '';
     this.inStockString = '';
 
     if (search && search.length > 0) {
@@ -95,6 +107,9 @@ export class ProductService {
         '&author.lastname=' +
         search;
     }
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
+    });
     if (prices[0] && prices[1]) {
       this.pricesString +=
         '&unitpriceht[between]=' +
@@ -110,22 +125,25 @@ export class ProductService {
     }
     return this.http.get<Array<Product>>(
       'https://thibaultmorizet.fr/ws/products?page=' +
-        page +
-        '&itemsPerPage=' +
-        productnumber +
-        this.pricesString +
-        this.searchString +
-        this.inStockString
+      page +
+      '&itemsPerPage=' +
+      productnumber +
+      this.pricesString +
+      this.searchString +
+      this.categoriesString +
+      this.inStockString
     );
   }
 
   getAllProductsBySearch(
     search: string,
+    categories: Array<Category>,
     prices: Array<number>,
     productnumber: number,
     inStock: boolean
   ) {
     this.searchString = '';
+    this.categoriesString = '';
     this.pricesString = '';
     this.inStockString = '';
 
@@ -138,6 +156,9 @@ export class ProductService {
         '&author.lastname=' +
         search;
     }
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
+    });
     if (typeof prices[0] == 'number' && typeof prices[1] == 'number') {
       this.pricesString +=
         '&unitpriceht[between]=' +
@@ -153,11 +174,12 @@ export class ProductService {
     }
     return this.http.get<Array<Product>>(
       'https://thibaultmorizet.fr/ws/products?' +
-        'itemsPerPage=' +
-        productnumber +
-        this.pricesString +
-        this.searchString +
-        this.inStockString
+      'itemsPerPage=' +
+      productnumber +
+      this.pricesString +
+      this.searchString +
+      this.categoriesString +
+      this.inStockString
     );
   }
 
@@ -196,12 +218,14 @@ export class ProductService {
       formData
     );
   }
+
   addImage(imageInfo: object) {
     return this.http.post<{ token: string }>(
       'https://thibaultmorizet.fr/add_image',
       imageInfo
     );
   }
+
   deleteImage(imageUrl: object) {
     return this.http.post<{ token: string }>(
       'https://thibaultmorizet.fr/delete_image',

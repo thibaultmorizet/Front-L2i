@@ -1,29 +1,29 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { NgxIzitoastService } from 'ngx-izitoast';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {NgxIzitoastService} from 'ngx-izitoast';
 import {
   PrimeNGConfig,
   ConfirmationService,
   MessageService,
 } from 'primeng/api';
-import { Observable, Subscriber } from 'rxjs';
-import { Author } from 'src/app/interfaces/author';
-import { Product } from 'src/app/interfaces/product';
-import { Editor } from 'src/app/interfaces/editor';
-import { Format } from 'src/app/interfaces/format';
-import { Image } from 'src/app/interfaces/image';
-import { Taxe } from 'src/app/interfaces/taxe';
-import { Category } from 'src/app/interfaces/category';
-import { User } from 'src/app/interfaces/user';
-import { AuthorService } from 'src/app/services/author.service';
-import { ProductService } from 'src/app/services/product.service';
-import { EditorService } from 'src/app/services/editor.service';
-import { FormatService } from 'src/app/services/format.service';
-import { TaxeService } from 'src/app/services/taxe.service';
-import { Categoryservice } from 'src/app/services/category.service';
+import {Observable, Subscriber} from 'rxjs';
+import {Author} from 'src/app/interfaces/author';
+import {Product} from 'src/app/interfaces/product';
+import {Editor} from 'src/app/interfaces/editor';
+import {Format} from 'src/app/interfaces/format';
+import {Image} from 'src/app/interfaces/image';
+import {Taxe} from 'src/app/interfaces/taxe';
+import {Category} from 'src/app/interfaces/category';
+import {User} from 'src/app/interfaces/user';
+import {AuthorService} from 'src/app/services/author.service';
+import {ProductService} from 'src/app/services/product.service';
+import {EditorService} from 'src/app/services/editor.service';
+import {FormatService} from 'src/app/services/format.service';
+import {TaxeService} from 'src/app/services/taxe.service';
+import {Categoryservice} from 'src/app/services/category.service';
 import StorageCrypter from 'storage-crypter';
-import { BookService } from 'src/app/services/book.service';
+import {BookService} from 'src/app/services/book.service';
 
 @Component({
   selector: 'app-admin-books',
@@ -60,7 +60,8 @@ export class AdminBooksComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private iziToast: NgxIzitoastService,
     private translate: TranslateService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -81,7 +82,7 @@ export class AdminBooksComponent implements OnInit {
       }
     }
 
-    this.bs.getAllBooksWithoutLimit('', [], null).subscribe((data) => {
+    this.bs.getAllBooksWithoutLimit('', [], [], null).subscribe((data) => {
       this.allBooks = data;
     });
 
@@ -111,7 +112,7 @@ export class AdminBooksComponent implements OnInit {
       position: 'topRight',
     });
   }
-  
+
   openNew() {
     this.book = {
       unitpriceht: 1,
@@ -140,9 +141,11 @@ export class AdminBooksComponent implements OnInit {
             imageUrl: aBook.image?.substring(aBook.image?.indexOf('assets')),
           };
 
-          this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {});
+          this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {
+          });
 
-          this.bs.deleteTheBook(aBook.id).subscribe((el) => {});
+          this.bs.deleteTheBook(aBook.id).subscribe((el) => {
+          });
         });
         this.selectedBooks = [];
         this.iziToast.success({
@@ -158,7 +161,7 @@ export class AdminBooksComponent implements OnInit {
     book.author?.forEach((anAuthor) => {
       anAuthor.name = anAuthor.firstname + ' ' + anAuthor.lastname;
     });
-    this.book = { ...book };
+    this.book = {...book};
     this.bookDialog = true;
   }
 
@@ -166,7 +169,7 @@ export class AdminBooksComponent implements OnInit {
     this.confirmationService.confirm({
       message: this.translate.instant(
         'admin_books.confirm_delete_book_message',
-        { title: book.title }
+        {title: book.title}
       ),
       header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
@@ -177,8 +180,10 @@ export class AdminBooksComponent implements OnInit {
           imageUrl: book.image?.substring(book.image?.indexOf('assets')),
         };
 
-        this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {});
-        this.bs.deleteTheBook(book.id).subscribe((el) => {});
+        this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {
+        });
+        this.bs.deleteTheBook(book.id).subscribe((el) => {
+        });
         this.book = {};
 
         this.iziToast.success({
