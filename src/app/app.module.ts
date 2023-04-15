@@ -79,7 +79,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AdminFormatsComponent } from './components/admin-management/books-management/admin-formats/admin-formats.component';
 import { AdminEditorsComponent } from './components/admin-management/books-management/admin-editors/admin-editors.component';
 import { AdminAuthorsComponent } from './components/admin-management/admin-authors/admin-authors.component';
-import { AdminCategoriesComponent } from './components/admin-management/books-management/admin-categories/admin-categories.component';
+import { AdminCategoriesComponent } from './components/admin-management/admin-categories/admin-categories.component';
 import { ForgottenPasswordComponent } from './components/forgotten-password/forgotten-password.component';
 import { AdminVideosComponent } from './components/admin-management/videos-management/admin-videos/admin-videos.component';
 import { AdminBrandsComponent } from './components/admin-management/videos-management/admin-brands/admin-brands.component';

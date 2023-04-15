@@ -322,7 +322,7 @@
         </div>
 
         <div class="field">
-          <label for="name">ISBN</label>
+          <label>ISBN</label>
           <input
             type="text"
             pInputText
@@ -387,7 +387,7 @@
         </div>
 
         <div class="field">
-          <label for="taxe">TVA</label><br />
+          <label>TVA</label><br />
           <p-dropdown
             [options]="taxes"
             [(ngModel)]="book.taxe"
@@ -406,7 +406,7 @@
         </div>
 
         <div class="field">
-          <label for="editor">{{ "admin_books.editor" | translate }}</label
+          <label>{{ "admin_books.editor" | translate }}</label
           ><br />
           <p-dropdown
             [options]="editors"
@@ -417,7 +417,7 @@
         </div>
 
         <div class="field">
-          <label for="format">{{ "admin_books.format" | translate }}</label
+          <label>{{ "admin_books.format" | translate }}</label
           ><br />
           <p-dropdown
             [options]="formats"
@@ -428,7 +428,7 @@
         </div>
 
         <div class="field">
-          <label for="author">{{ "general.authors" | translate }}</label
+          <label>{{ "general.authors" | translate }}</label
           ><br />
           <p-multiSelect
             [options]="authors"
@@ -440,7 +440,7 @@
         </div>
 
         <div class="field">
-          <label for="category">{{ "general.categories" | translate }}</label
+          <label>{{ "general.categories" | translate }}</label
           ><br />
           <p-multiSelect
             [options]="categories"
@@ -452,7 +452,7 @@
         </div>
 
         <div class="field">
-          <label for="coverBook">{{
+          <label>{{
             "admin_books.cover_books" | translate
           }}</label
           ><br />
@@ -492,7 +492,7 @@
             !book.editor ||
             !book.format ||
             !book.author ||
-            !book.category 
+            !book.category
           "
         ></button>
       </ng-template>
