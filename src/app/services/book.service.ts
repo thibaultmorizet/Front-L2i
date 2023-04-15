@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Book } from '../interfaces/book';
-import { Category } from '../interfaces/category';
-import { Format } from '../interfaces/format';
-import { Product } from '../interfaces/product';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Book} from '../interfaces/book';
+import {Category} from '../interfaces/category';
+import {Format} from '../interfaces/format';
+import {Product} from '../interfaces/product';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,8 @@ export class BookService {
   private formatsString: string = '';
   private categoriesString: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAllBooks(inStock: boolean) {
     if (inStock) {
@@ -31,6 +32,7 @@ export class BookService {
     }
     return this.http.get<Array<Book>>(this.url + this.inStockString);
   }
+
   getOneBook(id: number) {
     return this.http.get<Book>('https://thibaultmorizet.fr/ws/books/' + id);
   }
@@ -79,13 +81,13 @@ export class BookService {
     }
     return this.http.get<Array<Book>>(
       'https://thibaultmorizet.fr/ws/books?' +
-        'itemsPerPage=' +
-        productnumber +
-        this.formatsString +
-        this.categoriesString +
-        this.pricesString +
-        this.searchString +
-        this.inStockString
+      'itemsPerPage=' +
+      productnumber +
+      this.formatsString +
+      this.categoriesString +
+      this.pricesString +
+      this.searchString +
+      this.inStockString
     );
   }
 
@@ -133,14 +135,14 @@ export class BookService {
     }
     return this.http.get<Array<Book>>(
       'https://thibaultmorizet.fr/ws/books?page=' +
-        page +
-        '&itemsPerPage=' +
-        productnumber +
-        this.formatsString +
-        this.categoriesString +
-        this.pricesString +
-        this.searchString +
-        this.inStockString
+      page +
+      '&itemsPerPage=' +
+      productnumber +
+      this.formatsString +
+      this.categoriesString +
+      this.pricesString +
+      this.searchString +
+      this.inStockString
     );
   }
 
@@ -183,17 +185,20 @@ export class BookService {
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
-        this.pricesString +
-        this.searchString +
-        this.inStockString
+      this.pricesString +
+      this.searchString +
+      this.inStockString
     );
   }
+
   createBook(book: Book) {
     return this.http.post<Book>(this.url, book);
   }
+
   updateBook(id: number | undefined, book: Book) {
     return this.http.put<{ token: string }>(this.url + '/' + id, book);
   }
+
   deleteTheBook(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
   }

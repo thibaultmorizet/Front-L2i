@@ -241,6 +241,7 @@ export class ShopComponent implements OnInit {
           event.page + 1,
           event.rows,
           this.selectedBrand,
+          this.selectedCategory,
           this.searchProduct?.title ?? this.searchProduct,
           this.selectedPriceRange,
           this.showProductsInStock
@@ -307,7 +308,8 @@ export class ShopComponent implements OnInit {
       this.videoService
         .getAllVideosBySearchAndParameters(
           this.selectedBrand,
-          this.searchProduct?.title ?? this.searchProduct,
+          this.selectedCategory,
+        this.searchProduct?.title ?? this.searchProduct,
           this.selectedPriceRange,
           this.pageRows,
           this.showProductsInStock
@@ -317,7 +319,8 @@ export class ShopComponent implements OnInit {
           this.videoService
             .getAllVideosBySearchAndParameters(
               this.selectedBrand,
-              this.searchProduct?.title ?? this.searchProduct,
+              this.selectedCategory,
+            this.searchProduct?.title ?? this.searchProduct,
               this.selectedPriceRange,
               10000,
               this.showProductsInStock
@@ -353,7 +356,7 @@ export class ShopComponent implements OnInit {
                 ),
                 position: 'topRight',
               });
-              
+
             } else {
               if (el.number_ordered != undefined) {
                 el.number_ordered = el.number_ordered + 1;

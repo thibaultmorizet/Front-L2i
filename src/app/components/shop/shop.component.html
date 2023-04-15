@@ -70,22 +70,16 @@
               "
             ></p-multiSelect>
           </div>
-          <div
-            *ngIf="
-              selectedType.includes('Livre') || selectedType.includes('Book')
-            "
-          >
-            <p-multiSelect
-              [options]="categories"
-              [(ngModel)]="selectedCategory"
-              defaultLabel="{{ 'product.category' | translate }}"
-              optionLabel="name"
-              display="chip"
-              (onChange)="
+          <p-multiSelect
+            [options]="categories"
+            [(ngModel)]="selectedCategory"
+            defaultLabel="{{ 'product.category' | translate }}"
+            optionLabel="name"
+            display="chip"
+            (onChange)="
                 getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
               "
-            ></p-multiSelect>
-          </div>
+          ></p-multiSelect>
           <div *ngIf="selectedType.includes('Video')">
             <p-multiSelect
               [options]="brands"
@@ -102,7 +96,7 @@
             <p class="price-range-title">
               {{ "product.price_range" | translate }} :
               {{
-                selectedPriceRange[0] + " € - " + selectedPriceRange[1] + " €"
+              selectedPriceRange[0] + " € - " + selectedPriceRange[1] + " €"
               }}
             </p>
             <p-slider
@@ -130,10 +124,10 @@
             >
               <span *ngIf="showProductsInStock">{{
                 "product.only_products_in_stock" | translate
-              }}</span>
+                }}</span>
               <span *ngIf="!showProductsInStock">{{
                 "product.only_products_out_of_stock" | translate
-              }}</span>
+                }}</span>
             </button>
           </div>
 
@@ -155,7 +149,7 @@
           <div class="shop-article-img">
             <a [routerLink]="['/products/' + aProduct.id]">
               <img src="{{ aProduct.image }}" alt="" class="img-icon"
-            /></a>
+              /></a>
             <div class="out-of-stock-message" *ngIf="aProduct.stock == 0">
               {{ "general.out_of_stock" | translate }}
             </div>
@@ -175,11 +169,11 @@
           >
             <i class="pi pi-shopping-cart"></i>
             <span
-              >{{
-                getUnitpricettcFromUnitpricehtAndTva(
-                  aProduct.unitpriceht,
-                  aProduct.taxe?.tva
-                )
+            >{{
+              getUnitpricettcFromUnitpricehtAndTva(
+                aProduct.unitpriceht,
+                aProduct.taxe?.tva
+              )
               }}
               €
             </span>

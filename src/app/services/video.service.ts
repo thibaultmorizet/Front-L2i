@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Brand } from '../interfaces/brand';
-import { Product } from '../interfaces/product';
-import { Video } from '../interfaces/video';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Brand} from '../interfaces/brand';
+import {Product} from '../interfaces/product';
+import {Video} from '../interfaces/video';
+import {Category} from "../interfaces/category";
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,10 @@ export class VideoService {
   private searchString: string = '';
   private pricesString: string = '';
   private brandsString: string = '';
+  private categoriesString: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAllVideos(inStock: boolean) {
     if (inStock) {
@@ -29,18 +32,21 @@ export class VideoService {
     }
     return this.http.get<Array<Video>>(this.url + this.inStockString);
   }
+
   getOneVideo(id: number) {
     return this.http.get<Video>('https://thibaultmorizet.fr/ws/videos/' + id);
   }
 
   getAllVideosBySearchAndParameters(
     brands: Array<Brand>,
+    categories: Array<Category>,
     search: string,
     prices: Array<number>,
     productnumber: number,
     inStock: boolean
   ) {
     this.brandsString = '';
+    this.categoriesString = '';
     this.searchString = '';
     this.pricesString = '';
     this.inStockString = '';
@@ -57,6 +63,9 @@ export class VideoService {
     brands.forEach((el) => {
       this.brandsString += '&brand.name[]=' + el.name;
     });
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
+    });
     if (typeof prices[0] == 'number' && typeof prices[1] == 'number') {
       this.pricesString +=
         '&unitpriceht[between]=' +
@@ -72,12 +81,13 @@ export class VideoService {
     }
     return this.http.get<Array<Video>>(
       'https://thibaultmorizet.fr/ws/videos?' +
-        'itemsPerPage=' +
-        productnumber +
-        this.brandsString +
-        this.pricesString +
-        this.searchString +
-        this.inStockString
+      'itemsPerPage=' +
+      productnumber +
+      this.brandsString +
+      this.categoriesString +
+      this.pricesString +
+      this.searchString +
+      this.inStockString
     );
   }
 
@@ -85,11 +95,13 @@ export class VideoService {
     page: number,
     productnumber: number,
     brands: Array<Brand>,
+    categories: Array<Category>,
     search: string,
     prices: Array<number>,
     inStock: boolean
   ) {
     this.brandsString = '';
+    this.categoriesString = '';
     this.searchString = '';
     this.inStockString = '';
 
@@ -104,6 +116,9 @@ export class VideoService {
     }
     brands.forEach((el) => {
       this.brandsString += '&brand.name[]=' + el.name;
+    });
+    categories.forEach((el) => {
+      this.categoriesString += '&category.name[]=' + el.name;
     });
     if (prices[0] && prices[1]) {
       this.pricesString +=
@@ -120,15 +135,17 @@ export class VideoService {
     }
     return this.http.get<Array<Video>>(
       'https://thibaultmorizet.fr/ws/videos?page=' +
-        page +
-        '&itemsPerPage=' +
-        productnumber +
-        this.brandsString +
-        this.pricesString +
-        this.searchString +
-        this.inStockString
+      page +
+      '&itemsPerPage=' +
+      productnumber +
+      this.brandsString +
+      this.categoriesString +
+      this.pricesString +
+      this.searchString +
+      this.inStockString
     );
   }
+
   getAllVideosWithoutLimit(
     search: string,
     prices: Array<number>,
@@ -162,18 +179,20 @@ export class VideoService {
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
-        this.pricesString +
-        this.searchString +
-        this.inStockString
+      this.pricesString +
+      this.searchString +
+      this.inStockString
     );
   }
 
   createVideo(video: Video) {
     return this.http.post<Video>(this.url, video);
   }
+
   updateVideo(id: number | undefined, video: Video) {
     return this.http.put<{ token: string }>(this.url + '/' + id, video);
   }
+
   deleteTheVideo(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
   }
