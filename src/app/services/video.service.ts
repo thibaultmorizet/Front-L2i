@@ -71,7 +71,7 @@ export class VideoService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - (5.5 * prices[1]) / 100);
+        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
@@ -125,7 +125,7 @@ export class VideoService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - (5.5 * prices[1]) / 100);
+        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
@@ -174,7 +174,7 @@ export class VideoService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - (5.5 * prices[1]) / 100);
+        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
     }
     if (inStock == null) {
       this.inStockString = '';
