@@ -206,7 +206,7 @@
 
 @media (min-width: 1300px) {
   .filter-list {
-    grid-template-columns: 1fr 1fr 1fr .5fr .8fr;
+    grid-template-columns: .8fr 1fr 1fr 1fr .5fr .8fr;
   }
 
   .filter-list-book {
@@ -214,7 +214,7 @@
   }
 
   .filter-list-video {
-    grid-template-columns: 1fr 1fr 1fr .5fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr .5fr;
   }
 
   .shop-article-list {

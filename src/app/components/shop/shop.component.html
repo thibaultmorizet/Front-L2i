@@ -70,16 +70,6 @@
               "
             ></p-multiSelect>
           </div>
-          <p-multiSelect
-            [options]="categories"
-            [(ngModel)]="selectedCategory"
-            defaultLabel="{{ 'product.category' | translate }}"
-            optionLabel="name"
-            display="chip"
-            (onChange)="
-                getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
-              "
-          ></p-multiSelect>
           <div *ngIf="selectedType.includes('Video')">
             <p-multiSelect
               [options]="brands"
@@ -92,6 +82,16 @@
               "
             ></p-multiSelect>
           </div>
+          <p-multiSelect
+          [options]="categories"
+          [(ngModel)]="selectedCategory"
+          defaultLabel="{{ 'product.category' | translate }}"
+          optionLabel="name"
+          display="chip"
+          (onChange)="
+                getProductsWithTypeAndBrandAndFormatAndCategoryAndPriceAndSearch()
+              "
+        ></p-multiSelect>
           <div>
             <p class="price-range-title">
               {{ "product.price_range" | translate }} :
