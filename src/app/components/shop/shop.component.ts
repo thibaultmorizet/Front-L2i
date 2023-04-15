@@ -86,7 +86,7 @@ export class ShopComponent implements OnInit {
     this.primengConfig.ripple = true;
     this.translate.use(this.translate.getDefaultLang());
 
-    this.ps.getAllProductsWithoutLimit('', [], true).subscribe((res) => {
+    this.ps.getAllProductsWithoutLimit('', [], [], true).subscribe((res) => {
       res.forEach((aProduct) => {
         if (
           aProduct.unitpriceht &&
@@ -162,6 +162,7 @@ export class ShopComponent implements OnInit {
     this.ps
       .getAllProductsWithoutLimit(
         searchProduct,
+        categoryFilter,
         prices,
         this.showProductsInStock
       )
@@ -208,6 +209,7 @@ export class ShopComponent implements OnInit {
           event.page + 1,
           event.rows,
           this.searchProduct?.title ?? this.searchProduct,
+          this.selectedCategory,
           this.selectedPriceRange,
           this.showProductsInStock
         )
