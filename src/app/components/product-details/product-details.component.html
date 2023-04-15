@@ -143,6 +143,24 @@
                   <span>{{ product.editor?.name }}</span>
                 </span>
               </li>
+              <li *ngFor="let aCategory of product.category">
+                  <span>
+                    <span class="bold"
+                    >{{ "general.category" | translate }} :
+                    </span>
+                    <span
+                    >{{ aCategory.name }}</span
+                    >
+                  </span>
+              </li>
+              <li *ngIf="product.type == 'book'">
+                <span>
+                  <span class="bold"
+                  >{{ "general.format" | translate }} :
+                  </span>
+                  <span>{{ product.format?.name }}</span>
+                </span>
+              </li>
               <li *ngIf="product.type == 'video'">
                 <span>
                   <span class="bold">{{ "general.brand" | translate }} : </span>
