@@ -38,10 +38,10 @@
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
-            <th style="display: table-cell !important">
+            <th id="table-header-image" style="display: table-cell !important">
               {{ "admin_home.image" | translate }}
             </th>
-            <th
+            <th id="table-header-title"
               style="display: table-cell !important; min-width: 15rem"
               pSortableColumn="title"
             >
@@ -49,14 +49,14 @@
               <p-sortIcon field="title"></p-sortIcon>
             </th>
 
-            <th
+            <th id="table-header-soldnumber"
               style="display: table-cell !important; min-width: 15rem"
               pSortableColumn="soldnumber"
             >
               {{ "admin_home.sold_number" | translate }}
               <p-sortIcon field="soldnumber"></p-sortIcon>
             </th>
-            <th
+            <th id="table-header-visitnumber"
               style="display: table-cell !important; min-width: 15rem"
               pSortableColumn="visitnumber"
             >
