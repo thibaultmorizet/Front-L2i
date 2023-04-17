@@ -119,41 +119,41 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th style="display: table-cell !important; width: 4rem">
+          <th id="table-header-checkbox" style="display: table-cell !important; width: 4rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th style="display: table-cell !important">
+          <th id="table-header-image" style="display: table-cell !important">
             {{ "admin_books.image" | translate }}
           </th>
-          <th
+          <th id="table-header-title"
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="title"
           >
             {{ "admin_books.title" | translate }}
             <p-sortIcon field="title"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important">
+          <th id="table-header-pricettc" style="display: table-cell !important">
             {{ "admin_books.price_ttc" | translate }}
           </th>
-          <th
+          <th id="table-header-priceht"
             style="display: table-cell !important"
             pSortableColumn="unitpriceht"
           >
             {{ "admin_books.price_ht" | translate }}
             <p-sortIcon field="unitpriceht"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important" pSortableColumn="taxe.tva">
+          <th id="table-header-tva" style="display: table-cell !important" pSortableColumn="taxe.tva">
             TVA
             <p-sortIcon field="taxe.tva"></p-sortIcon>
           </th>
-          <th
+          <th id="table-header-format-name"
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="format.name"
           >
             {{ "admin_books.format" | translate }}
             <p-sortIcon field="format.name"></p-sortIcon>
           </th>
-          <th
+          <th id="table-header-editor-name"
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="editor.name"
           >
@@ -161,34 +161,34 @@
             <p-sortIcon field="editor.name"></p-sortIcon>
           </th>
 
-          <th
+          <th id="table-header-isbn"
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="isbn"
           >
             ISBN <p-sortIcon field="isbn"></p-sortIcon>
           </th>
 
-          <th
+          <th id="table-header-year"
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="year"
           >
             {{ "admin_books.year" | translate }}
             <p-sortIcon field="year"></p-sortIcon>
           </th>
-          <th
+          <th id="table-header-stock"
             style="display: table-cell !important; min-width: 10rem"
             pSortableColumn="stock"
           >
             {{ "admin_books.stock" | translate }}
             <p-sortIcon field="stock"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important">
+          <th id="table-header-authors" style="display: table-cell !important">
             {{ "general.authors" | translate }}
           </th>
-          <th style="display: table-cell !important">
+          <th id="table-header-categories" style="display: table-cell !important">
             {{ "general.categories" | translate }}
           </th>
-          <th style="display: table-cell !important"></th>
+          <th id="table-header-void" style="display: table-cell !important"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-book>

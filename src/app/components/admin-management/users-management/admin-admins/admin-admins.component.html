@@ -54,21 +54,22 @@
       <ng-template pTemplate="header">
         <tr>
           <th
+            id="table-header-firstname"
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="firstname"
           >
             {{ "general.firstname" | translate }}
             <p-sortIcon field="firstname"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important" pSortableColumn="lastname">
+          <th id="table-header-lastname" style="display: table-cell !important" pSortableColumn="lastname">
             {{ "general.lastname" | translate }}
             <p-sortIcon field="lastname"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important" pSortableColumn="email">
+          <th id="table-header-email" style="display: table-cell !important" pSortableColumn="email">
             {{ "general.email" | translate }}
             <p-sortIcon field="email"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important"></th>
+          <th id="table-header-void" style="display: table-cell !important"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user>

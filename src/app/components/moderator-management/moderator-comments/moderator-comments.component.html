@@ -91,10 +91,11 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th style="display: table-cell !important">
+          <th id="table-header-image" style="display: table-cell !important">
             {{ "comments.image" | translate }}
           </th>
           <th
+            id="table-header-title"
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="product.title"
           >
@@ -102,6 +103,7 @@
             <p-sortIcon field="product.title"></p-sortIcon>
           </th>
           <th
+            id="table-header-firstname"
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="user.firstname"
           >
@@ -109,6 +111,7 @@
             <p-sortIcon field="user.firstname"></p-sortIcon>
           </th>
           <th
+            id="table-header-comment"
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="text"
           >
@@ -116,6 +119,7 @@
             <p-sortIcon field="text"></p-sortIcon>
           </th>
           <th
+            id="table-header-createdat"
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="createdAt"
           >
@@ -123,7 +127,7 @@
             <p-sortIcon field="createdAt"></p-sortIcon>
           </th>
 
-          <th style="display: table-cell !important"></th>
+          <th id="table-header-void" style="display: table-cell !important"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-comment>

@@ -74,25 +74,27 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th style="display: table-cell !important; width: 4rem">
+          <th id="table-header-checkbox" style="display: table-cell !important; width: 4rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
           <th
+            id="table-header-firstname"
             style="display: table-cell !important; min-width: 15rem"
             pSortableColumn="firstname"
           >
             {{ "general.firstname" | translate }}
             <p-sortIcon field="firstname"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important" pSortableColumn="lastname">
+          <th id="table-header-lastname" style="display: table-cell !important" pSortableColumn="lastname">
             {{ "general.lastname" | translate }}
             <p-sortIcon field="lastname"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important" pSortableColumn="email">
+          <th id="table-header-email" style="display: table-cell !important" pSortableColumn="email">
             {{ "general.email" | translate }}
             <p-sortIcon field="email"></p-sortIcon>
           </th>
           <th
+            id="table-header-billingaddress"
             style="display: table-cell !important"
             pSortableColumn="billingAddress"
           >
@@ -100,13 +102,14 @@
             <p-sortIcon field="billingAddress"></p-sortIcon>
           </th>
           <th
+            id="table-header-deliveryaddress"
             style="display: table-cell !important"
             pSortableColumn="deliveryAddress"
           >
             {{ "general.delivery_address" | translate }}
             <p-sortIcon field="deliveryAddress"></p-sortIcon>
           </th>
-          <th style="display: table-cell !important"></th>
+          <th id="table-header-void" style="display: table-cell !important"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user>
@@ -120,14 +123,14 @@
           <td *ngIf="user.billingAddress?.street">
             {{ user.billingAddress?.street }},
             {{ user.billingAddress?.postalcode }} {{ user.billingAddress?.city
-            }}<br />{{ user.billingAddress?.country }}
+            }}<br/>{{ user.billingAddress?.country }}
           </td>
           <td *ngIf="!user.billingAddress?.street"></td>
           <td *ngIf="user.deliveryAddress?.street">
             {{ user.deliveryAddress?.street }},
             {{ user.deliveryAddress?.postalcode }}
-            {{ user.deliveryAddress?.city }}<br />{{
-              user.deliveryAddress?.country
+            {{ user.deliveryAddress?.city }}<br/>{{
+            user.deliveryAddress?.country
             }}
           </td>
           <td *ngIf="!user.deliveryAddress?.street"></td>
@@ -153,8 +156,8 @@
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
           {{
-            "admin_users.total_users_message"
-              | translate : { userLength: allUsers ? allUsers.length : 0 }
+          "admin_users.total_users_message"
+            | translate : {userLength: allUsers ? allUsers.length : 0}
           }}
         </div>
       </ng-template>
@@ -191,7 +194,7 @@
             autofocus
           />
           <small class="p-error" *ngIf="submitted && !user.firstname"
-            >{{ "general.firstname" | translate }}
+          >{{ "general.firstname" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
@@ -206,7 +209,7 @@
             required
           />
           <small class="p-error" *ngIf="submitted && !user.lastname"
-            >{{ "general.lastname" | translate }}
+          >{{ "general.lastname" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
@@ -221,16 +224,16 @@
             required
           />
           <small class="p-error" *ngIf="submitted && !user.email"
-            >{{ "general.email" | translate }}
+          >{{ "general.email" | translate }}
             {{ "general.is_required" | translate }}</small
           >
         </div>
 
-        <br />
+        <br/>
 
         <div class="field">
           <label for="billingAddressStreet"
-            >{{ "general.billing_address" | translate }} -
+          >{{ "general.billing_address" | translate }} -
             {{ "general.street" | translate }}</label
           >
           <input
@@ -245,7 +248,7 @@
           <label
             *ngIf="updateBillingAddress.street"
             for="billingAddressPostalcode"
-            >{{ "general.billing_address" | translate }} -
+          >{{ "general.billing_address" | translate }} -
             {{ "general.postal_code" | translate }} *</label
           >
           <p-inputMask
@@ -260,7 +263,7 @@
 
         <div class="field">
           <label *ngIf="updateBillingAddress.street" for="billingAddressCity"
-            >{{ "general.billing_address" | translate }} -
+          >{{ "general.billing_address" | translate }} -
             {{ "general.city" | translate }} *</label
           >
           <input
@@ -274,7 +277,7 @@
 
         <div class="field">
           <label *ngIf="updateBillingAddress.street" for="billingAddressCountry"
-            >{{ "general.billing_address" | translate }} -
+          >{{ "general.billing_address" | translate }} -
             {{ "general.country" | translate }} *</label
           >
           <input
@@ -286,11 +289,11 @@
           />
         </div>
 
-        <br />
+        <br/>
 
         <div class="field">
           <label for="deliveryAddressStreet"
-            >{{ "general.delivery_address" | translate }} -
+          >{{ "general.delivery_address" | translate }} -
             {{ "general.street" | translate }}</label
           >
           <input
@@ -305,7 +308,7 @@
           <label
             *ngIf="updateDeliveryAddress.street"
             for="deliveryAddressPostalcode"
-            >{{ "general.delivery_address" | translate }} -
+          >{{ "general.delivery_address" | translate }} -
             {{ "general.postal_code" | translate }} *</label
           >
           <p-inputMask
@@ -320,7 +323,7 @@
 
         <div class="field">
           <label *ngIf="updateDeliveryAddress.street" for="deliveryAddressCity"
-            >{{ "general.delivery_address" | translate }} -
+          >{{ "general.delivery_address" | translate }} -
             {{ "general.city" | translate }} *</label
           >
           <input
@@ -336,7 +339,7 @@
           <label
             *ngIf="updateDeliveryAddress.street"
             for="deliveryAddressCountry"
-            >{{ "general.delivery_address" | translate }} -
+          >{{ "general.delivery_address" | translate }} -
             {{ "general.country" | translate }} *</label
           >
           <input
