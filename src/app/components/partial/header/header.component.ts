@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
 import StorageCrypter from 'storage-crypter';
 import { ActivatedRoute, Router } from '@angular/router';

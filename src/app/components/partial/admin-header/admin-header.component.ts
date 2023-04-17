@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { User } from 'src/app/interfaces/user';
-import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({

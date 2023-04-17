@@ -26,7 +26,7 @@ export class ProductDetailsComponent implements OnInit {
   idProduct: number = 0;
   cart: Array<Product> = [];
   storageCrypter = new StorageCrypter('Secret');
-  productExistinCart: Boolean = false;
+  productExistinCart: boolean = false;
   closeResult = '';
   errorPassword: string | null = null;
   errorEmail: string | null = null;
@@ -362,7 +362,7 @@ export class ProductDetailsComponent implements OnInit {
     this.commentService.getCommentById(id).subscribe((el) => {
       if (typeof el[0] == 'object' && el[0].user) {
         if (el[0].user.id == this.connectedUser?.id) {
-          this.commentService.deleteTheComment(el[0].id).subscribe((res) => {
+          this.commentService.deleteTheComment(el[0].id).subscribe(() => {
             if (this.product.comments) {
               this.product.comments.forEach(function (element, index, object) {
                 if (element.id == el[0].id) {
