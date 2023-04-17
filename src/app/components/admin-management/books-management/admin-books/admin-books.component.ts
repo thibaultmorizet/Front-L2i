@@ -74,7 +74,7 @@ export class AdminBooksComponent implements OnInit {
       );
     } catch (error) {
       this.connectedAdmin = null;
-      this.router.navigateByUrl('/admin/login');
+      this.router.navigateByUrl('/admin/login').then();
     }
 
     if (this.storageCrypter.getItem('jeton', 'local')) {
@@ -107,7 +107,7 @@ export class AdminBooksComponent implements OnInit {
     this.storageCrypter.removeItem('adminUser', 'session');
     this.storageCrypter.removeItem('language', 'session');
     this.connectedAdmin = null;
-    this.router.navigateByUrl('/admin/login');
+    this.router.navigateByUrl('/admin/login').then();
     this.iziToast.success({
       message: this.translate.instant('izitoast.you_re_logout'),
       position: 'topRight',
