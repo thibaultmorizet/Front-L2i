@@ -142,10 +142,10 @@ export class AdminBooksComponent implements OnInit {
             imageUrl: aBook.image?.substring(aBook.image?.indexOf('assets')),
           };
 
-          this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {
+          this.ps.deleteImage(imageUrlToDelete).subscribe(() => {
           });
 
-          this.bs.deleteTheBook(aBook.id).subscribe((el) => {
+          this.bs.deleteTheBook(aBook.id).subscribe(() => {
           });
         });
         this.selectedBooks = [];
@@ -181,9 +181,9 @@ export class AdminBooksComponent implements OnInit {
           imageUrl: book.image?.substring(book.image?.indexOf('assets')),
         };
 
-        this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {
+        this.ps.deleteImage(imageUrlToDelete).subscribe(() => {
         });
-        this.bs.deleteTheBook(book.id).subscribe((el) => {
+        this.bs.deleteTheBook(book.id).subscribe(() => {
         });
         this.book = {};
 
@@ -220,7 +220,7 @@ export class AdminBooksComponent implements OnInit {
         this.ps.addImage(this.imageInfo).subscribe();
       }
       this.bs.updateBook(this.book.id, this.book).subscribe({
-        next: (result) => {
+        next: () => {
           this.book = {};
           this.ngOnInit();
           this.iziToast.success({
@@ -258,7 +258,7 @@ export class AdminBooksComponent implements OnInit {
             this.ps.addImage(this.imageInfo).subscribe();
           }
           this.bs.updateBook(res.id, this.book).subscribe({
-            next: (result) => {
+            next: () => {
               this.book = {};
               this.ngOnInit();
               this.iziToast.success({
