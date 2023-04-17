@@ -46,6 +46,7 @@ export class AdminBooksComponent implements OnInit {
   authors: Array<Author> = [];
   categories: Array<Category> = [];
   imageInfo: Image = {};
+  image_extension: string = "jpeg";
 
   constructor(
     private router: Router,
@@ -208,19 +209,14 @@ export class AdminBooksComponent implements OnInit {
     if (this.book.id) {
       if (this.imageInfo.data) {
         this.imageInfo.productId = this.book.id?.toString();
-
+        this.image_extension = 'jpeg';
         if (this.imageInfo.url) {
-          this.book.image =
-            'https://www.thibaultmorizet.fr/assets/product-images/' +
-            this.book.id +
-            '.' +
-            this.imageInfo.url.split('.').pop();
-        } else {
-          this.book.image =
-            'https://www.thibaultmorizet.fr/assets/product-images/' +
-            this.book.id +
-            '.jpeg';
+            this.image_extension = this.imageInfo.url.split('.').pop()??"jpeg";
         }
+        this.book.image =
+          'https://www.thibaultmorizet.fr/assets/product-images/' +
+          this.book.id +
+          '.' + this.image_extension
         this.ps.addImage(this.imageInfo).subscribe();
       }
       this.bs.updateBook(this.book.id, this.book).subscribe({
