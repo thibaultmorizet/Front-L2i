@@ -27,5 +27,5 @@ export interface Product {
   soldnumber?: number;
   comments?: Array<Comment>;
   brand?: Brand;
-  type?: String;
+  type?: string;
 }

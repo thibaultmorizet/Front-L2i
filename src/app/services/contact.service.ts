@@ -1,5 +1,4 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Product } from '../interfaces/product';
 
 import { Injectable } from '@angular/core';
 import { Contact } from '../interfaces/contact';
@@ -28,7 +27,7 @@ export class ContactService {
         },
         { headers: headers }
       )
-      .subscribe((response) => {
+      .subscribe(() => {
         this.iziToast.success({
           message: this.translate.instant('izitoast.mail_sent'),
           position: 'topRight',

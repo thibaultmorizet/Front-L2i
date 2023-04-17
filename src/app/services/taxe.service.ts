@@ -14,7 +14,7 @@ export class TaxeService {
     return this.http.get<Array<Taxe>>(this.url);
   }
 
-  getTaxeByTva(tva: Number | undefined) {
+  getTaxeByTva(tva: number | undefined) {
     return this.http.get<Array<Taxe>>(
       'https://thibaultmorizet.fr/ws/taxes?tva=' + tva
     );

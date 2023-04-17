@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
 import { User } from '../interfaces/user';
 
 @Injectable({
@@ -14,7 +13,7 @@ export class UserService {
   register(user: User) {
     return this.http.post<{ token: string }>(this.url, user);
   }
-  getTheUser(email: String | undefined) {
+  getTheUser(email: string | undefined) {
     return this.http.get<Array<User>>(
       'https://thibaultmorizet.fr/ws/users?email=' + email
     );

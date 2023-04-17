@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   connectedUser: User | null = {};
   productBestSell: Array<Product> = [];
   responsiveOptions: any;
-  productExistinCart: Boolean = false;
+  productExistinCart: boolean = false;
   @ViewChild('bestSellCarousel') bestSellCarousel?: CarouselModule;
   carouselIsLoaded: boolean = false;
 

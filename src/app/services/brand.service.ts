@@ -7,14 +7,13 @@ import { Brand } from '../interfaces/brand';
 })
 export class BrandService {
   private url: string = 'https://thibaultmorizet.fr/ws/brands';
-  private brands: Array<object> = [];
 
   constructor(private http: HttpClient) {}
 
   getAllBrands() {
     return this.http.get<Array<Brand>>(this.url);
   }
-  getBrandByName(name: String | undefined) {
+  getBrandByName(name: string | undefined) {
     return this.http.get<Array<Brand>>(
       'https://thibaultmorizet.fr/ws/brands?name=' + name
     );

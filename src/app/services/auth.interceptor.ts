@@ -6,7 +6,6 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpHeaders,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -17,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url !== "https://thibaultmorizet.fr/authentication_token" && request.url !== "https://thibaultmorizet.fr/ws/users") {            
+    if (request.url !== "https://thibaultmorizet.fr/authentication_token" && request.url !== "https://thibaultmorizet.fr/ws/users") {
       let jeton = this.storageCrypter.getItem('jeton', 'local');
       request = request.clone({
         setHeaders: {

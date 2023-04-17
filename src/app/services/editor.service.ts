@@ -7,14 +7,13 @@ import { Editor } from '../interfaces/editor';
 })
 export class EditorService {
   private url: string = 'https://thibaultmorizet.fr/ws/editors';
-  private editors: Array<object> = [];
 
   constructor(private http: HttpClient) {}
 
   getAllEditors() {
     return this.http.get<Array<Editor>>(this.url);
   }
-  getEditorByName(name: String | undefined) {
+  getEditorByName(name: string | undefined) {
     return this.http.get<Array<Editor>>(
       'https://thibaultmorizet.fr/ws/editors?name=' + name
     );

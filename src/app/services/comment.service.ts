@@ -13,7 +13,7 @@ export class CommentService {
   getAllComments() {
     return this.http.get<Array<Comment>>(this.url);
   }
-  getCommentById(id: Number | undefined) {
+  getCommentById(id: number | undefined) {
     return this.http.get<Array<Comment>>(
       'https://thibaultmorizet.fr/ws/comments?id=' + id
     );

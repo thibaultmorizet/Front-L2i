@@ -34,14 +34,14 @@ export class ShopComponent implements OnInit {
   products: Array<Product> = [];
   allProducts: Array<Product> = [];
   formats: Array<Format> = [];
-  types: Array<String> = [];
+  types: Array<string> = [];
   editors: Array<Editor> = [];
   brands: Array<Brand> = [];
   authors: Array<Author> = [];
   categories: Array<Category> = [];
   user: User = {};
   searchProduct: any = {};
-  productExistinCart: Boolean = false;
+  productExistinCart: boolean = false;
   numberToOrder: string = '1';
   storageCrypter = new StorageCrypter('Secret');
   userInscription: User = {};
@@ -55,7 +55,7 @@ export class ShopComponent implements OnInit {
 
   selectedFormat: Array<Format> = [];
   selectedBrand: Array<Brand> = [];
-  selectedType: Array<String> = [];
+  selectedType: Array<string> = [];
   selectedCategory: Array<Category> = [];
   selectedPriceRange: Array<number> = [0, 0];
   showProductsInStock: boolean = true;
@@ -459,8 +459,8 @@ export class ShopComponent implements OnInit {
   filterProduct(event: any) {
     let filtered: any[] = [];
     let query = event.query;
-    for (let i = 0; i < this.allProducts.length; i++) {
-      let product = this.allProducts[i];
+    for(let aProduct of this.allProducts){
+      let product = aProduct;
       if (
         product.title &&
         product.title.toLowerCase().indexOf(query.toLowerCase()) == 0
@@ -471,7 +471,7 @@ export class ShopComponent implements OnInit {
           if (
             (anAuthor.firstname &&
               anAuthor.firstname.toLowerCase().indexOf(query.toLowerCase()) ==
-                0) ||
+              0) ||
             (anAuthor.lastname &&
               anAuthor.lastname.toLowerCase().indexOf(query.toLowerCase()) == 0)
           ) {
@@ -480,7 +480,6 @@ export class ShopComponent implements OnInit {
         });
       }
     }
-
     this.filteredProducts = filtered;
   }
 

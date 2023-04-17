@@ -1,7 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Product} from '../interfaces/product';
-import {Format} from '../interfaces/format';
 import {Category} from '../interfaces/category';
 
 @Injectable({
@@ -11,7 +10,6 @@ export class ProductService {
   private url: string = 'https://thibaultmorizet.fr/ws/products';
   private urlWithoutLimit: string =
     'https://thibaultmorizet.fr/ws/products?itemsPerPage=10000';
-  private products: Array<object> = [];
   private searchString: string = '';
   private pricesString: string = '';
   private inStockString: string = '';

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxIzitoastService } from 'ngx-izitoast';
 import { Product } from 'src/app/interfaces/product';
@@ -305,7 +305,7 @@ export class CartDetailsComponent implements OnInit {
     if (this.newAddressBilling.id != undefined) {
       this.addressService
         .updateAddress(this.newAddressBilling.id, this.newAddressBilling)
-        .subscribe((res) => {
+        .subscribe(() => {
           this.connectedUser.billingAddress = this.newAddressBilling;
 
           this.storageCrypter.setItem(
@@ -338,7 +338,7 @@ export class CartDetailsComponent implements OnInit {
         );
         this.us
           .updateUser(this.connectedUser?.id, this.connectedUser)
-          .subscribe((res) => {
+          .subscribe(() => {
             this.iziToast.success({
               message: this.translate.instant(
                 'izitoast.modification_confirmed'
@@ -358,7 +358,7 @@ export class CartDetailsComponent implements OnInit {
     if (this.newAddressDelivery.id != undefined) {
       this.addressService
         .updateAddress(this.newAddressDelivery.id, this.newAddressDelivery)
-        .subscribe((res) => {
+        .subscribe(() => {
           this.connectedUser.deliveryAddress = this.newAddressDelivery;
 
           this.storageCrypter.setItem(
@@ -391,7 +391,7 @@ export class CartDetailsComponent implements OnInit {
         );
         this.us
           .updateUser(this.connectedUser?.id, this.connectedUser)
-          .subscribe((res) => {
+          .subscribe(() => {
             this.iziToast.success({
               message: this.translate.instant(
                 'izitoast.modification_confirmed'
@@ -446,7 +446,7 @@ export class CartDetailsComponent implements OnInit {
 
               this.ps
                 .updateProduct(aProduct.id, aProduct)
-                .subscribe((el) => {});
+                .subscribe(() => {});
             }
           }
         });
@@ -473,7 +473,7 @@ export class CartDetailsComponent implements OnInit {
           ', ' +
           this.newAddressBilling.country;
 
-        this.os.setOrder(this.order).subscribe((el) => {});
+        this.os.setOrder(this.order).subscribe(() => {});
         this.cart = [];
         this.storageCrypter.removeItem('cart', 'local');
         this.iziToast.success({
@@ -537,7 +537,7 @@ export class CartDetailsComponent implements OnInit {
         );
         this.us
           .updateUser(this.connectedUser?.id, this.connectedUser)
-          .subscribe((res) => {
+          .subscribe(() => {
             this.iziToast.success({
               message: this.translate.instant(
                 'izitoast.modification_confirmed'

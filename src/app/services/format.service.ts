@@ -7,14 +7,13 @@ import { Format } from '../interfaces/format';
 })
 export class FormatService {
   private url: string = 'https://thibaultmorizet.fr/ws/formats';
-  private formats: Array<object> = [];
 
   constructor(private http: HttpClient) {}
 
   getAllFormats() {
     return this.http.get<Array<Format>>(this.url);
   }
-  getFormatByName(name: String | undefined) {
+  getFormatByName(name: string | undefined) {
     return this.http.get<Array<Format>>(
       'https://thibaultmorizet.fr/ws/formats?name=' + name
     );

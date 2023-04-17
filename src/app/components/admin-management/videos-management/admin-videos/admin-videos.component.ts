@@ -14,10 +14,8 @@ import {Image} from 'src/app/interfaces/image';
 import {Taxe} from 'src/app/interfaces/taxe';
 import {Category} from 'src/app/interfaces/category';
 import {User} from 'src/app/interfaces/user';
-import {AuthorService} from 'src/app/services/author.service';
 import {ProductService} from 'src/app/services/product.service';
 import {TaxeService} from 'src/app/services/taxe.service';
-import {Categoryservice} from 'src/app/services/category.service';
 import StorageCrypter from 'storage-crypter';
 import {VideoService} from 'src/app/services/video.service';
 import {BrandService} from 'src/app/services/brand.service';
@@ -131,10 +129,10 @@ export class AdminVideosComponent implements OnInit {
             imageUrl: aVideo.image?.substring(aVideo.image?.indexOf('assets')),
           };
 
-          this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {
+          this.ps.deleteImage(imageUrlToDelete).subscribe(() => {
           });
 
-          this.vs.deleteTheVideo(aVideo.id).subscribe((el) => {
+          this.vs.deleteTheVideo(aVideo.id).subscribe(() => {
           });
         });
         this.selectedVideos = [];
@@ -169,9 +167,9 @@ export class AdminVideosComponent implements OnInit {
           imageUrl: video.image?.substring(video.image?.indexOf('assets')),
         };
 
-        this.ps.deleteImage(imageUrlToDelete).subscribe((el) => {
+        this.ps.deleteImage(imageUrlToDelete).subscribe(() => {
         });
-        this.vs.deleteTheVideo(video.id).subscribe((el) => {
+        this.vs.deleteTheVideo(video.id).subscribe(() => {
         });
         this.video = {};
 
@@ -212,7 +210,7 @@ export class AdminVideosComponent implements OnInit {
         }
         this.ps.addImage(this.imageInfo).subscribe();
       }
-      this.vs.updateVideo(this.video.id, this.video).subscribe((result) => {
+      this.vs.updateVideo(this.video.id, this.video).subscribe(() => {
         this.video = {};
         this.ngOnInit();
         this.iziToast.success({
@@ -240,7 +238,7 @@ export class AdminVideosComponent implements OnInit {
 
           this.ps.addImage(this.imageInfo).subscribe();
         }
-        this.vs.updateVideo(res.id, this.video).subscribe((result) => {
+        this.vs.updateVideo(res.id, this.video).subscribe(() => {
           this.video = {};
           this.ngOnInit();
           this.iziToast.success({
