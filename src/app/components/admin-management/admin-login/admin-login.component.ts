@@ -17,7 +17,7 @@ import StorageCrypter from 'storage-crypter';
 export class AdminLoginComponent implements OnInit {
   storageCrypter = new StorageCrypter('Secret');
   passwordIsClear: boolean = false;
-  passwordType: string = 'password';
+  typeOfPassword: string = 'password';
   adminLogin: User = {};
   errorPassword: string | null = null;
   errorEmail: string | null = null;
@@ -58,11 +58,11 @@ export class AdminLoginComponent implements OnInit {
 
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
-    if (this.passwordIsClear === true) {
-      this.passwordType = 'text';
+    if (this.passwordIsClear) {
+      this.typeOfPassword = 'text';
       return;
     }
-    this.passwordType = 'password';
+    this.typeOfPassword = 'password';
   }
 
   login() {
@@ -114,7 +114,7 @@ export class AdminLoginComponent implements OnInit {
             }, 250);
           }
         },
-        error: (res) => {
+        error: () => {
           this.errorPassword = 'Incorrect password';
         },
       });

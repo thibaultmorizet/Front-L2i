@@ -18,7 +18,6 @@ import { NgxIzitoastService } from 'ngx-izitoast';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
-import { AddressService } from 'src/app/services/address.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
@@ -47,7 +46,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   isLoginPage: boolean = true;
   userInscription: User = {};
   passwordIsClear: boolean = false;
-  passwordType: string = 'password';
+  typeOfPassword: string = 'password';
 
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -151,7 +150,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             }, 250);
           }
         },
-        error: (res) => {
+        error: () => {
           this.errorPassword = 'Incorrect password';
         },
       });
@@ -206,7 +205,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 }, 250);
               }
             },
-            error: (res) => {
+            error: () => {
               this.errorPassword = 'Incorrect password';
             },
           });
@@ -221,7 +220,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       if (res[0] == undefined) {
         this.errorEmail = '';
         this.userInscription.language = 'en';
-        this.us.register(this.userInscription).subscribe((resRegister) => {
+        this.us.register(this.userInscription).subscribe(() => {
           this.userInscription = {};
           this.isLoginPage = true;
 
@@ -348,11 +347,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
-    if (this.passwordIsClear === true) {
-      this.passwordType = 'text';
+    if (this.passwordIsClear) {
+      this.typeOfPassword = 'text';
       return;
     }
-    this.passwordType = 'password';
+    this.typeOfPassword = 'password';
   }
   checkLastnamePattern() {
     let lastnamePattern = new FormControl(

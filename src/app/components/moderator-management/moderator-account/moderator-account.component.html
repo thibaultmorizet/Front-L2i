@@ -1,6 +1,6 @@
 <div class="general-content">
     <app-moderator-header></app-moderator-header>
-  
+
     <main id="content">
       <div class="container">
         <img
@@ -8,7 +8,7 @@
           src="https://www.thibaultmorizet.fr/assets/background-images/personalData.png"
           alt="personnalDataImg"
         />
-  
+
         <div>
           <p-confirmDialog
             [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
@@ -27,7 +27,7 @@
             >
               {{ "general.please_change_your_password" | translate }}
             </div>
-  
+
             <div class="subtitle">
               {{ "moderator_account.personnal_data" | translate }}
             </div>
@@ -50,7 +50,7 @@
                   />
                 </div>
               </div>
-  
+
               <div class="input-group">
                 <div class="field mb-3">
                   <input
@@ -65,7 +65,7 @@
                   />
                 </div>
               </div>
-  
+
               <div class="input-group">
                 <div class="field mb-3">
                   <input
@@ -81,14 +81,14 @@
                   />
                 </div>
               </div>
-  
+
               <div class="input-group">
                 <div class="field mb-3">
                   <div>
                     <input
                       id="password"
                       name="password"
-                      [type]="passwordType"
+                      [type]="typeOfPassword"
                       placeholder="{{
                         'my_account.insert_your_new_password' | translate
                       }}"
@@ -117,14 +117,14 @@
                   >
                 </div>
               </div>
-  
+
               <div class="input-group">
                 <div class="field mb-3">
                   <div>
                     <input
                       id="passwordConfirm"
                       name="passwordConfirm"
-                      [type]="passwordType"
+                      [type]="typeOfPassword"
                       placeholder="{{
                         'my_account.confirm_your_new_password' | translate
                       }}"
@@ -152,7 +152,7 @@
                   >
                 </div>
               </div>
-  
+
               <div class="d-flex justify-content-end mt-2">
                 <button
                   pButton
@@ -180,7 +180,7 @@
               >
                 {{ "my_account.delete_my_account" | translate }}
               </button>
-  
+
               <button
                 type="button"
                 (click)="logout()"
@@ -195,4 +195,3 @@
     </main>
     <app-moderator-footer></app-moderator-footer>
   </div>
-  

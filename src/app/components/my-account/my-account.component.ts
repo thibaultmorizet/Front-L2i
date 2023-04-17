@@ -36,7 +36,7 @@ export class MyAccountComponent implements OnInit {
   orders: Array<Order> = [];
   isOrderPage: boolean = false;
   passwordIsClear: boolean = false;
-  passwordType: string = 'password';
+  typeOfPassword: string = 'password';
   forceToUpdatePassword: boolean = false;
 
   constructor(
@@ -269,10 +269,10 @@ export class MyAccountComponent implements OnInit {
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
     if (this.passwordIsClear) {
-      this.passwordType = 'text';
+      this.typeOfPassword = 'text';
       return;
     }
-    this.passwordType = 'password';
+    this.typeOfPassword = 'password';
   }
 
   checkUpdatePasswordPattern() {

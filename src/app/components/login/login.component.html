@@ -31,7 +31,7 @@
                   <input
                     id="password"
                     name="password"
-                    [type]="passwordType"
+                    [type]="typeOfPassword"
                     placeholder="{{ 'login.password' | translate }}"
                     pInputText
                     [(ngModel)]="userLogin.password"
@@ -167,7 +167,7 @@
                   <input
                     id="password"
                     name="password"
-                    [type]="passwordType"
+                    [type]="typeOfPassword"
                     placeholder="{{ 'login.password' | translate }}"
                     pInputText
                     [(ngModel)]="userInscription.password"
@@ -201,7 +201,7 @@
                   <input
                     id="passwordConfirm"
                     name="passwordConfirm"
-                    [type]="passwordType"
+                    [type]="typeOfPassword"
                     placeholder="{{
                       'login.confirm_your_password' | translate
                     }}"

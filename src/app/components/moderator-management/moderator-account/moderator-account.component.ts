@@ -29,7 +29,7 @@ export class ModeratorAccountComponent implements OnInit {
   errorFirstname: string | null = null;
   errorPasswordConfirm: string | null = null;
   passwordIsClear: boolean = false;
-  passwordType: string = 'password';
+  typeOfPassword: string = 'password';
   forceToUpdatePassword: boolean = false;
 
   constructor(
@@ -91,7 +91,7 @@ export class ModeratorAccountComponent implements OnInit {
         this.newModeratorData.forceToUpdatePassword = false;
         this.us
           .updateUser(this.newModeratorData.id, this.newModeratorData)
-          .subscribe((res) => {
+          .subscribe(() => {
             this.forceToUpdatePassword = false;
             this.iziToast.success({
               message: this.translate.instant(
@@ -131,11 +131,11 @@ export class ModeratorAccountComponent implements OnInit {
 
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
-    if (this.passwordIsClear === true) {
-      this.passwordType = 'text';
+    if (this.passwordIsClear) {
+      this.typeOfPassword = 'text';
       return;
     }
-    this.passwordType = 'password';
+    this.typeOfPassword = 'password';
   }
 
   checkUpdatePasswordPattern() {
@@ -181,7 +181,7 @@ export class ModeratorAccountComponent implements OnInit {
       this.connectedModerator = JSON.parse(
         this.storageCrypter.getItem('moderatorUser', 'session')
       );
-      this.us.deleteTheUser(this.connectedModerator.id).subscribe((el) => {});
+      this.us.deleteTheUser(this.connectedModerator.id).subscribe(() => {});
       this.logout();
     } catch {}
   }

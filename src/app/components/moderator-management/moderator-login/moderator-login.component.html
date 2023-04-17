@@ -1,11 +1,11 @@
 <div class="general-content">
     <app-moderator-header></app-moderator-header>
-  
+
     <main id="content">
       <div class="container">
         <div class="moderator-login-container">
           <p class="title text-center">{{ "login.login" | translate }}</p>
-  
+
           <form #loginForm="ngForm" (ngSubmit)="login()">
             <div class="mb-3">
               <div class="input-group">
@@ -18,26 +18,26 @@
                     pInputText
                     [(ngModel)]="moderatorLogin.email"
                     [ngClass]="{ 'ng-invalid': errorEmail }"
-                    
+
                   />
                   <small class="p-error" [ngClass]="{ 'd-none': !errorEmail }">{{
                     errorEmail
                   }}</small>
                 </div>
               </div>
-  
+
               <div class="input-group">
                 <div class="field mb-3">
                   <div>
                     <input
                       id="password"
                       name="password"
-                      [type]="passwordType"
+                      [type]="typeOfPassword"
                       placeholder="{{ 'my_account.password' | translate }}"
                       pInputText
                       [(ngModel)]="moderatorLogin.password"
                       [ngClass]="{ 'ng-invalid': errorPassword }"
-                      
+
                     />
                     <span
                       class="toogle-password-clear"
@@ -58,7 +58,7 @@
                   >
                 </div>
               </div>
-  
+
               <div class="d-flex justify-content-end mt-2">
                 <button
                   pButton
@@ -77,4 +77,3 @@
     </main>
     <app-moderator-footer></app-moderator-footer>
   </div>
-  

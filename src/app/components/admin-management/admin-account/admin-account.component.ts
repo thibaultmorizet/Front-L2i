@@ -26,7 +26,7 @@ export class AdminAccountComponent implements OnInit {
   errorFirstname: string | null = null;
   errorPasswordConfirm: string | null = null;
   passwordIsClear: boolean = false;
-  passwordType: string = 'password';
+  typeOfPassword: string = 'password';
   forceToUpdatePassword: boolean = false;
 
   constructor(
@@ -87,7 +87,7 @@ export class AdminAccountComponent implements OnInit {
       this.newAdminData.forceToUpdatePassword = false;
       this.us
         .updateUser(this.newAdminData.id, this.newAdminData)
-        .subscribe((res) => {
+        .subscribe(() => {
           this.forceToUpdatePassword = false;
           this.iziToast.success({
             message: this.translate.instant('izitoast.modification_confirmed'),
@@ -122,11 +122,11 @@ export class AdminAccountComponent implements OnInit {
 
   tooglePasswordClear() {
     this.passwordIsClear = !this.passwordIsClear;
-    if (this.passwordIsClear === true) {
-      this.passwordType = 'text';
+    if (this.passwordIsClear) {
+      this.typeOfPassword = 'text';
       return;
     }
-    this.passwordType = 'password';
+    this.typeOfPassword = 'password';
   }
 
   checkUpdatePasswordPattern() {
@@ -170,7 +170,7 @@ export class AdminAccountComponent implements OnInit {
       this.connectedAdmin = JSON.parse(
         this.storageCrypter.getItem('adminUser', 'session')
       );
-      this.us.deleteTheUser(this.connectedAdmin.id).subscribe((el) => {});
+      this.us.deleteTheUser(this.connectedAdmin.id).subscribe(() => {});
       this.logout();
     } catch {}
   }
