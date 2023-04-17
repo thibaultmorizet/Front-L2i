@@ -242,18 +242,15 @@ export class AdminBooksComponent implements OnInit {
         next: (res) => {
           if (this.imageInfo.data) {
             this.imageInfo.productId = res.id?.toString();
+
+            this.image_extension = 'jpeg';
             if (this.imageInfo.url) {
-              this.book.image =
-                'https://www.thibaultmorizet.fr/assets/product-images/' +
-                res.id +
-                '.' +
-                this.imageInfo.url.split('.').pop();
-            } else {
-              this.book.image =
-                'https://www.thibaultmorizet.fr/assets/product-images/' +
-                res.id +
-                '.jpeg';
+              this.image_extension = this.imageInfo.url.split('.').pop()??"jpeg";
             }
+            this.book.image =
+              'https://www.thibaultmorizet.fr/assets/product-images/' +
+              res.id +
+              '.' + this.image_extension
 
             this.ps.addImage(this.imageInfo).subscribe();
           }
