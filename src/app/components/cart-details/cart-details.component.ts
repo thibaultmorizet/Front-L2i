@@ -1,23 +1,24 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgxIzitoastService } from 'ngx-izitoast';
-import { Product } from 'src/app/interfaces/product';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgxIzitoastService} from 'ngx-izitoast';
+import {Product} from 'src/app/interfaces/product';
 import StorageCrypter from 'storage-crypter';
-import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth.service';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import {User} from 'src/app/interfaces/user';
+import {AuthService} from 'src/app/services/auth.service';
+import {SocialAuthService, SocialUser} from 'angularx-social-login';
 import {
   PrimeNGConfig,
   ConfirmationService,
   MessageService,
 } from 'primeng/api';
-import { AddressService } from 'src/app/services/address.service';
-import { UserService } from 'src/app/services/user.service';
-import { Address } from 'src/app/interfaces/address';
-import { ProductService } from 'src/app/services/product.service';
-import { Order } from 'src/app/interfaces/order';
-import { OrderService } from 'src/app/services/order.service';
-import { TranslateService } from '@ngx-translate/core';
+import {AddressService} from 'src/app/services/address.service';
+import {UserService} from 'src/app/services/user.service';
+import {Address} from 'src/app/interfaces/address';
+import {ProductService} from 'src/app/services/product.service';
+import {Order} from 'src/app/interfaces/order';
+import {OrderService} from 'src/app/services/order.service';
+import {TranslateService} from '@ngx-translate/core';
+
 @Component({
   selector: 'app-cart-details',
   templateUrl: './cart-details.component.html',
@@ -60,7 +61,8 @@ export class CartDetailsComponent implements OnInit {
     private os: OrderService,
     private translate: TranslateService,
     private confirmationService: ConfirmationService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -131,11 +133,10 @@ export class CartDetailsComponent implements OnInit {
       this.socialUser = user;
       this.isLoggedin = user != null;
     });
+    let jeton = this.storageCrypter.getItem('jeton', 'local');
+    if (jeton && this.tokenExpired(jeton)) {
+      this.logout();
 
-    if (this.storageCrypter.getItem('jeton', 'local')) {
-      if (this.tokenExpired(this.storageCrypter.getItem('jeton', 'local'))) {
-        this.logout();
-      }
     }
     this.getDeliveryDate();
   }
@@ -446,7 +447,8 @@ export class CartDetailsComponent implements OnInit {
 
               this.ps
                 .updateProduct(aProduct.id, aProduct)
-                .subscribe(() => {});
+                .subscribe(() => {
+                });
             }
           }
         });
@@ -473,7 +475,8 @@ export class CartDetailsComponent implements OnInit {
           ', ' +
           this.newAddressBilling.country;
 
-        this.os.setOrder(this.order).subscribe(() => {});
+        this.os.setOrder(this.order).subscribe(() => {
+        });
         this.cart = [];
         this.storageCrypter.removeItem('cart', 'local');
         this.iziToast.success({
@@ -505,6 +508,7 @@ export class CartDetailsComponent implements OnInit {
     }
     return null;
   }
+
   confirmUseSameAddress() {
     this.confirmationService.confirm({
       message: this.translate.instant(
@@ -520,6 +524,7 @@ export class CartDetailsComponent implements OnInit {
       },
     });
   }
+
   UseSameAddress() {
     if (this.connectedUser?.billingAddress?.id != undefined) {
       this.copyAddress.street = this.connectedUser?.billingAddress.street;
