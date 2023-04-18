@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { NgxIzitoastService } from 'ngx-izitoast';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {NgxIzitoastService} from 'ngx-izitoast';
 import {
   ConfirmationService,
   MessageService,
   PrimeNGConfig,
 } from 'primeng/api';
-import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
+import {User} from 'src/app/interfaces/user';
+import {AuthService} from 'src/app/services/auth.service';
+import {UserService} from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -35,7 +35,8 @@ export class AdminModeratorsComponent implements OnInit {
     private iziToast: NgxIzitoastService,
     private as: AuthService,
     private translate: TranslateService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -71,7 +72,8 @@ export class AdminModeratorsComponent implements OnInit {
           (val: any) => !this.selectedModerators.includes(val)
         );
         this.selectedModerators.forEach((aModerator) => {
-          this.us.deleteTheUser(aModerator.id).subscribe((el) => {});
+          this.us.deleteTheUser(aModerator.id).subscribe(() => {
+          });
         });
         this.selectedModerators = [];
         this.iziToast.success({
@@ -86,14 +88,15 @@ export class AdminModeratorsComponent implements OnInit {
     this.confirmationService.confirm({
       message: this.translate.instant(
         'admin_moderators.confirm_delete_moderator_message',
-        { firstname: moderator.firstname, lastname: moderator.lastname }
+        {firstname: moderator.firstname, lastname: moderator.lastname}
       ),
       header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
       dismissableMask: true,
       accept: () => {
         this.allModerators = this.allModerators.filter((val: any) => val.id !== moderator.id);
-        this.us.deleteTheUser(moderator.id).subscribe((el) => {});
+        this.us.deleteTheUser(moderator.id).subscribe(() => {
+        });
         this.moderator = {};
         this.iziToast.success({
           message: this.translate.instant('admin_moderators.moderator_deleted'),
@@ -104,7 +107,7 @@ export class AdminModeratorsComponent implements OnInit {
   }
 
   editModerator(moderator: User) {
-    this.moderator = { ...moderator };
+    this.moderator = {...moderator};
     this.moderatorDialog = true;
   }
 
@@ -121,9 +124,9 @@ export class AdminModeratorsComponent implements OnInit {
       this.us.getTheUser(moderator.email).subscribe((res) => {
         if (
           res[0] == undefined ||
-          (res[0] != undefined && res[0].id == moderator.id)
+          res[0].id == moderator.id
         ) {
-          this.us.updateUser(moderator.id, moderator).subscribe((result) => {
+          this.us.updateUser(moderator.id, moderator).subscribe(() => {
             this.ngOnInit();
             this.iziToast.success({
               message: 'Moderator updated',
@@ -176,9 +179,10 @@ export class AdminModeratorsComponent implements OnInit {
           moderator.language = 'en';
           moderator.roles = ['ROLE_MODERATOR'];
           mailInfo.password = pass;
-          this.as.sendNewPassword(mailInfo).subscribe((el) => {});
-          this.us.register(moderator).subscribe((result) => {
-            this.us.getTheUser(moderator.email).subscribe((moderatorRes) => {
+          this.as.sendNewPassword(mailInfo).subscribe(() => {
+          });
+          this.us.register(moderator).subscribe(() => {
+            this.us.getTheUser(moderator.email).subscribe(() => {
               this.allModerators.push(moderator);
 
               this.ngOnInit();
