@@ -1,4 +1,4 @@
-declare var google: any;
+declare let google: any;
 import {
   Component,
   OnInit,

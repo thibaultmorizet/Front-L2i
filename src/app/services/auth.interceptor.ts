@@ -13,8 +13,6 @@ import { Observable } from 'rxjs';
 export class AuthInterceptor implements HttpInterceptor {
   storageCrypter = new StorageCrypter('Secret');
 
-  constructor() {}
-
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (request.url !== "https://thibaultmorizet.fr/authentication_token" && request.url !== "https://thibaultmorizet.fr/ws/users") {
       let jeton = this.storageCrypter.getItem('jeton', 'local');

@@ -41,6 +41,7 @@ export class AdminVideosComponent implements OnInit {
   authors: Array<Author> = [];
   categories: Array<Category> = [];
   imageInfo: Image = {};
+  image_extension: string|undefined = "jpeg";
 
   constructor(
     private router: Router,
@@ -195,19 +196,15 @@ export class AdminVideosComponent implements OnInit {
     if (this.video.id) {
       if (this.imageInfo.data) {
         this.imageInfo.productId = this.video.id?.toString();
-
+        this.image_extension = 'jpeg';
         if (this.imageInfo.url) {
-          this.video.image =
-            'https://www.thibaultmorizet.fr/assets/product-images/' +
-            this.video.id +
-            '.' +
-            this.imageInfo.url.split('.').pop();
-        } else {
-          this.video.image =
-            'https://www.thibaultmorizet.fr/assets/product-images/' +
-            this.video.id +
-            '.jpeg';
+          this.image_extension = this.imageInfo.url.split('.').pop();
         }
+        this.video.image =
+          'https://www.thibaultmorizet.fr/assets/product-images/' +
+          this.video.id +
+          '.' + this.image_extension
+
         this.ps.addImage(this.imageInfo).subscribe();
       }
       this.vs.updateVideo(this.video.id, this.video).subscribe(() => {
@@ -223,18 +220,15 @@ export class AdminVideosComponent implements OnInit {
       this.vs.createVideo(this.video).subscribe((res) => {
         if (this.imageInfo.data) {
           this.imageInfo.productId = res.id?.toString();
+
+          this.image_extension = 'jpeg';
           if (this.imageInfo.url) {
-            this.video.image =
-              'https://www.thibaultmorizet.fr/assets/product-images/' +
-              res.id +
-              '.' +
-              this.imageInfo.url.split('.').pop();
-          } else {
-            this.video.image =
-              'https://www.thibaultmorizet.fr/assets/product-images/' +
-              res.id +
-              '.jpeg';
+            this.image_extension = this.imageInfo.url.split('.').pop();
           }
+          this.video.image =
+            'https://www.thibaultmorizet.fr/assets/product-images/' +
+            res.id +
+            '.' + this.image_extension
 
           this.ps.addImage(this.imageInfo).subscribe();
         }
