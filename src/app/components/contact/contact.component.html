@@ -21,6 +21,18 @@
             role="contact"
             (ngSubmit)="sendContactMail()"
           >
+            <div class="input-group mb-3" *ngIf="connectedUser===null">
+              <input
+                id="email"
+                name="email"
+                placeholder="{{ 'general.email' | translate }}"
+                type="email"
+                pInputText
+                [(ngModel)]="contactInfo.email"
+                class="w-100"
+                required
+              />
+            </div>
             <div class="input-group mb-3">
               <input
                 id="subject"
@@ -54,7 +66,7 @@
                 class="p-button-raised p-button-primary-color btn-primary-color"
                 [disabled]="!contactForm.valid && contactInfo.subject"
               >
-              {{ "contact.send_mail" | translate }}
+                {{ "contact.send_mail" | translate }}
               </button>
             </div>
           </form>
