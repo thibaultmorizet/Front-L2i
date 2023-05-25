@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgxIzitoastService } from 'ngx-izitoast';
-import { Product } from 'src/app/interfaces/product';
-import { ProductService } from 'src/app/services/product.service';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NgxIzitoastService} from 'ngx-izitoast';
+import {Product} from 'src/app/interfaces/product';
+import {ProductService} from 'src/app/services/product.service';
 import StorageCrypter from 'storage-crypter';
-import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth.service';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import { TranslateService } from '@ngx-translate/core';
-import { CommentService } from 'src/app/services/comment.service';
-import { Comment } from 'src/app/interfaces/comment';
-import { ConfirmationService } from 'primeng/api';
-import { BookService } from 'src/app/services/book.service';
-import { VideoService } from 'src/app/services/video.service';
+import {User} from 'src/app/interfaces/user';
+import {AuthService} from 'src/app/services/auth.service';
+import {SocialAuthService, SocialUser} from 'angularx-social-login';
+import {TranslateService} from '@ngx-translate/core';
+import {CommentService} from 'src/app/services/comment.service';
+import {Comment} from 'src/app/interfaces/comment';
+import {ConfirmationService} from 'primeng/api';
+import {BookService} from 'src/app/services/book.service';
+import {VideoService} from 'src/app/services/video.service';
 
 @Component({
   selector: 'app-product-details',
@@ -50,90 +50,93 @@ export class ProductDetailsComponent implements OnInit {
     private translate: TranslateService,
     private commentService: CommentService,
     private confirmationService: ConfirmationService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.translate.use(this.translate.getDefaultLang());
 
     this.route.paramMap.subscribe((res) => {
       this.idProduct = +(res.get('id') ?? '0');
-      this.ps.getOneProduct(this.idProduct).subscribe((b) => {
-        if (b.brand) {
-          this.vs.getOneVideo(this.idProduct).subscribe((result) => {
-            this.product = result;
-            this.product.type = 'video';
-            if (this.product.comments) {
-              this.product.comments.sort((objA, objB) => {
-                if (
-                  objB.createdAt != undefined &&
-                  objA.createdAt != undefined
-                ) {
-                  let date1 = new Date(objA.createdAt);
-                  let date2 = new Date(objB.createdAt);
+      if (this.idProduct != 0) {
+        this.ps.getOneProduct(this.idProduct).subscribe((b) => {
+          if (b.brand) {
+            this.vs.getOneVideo(this.idProduct).subscribe((result) => {
+              this.product = result;
+              this.product.type = 'video';
+              if (this.product.comments) {
+                this.product.comments.sort((objA, objB) => {
+                  if (
+                    objB.createdAt != undefined &&
+                    objA.createdAt != undefined
+                  ) {
+                    let date1 = new Date(objA.createdAt);
+                    let date2 = new Date(objB.createdAt);
 
-                  return date2.getTime() - date1.getTime();
-                }
-                return 0;
-              });
-            }
+                    return date2.getTime() - date1.getTime();
+                  }
+                  return 0;
+                });
+              }
 
-            this.product.number_ordered = 1;
-            if (this.product.visitnumber) {
-              this.product.visitnumber += 1;
-            } else {
-              this.product.visitnumber = 1;
-            }
+              this.product.number_ordered = 1;
+              if (this.product.visitnumber) {
+                this.product.visitnumber += 1;
+              } else {
+                this.product.visitnumber = 1;
+              }
 
-            this.ps
-              .updateProduct(this.product.id, this.product)
-              .subscribe(() => {});
-          });
-        } else {
-          this.bs.getOneBook(this.idProduct).subscribe((result) => {
-            this.product = result;
-            this.product.type = 'book';
+              this.ps
+                .updateProduct(this.product.id, this.product)
+                .subscribe(() => {
+                });
+            });
+          } else {
+            this.bs.getOneBook(this.idProduct).subscribe((result) => {
+              this.product = result;
+              this.product.type = 'book';
 
-            this.product.number_ordered = 1;
-            if (this.product.visitnumber) {
-              this.product.visitnumber += 1;
-            } else {
-              this.product.visitnumber = 1;
-            }
+              this.product.number_ordered = 1;
+              if (this.product.visitnumber) {
+                this.product.visitnumber += 1;
+              } else {
+                this.product.visitnumber = 1;
+              }
 
-            this.ps
-              .updateProduct(this.product.id, this.product)
-              .subscribe(() => {
-                if (this.product.comments) {
-                  this.product.comments.forEach((aComment) => {
-                    if (
-                      aComment.commentstatut?.id == 3 ||
-                      (aComment.commentstatut?.id == 1 &&
-                        this.connectedUser?.id != aComment.user?.id)
-                    ) {
-                      this.product.comments?.splice(
-                        this.product.comments.indexOf(aComment),
-                        1
-                      );
-                    }
-                  });
-                  this.product.comments.sort((objA, objB) => {
-                    if (
-                      objB.createdAt != undefined &&
-                      objA.createdAt != undefined
-                    ) {
-                      let date1 = new Date(objA.createdAt);
-                      let date2 = new Date(objB.createdAt);
+              this.ps
+                .updateProduct(this.product.id, this.product)
+                .subscribe(() => {
+                  if (this.product.comments) {
+                    this.product.comments.forEach((aComment) => {
+                      if (
+                        aComment.commentstatut?.id == 3 ||
+                        (aComment.commentstatut?.id == 1 &&
+                          this.connectedUser?.id != aComment.user?.id)
+                      ) {
+                        this.product.comments?.splice(
+                          this.product.comments.indexOf(aComment),
+                          1
+                        );
+                      }
+                    });
+                    this.product.comments.sort((objA, objB) => {
+                      if (
+                        objB.createdAt != undefined &&
+                        objA.createdAt != undefined
+                      ) {
+                        let date1 = new Date(objA.createdAt);
+                        let date2 = new Date(objB.createdAt);
 
-                      return date2.getTime() - date1.getTime();
-                    }
-                    return 0;
-                  });
-                }
-              });
-          });
-        }
-      });
-
+                        return date2.getTime() - date1.getTime();
+                      }
+                      return 0;
+                    });
+                  }
+                });
+            });
+          }
+        });
+      }
       try {
         this.connectedUser = JSON.parse(
           this.storageCrypter.getItem('user', 'session')
@@ -292,6 +295,7 @@ export class ProductDetailsComponent implements OnInit {
       position: 'topRight',
     });
   }
+
   getUnitpricettcFromUnitpricehtAndTva(
     unitpriceht: number | undefined,
     tva: number | undefined
@@ -345,6 +349,7 @@ export class ProductDetailsComponent implements OnInit {
     }
     return '';
   }
+
   confirmDeleteComment(id: number | undefined) {
     this.confirmationService.confirm({
       message: this.translate.instant(
@@ -357,6 +362,7 @@ export class ProductDetailsComponent implements OnInit {
       },
     });
   }
+
   deleteComment(id: number | undefined) {
     this.deleteCommentButtonDisable = true;
     this.commentService.getCommentById(id).subscribe((el) => {

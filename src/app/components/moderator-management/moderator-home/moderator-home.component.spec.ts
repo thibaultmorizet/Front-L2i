@@ -12,8 +12,8 @@ import { NgxIziToastModule } from 'ngx-izitoast';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { AdminFooterComponent } from '../../partial/admin-footer/admin-footer.component';
-import { AdminHeaderComponent } from '../../partial/admin-header/admin-header.component';
+import { ModeratorFooterComponent } from '../../partial/moderator-footer/moderator-footer.component';
+import { ModeratorHeaderComponent } from '../../partial/moderator-header/moderator-header.component';
 
 import { ModeratorHomeComponent } from './moderator-home.component';
 
@@ -25,8 +25,8 @@ describe('ModeratorHomeComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         ModeratorHomeComponent,
-        AdminHeaderComponent,
-        AdminFooterComponent,
+        ModeratorHeaderComponent,
+        ModeratorFooterComponent,
       ],
       imports: [
         NgxIziToastModule,

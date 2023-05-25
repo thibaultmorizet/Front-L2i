@@ -11,8 +11,8 @@ import {
 import { NgxIziToastModule } from 'ngx-izitoast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { AdminFooterComponent } from '../../partial/admin-footer/admin-footer.component';
-import { AdminHeaderComponent } from '../../partial/admin-header/admin-header.component';
+import { ModeratorFooterComponent } from '../../partial/moderator-footer/moderator-footer.component';
+import { ModeratorHeaderComponent } from '../../partial/moderator-header/moderator-header.component';
 import { ModeratorAccountComponent } from './moderator-account.component';
 
 describe('ModeratorAccountComponent', () => {
@@ -23,8 +23,8 @@ describe('ModeratorAccountComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         ModeratorAccountComponent,
-        AdminHeaderComponent,
-        AdminFooterComponent,
+        ModeratorHeaderComponent,
+        ModeratorFooterComponent,
       ],
       imports: [
         ConfirmDialogModule,
