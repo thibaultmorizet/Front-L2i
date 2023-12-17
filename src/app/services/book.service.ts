@@ -9,9 +9,9 @@ import { Product } from '../interfaces/product';
   providedIn: 'root',
 })
 export class BookService {
-  private url: string = 'https://l2i.thibaultmorizet.fr/ws/books';
+  private url: string = 'https://back-l2i.thibaultmorizet.fr/ws/books';
   private urlWithoutLimit: string =
-    'https://l2i.thibaultmorizet.fr/ws/books?itemsPerPage=10000';
+    'https://back-l2i.thibaultmorizet.fr/ws/books?itemsPerPage=10000';
 
   private books: Array<object> = [];
   private inStockString: string = '';
@@ -33,7 +33,9 @@ export class BookService {
   }
 
   getOneBook(id: number) {
-    return this.http.get<Book>('https://l2i.thibaultmorizet.fr/ws/books/' + id);
+    return this.http.get<Book>(
+      'https://back-l2i.thibaultmorizet.fr/ws/books/' + id
+    );
   }
 
   getAllBooksBySearchAndParameters(
@@ -79,7 +81,7 @@ export class BookService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Book>>(
-      'https://l2i.thibaultmorizet.fr/ws/books?' +
+      'https://back-l2i.thibaultmorizet.fr/ws/books?' +
         'itemsPerPage=' +
         productnumber +
         this.formatsString +
@@ -133,7 +135,7 @@ export class BookService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Book>>(
-      'https://l2i.thibaultmorizet.fr/ws/books?page=' +
+      'https://back-l2i.thibaultmorizet.fr/ws/books?page=' +
         page +
         '&itemsPerPage=' +
         productnumber +

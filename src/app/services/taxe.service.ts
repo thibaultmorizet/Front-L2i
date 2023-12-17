@@ -6,7 +6,7 @@ import { Taxe } from '../interfaces/taxe';
   providedIn: 'root',
 })
 export class TaxeService {
-  private url: string = 'https://l2i.thibaultmorizet.fr/ws/taxes';
+  private url: string = 'https://back-l2i.thibaultmorizet.fr/ws/taxes';
 
   constructor(private http: HttpClient) {}
 
@@ -16,13 +16,13 @@ export class TaxeService {
 
   getTaxeByTva(tva: number | undefined) {
     return this.http.get<Array<Taxe>>(
-      'https://l2i.thibaultmorizet.fr/ws/taxes?tva=' + tva
+      'https://back-l2i.thibaultmorizet.fr/ws/taxes?tva=' + tva
     );
   }
 
   setTaxe(taxe: Taxe) {
     return this.http.post<{ token: string }>(
-      'https://l2i.thibaultmorizet.fr/ws/taxes',
+      'https://back-l2i.thibaultmorizet.fr/ws/taxes',
       taxe
     );
   }

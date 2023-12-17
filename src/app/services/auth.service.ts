@@ -6,7 +6,8 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class AuthService {
-  private url: string = 'https://l2i.thibaultmorizet.fr/authentication_token';
+  private url: string =
+    'https://back-l2i.thibaultmorizet.fr/authentication_token';
   constructor(private http: HttpClient) {}
 
   login(user: User) {
@@ -15,7 +16,7 @@ export class AuthService {
 
   sendNewPassword(mailInfo: object) {
     return this.http.post<{ token: string }>(
-      'https://l2i.thibaultmorizet.fr/mail',
+      'https://back-l2i.thibaultmorizet.fr/mail',
       mailInfo
     );
   }

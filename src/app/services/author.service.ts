@@ -6,7 +6,7 @@ import { Author } from '../interfaces/author';
   providedIn: 'root',
 })
 export class AuthorService {
-  private url: string = 'https://l2i.thibaultmorizet.fr/ws/authors';
+  private url: string = 'https://back-l2i.thibaultmorizet.fr/ws/authors';
   private authors: Array<object> = [];
 
   constructor(private http: HttpClient) {}

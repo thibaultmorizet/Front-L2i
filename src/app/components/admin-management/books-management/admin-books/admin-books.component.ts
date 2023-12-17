@@ -209,7 +209,7 @@ export class AdminBooksComponent implements OnInit {
           this.image_extension = this.imageInfo.url.split('.').pop();
         }
         this.book.image =
-          'https://l2i.thibaultmorizet.fr/assets/product-images/' +
+          'https://back-l2i.thibaultmorizet.fr/assets/product-images/' +
           this.book.id +
           '.' +
           this.image_extension;
@@ -244,7 +244,7 @@ export class AdminBooksComponent implements OnInit {
               this.image_extension = this.imageInfo.url.split('.').pop();
             }
             this.book.image =
-              'https://l2i.thibaultmorizet.fr/assets/product-images/' +
+              'https://back-l2i.thibaultmorizet.fr/assets/product-images/' +
               res.id +
               '.' +
               this.image_extension;

@@ -196,7 +196,7 @@ export class AdminVideosComponent implements OnInit {
           this.image_extension = this.imageInfo.url.split('.').pop();
         }
         this.video.image =
-          'https://l2i.thibaultmorizet.fr/assets/product-images/' +
+          'https://back-l2i.thibaultmorizet.fr/assets/product-images/' +
           this.video.id +
           '.' +
           this.image_extension;
@@ -222,7 +222,7 @@ export class AdminVideosComponent implements OnInit {
             this.image_extension = this.imageInfo.url.split('.').pop();
           }
           this.video.image =
-            'https://l2i.thibaultmorizet.fr/assets/product-images/' +
+            'https://back-l2i.thibaultmorizet.fr/assets/product-images/' +
             res.id +
             '.' +
             this.image_extension;

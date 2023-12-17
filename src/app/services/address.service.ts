@@ -6,7 +6,7 @@ import { Address } from '../interfaces/address';
   providedIn: 'root',
 })
 export class AddressService {
-  private url: string = 'https://l2i.thibaultmorizet.fr/ws/addresses';
+  private url: string = 'https://back-l2i.thibaultmorizet.fr/ws/addresses';
 
   constructor(private http: HttpClient) {}
 

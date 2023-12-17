@@ -6,7 +6,7 @@ import { Editor } from '../interfaces/editor';
   providedIn: 'root',
 })
 export class EditorService {
-  private url: string = 'https://l2i.thibaultmorizet.fr/ws/editors';
+  private url: string = 'https://back-l2i.thibaultmorizet.fr/ws/editors';
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +15,7 @@ export class EditorService {
   }
   getEditorByName(name: string | undefined) {
     return this.http.get<Array<Editor>>(
-      'https://l2i.thibaultmorizet.fr/ws/editors?name=' + name
+      'https://back-l2i.thibaultmorizet.fr/ws/editors?name=' + name
     );
   }
   updateEditor(id: number | undefined, editor: Editor) {

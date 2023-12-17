@@ -13,7 +13,7 @@ import StorageCrypter from 'storage-crypter';
 export class FooterComponent implements OnInit {
   path: string = '';
   flagimg: string =
-    'https://l2i.thibaultmorizet.fr/assets/flag/englishFlag.png';
+    'https://back-l2i.thibaultmorizet.fr/assets/flag/englishFlag.png';
   language: string = 'en';
   storageCrypter = new StorageCrypter('Secret');
   connectedUser: User = {};
@@ -60,13 +60,14 @@ export class FooterComponent implements OnInit {
   setLanguage() {
     if (this.language == 'fr') {
       this.flagimg =
-        'https://l2i.thibaultmorizet.fr/assets/flag/frenchFlag.png';
+        'https://back-l2i.thibaultmorizet.fr/assets/flag/frenchFlag.png';
       this.translate.setDefaultLang(this.language);
       this.translate.use(this.language);
       return;
     }
     this.language = 'en';
-    this.flagimg = 'https://l2i.thibaultmorizet.fr/assets/flag/englishFlag.png';
+    this.flagimg =
+      'https://back-l2i.thibaultmorizet.fr/assets/flag/englishFlag.png';
     this.translate.setDefaultLang(this.language);
     this.translate.use(this.language);
   }

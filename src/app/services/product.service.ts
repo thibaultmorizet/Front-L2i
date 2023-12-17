@@ -7,9 +7,9 @@ import { Product } from '../interfaces/product';
   providedIn: 'root',
 })
 export class ProductService {
-  private url: string = 'https://l2i.thibaultmorizet.fr/ws/products';
+  private url: string = 'https://back-l2i.thibaultmorizet.fr/ws/products';
   private urlWithoutLimit: string =
-    'https://l2i.thibaultmorizet.fr/ws/products?itemsPerPage=10000';
+    'https://back-l2i.thibaultmorizet.fr/ws/products?itemsPerPage=10000';
   private searchString: string = '';
   private pricesString: string = '';
   private inStockString: string = '';
@@ -29,7 +29,7 @@ export class ProductService {
 
   getOneProduct(id: number) {
     return this.http.get<Product>(
-      'https://l2i.thibaultmorizet.fr/ws/products/' + id
+      'https://back-l2i.thibaultmorizet.fr/ws/products/' + id
     );
   }
 
@@ -121,7 +121,7 @@ export class ProductService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Product>>(
-      'https://l2i.thibaultmorizet.fr/ws/products?page=' +
+      'https://back-l2i.thibaultmorizet.fr/ws/products?page=' +
         page +
         '&itemsPerPage=' +
         productnumber +
@@ -170,7 +170,7 @@ export class ProductService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Product>>(
-      'https://l2i.thibaultmorizet.fr/ws/products?' +
+      'https://back-l2i.thibaultmorizet.fr/ws/products?' +
         'itemsPerPage=' +
         productnumber +
         this.pricesString +
@@ -211,21 +211,21 @@ export class ProductService {
     formData.append('file', file, file.name);
 
     return this.http.post<{ token: string }>(
-      'https://l2i.thibaultmorizet.fr/assets/',
+      'https://back-l2i.thibaultmorizet.fr/assets/',
       formData
     );
   }
 
   addImage(imageInfo: object) {
     return this.http.post<{ token: string }>(
-      'https://l2i.thibaultmorizet.fr/add_image',
+      'https://back-l2i.thibaultmorizet.fr/add_image',
       imageInfo
     );
   }
 
   deleteImage(imageUrl: object) {
     return this.http.post<{ token: string }>(
-      'https://l2i.thibaultmorizet.fr/delete_image',
+      'https://back-l2i.thibaultmorizet.fr/delete_image',
       imageUrl
     );
   }

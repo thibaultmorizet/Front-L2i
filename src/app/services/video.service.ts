@@ -9,9 +9,9 @@ import { Video } from '../interfaces/video';
   providedIn: 'root',
 })
 export class VideoService {
-  private url: string = 'https://l2i.thibaultmorizet.fr/ws/videos';
+  private url: string = 'https://back-l2i.thibaultmorizet.fr/ws/videos';
   private urlWithoutLimit: string =
-    'https://l2i.thibaultmorizet.fr/ws/videos?itemsPerPage=10000';
+    'https://back-l2i.thibaultmorizet.fr/ws/videos?itemsPerPage=10000';
 
   private videos: Array<object> = [];
   private inStockString: string = '';
@@ -34,7 +34,7 @@ export class VideoService {
 
   getOneVideo(id: number) {
     return this.http.get<Video>(
-      'https://l2i.thibaultmorizet.fr/ws/videos/' + id
+      'https://back-l2i.thibaultmorizet.fr/ws/videos/' + id
     );
   }
 
@@ -81,7 +81,7 @@ export class VideoService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Video>>(
-      'https://l2i.thibaultmorizet.fr/ws/videos?' +
+      'https://back-l2i.thibaultmorizet.fr/ws/videos?' +
         'itemsPerPage=' +
         productnumber +
         this.brandsString +
@@ -135,7 +135,7 @@ export class VideoService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Video>>(
-      'https://l2i.thibaultmorizet.fr/ws/videos?page=' +
+      'https://back-l2i.thibaultmorizet.fr/ws/videos?page=' +
         page +
         '&itemsPerPage=' +
         productnumber +
