@@ -6,7 +6,7 @@ import { Order } from '../interfaces/order';
   providedIn: 'root',
 })
 export class OrderService {
-  private url: string = 'https://thibaultmorizet.fr/ws/orders';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/orders';
   private orders: Array<Order> = [];
 
   constructor(private http: HttpClient) {}
@@ -29,15 +29,15 @@ export class OrderService {
 
   createInvoice(order: Order) {
     return this.http.post<any>(
-      'https://thibaultmorizet.fr/generate_invoice',
+      'https://l2i.thibaultmorizet.fr/generate_invoice',
       order
     );
   }
 
   invoiceIsExist(invoice_path: string) {
     return this.http.post<any>(
-      'https://thibaultmorizet.fr/invoice_is_exist',
-      { "invoice_path": invoice_path }
+      'https://l2i.thibaultmorizet.fr/invoice_is_exist',
+      { invoice_path: invoice_path }
     );
   }
 }

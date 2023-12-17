@@ -6,7 +6,7 @@ import { Brand } from '../interfaces/brand';
   providedIn: 'root',
 })
 export class BrandService {
-  private url: string = 'https://thibaultmorizet.fr/ws/brands';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/brands';
 
   constructor(private http: HttpClient) {}
 
@@ -15,12 +15,12 @@ export class BrandService {
   }
   getBrandByName(name: string | undefined) {
     return this.http.get<Array<Brand>>(
-      'https://thibaultmorizet.fr/ws/brands?name=' + name
+      'https://l2i.thibaultmorizet.fr/ws/brands?name=' + name
     );
   }
   setBrand(brand: Brand) {
     return this.http.post<{ token: string }>(
-      'https://thibaultmorizet.fr/ws/brands',
+      'https://l2i.thibaultmorizet.fr/ws/brands',
       brand
     );
   }
@@ -34,6 +34,4 @@ export class BrandService {
   deleteTheBrand(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
   }
-
-
 }

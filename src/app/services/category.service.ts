@@ -6,12 +6,12 @@ import { Category } from '../interfaces/category';
   providedIn: 'root',
 })
 export class Categoryservice {
-  private url: string = 'https://thibaultmorizet.fr/ws/categories';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/categories';
   private categories: Array<object> = [];
 
   constructor(private http: HttpClient) {}
 
-  getAllCategories() {    
+  getAllCategories() {
     return this.http.get<Array<Category>>(this.url);
   }
   updateCategory(id: number | undefined, category: Category) {

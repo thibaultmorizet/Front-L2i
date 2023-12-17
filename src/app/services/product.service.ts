@@ -1,22 +1,21 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Product} from '../interfaces/product';
-import {Category} from '../interfaces/category';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Category } from '../interfaces/category';
+import { Product } from '../interfaces/product';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private url: string = 'https://thibaultmorizet.fr/ws/products';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/products';
   private urlWithoutLimit: string =
-    'https://thibaultmorizet.fr/ws/products?itemsPerPage=10000';
+    'https://l2i.thibaultmorizet.fr/ws/products?itemsPerPage=10000';
   private searchString: string = '';
   private pricesString: string = '';
   private inStockString: string = '';
   private categoriesString: string = '';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAllProducts(inStock: boolean) {
     if (inStock) {
@@ -30,7 +29,7 @@ export class ProductService {
 
   getOneProduct(id: number) {
     return this.http.get<Product>(
-      'https://thibaultmorizet.fr/ws/products/' + id
+      'https://l2i.thibaultmorizet.fr/ws/products/' + id
     );
   }
 
@@ -62,7 +61,7 @@ export class ProductService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100 + 1);
     }
     if (inStock == null) {
       this.inStockString = '';
@@ -77,10 +76,10 @@ export class ProductService {
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
-      this.pricesString +
-      this.searchString +
-      this.categoriesString +
-      this.inStockString
+        this.pricesString +
+        this.searchString +
+        this.categoriesString +
+        this.inStockString
     );
   }
 
@@ -113,7 +112,7 @@ export class ProductService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100 + 1);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
@@ -122,14 +121,14 @@ export class ProductService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Product>>(
-      'https://thibaultmorizet.fr/ws/products?page=' +
-      page +
-      '&itemsPerPage=' +
-      productnumber +
-      this.pricesString +
-      this.searchString +
-      this.categoriesString +
-      this.inStockString
+      'https://l2i.thibaultmorizet.fr/ws/products?page=' +
+        page +
+        '&itemsPerPage=' +
+        productnumber +
+        this.pricesString +
+        this.searchString +
+        this.categoriesString +
+        this.inStockString
     );
   }
 
@@ -162,7 +161,7 @@ export class ProductService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100 + 1);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
@@ -171,13 +170,13 @@ export class ProductService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Product>>(
-      'https://thibaultmorizet.fr/ws/products?' +
-      'itemsPerPage=' +
-      productnumber +
-      this.pricesString +
-      this.searchString +
-      this.categoriesString +
-      this.inStockString
+      'https://l2i.thibaultmorizet.fr/ws/products?' +
+        'itemsPerPage=' +
+        productnumber +
+        this.pricesString +
+        this.searchString +
+        this.categoriesString +
+        this.inStockString
     );
   }
 
@@ -219,14 +218,14 @@ export class ProductService {
 
   addImage(imageInfo: object) {
     return this.http.post<{ token: string }>(
-      'https://thibaultmorizet.fr/add_image',
+      'https://l2i.thibaultmorizet.fr/add_image',
       imageInfo
     );
   }
 
   deleteImage(imageUrl: object) {
     return this.http.post<{ token: string }>(
-      'https://thibaultmorizet.fr/delete_image',
+      'https://l2i.thibaultmorizet.fr/delete_image',
       imageUrl
     );
   }

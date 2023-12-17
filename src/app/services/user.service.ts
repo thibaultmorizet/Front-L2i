@@ -6,7 +6,7 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class UserService {
-  private url: string = 'https://thibaultmorizet.fr/ws/users';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/users';
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +15,7 @@ export class UserService {
   }
   getTheUser(email: string | undefined) {
     return this.http.get<Array<User>>(
-      'https://thibaultmorizet.fr/ws/users?email=' + email
+      'https://l2i.thibaultmorizet.fr/ws/users?email=' + email
     );
   }
   updateUser(id: number | undefined, user: User) {

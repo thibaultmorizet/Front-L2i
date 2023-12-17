@@ -6,7 +6,7 @@ import { Comment } from '../interfaces/comment';
   providedIn: 'root',
 })
 export class CommentService {
-  private url: string = 'https://thibaultmorizet.fr/ws/comments';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/comments';
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +15,7 @@ export class CommentService {
   }
   getCommentById(id: number | undefined) {
     return this.http.get<Array<Comment>>(
-      'https://thibaultmorizet.fr/ws/comments?id=' + id
+      'https://l2i.thibaultmorizet.fr/ws/comments?id=' + id
     );
   }
   setComment(comment: Comment) {

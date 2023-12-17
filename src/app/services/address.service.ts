@@ -6,7 +6,7 @@ import { Address } from '../interfaces/address';
   providedIn: 'root',
 })
 export class AddressService {
-  private url: string = 'https://thibaultmorizet.fr/ws/addresses';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/addresses';
 
   constructor(private http: HttpClient) {}
 
@@ -18,11 +18,10 @@ export class AddressService {
     return this.http.put<{ token: string }>(this.url + '/' + id, address);
   }
 
-  createAddress( address: Address) {
-    return this.http.post< Address >(this.url, address);
+  createAddress(address: Address) {
+    return this.http.post<Address>(this.url, address);
   }
   deleteTheAddress(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
   }
-
 }

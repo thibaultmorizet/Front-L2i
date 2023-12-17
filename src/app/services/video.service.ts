@@ -1,17 +1,17 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Brand} from '../interfaces/brand';
-import {Product} from '../interfaces/product';
-import {Video} from '../interfaces/video';
-import {Category} from "../interfaces/category";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Brand } from '../interfaces/brand';
+import { Category } from '../interfaces/category';
+import { Product } from '../interfaces/product';
+import { Video } from '../interfaces/video';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VideoService {
-  private url: string = 'https://thibaultmorizet.fr/ws/videos';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/videos';
   private urlWithoutLimit: string =
-    'https://thibaultmorizet.fr/ws/videos?itemsPerPage=10000';
+    'https://l2i.thibaultmorizet.fr/ws/videos?itemsPerPage=10000';
 
   private videos: Array<object> = [];
   private inStockString: string = '';
@@ -20,8 +20,7 @@ export class VideoService {
   private brandsString: string = '';
   private categoriesString: string = '';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAllVideos(inStock: boolean) {
     if (inStock) {
@@ -34,7 +33,9 @@ export class VideoService {
   }
 
   getOneVideo(id: number) {
-    return this.http.get<Video>('https://thibaultmorizet.fr/ws/videos/' + id);
+    return this.http.get<Video>(
+      'https://l2i.thibaultmorizet.fr/ws/videos/' + id
+    );
   }
 
   getAllVideosBySearchAndParameters(
@@ -71,7 +72,7 @@ export class VideoService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100 + 1);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
@@ -80,14 +81,14 @@ export class VideoService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Video>>(
-      'https://thibaultmorizet.fr/ws/videos?' +
-      'itemsPerPage=' +
-      productnumber +
-      this.brandsString +
-      this.categoriesString +
-      this.pricesString +
-      this.searchString +
-      this.inStockString
+      'https://l2i.thibaultmorizet.fr/ws/videos?' +
+        'itemsPerPage=' +
+        productnumber +
+        this.brandsString +
+        this.categoriesString +
+        this.pricesString +
+        this.searchString +
+        this.inStockString
     );
   }
 
@@ -125,7 +126,7 @@ export class VideoService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100 + 1);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
@@ -134,15 +135,15 @@ export class VideoService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Video>>(
-      'https://thibaultmorizet.fr/ws/videos?page=' +
-      page +
-      '&itemsPerPage=' +
-      productnumber +
-      this.brandsString +
-      this.categoriesString +
-      this.pricesString +
-      this.searchString +
-      this.inStockString
+      'https://l2i.thibaultmorizet.fr/ws/videos?page=' +
+        page +
+        '&itemsPerPage=' +
+        productnumber +
+        this.brandsString +
+        this.categoriesString +
+        this.pricesString +
+        this.searchString +
+        this.inStockString
     );
   }
 
@@ -174,7 +175,7 @@ export class VideoService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100 + 1);
     }
     if (inStock == null) {
       this.inStockString = '';
@@ -189,10 +190,10 @@ export class VideoService {
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
-      this.pricesString +
-      this.searchString +
-      this.categoriesString +
-      this.inStockString
+        this.pricesString +
+        this.searchString +
+        this.categoriesString +
+        this.inStockString
     );
   }
 

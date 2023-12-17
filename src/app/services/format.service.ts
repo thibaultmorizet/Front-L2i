@@ -6,7 +6,7 @@ import { Format } from '../interfaces/format';
   providedIn: 'root',
 })
 export class FormatService {
-  private url: string = 'https://thibaultmorizet.fr/ws/formats';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/formats';
 
   constructor(private http: HttpClient) {}
 
@@ -15,12 +15,12 @@ export class FormatService {
   }
   getFormatByName(name: string | undefined) {
     return this.http.get<Array<Format>>(
-      'https://thibaultmorizet.fr/ws/formats?name=' + name
+      'https://l2i.thibaultmorizet.fr/ws/formats?name=' + name
     );
   }
   setFormat(format: Format) {
     return this.http.post<{ token: string }>(
-      'https://thibaultmorizet.fr/ws/formats',
+      'https://l2i.thibaultmorizet.fr/ws/formats',
       format
     );
   }

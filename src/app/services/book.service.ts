@@ -1,17 +1,17 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Book} from '../interfaces/book';
-import {Category} from '../interfaces/category';
-import {Format} from '../interfaces/format';
-import {Product} from '../interfaces/product';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Book } from '../interfaces/book';
+import { Category } from '../interfaces/category';
+import { Format } from '../interfaces/format';
+import { Product } from '../interfaces/product';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookService {
-  private url: string = 'https://thibaultmorizet.fr/ws/books';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/books';
   private urlWithoutLimit: string =
-    'https://thibaultmorizet.fr/ws/books?itemsPerPage=10000';
+    'https://l2i.thibaultmorizet.fr/ws/books?itemsPerPage=10000';
 
   private books: Array<object> = [];
   private inStockString: string = '';
@@ -20,8 +20,7 @@ export class BookService {
   private formatsString: string = '';
   private categoriesString: string = '';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAllBooks(inStock: boolean) {
     if (inStock) {
@@ -34,7 +33,7 @@ export class BookService {
   }
 
   getOneBook(id: number) {
-    return this.http.get<Book>('https://thibaultmorizet.fr/ws/books/' + id);
+    return this.http.get<Book>('https://l2i.thibaultmorizet.fr/ws/books/' + id);
   }
 
   getAllBooksBySearchAndParameters(
@@ -71,7 +70,7 @@ export class BookService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100 + 1);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
@@ -80,14 +79,14 @@ export class BookService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Book>>(
-      'https://thibaultmorizet.fr/ws/books?' +
-      'itemsPerPage=' +
-      productnumber +
-      this.formatsString +
-      this.categoriesString +
-      this.pricesString +
-      this.searchString +
-      this.inStockString
+      'https://l2i.thibaultmorizet.fr/ws/books?' +
+        'itemsPerPage=' +
+        productnumber +
+        this.formatsString +
+        this.categoriesString +
+        this.pricesString +
+        this.searchString +
+        this.inStockString
     );
   }
 
@@ -125,7 +124,7 @@ export class BookService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100 + 1);
     }
     if (inStock) {
       this.inStockString = '&stock%5Bgt%5D=0';
@@ -134,15 +133,15 @@ export class BookService {
       this.inStockString = '&stock%5Blte%5D=0';
     }
     return this.http.get<Array<Book>>(
-      'https://thibaultmorizet.fr/ws/books?page=' +
-      page +
-      '&itemsPerPage=' +
-      productnumber +
-      this.formatsString +
-      this.categoriesString +
-      this.pricesString +
-      this.searchString +
-      this.inStockString
+      'https://l2i.thibaultmorizet.fr/ws/books?page=' +
+        page +
+        '&itemsPerPage=' +
+        productnumber +
+        this.formatsString +
+        this.categoriesString +
+        this.pricesString +
+        this.searchString +
+        this.inStockString
     );
   }
 
@@ -174,7 +173,7 @@ export class BookService {
         '&unitpriceht[between]=' +
         Math.ceil(prices[0] - (5.5 * prices[0]) / 100) +
         '..' +
-        Math.ceil(prices[1] - ((5.5 * prices[1]) / 100)+1);
+        Math.ceil(prices[1] - (5.5 * prices[1]) / 100 + 1);
     }
     if (inStock == null) {
       this.inStockString = '';
@@ -189,10 +188,10 @@ export class BookService {
     }
     return this.http.get<Array<Product>>(
       this.urlWithoutLimit +
-      this.pricesString +
-      this.searchString +
-      this.categoriesString +
-      this.inStockString
+        this.pricesString +
+        this.searchString +
+        this.categoriesString +
+        this.inStockString
     );
   }
 

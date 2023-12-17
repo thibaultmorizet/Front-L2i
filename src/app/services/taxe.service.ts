@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Taxe } from '../interfaces/taxe';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaxeService {
-  private url: string = 'https://thibaultmorizet.fr/ws/taxes';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/taxes';
 
   constructor(private http: HttpClient) {}
 
@@ -16,13 +16,13 @@ export class TaxeService {
 
   getTaxeByTva(tva: number | undefined) {
     return this.http.get<Array<Taxe>>(
-      'https://thibaultmorizet.fr/ws/taxes?tva=' + tva
+      'https://l2i.thibaultmorizet.fr/ws/taxes?tva=' + tva
     );
   }
 
   setTaxe(taxe: Taxe) {
     return this.http.post<{ token: string }>(
-      'https://thibaultmorizet.fr/ws/taxes',
+      'https://l2i.thibaultmorizet.fr/ws/taxes',
       taxe
     );
   }
@@ -34,5 +34,4 @@ export class TaxeService {
   deleteTheTaxe(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
   }
-
 }

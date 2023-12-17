@@ -6,7 +6,7 @@ import { Author } from '../interfaces/author';
   providedIn: 'root',
 })
 export class AuthorService {
-  private url: string = 'https://thibaultmorizet.fr/ws/authors';
+  private url: string = 'https://l2i.thibaultmorizet.fr/ws/authors';
   private authors: Array<object> = [];
 
   constructor(private http: HttpClient) {}
@@ -22,7 +22,7 @@ export class AuthorService {
   createAuthor(author: Author) {
     return this.http.post<Author>(this.url, author);
   }
-  
+
   deleteTheAuthor(id: number | undefined) {
     return this.http.delete<{ token: string }>(this.url + '/' + id);
   }
