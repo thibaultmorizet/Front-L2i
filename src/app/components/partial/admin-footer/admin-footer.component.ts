@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
-import {User} from 'src/app/interfaces/user';
-import {UserService} from 'src/app/services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { User } from 'src/app/interfaces/user';
+import { UserService } from 'src/app/services/user.service';
 import StorageCrypter from 'storage-crypter';
 
 @Component({
@@ -13,7 +13,7 @@ import StorageCrypter from 'storage-crypter';
 export class AdminFooterComponent implements OnInit {
   path: string = '';
   flagimg: string =
-    'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
+    'https://l2i.thibaultmorizet.fr/assets/flag/englishFlag.png';
   language: string = 'en';
   storageCrypter = new StorageCrypter('Secret');
   connectedAdmin: User = {};
@@ -22,8 +22,7 @@ export class AdminFooterComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
     private us: UserService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     try {
@@ -61,13 +60,13 @@ export class AdminFooterComponent implements OnInit {
   setLanguage() {
     if (this.language == 'fr') {
       this.flagimg =
-        'https://www.thibaultmorizet.fr/assets/flag/frenchFlag.png';
+        'https://l2i.thibaultmorizet.fr/assets/flag/frenchFlag.png';
       this.translate.setDefaultLang(this.language);
       this.translate.use(this.language);
       return;
     }
     this.language = 'en';
-    this.flagimg = 'https://www.thibaultmorizet.fr/assets/flag/englishFlag.png';
+    this.flagimg = 'https://l2i.thibaultmorizet.fr/assets/flag/englishFlag.png';
     this.translate.setDefaultLang(this.language);
     this.translate.use(this.language);
   }

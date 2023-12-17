@@ -4,7 +4,7 @@
       <div class="container">
         <a class="navbar-brand pointer" [routerLink]="['/home']"
           ><img
-            src="https://www.thibaultmorizet.fr/assets/logo/logo-l2i.png"
+            src="https://l2i.thibaultmorizet.fr/assets/logo/logo-l2i.png"
             alt="logo-l2i"
             width="40"
         /></a>
@@ -12,13 +12,13 @@
           class="home-link text-uppercase"
           [routerLink]="['/home']"
           [ngClass]="{ active: path === 'home' }"
-          >{{'header.home' | translate}}</a
+          >{{ "header.home" | translate }}</a
         >
         <a
           class="home-link text-uppercase"
           [routerLink]="['/shop']"
           [ngClass]="{ active: path === 'shop' }"
-          >{{'header.shop' | translate}}</a
+          >{{ "header.shop" | translate }}</a
         >
 
         <a
@@ -26,7 +26,7 @@
           class="home-link text-uppercase"
           [routerLink]="['/my-account']"
           [ngClass]="{ active: path === 'my-account' }"
-          >{{'header.my_account' | translate}}</a
+          >{{ "header.my_account" | translate }}</a
         >
 
         <a
@@ -34,7 +34,7 @@
           class="home-link text-uppercase"
           [routerLink]="['/login']"
           [ngClass]="{ active: path === 'login' }"
-          >{{'header.login_sign_in' | translate}}</a
+          >{{ "header.login_sign_in" | translate }}</a
         >
 
         <div id="bag-shopping-count-container">
@@ -46,7 +46,7 @@
             <span id="bag-shopping-count" aria-hidden="true">{{
               cartLength
             }}</span>
-            {{'header.my_cart' | translate}}</a
+            {{ "header.my_cart" | translate }}</a
           >
         </div>
       </div>

@@ -4,15 +4,15 @@
   <main id="content">
     <div class="container">
       <p-confirmDialog
-      [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-      [style]="{ width: '50vw' }"
-      [baseZIndex]="10000"
-      rejectButtonStyleClass="p-button-outline-danger"
-      acceptButtonStyleClass="p-button-valid"
-      acceptLabel="{{ 'general.yes' | translate }}"
-      rejectLabel="{{ 'general.no' | translate }}"
-    >
-    </p-confirmDialog>
+        [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+        [style]="{ width: '50vw' }"
+        [baseZIndex]="10000"
+        rejectButtonStyleClass="p-button-outline-danger"
+        acceptButtonStyleClass="p-button-valid"
+        acceptLabel="{{ 'general.yes' | translate }}"
+        rejectLabel="{{ 'general.no' | translate }}"
+      >
+      </p-confirmDialog>
 
       <p-dialog
         *ngIf="cart.length > 0"
@@ -341,9 +341,7 @@
             class="cart-details-delivery-address"
             *ngIf="!connectedUser?.deliveryAddress"
           >
-            <div
-              class="d-flex align-items-center flex-column"
-            >
+            <div class="d-flex align-items-center flex-column">
               <div class="field-checkbox" *ngIf="connectedUser?.billingAddress">
                 <p-checkbox
                   name="use_the_same_address"
@@ -439,12 +437,12 @@
       <div class="cart-empty-message" *ngIf="cart.length == 0">
         <img
           id="emptyCartImg"
-          src="https://www.thibaultmorizet.fr/assets/background-images/emptyCart.png"
+          src="https://l2i.thibaultmorizet.fr/assets/background-images/emptyCart.png"
           alt="emptyCartImg"
         />
         <img
           id="emptyCart2Img"
-          src="https://www.thibaultmorizet.fr/assets/background-images/emptyCart2.png"
+          src="https://l2i.thibaultmorizet.fr/assets/background-images/emptyCart2.png"
           alt="emptyCart2Img"
         />
         <div class="empty-cart-text-block">

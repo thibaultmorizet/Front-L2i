@@ -3,7 +3,7 @@ body {
 }
 
 body:has(.general-best-sell-container), body:has(.login-container), body:has(.register-container), body:has(.admin-login-container), body:has(.moderator-login-container), body:has(.forgotten-password-container) {
-    background-image: url('https://www.thibaultmorizet.fr/assets/background-images/home-background.jpg');
+    background-image: url('https://l2i.thibaultmorizet.fr/assets/background-images/home-background.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;

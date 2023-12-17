@@ -1,25 +1,25 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
-import {NgxIzitoastService} from 'ngx-izitoast';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { NgxIzitoastService } from 'ngx-izitoast';
 import {
   PrimeNGConfig,
   ConfirmationService,
   MessageService,
 } from 'primeng/api';
-import {Observable, Subscriber} from 'rxjs';
-import {Author} from 'src/app/interfaces/author';
-import {Product} from 'src/app/interfaces/product';
-import {Image} from 'src/app/interfaces/image';
-import {Taxe} from 'src/app/interfaces/taxe';
-import {Category} from 'src/app/interfaces/category';
-import {User} from 'src/app/interfaces/user';
-import {ProductService} from 'src/app/services/product.service';
-import {TaxeService} from 'src/app/services/taxe.service';
+import { Observable, Subscriber } from 'rxjs';
+import { Author } from 'src/app/interfaces/author';
+import { Product } from 'src/app/interfaces/product';
+import { Image } from 'src/app/interfaces/image';
+import { Taxe } from 'src/app/interfaces/taxe';
+import { Category } from 'src/app/interfaces/category';
+import { User } from 'src/app/interfaces/user';
+import { ProductService } from 'src/app/services/product.service';
+import { TaxeService } from 'src/app/services/taxe.service';
 import StorageCrypter from 'storage-crypter';
-import {VideoService} from 'src/app/services/video.service';
-import {BrandService} from 'src/app/services/brand.service';
-import {Brand} from 'src/app/interfaces/brand';
+import { VideoService } from 'src/app/services/video.service';
+import { BrandService } from 'src/app/services/brand.service';
+import { Brand } from 'src/app/interfaces/brand';
 
 @Component({
   selector: 'app-admin-videos',
@@ -41,7 +41,7 @@ export class AdminVideosComponent implements OnInit {
   authors: Array<Author> = [];
   categories: Array<Category> = [];
   imageInfo: Image = {};
-  image_extension: string|undefined = "jpeg";
+  image_extension: string | undefined = 'jpeg';
 
   constructor(
     private router: Router,
@@ -53,8 +53,7 @@ export class AdminVideosComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private iziToast: NgxIzitoastService,
     private translate: TranslateService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -130,11 +129,9 @@ export class AdminVideosComponent implements OnInit {
             imageUrl: aVideo.image?.substring(aVideo.image?.indexOf('assets')),
           };
 
-          this.ps.deleteImage(imageUrlToDelete).subscribe(() => {
-          });
+          this.ps.deleteImage(imageUrlToDelete).subscribe(() => {});
 
-          this.vs.deleteTheVideo(aVideo.id).subscribe(() => {
-          });
+          this.vs.deleteTheVideo(aVideo.id).subscribe(() => {});
         });
         this.selectedVideos = [];
         this.iziToast.success({
@@ -149,7 +146,7 @@ export class AdminVideosComponent implements OnInit {
     video.author?.forEach((anAuthor) => {
       anAuthor.name = anAuthor.firstname + ' ' + anAuthor.lastname;
     });
-    this.video = {...video};
+    this.video = { ...video };
     this.videoDialog = true;
   }
 
@@ -157,7 +154,7 @@ export class AdminVideosComponent implements OnInit {
     this.confirmationService.confirm({
       message: this.translate.instant(
         'admin_videos.confirm_delete_video_message',
-        {title: video.title}
+        { title: video.title }
       ),
       header: this.translate.instant('general.confirm'),
       icon: 'pi pi-exclamation-triangle',
@@ -168,10 +165,8 @@ export class AdminVideosComponent implements OnInit {
           imageUrl: video.image?.substring(video.image?.indexOf('assets')),
         };
 
-        this.ps.deleteImage(imageUrlToDelete).subscribe(() => {
-        });
-        this.vs.deleteTheVideo(video.id).subscribe(() => {
-        });
+        this.ps.deleteImage(imageUrlToDelete).subscribe(() => {});
+        this.vs.deleteTheVideo(video.id).subscribe(() => {});
         this.video = {};
 
         this.iziToast.success({
@@ -201,9 +196,10 @@ export class AdminVideosComponent implements OnInit {
           this.image_extension = this.imageInfo.url.split('.').pop();
         }
         this.video.image =
-          'https://www.thibaultmorizet.fr/assets/product-images/' +
+          'https://l2i.thibaultmorizet.fr/assets/product-images/' +
           this.video.id +
-          '.' + this.image_extension
+          '.' +
+          this.image_extension;
 
         this.ps.addImage(this.imageInfo).subscribe();
       }
@@ -226,9 +222,10 @@ export class AdminVideosComponent implements OnInit {
             this.image_extension = this.imageInfo.url.split('.').pop();
           }
           this.video.image =
-            'https://www.thibaultmorizet.fr/assets/product-images/' +
+            'https://l2i.thibaultmorizet.fr/assets/product-images/' +
             res.id +
-            '.' + this.image_extension
+            '.' +
+            this.image_extension;
 
           this.ps.addImage(this.imageInfo).subscribe();
         }

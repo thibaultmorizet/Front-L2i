@@ -211,7 +211,7 @@ export class ProductService {
     formData.append('file', file, file.name);
 
     return this.http.post<{ token: string }>(
-      'https://www.thibaultmorizet.fr/assets/',
+      'https://l2i.thibaultmorizet.fr/assets/',
       formData
     );
   }

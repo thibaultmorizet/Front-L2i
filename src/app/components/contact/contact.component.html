@@ -5,23 +5,23 @@
     <div class="container">
       <img
         id="contactImg"
-        src="https://www.thibaultmorizet.fr/assets/background-images/contact.png"
+        src="https://l2i.thibaultmorizet.fr/assets/background-images/contact.png"
         alt="contactImg"
       />
       <img
         id="contact2Img"
-        src="https://www.thibaultmorizet.fr/assets/background-images/contact2.png"
+        src="https://l2i.thibaultmorizet.fr/assets/background-images/contact2.png"
         alt="contact2Img"
       />
       <div class="contact-container">
         <div>
-          <p class="title text-center">{{ 'general.contact' | translate }}</p>
+          <p class="title text-center">{{ "general.contact" | translate }}</p>
           <form
             #contactForm="ngForm"
             role="contact"
             (ngSubmit)="sendContactMail()"
           >
-            <div class="input-group mb-3" *ngIf="connectedUser===null">
+            <div class="input-group mb-3" *ngIf="connectedUser === null">
               <input
                 id="email"
                 name="email"
